@@ -8,18 +8,20 @@
 
 #include "strategy.h"
 
+Strategy* Strategy::instance = NULL;
+
 Strategy::Strategy(){
     main_color = "yellow";
     is_debug = false;
     real_environment = false;
-	robot_radius = 8.0;
-	distance_to_stop = 5.0;
-	changePose = true;
 	srand(time(NULL));
+
+	initialize_strategies();
+	initialize_robots();
 }
 
 void Strategy::init(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name){
-	init_sample(main_color, is_debug, real_environment, ip_receive_state, ip_send_debug, ip_send_command, name);
+	init_sample(main_color, is_debug, real_environment, "localhost", "localhost", "localhost", "name");
 	loop();
 }
 
@@ -30,17 +32,17 @@ void Strategy::initialize_strategies(){
 }
 
 void Strategy::initialize_robots(){
-   /*  team["goal"] = state.robots[0];
-    team["attack"] = state.robots[1];
-    team["defense"] = state.robots[2]; */
+	team["goal"] = &state.robots[0];
+    team["attack"] = &state.robots[1];
+    team["defense"] = &state.robots[2];
 }
 
 void Strategy::loop(){
 	while(true){
 		// DON'T REMOVE receive_data();
 		receive_state();
-		// DON'T REMOVE receive_Data();'
-				
+		// DON'T REMOVE receive_Data();
+
 		if(!real_environment){
 			// DON'T REMOVE send_data();
 			send_commands();
@@ -56,13 +58,23 @@ void Strategy::loop(){
 	}
 }
 
-void Strategy::convert_receive_state(){
-	team["goal"]->pose = state.robots[0].pose;
-	team["attack"]->pose = state.robots[1].pose;
-	team["defense"]->pose = state.robots[2].pose;
-	
+void Strategy::define_function_for_each_robot(){
+    
+    if (team["attack"]->pose.x > (state.ball.x * 1.1) && 
+      !(team["attack"]->pose.x > state.ball.x && team["defense"]->pose.x > state.ball.x) ){
+
+        Robot *aux = team["attack"];
+        team["attack"] = team["defense"];
+        team["defense"] = aux;
+    }
 }
 
-void Strategy::convert_send_commands(){
-	
+Strategy* Strategy::getInstance(){
+    
+    if(instance == NULL){
+        instance = new Strategy();
+        instance->initialize_strategies();
+    }
+
+    return instance;
 }

@@ -29,26 +29,24 @@ class Strategy : public Sample{
 		Sample :: common::Command commands[3];
 		Sample :: common::Debug debug;
 	*/
-protected:
-	float robot_radius;
-	float distance_to_stop;
-
-	btVector3 final;
-	bool changePose;
-
-	map<string, Robot*> team;
-	map<string, StrategyBase*> strategies;
-
 public:
-	Strategy();	
+	Strategy();
 
 	void init(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name);
 	void loop();
 
+	// Singleton Implementation
+	static Strategy* getInstance();
+
 	void initialize_strategies();
-    void initialize_robots();
-	void convert_receive_state();
-	void convert_send_commands();
+	void initialize_robots();
+	void define_function_for_each_robot();
+
+private:
+	static Strategy* instance; ///< holds the class instance
+
+	map<string, Robot*> team;
+	map<string, StrategyBase*> strategies;
 };
 
 #endif // _STRATEGY_H_

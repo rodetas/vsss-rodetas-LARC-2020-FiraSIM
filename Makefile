@@ -30,8 +30,8 @@ FILE_NAMES = $(FILE_NAMES_SRC) $(FILE_NAMES_PROTOS)
 
 
 
-RELEASE = VSS-SampleCpp
-DEBUG = VSS-SampleCpp-Debug
+RELEASE = SDK-Rodetas
+DEBUG = SDK-Rodetas-Debug
 
 .cpp.o:
 	@$(CCX) $(INCLUDES) $(LIBRARIES) -Wall -Wformat -c -o $@ $< -w
@@ -43,10 +43,10 @@ all: message_compiling release
 	@echo Done ...
 
 message_compiling:
-	@echo Compiling VSS-SampleCpp ...
+	@echo Compiling SDK-Rodetas ...
 
 message_cleaning:
-	@echo Cleaning VSS-SampleCpp ...
+	@echo Cleaning SDK-Rodetas ...
 
 yellow:
 	./$(RELEASE) -c yellow

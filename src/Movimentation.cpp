@@ -9,10 +9,10 @@ Movimentation::Movimentation(){
  */
 Command Movimentation::movePlayers(Robot* robot){
 
-	Point destination = robot->getTarget();
+	/* Point destination = robot->getTarget();
 	Command command;
 
-	/* movement along the field */
+	/* movement along the field 
 	if (robot->cosFrom(destination) < -0.4) {
 		command = definePwm(robot, BACK_MOVE);
 	
@@ -27,11 +27,11 @@ Command Movimentation::movePlayers(Robot* robot){
 	    }
 	}
 	
-	return command;
+	return command; */
 }
 
 Command Movimentation::progressiveAcell(Robot* robot, Command atual){
-
+/* 
 	Command c = atual;
 	Command last = robot->getLastCommand();
 
@@ -45,11 +45,11 @@ Command Movimentation::progressiveAcell(Robot* robot, Command atual){
 
 	c = checkPwm(c);
 
-	return c; 
+	return c;  */
 }
 
 Command Movimentation::checkPwm(const Command& pwm){
-	Command command(pwm);
+/* 	Command command(pwm);
 
 	if(pwm.pwm1 > 255) command.pwm1 = 255;
 	if(pwm.pwm2 > 255) command.pwm2 = 255;
@@ -57,7 +57,7 @@ Command Movimentation::checkPwm(const Command& pwm){
 	if(pwm.pwm1 < 0) command.pwm1 = 0;
 	if(pwm.pwm2 < 0) command.pwm2 = 0;
 
-	return command;
+	return command; */
 }
 
 /*
@@ -65,7 +65,7 @@ Command Movimentation::checkPwm(const Command& pwm){
  */
 Command Movimentation::definePwm(Robot* robot, char direction){
 
-	int standardPower = 160;
+	/* int standardPower = 160;
 
 	int basePower = standardPower * robot->getPotencyFactor();
 	int correctionPower = (standardPower) * robot->sinFrom(robot->getTarget()) * robot->getCurveFactor();
@@ -74,12 +74,12 @@ Command Movimentation::definePwm(Robot* robot, char direction){
 
 	Command verifiedPwm = checkPwm(Command(pwmMotor1, pwmMotor2, direction));
 
-	return verifiedPwm;
+	return verifiedPwm; */
 }
 
 Command Movimentation::turn(Robot* robot, Point point, char direction){
 
-	int standardPower = 180;
+	/* int standardPower = 180;
 	
 	int basePower = standardPower * robot->getPotencyFactor();
 	int correctionPower = (standardPower) * abs(robot->sinFrom(point)) * robot->getCurveFactor();
@@ -88,24 +88,24 @@ Command Movimentation::turn(Robot* robot, Point point, char direction){
 
 	Command verifiedPwm = checkPwm(Command(pwmMotor1, pwmMotor2, direction));
 
-	return verifiedPwm;
+	return verifiedPwm; */
 }
 
 Command Movimentation::turnLeft(int pwm1, int pwm2){
-	Command command(pwm1, pwm2, LEFT_MOVE);
-	return command;
+	/* Command command(pwm1, pwm2, LEFT_MOVE);
+	return command; */
 }
 
 Command Movimentation::turnRight(int pwm1, int pwm2){
-	Command command(pwm1, pwm2, RIGHT_MOVE);
-	return command;
+	/* Command command(pwm1, pwm2, RIGHT_MOVE);
+	return command; */
 }
 
 Command Movimentation::stop(){
-	Command command(0, 0, STOPPED_MOVE);
-	return command;
+	/* Command command(0, 0, STOPPED_MOVE);
+	return command; */
 }
 
 Command Movimentation::getMovement(){
-	return movements;
+	/* return movements; */
 }

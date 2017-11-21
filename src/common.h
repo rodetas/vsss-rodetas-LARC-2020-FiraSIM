@@ -73,9 +73,9 @@ namespace common{
         //! Default function: prints all variables.
         void show(){
             printf("Robot:\n");
-            printf("Pose:\n");
+            printf("\tPose:\t");
             pose.show();
-            printf("V_Pose:\n");
+            printf("\tV_Pose:\t");
             v_pose.show();
         }
     };
@@ -120,23 +120,23 @@ namespace common{
         /* TODO: outros construtores*/
         //! Default function: prints all variables.
         void show(){
-            cout << "Robots Team 1:" << endl;
+            cout << endl << endl << "Robots Team 1:" << endl;
             for(int i = 0 ; i < 3 ; i++){
                 robots[i].show();
             }
-            cout << "Robots Team 1 Kalman:" << endl;
+            cout << endl << endl << "Robots Team 1 Kalman:" << endl;
             for(int i = 0 ; i < 3 ; i++){
                 robots_kalman[i].show();
             }
-            cout << "Robots Team 2:" << endl;
+            cout << endl << endl << "Robots Team 2:" << endl;
             for(int i = 3 ; i < 6 ; i++){
                 robots[i].show();
             }
-            cout << "Robots Team 2 Kalman" << endl;
+            cout << endl << endl << "Robots Team 2 Kalman" << endl;
             for(int i = 3 ; i < 6 ; i++){
                 robots_kalman[i].show();
             }
-            cout << "Ball:" << endl;
+            cout << endl << endl << "Ball:" << endl;
             ball.show();
             ball_kalman.show();
         };

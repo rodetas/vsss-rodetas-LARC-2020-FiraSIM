@@ -5,7 +5,7 @@ StrategyAttack::StrategyAttack() : StrategyBase(){
 }
 
 Command StrategyAttack::strategy(Robot* robot, Command command){
-
+/* 
 	Command c = command;
 //	c = stopStrategy(c);
 	c = kickStrategy(c);
@@ -29,11 +29,11 @@ Command StrategyAttack::strategy(Robot* robot, Command command){
 		}
 	}
 
-	return c;
+	return c; */
 }
 
 Command StrategyAttack::kickStrategy(Command _command){
-	Command c = _command;
+/* 	Command c = _command;
 
 	Point centerGoal = Point(imageSize.x, imageSize.y/2);
 	float angle_robot_goal = calcAngle(centerGoal, robot->getPosition());
@@ -46,11 +46,11 @@ Command StrategyAttack::kickStrategy(Command _command){
 		c.pwm2 *= 1.5;
 	} 
 
-	return c;
+	return c; */
 }
 
 Point StrategyAttack::defineTarget(Robot* robot){
-    Point target;// = data->getBall()->getPosition();
+    /* Point target;// = data->getBall()->getPosition();
 	Ball* ball = data->getBall();
 
 	target = ball->getBallProjection();
@@ -113,13 +113,13 @@ Point StrategyAttack::defineTarget(Robot* robot){
 		target.y = ball.y;
 	}
 		
- */   
 
 	//target = applyPotencialField(target, data->getRobot("defense").getPosition(), robot->getPosition());
 
 	// verifies the limits of the destination
 	if (target.y < 0) target.y = 0;
-	if (target.y > imageSize.y) target.y = imageSize.y;
+	if (target.y > imageSize.y) target.y = imageSize.y; 
 
 	return target;
+	*/
 }
