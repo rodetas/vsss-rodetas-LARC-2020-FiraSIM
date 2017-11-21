@@ -10,24 +10,21 @@ StrategyBase::StrategyBase(){
 }
 
 void StrategyBase::apply(Robot* robot){
-    /* if(!robot->isNull()){
+    /* setRobot(robot);
 
-        setRobot(robot);
+    // define target
+    Point target = defineTarget(robot);
+    robot->setTarget(target);
+    
+    // define pwm
+    Command movimentationCommand = movimentation.movePlayers(robot);
 
-        // define target
-        Point target = defineTarget(robot);
-        robot->setTarget(target);
-        
-        // define pwm
-        Command movimentationCommand = movimentation.movePlayers(robot);
-
-        // define strategy
-        Command strategyCommand = strategy(robot, movimentationCommand);
-        
-        Command finalPwm = movimentation.progressiveAcell(robot, strategyCommand);
-        
-        robot->setCommand(finalPwm);
-    } */
+    // define strategy
+    Command strategyCommand = strategy(robot, movimentationCommand);
+    
+    Command finalPwm = movimentation.progressiveAcell(robot, strategyCommand);
+    
+    robot->setCommand(finalPwm); */
 } 
 
 void StrategyBase::move(Robot* robot){
@@ -154,7 +151,7 @@ Point StrategyBase::applyPotencialField(const Point& target, const Point& toRepu
 } 
 
 void StrategyBase::setRobot(Robot* _robot){
-    /* robot = _robot; */
+    robot = _robot;
 }
 
 Robot* StrategyBase::getRobot(){

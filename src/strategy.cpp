@@ -69,6 +69,19 @@ void Strategy::define_function_for_each_robot(){
     }
 }
 
+void Strategy::apply(){
+
+	// define as funções de cada robô
+	define_function_for_each_robot();
+
+	// aplica a estratégia para cada robô
+	for(auto it = strategies.begin() ; it != strategies.end() ; it++){
+		string function = it->first;
+		// envia o robô específico como parâmetro para a estratégia
+		(it)->second->apply(team[function]);
+	}
+}
+
 Strategy* Strategy::getInstance(){
     
     if(instance == NULL){

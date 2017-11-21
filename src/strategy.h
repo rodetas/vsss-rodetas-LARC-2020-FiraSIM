@@ -38,6 +38,7 @@ public:
 	// Singleton Implementation
 	static Strategy* getInstance();
 
+	void apply();
 	void initialize_strategies();
 	void initialize_robots();
 	void define_function_for_each_robot();
