@@ -1,12 +1,15 @@
 #include "StrategyBase.h"
 
 StrategyBase::StrategyBase(){
-    robotState = PARADO;
+    
 }
 
-void StrategyBase::apply(string _robot, map<string, int> _id, State _state){
+void StrategyBase::apply(map<string, int> _id, State _state){
     // update robot
-    setRobot(_state.robots[_id[_robot]]);
+    setState(_state);
+    setIds(_id);
+    setRobot(_state.robots[_id[name]]);
+
 
     // define target
     defineTarget(robot);
@@ -120,5 +123,13 @@ void StrategyBase::setRobot(Robot _robot){
 }
 
 void StrategyBase::setState(State _state){
-    position = _state;
+    state = _state;    
+}
+
+void StrategyBase::setIds(map<string, int> _id){
+    id = _id;
+}
+
+Robot StrategyBase::getRobot(string func){
+    return state.robots[id[func]];
 }

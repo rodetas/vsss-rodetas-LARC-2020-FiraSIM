@@ -18,7 +18,7 @@ public:
      */
     StrategyBase();
 
-    virtual void apply(string, map<string, int>, State);
+    virtual void apply(map<string, int>, State);
      
     virtual void move(Robot);
 
@@ -54,17 +54,23 @@ public:
 
     void setState(State);
 
+    void setIds(map<string, int>);
+
 protected:    
     static float curve_factor;
     static float potency_factor;
 
-    int robotState; ///< for represent the atual robot state (PARADO, DEFENDENDO, ATACANDO)
+    string name;
 
     Robot robot;
     Point target;
-    State position;
+    State state;
+    map<string, int> id;
+
     Command command;
-    Movimentation movimentation;  
+    Movimentation movimentation;
+
+    Robot getRobot(string);
 };
 
 #endif

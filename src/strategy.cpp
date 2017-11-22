@@ -75,9 +75,9 @@ void Strategy::apply(){
 	define_function_for_each_robot();
 
 	// aplica a estratégia para cada robô
-	strategies["goal"]->apply("goal", id, state);
-	strategies["attack"]->apply("attack", id, state);
-	strategies["defense"]->apply("defense", id, state); 
+	strategies["goal"]->apply(id, state);
+	strategies["attack"]->apply(id, state);
+	strategies["defense"]->apply(id, state); 
 }
 
 Strategy* Strategy::getInstance(){

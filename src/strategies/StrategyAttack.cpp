@@ -1,7 +1,7 @@
 #include "StrategyAttack.h"
 
 StrategyAttack::StrategyAttack() : StrategyBase(){
-
+	name = "attack";
 }
 
 Command StrategyAttack::strategy(Robot robot, Command command){
