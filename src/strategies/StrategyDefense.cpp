@@ -4,7 +4,7 @@ StrategyDefense::StrategyDefense() : StrategyBase()	{
 
 }
 
-Command StrategyDefense::strategy(Robot* robot, Command command){
+Command StrategyDefense::strategy(Robot robot, Command command){
 	/* Command c = command;
 
 	c = stopStrategy(c);
@@ -13,13 +13,12 @@ Command StrategyDefense::strategy(Robot* robot, Command command){
 	return c; */
 }
 
-Point StrategyDefense::defineTarget(Robot* robot){
+void StrategyDefense::defineCommand(Command _command){
+	command = _command;
+}
 
-	/* Point defenseTarget = Point(imageSize.x/2, imageSize.y/2);
-
-	//defenseTarget = robot->getProjection();
-
-	return defenseTarget; */
+void StrategyDefense::defineTarget(Robot robot){
+	target = Point(200,200,0);
 }
 
 Command StrategyDefense::collisionStrategy(Command _command){  

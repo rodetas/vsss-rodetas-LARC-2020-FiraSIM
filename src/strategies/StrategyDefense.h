@@ -8,10 +8,10 @@ class StrategyDefense : public StrategyBase {
 public:
     StrategyDefense();
 
-    virtual Command strategy(Robot*, Command);
+    virtual Command strategy(Robot, Command);
     virtual Command collisionStrategy(Command);    
-    virtual Point defineTarget(Robot*);
-
+    virtual void defineTarget(Robot);
+    virtual void defineCommand(Command);
 };
 
 #endif

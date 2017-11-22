@@ -1,45 +1,44 @@
 #include "StrategyBase.h"
 
-int StrategyBase::nStrategies = 0;
-
 StrategyBase::StrategyBase(){
-   /*  robotState = PARADO;
-	nStrategies++;
-
-	data = Strategy::getInstance(); */
+    robotState = PARADO;
 }
 
-void StrategyBase::apply(Robot* robot){
-    /* setRobot(robot);
+void StrategyBase::apply(string _robot, map<string, int> _id, State _state){
+    // update robot
+    setRobot(_state.robots[_id[_robot]]);
 
     // define target
-    Point target = defineTarget(robot);
-    robot->setTarget(target);
+    defineTarget(robot);
     
-    // define pwm
+    // define basic movimentation
     Command movimentationCommand = movimentation.movePlayers(robot);
 
     // define strategy
     Command strategyCommand = strategy(robot, movimentationCommand);
     
+    // adjust final pwm
     Command finalPwm = movimentation.progressiveAcell(robot, strategyCommand);
     
-    robot->setCommand(finalPwm); */
+    // define command
+    defineCommand(finalPwm);
 } 
 
-void StrategyBase::move(Robot* robot){
-   /*  setRobot(robot);
-    // define pwm
+void StrategyBase::move(Robot robot){
+    /* // update robot
+    setRobot(robot);
+
+    // define basic movimentation
     Command movimentationCommand = movimentation.movePlayers(robot);
 
     // define strategy
-    Command strategyCommand = strategy(robot, movimentationCommand);
+    Command strategyCommand = stopStrategy(strategyCommand);
 
-    strategyCommand = stopStrategy(strategyCommand);
-
+    // adjust final pwm
     Command finalPwm = movimentation.progressiveAcell(robot, strategyCommand);
-
-    robot->setCommand(finalPwm); */
+    
+    // define command
+    defineCommand(finalPwm);  */
 }
 
  Command StrategyBase::cornerStrategy(Command command){
@@ -69,13 +68,6 @@ void StrategyBase::move(Robot* robot){
     }
 
     return c; */
-}
-
-Command StrategyBase::collisionStrategy(Command _command){   
-}
-
-Command StrategyBase::kickStrategy(Command _command){
-
 }
 
 Command StrategyBase::stopStrategy(Command _command){
@@ -114,50 +106,19 @@ Command StrategyBase::stopStrategy(Command _command){
     return c; */
 }
 
-Command StrategyBase::blockedStrategy(Command _command){
-   /*  Command c = _command;
-
-    if(robot->isStoppedLongTime() && robot->distanceFrom(robot->getTarget()) > robot->getRadius()*4){
-        if (c.direcao == FORWARD_MOVE) {
-            c = Command(255,255,BACK_MOVE);
-        } else if(c.direcao == BACK_MOVE){
-            c = Command(255,255,FORWARD_MOVE);
-        }
-    }
-
-    return c; */
+Command StrategyBase::collisionStrategy(Command _command){   
 }
 
-// FICA CONFUSO QUANDO ESTA EXTAMENTE NO MEIO
-Point StrategyBase::applyPotencialField(const Point& target, const Point& toRepulsion, const Point& toDestination) const {
-    
-   /*  Point2i repulsion;
-    Point2i factorRepulsion = Point2i(5000,20000);//{ 5000, 20000 };
+Command StrategyBase::blockedStrategy(Command _command){
+}
 
-    float sin_repulsion_destination = sin((calcAngle(toDestination, toRepulsion))/RADIAN_TO_DEGREE);
-    float cos_repulsion_destination = cos((calcAngle(toDestination, toRepulsion))/RADIAN_TO_DEGREE);
-    float distance_repulsion_destination = distance(toRepulsion, toDestination);
+Command StrategyBase::kickStrategy(Command _command){
+}
 
-    if(sin_repulsion_destination > 0){
-        sin_repulsion_destination = 1 - sin_repulsion_destination;
-    } else {
-        sin_repulsion_destination = abs(sin_repulsion_destination) - 1;
-    }
-
-    repulsion.x = (cos_repulsion_destination / (distance_repulsion_destination * 0.6)) * factorRepulsion.x;
-    repulsion.y = (sin_repulsion_destination / (distance_repulsion_destination * 0.6)) * factorRepulsion.y;
-
-    return Point(repulsion.x, repulsion.y); */
-} 
-
-void StrategyBase::setRobot(Robot* _robot){
+void StrategyBase::setRobot(Robot _robot){
     robot = _robot;
 }
 
-Robot* StrategyBase::getRobot(){
-    /* return robot; */
-}
-
-int StrategyBase::getNumStrategies(){
-	/* return nStrategies; */
+void StrategyBase::setState(State _state){
+    position = _state;
 }

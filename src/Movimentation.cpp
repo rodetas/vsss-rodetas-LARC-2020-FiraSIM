@@ -7,7 +7,7 @@ Movimentation::Movimentation(){
 /*
  * calculates the basic movimentation
  */
-Command Movimentation::movePlayers(Robot* robot){
+Command Movimentation::movePlayers(Robot robot){
 
 	/* Point destination = robot->getTarget();
 	Command command;
@@ -30,7 +30,7 @@ Command Movimentation::movePlayers(Robot* robot){
 	return command; */
 }
 
-Command Movimentation::progressiveAcell(Robot* robot, Command atual){
+Command Movimentation::progressiveAcell(Robot robot, Command atual){
 /* 
 	Command c = atual;
 	Command last = robot->getLastCommand();
@@ -63,7 +63,7 @@ Command Movimentation::checkPwm(const Command& pwm){
 /*
  * Correct robot pwm to follow the destination
  */
-Command Movimentation::definePwm(Robot* robot, char direction){
+Command Movimentation::definePwm(Robot robot, char direction){
 
 	/* int standardPower = 160;
 
@@ -77,7 +77,7 @@ Command Movimentation::definePwm(Robot* robot, char direction){
 	return verifiedPwm; */
 }
 
-Command Movimentation::turn(Robot* robot, Point point, char direction){
+Command Movimentation::turn(Robot robot, Point point, char direction){
 
 	/* int standardPower = 180;
 	

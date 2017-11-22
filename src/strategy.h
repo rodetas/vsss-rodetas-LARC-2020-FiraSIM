@@ -46,7 +46,7 @@ public:
 private:
 	static Strategy* instance; ///< holds the class instance
 
-	map<string, Robot*> team;
+	map<string, int> id;
 	map<string, StrategyBase*> strategies;
 };
 

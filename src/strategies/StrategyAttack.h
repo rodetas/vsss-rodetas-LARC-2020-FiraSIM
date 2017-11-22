@@ -6,13 +6,12 @@
 class StrategyAttack : public StrategyBase {
 
 public:
-
     StrategyAttack();
 
-    virtual Command strategy(Robot*, Command);
-    virtual Point defineTarget(Robot*);
+    virtual Command strategy(Robot, Command);
     virtual Command kickStrategy(Command);
-    
+    virtual void defineTarget(Robot);
+    virtual void defineCommand(Command);
 };
 
 #endif

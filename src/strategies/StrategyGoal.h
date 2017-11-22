@@ -8,9 +8,10 @@ class StrategyGoal : public StrategyBase {
 public:
     StrategyGoal();
 
-    virtual Command strategy(Robot*, Command);
-    virtual Point defineTarget(Robot*);
+    virtual Command strategy(Robot, Command);
     virtual Command stopStrategy(Command);
+    virtual void defineTarget(Robot);
+    virtual void defineCommand(Command);
 };
 
 #endif

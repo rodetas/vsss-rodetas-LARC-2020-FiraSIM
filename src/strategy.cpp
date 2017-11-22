@@ -32,21 +32,21 @@ void Strategy::initialize_strategies(){
 }
 
 void Strategy::initialize_robots(){
-	team["goal"] = &state.robots[0];
-    team["attack"] = &state.robots[1];
-    team["defense"] = &state.robots[2];
+	id["goal"] = 0;
+	id["attack"] = 1;
+	id["defense"] = 2;
 }
 
 void Strategy::loop(){
 	while(true){
-		// DON'T REMOVE receive_data();
+		
 		receive_state();
-		// DON'T REMOVE receive_Data();
+		
+		apply();
 
 		if(!real_environment){
-			// DON'T REMOVE send_data();
 			send_commands();
-			// DON'T REMOVE send_data();
+
 		}else{
 			// Put your transmission code here
 		}
@@ -60,12 +60,12 @@ void Strategy::loop(){
 
 void Strategy::define_function_for_each_robot(){
     
-    if (team["attack"]->pose.x > (state.ball.x * 1.1) && 
-      !(team["attack"]->pose.x > state.ball.x && team["defense"]->pose.x > state.ball.x) ){
+    if (state.robots[id["attack"]].pose.x > (state.ball.x * 1.1) && 
+      !(state.robots[id["attack"]].pose.x > state.ball.x && state.robots[id["defense"]].pose.x > state.ball.x) ){
 
-        Robot *aux = team["attack"];
-        team["attack"] = team["defense"];
-        team["defense"] = aux;
+        int aux = id["attack"];
+        id["attack"] = id["defense"];
+        id["defense"] = aux;
     }
 }
 
@@ -75,11 +75,9 @@ void Strategy::apply(){
 	define_function_for_each_robot();
 
 	// aplica a estratégia para cada robô
-	for(auto it = strategies.begin() ; it != strategies.end() ; it++){
-		string function = it->first;
-		// envia o robô específico como parâmetro para a estratégia
-		(it)->second->apply(team[function]);
-	}
+	strategies["goal"]->apply("goal", id, state);
+	strategies["attack"]->apply("attack", id, state);
+	strategies["defense"]->apply("defense", id, state); 
 }
 
 Strategy* Strategy::getInstance(){

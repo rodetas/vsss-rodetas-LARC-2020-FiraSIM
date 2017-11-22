@@ -4,7 +4,7 @@ StrategyAttack::StrategyAttack() : StrategyBase(){
 
 }
 
-Command StrategyAttack::strategy(Robot* robot, Command command){
+Command StrategyAttack::strategy(Robot robot, Command command){
 /* 
 	Command c = command;
 //	c = stopStrategy(c);
@@ -32,24 +32,11 @@ Command StrategyAttack::strategy(Robot* robot, Command command){
 	return c; */
 }
 
-Command StrategyAttack::kickStrategy(Command _command){
-/* 	Command c = _command;
-
-	Point centerGoal = Point(imageSize.x, imageSize.y/2);
-	float angle_robot_goal = calcAngle(centerGoal, robot->getPosition());
-
-	if(angle_robot_goal < 45.0 && angle_robot_goal > -45.0 && (robot->cosFrom(centerGoal) < -0.8 || robot->cosFrom(centerGoal) > 0.8) && 
-		(robot->cosFrom(data->getBall()->getPosition()) < -0.8 || robot->cosFrom(data->getBall()->getPosition()) > 0.8) &&
-		robot->x() < data->getBall()->x() && robot->distanceFrom(data->getBall()->getPosition()) < robot->getRadius()*2){
-
-		c.pwm1 *= 1.5;
-		c.pwm2 *= 1.5;
-	} 
-
-	return c; */
+void StrategyAttack::defineCommand(Command _command){
+	command = _command;
 }
 
-Point StrategyAttack::defineTarget(Robot* robot){
+void StrategyAttack::defineTarget(Robot robot){
     /* Point target;// = data->getBall()->getPosition();
 	Ball* ball = data->getBall();
 
@@ -122,4 +109,21 @@ Point StrategyAttack::defineTarget(Robot* robot){
 
 	return target;
 	*/
+}
+
+Command StrategyAttack::kickStrategy(Command _command){
+/* 	Command c = _command;
+
+	Point centerGoal = Point(imageSize.x, imageSize.y/2);
+	float angle_robot_goal = calcAngle(centerGoal, robot->getPosition());
+
+	if(angle_robot_goal < 45.0 && angle_robot_goal > -45.0 && (robot->cosFrom(centerGoal) < -0.8 || robot->cosFrom(centerGoal) > 0.8) && 
+		(robot->cosFrom(data->getBall()->getPosition()) < -0.8 || robot->cosFrom(data->getBall()->getPosition()) > 0.8) &&
+		robot->x() < data->getBall()->x() && robot->distanceFrom(data->getBall()->getPosition()) < robot->getRadius()*2){
+
+		c.pwm1 *= 1.5;
+		c.pwm2 *= 1.5;
+	} 
+
+	return c; */
 }

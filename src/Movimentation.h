@@ -23,17 +23,17 @@ public:
 	/**
 	 *
 	 */
-	Command movePlayers(Robot*);
+	Command movePlayers(Robot);
 
 
-	Command turn(Robot*, btVector3, char);
+	Command turn(Robot, btVector3, char);
 
 	/**
 	 *
 	 */
-	Command definePwm(Robot*, char);
+	Command definePwm(Robot, char);
 
-	Command progressiveAcell(Robot*, Command);
+	Command progressiveAcell(Robot, Command);
 
 	Command stop();
 	Command turnLeft(int, int);

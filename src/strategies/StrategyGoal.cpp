@@ -4,7 +4,7 @@ StrategyGoal::StrategyGoal() : StrategyBase() {
 
 }
 
-Command StrategyGoal::strategy(Robot* robot, Command command){
+Command StrategyGoal::strategy(Robot robot, Command command){
 	Command c = command;
 
 	c = stopStrategy(c);
@@ -12,7 +12,11 @@ Command StrategyGoal::strategy(Robot* robot, Command command){
 	return c;
 }
 
-Point StrategyGoal::defineTarget(Robot* robot){
+void StrategyGoal::defineCommand(Command _command){
+	command = _command;
+}
+
+void StrategyGoal::defineTarget(Robot robot){
 
     /* Point goalTarget = Point(0,0);
 	Point ballProjection = data->getBall()->getBallProjection();

@@ -18,20 +18,25 @@ public:
      */
     StrategyBase();
 
-    virtual void apply(Robot*);
+    virtual void apply(string, map<string, int>, State);
      
-    virtual void move(Robot*);
+    virtual void move(Robot);
 
-     /**
-      * Pure virtual function to apply the strategy
-      */
-    virtual Command strategy(Robot*, Command) = 0;
+    /**
+     * Pure virtual function to apply the strategy
+    */
+    virtual Command strategy(Robot, Command) = 0;
 
     /**
      * Pure virtual function to define where goes the robot
      */
-    virtual Point defineTarget(Robot*) = 0;
+    virtual void defineTarget(Robot) = 0;
 
+    /**
+     * Pure virtual function to define the final pwm
+     */
+    virtual void defineCommand(Command) = 0;
+    
     /**
      * Apply the robot strategy when it's on the corner
      */
@@ -45,38 +50,21 @@ public:
 
     virtual Command collisionStrategy(Command);
 
-     /**
-     * Apply the potencial field
-     * \param target: 
-     * \param toRepulsion:
-     * \param toDestination:
-     * \return 
-     */
-     // @TODO: ADICIONAR A DOCUMENTACAO DESTE METODO
-    virtual Point applyPotencialField(const Point& target, const Point& toRepulsion, const Point& toDestination) const;
+    void setRobot(Robot);
 
-    void setRobot(Robot*);
+    void setState(State);
 
-    Robot* getRobot();
-
-    static int getNumStrategies();
-
-protected:
-
-    Strategy* data;
-    
+protected:    
     static float curve_factor;
     static float potency_factor;
 
     int robotState; ///< for represent the atual robot state (PARADO, DEFENDENDO, ATACANDO)
 
-    Robot* robot;
-
-    Movimentation movimentation;
-
-private:
-    static int nStrategies; ///< number of robots strategy will deal 
-        
+    Robot robot;
+    Point target;
+    State position;
+    Command command;
+    Movimentation movimentation;  
 };
 
 #endif
