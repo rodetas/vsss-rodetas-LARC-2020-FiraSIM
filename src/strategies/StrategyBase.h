@@ -3,6 +3,7 @@
 
 #include "../common.h"
 #include "../Movimentation.h"
+#include "../State.h"
 
 enum {PARADO, DEFENDENDO, ATACANDO};
 
@@ -36,7 +37,7 @@ public:
      * Pure virtual function to define the final pwm
      */
     virtual void defineCommand(Command) = 0;
-    
+
     /**
      * Apply the robot strategy when it's on the corner
      */
@@ -56,9 +57,13 @@ public:
 
     void setIds(map<string, int>);
 
+    Command getCommand();
+
 protected:    
     static float curve_factor;
     static float potency_factor;
+
+    btVector3 imageSize;
 
     string name;
 
@@ -71,6 +76,7 @@ protected:
     Movimentation movimentation;
 
     Robot getRobot(string);
+
 };
 
 #endif

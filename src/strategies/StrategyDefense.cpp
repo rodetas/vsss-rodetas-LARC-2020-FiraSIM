@@ -1,7 +1,7 @@
 #include "StrategyDefense.h"
 
 StrategyDefense::StrategyDefense() : StrategyBase()	{
-
+	name = "defense";
 }
 
 Command StrategyDefense::strategy(Robot robot, Command command){

@@ -12,6 +12,7 @@
 #include "common.h"
 #include "VSS-Interface/cpp/interface.h"
 #include "vector"
+#include "State.h"
 
 using namespace std;
 using namespace common;
@@ -35,7 +36,7 @@ protected:
     string name;
     int flag_init;
 
-    common::State state;
+    State state;
 	common::Command commands[3];
     common::Debug debug;
 

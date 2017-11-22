@@ -46,7 +46,7 @@ void Sample::init_sample(string main_color, bool is_debug, bool real_environment
 
 void Sample::receive_state(){
     interface_receive.receiveState();
-	state = common::Global_State2State(global_state, main_color);
+	state = State::Global_State2State(global_state, main_color);
 	situation = global_state.situation();
 }
 

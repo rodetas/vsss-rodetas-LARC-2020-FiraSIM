@@ -37,6 +37,8 @@ void StrategyAttack::defineCommand(Command _command){
 }
 
 void StrategyAttack::defineTarget(Robot robot){
+	target = state.ball.pose;
+
     /* Point target;// = data->getBall()->getPosition();
 	Ball* ball = data->getBall();
 

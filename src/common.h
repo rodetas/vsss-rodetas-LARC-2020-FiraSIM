@@ -11,6 +11,7 @@
 
 #include "iostream"
 #include "math.h"
+//#include "State.h"
 #include "VSS-Interface/cpp/interface.h"
 
 using namespace std;
@@ -44,7 +45,7 @@ namespace common{
         };
     };
     typedef btVector3 Point;
-
+/*
     //! This strcut represets the pose that one robot can handle. Pos and Vel.
     struct Robot{
         //! Data: Pose
@@ -70,6 +71,11 @@ namespace common{
             v_pose = r->v_pose;
         };
 
+        bool isBoard(){
+            Point imageSize = Point(640,480);
+	        return (pose.y > (imageSize.y*0.9) || pose.y < (imageSize.y*0.10) || ((pose.x > (imageSize.x*0.85) || pose.x < (imageSize.x*0.15))));
+        };
+
         //! Default function: prints all variables.
         void show(){
             printf("Robot:\n");
@@ -80,6 +86,17 @@ namespace common{
         }
     };
 
+    struct Ball {
+        btVector3 pose;
+
+        //! Default constructor: Robot t;
+        Robot(){
+            pose = btVector3(0, 0, 0);
+            v_pose = btVector3(0, 0, 0);
+        };
+
+    };
+*/
     //! This is a simple structure responsible for represent a path: vector of poses. 
 	struct Path{
 		vector<btVector3> poses;
@@ -100,7 +117,7 @@ namespace common{
         Path robots_path[3];
         Debug(){};
     };
-
+/*
     //! This struct represents the state that the workspace can handle.
     struct State{
         //! All robots by vision
@@ -108,7 +125,7 @@ namespace common{
         //! All robots by kalman
         Robot robots_kalman[6];
         //! Pos ball by vision
-        btVector3 ball;
+        Ball ball;
         //! Vel ball by vision
         btVector3 v_ball;
         //! Pos ball by kalman
@@ -117,7 +134,7 @@ namespace common{
         btVector3 v_ball_kalman;
         //! Default constructor: State s;
         State(){};
-        /* TODO: outros construtores*/
+
         //! Default function: prints all variables.
         void show(){
             cout << endl << endl << "Robots Team 1:" << endl;
@@ -141,7 +158,7 @@ namespace common{
             ball_kalman.show();
         };
     };
-
+*/
     struct Command{
         float left;
         float right;
@@ -173,7 +190,6 @@ namespace common{
     //! Estimate angle between two straight lines in radian.
     double radian(btVector3, btVector3);
 
-    State Global_State2State(vss_state::Global_State global_state, string main_color);
 }
 
 #endif

@@ -60,8 +60,8 @@ void Strategy::loop(){
 
 void Strategy::define_function_for_each_robot(){
     
-    if (state.robots[id["attack"]].pose.x > (state.ball.x * 1.1) && 
-      !(state.robots[id["attack"]].pose.x > state.ball.x && state.robots[id["defense"]].pose.x > state.ball.x) ){
+    if (state.robots[id["attack"]].pose.x > (state.ball.pose.x * 1.1) && 
+      !(state.robots[id["attack"]].pose.x > state.ball.pose.x && state.robots[id["defense"]].pose.x > state.ball.pose.x) ){
 
         int aux = id["attack"];
         id["attack"] = id["defense"];
@@ -77,7 +77,10 @@ void Strategy::apply(){
 	// aplica a estratégia para cada robô
 	strategies["goal"]->apply(id, state);
 	strategies["attack"]->apply(id, state);
-	strategies["defense"]->apply(id, state); 
+	strategies["defense"]->apply(id, state);
+	
+//	cout << strategies["attack"]->getCommand().left << " " << strategies["attack"]->getCommand().right << endl;
+	commands[id["attack"]] = strategies["attack"]->getCommand();
 }
 
 Strategy* Strategy::getInstance(){

@@ -1,7 +1,7 @@
 #include "StrategyGoal.h"
 
 StrategyGoal::StrategyGoal() : StrategyBase() {
-
+	name = "goal";
 }
 
 Command StrategyGoal::strategy(Robot robot, Command command){

@@ -2,6 +2,8 @@
 #define MOVIMENTATION_H_
 
 #include "common.h"
+#include "Robot.h"
+#include "Ball.h"
 
 using namespace common;
 
