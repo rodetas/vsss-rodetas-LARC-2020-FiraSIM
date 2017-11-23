@@ -15,15 +15,15 @@ public:
 
     Robot& operator=(const Robot& r) {
         if (this != &r){
-            radius = r.radius;
             pose = r.pose;
+            radius = r.radius;
         }
         return *this;
     }
 
     void initialize();
 
-    bool isParallelGoal();    
+    bool isParallelGoal(btVector3);    
     bool isStopped();
     bool isStoppedFor(int);    
     bool calculateStopped();

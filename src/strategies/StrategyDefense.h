@@ -9,7 +9,6 @@ public:
     StrategyDefense();
 
     virtual Command strategy(Robot, Command);
-    virtual Command collisionStrategy(Command);    
     virtual void defineTarget(Robot);
     virtual void defineCommand(Command);
 };

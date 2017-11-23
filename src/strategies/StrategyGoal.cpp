@@ -7,8 +7,8 @@ StrategyGoal::StrategyGoal() : StrategyBase() {
 Command StrategyGoal::strategy(Robot robot, Command command){
 	Command c = command;
 
-	// c = stopStrategy(c);
-
+	c = stopStrategy(c);
+	
 	return c;
 }
 
@@ -17,41 +17,38 @@ void StrategyGoal::defineCommand(Command _command){
 }
 
 void StrategyGoal::defineTarget(Robot robot){
-	target = Point(140,65,0);
 
-    /*
-	Point ballProjection = data->getBall()->getBallProjection();
+	Point ballProjection = state.ball.getProjection();
 
-	goalTarget.x = rodetas::imageSize.x*0.15;
-	goalTarget.y = rodetas::imageSize.y/2 - (rodetas::imageSize.y/2-ballProjection.y)/2;
-
-	*/
+	target.x = image_size.x * (0.95);
+	target.y = image_size.y/2 - (image_size.y/2 - ballProjection.y)/2;
 }
 
 Command StrategyGoal::stopStrategy(Command command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
-    /* Command c = command;
-    float maxDistance = robot->getRadius()*3;
-	float distanceTarget = robot->distanceFrom(robot->getTarget());
-	
-	if(robot->getVelocity() > rodetas::imageSize.x*0.05){
-		maxDistance = robot->getRadius()*6;
-	}
+    Command c = command;
+    float maxDistance = robot.getRadius() * (3);
+	float distanceTarget = robot.distanceFrom(target);
 
+/*	REVER VELOCIDADE 
+	if(robot.getVelocity() > image_size.x * (0.05)){
+		maxDistance = robot.getRadius() * (6);
+	}
+ */
 	if(distanceTarget < maxDistance){
-		c.pwm1 = command.pwm1*(distanceTarget/maxDistance);
-		c.pwm2 = command.pwm2*(distanceTarget/maxDistance);
+		c.left  = command.left  * (distanceTarget/maxDistance);
+		c.right = command.right * (distanceTarget/maxDistance);
 	}
 
-	if(distanceTarget < robot->getRadius()){
+	if(distanceTarget < robot.getRadius()){
 
-        if ((robot->getAngle() > 80 && robot->getAngle() < 120) || (robot->getAngle() > 260 && robot->getAngle() < 300)) {
+        if ((robot.yaw() > 80 && robot.yaw() < 120) || (robot.yaw() > 260 && robot.yaw() < 300)) {
             c = movimentation.stop();
         } else {
-			c = movimentation.turn(robot, Point(robot->getTarget().x, 0), RIGHT_MOVE);
+			c = movimentation.turnRight(10, 10);
         }
     }
 
-    return c; */
+    return c;
 }

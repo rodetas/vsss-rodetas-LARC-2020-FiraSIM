@@ -11,7 +11,7 @@ Strategy::Strategy(){
 }
 
 void Strategy::init(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name){
-	init_sample(main_color, is_debug, real_environment, "localhost", "localhost", "localhost", "name");
+	init_sample(main_color, is_debug, real_environment, ip_receive_state, ip_send_debug, ip_send_command, name);
 	loop();
 }
 
@@ -53,9 +53,9 @@ void Strategy::define_function_for_each_robot(){
     if (state.robots[id["attack"]].pose.x > (state.ball.pose.x * 1.1) && 
       !(state.robots[id["attack"]].pose.x > state.ball.pose.x && state.robots[id["defense"]].pose.x > state.ball.pose.x) ){
 
-        int aux = id["attack"];
+        /* int aux = id["attack"];
         id["attack"] = id["defense"];
-        id["defense"] = aux;
+        id["defense"] = aux; */
     }
 }
 

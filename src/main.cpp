@@ -19,7 +19,7 @@ int main(int argc, char** argv){
     string ip_receive_state, ip_send_debug, ip_send_command;
 
     Strategy strategy;
-    strategy.init(color, debug, false, ip_receive_state, ip_send_debug, ip_send_command, name);
+    strategy.init("blue", false, false, "localhost", "localhost", "localhost", "Rodetas");
 
 	/* if(argParse(argc, argv, &color, &debug, &ip_receive_state, &ip_send_debug, &ip_send_command, &name)){
         if(color == "yellow" || color == "blue"){

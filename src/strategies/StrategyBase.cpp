@@ -1,7 +1,8 @@
 #include "StrategyBase.h"
 
 StrategyBase::StrategyBase(){
-    imageSize = btVector3(640,480);
+    goal_size  = btVector3(10,40);
+    image_size = btVector3(150,130);
 }
 
 void StrategyBase::apply(map<string, int> _id, State _state){
@@ -14,53 +15,54 @@ void StrategyBase::apply(map<string, int> _id, State _state){
 
     // define target
     defineTarget(robot);
-    
+
     // define basic movimentation
     Command movimentationCommand = movimentation.movePlayers(robot, target);
 
     // define strategy
     Command strategyCommand = strategy(robot, movimentationCommand);
-    
+
     // define command
-    defineCommand(movimentationCommand);
+    defineCommand(strategyCommand);    
 } 
 
-void StrategyBase::move(Robot robot){
-    /* // update robot
-    setRobot(robot);
+void StrategyBase::move(map<string, int> _id, State _state){
+    
+    // update states
+    setState(_id, _state);
+
+    // update robot in this class
+    setRobot(state.robots[id[name]]);
 
     // define basic movimentation
-    Command movimentationCommand = movimentation.movePlayers(robot);
+    Command movimentationCommand = movimentation.movePlayers(robot, target);
 
     // define strategy
     Command strategyCommand = stopStrategy(strategyCommand);
-
-    // adjust final pwm
-    Command finalPwm = movimentation.progressiveAcell(robot, strategyCommand);
     
     // define command
-    defineCommand(finalPwm);  */
+    defineCommand(strategyCommand); 
 }
 
  Command StrategyBase::cornerStrategy(Command command){
-    // movement along the corners
+
     Command c = command;
 
-	if (robot.isBoard() && robot.isStopped()){
-        
+	if (robot.isBoard(image_size) && robot.isStopped()){      
+
         // girar caso robo esteja preso de frente pra parede
         if (robot.cosFrom(state.ball.pose) > -0.9 && robot.cosFrom(state.ball.pose) < 0.9) {
             if (robot.sinFrom(state.ball.pose) > 0) {
-                //c = movimentation.turn(robot, data->getBall()->getPosition(), RIGHT_MOVE);
+                c = movimentation.turnRight(100, 100);
             } else {
-                //c = movimentation.turn(robot, data->getBall()->getPosition(), LEFT_MOVE);
+                c = movimentation.turnLeft(100, 100);
             }
         } 
         
         // girar caso robo prenda a bola na parede
         if (robot.distanceFrom(state.ball.pose) < robot.getRadius()*1.5) {
 
-            if (robot.y() > (imageSize.y/2)){
+            if (robot.y() > (image_size.y/2)){
                 c = movimentation.turnLeft(255, 255);	
             } else {
                 c = movimentation.turnRight(255, 255);
@@ -74,37 +76,37 @@ void StrategyBase::move(Robot robot){
 Command StrategyBase::stopStrategy(Command _command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
-    /*Command c = _command;
-    float maxDistance = robot.getRadius()*3;
-	float distanceTarget = robot.distanceFrom(robot.getTarget());
-	
-	if(robot.getVelocity() > imageSize.x*0.05){
-		maxDistance = robot.getRadius()*6;
+    Command c = _command;
+    float maxDistance = robot.getRadius() * (3);
+	float distanceTarget = robot.distanceFrom(target);
+
+/* 	REVER VELOCIDADE
+	if(robot.getVelocity() > image_size.x * (0.05)){
+		maxDistance = robot.getRadius() * (6);
 	}
+ */
 
 	if(distanceTarget < maxDistance){
-		c.pwm1 = c.pwm1*(distanceTarget/maxDistance);
-		c.pwm2 = c.pwm2*(distanceTarget/maxDistance);
+		c.left  = c.left  * (distanceTarget/maxDistance);
+		c.right = c.right * (distanceTarget/maxDistance);
 	}
 
 	if(distanceTarget < robot.getRadius()){
 
-        if (robot.cosFrom(data->getBall()->getBallProjection()) < -0.8 || robot.cosFrom(data->getBall()->getBallProjection()) > 0.8) {
+        if (robot.cosFrom(state.ball.getProjection()) < -0.8 || robot.cosFrom(state.ball.getProjection()) > 0.8) {
             c = movimentation.stop();
  
         } else {
 
-            if (robot.sinFrom(data->getBall()->getPosition()) > 0) {
-                //c = movimentation.turnRight(pwm, pwm);
-                c = movimentation.turn(robot, data->getBall()->getBallProjection(), RIGHT_MOVE);
+            if (robot.sinFrom(state.ball.getPosition()) > 0) {
+                c = movimentation.turnRight(10, 10);
             } else {
-                //c = movimentation.turnLeft(pwm, pwm);
-                c = movimentation.turn(robot, data->getBall()->getBallProjection(), LEFT_MOVE);
+                c = movimentation.turnLeft(10, 10);
             }
         }
     }
 
-    return c; */
+    return c;
 }
 
 Command StrategyBase::collisionStrategy(Command _command){   

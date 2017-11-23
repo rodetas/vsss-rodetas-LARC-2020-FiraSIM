@@ -21,7 +21,7 @@ public:
 
     virtual void apply(map<string, int>, State);
      
-    virtual void move(Robot);
+    virtual void move(map<string, int>, State);
 
     /**
      * Pure virtual function to apply the strategy
@@ -61,7 +61,8 @@ protected:
     static float curve_factor;
     static float potency_factor;
 
-    btVector3 imageSize;
+    btVector3 goal_size;
+    btVector3 image_size;
 
     string name;
 

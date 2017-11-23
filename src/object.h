@@ -9,7 +9,6 @@ class Object {
 
 public:
     Object(){
-        imageSize = btVector3(640,480);
     }
 
     btVector3 getPosition(){
@@ -49,10 +48,9 @@ public:
         return (pose.x <= 0 && pose.y <= 0);
     }
 
-    bool isBoard(){
-        return false;
-	    //return (pose.y > (imageSize.y*0.9) || pose.y < (imageSize.y*0.10) || 
-        //    ((pose.x > (imageSize.x*0.85) || pose.x < (imageSize.x*0.15))));
+    bool isBoard(btVector3 image_size){
+	    return (pose.y > image_size.y * (0.90) || pose.y < image_size.y * (0.10) || 
+                pose.x > image_size.x * (0.85) || pose.x < image_size.x * (0.15) );
     }
 
     virtual void show(){
@@ -88,7 +86,6 @@ public:
     btVector3 projection;
 
 protected:
-    btVector3 imageSize;
 
 };
 

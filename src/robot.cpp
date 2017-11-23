@@ -11,14 +11,16 @@ Robot::Robot(int _id) : Object(){
 void Robot::initialize(){
     stoppedTime = 0;
 
+    radius = 5.0f;
     curveFactor = 0.4f;
     potencyFactor = 1.0f;
 
     pose = btVector3(0,0,0);
 }
 
-bool Robot::isParallelGoal(){
-    //return (cosFrom(btVector3(common::imageSize.x, y())) > -0.3 && cosFrom(btVector3(common::imageSize.x, y())) < 0.3);
+bool Robot::isParallelGoal(btVector3 image){
+    return (cosFrom( btVector3(image.x, y())) > -0.3 && 
+            cosFrom( btVector3(image.x, y())) <  0.3);
 }
 
 bool Robot::isStopped(){
@@ -59,7 +61,7 @@ Point Robot::calculateRobotProjection(){
     projection.x = aux.x + (lastPositions[0].x - lastPositions[10].x);
     projection.y = aux.y + (lastPositions[0].y - lastPositions[10].y);
 
-    if(projection.x > imageSize.x || projection.x < 0 || projection.y > imageSize.y || projection.y < 0){
+    if(projection.x > image_size.x || projection.x < 0 || projection.y > image_size.y || projection.y < 0){
         projection = lastRobotProjection;
     }
         
