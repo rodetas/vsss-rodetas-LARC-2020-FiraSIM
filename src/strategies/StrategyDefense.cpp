@@ -7,15 +7,15 @@ StrategyDefense::StrategyDefense() : StrategyBase()	{
 Command StrategyDefense::strategy(Robot robot, Command command){
 	Command c = command;
 
-	c = stopStrategy(c);
+	c = stop_strategy(c);
 
 	return c;
 }
 
-void StrategyDefense::defineCommand(Command _command){
+void StrategyDefense::define_command(Command _command){
 	command = _command;
 }
 
-void StrategyDefense::defineTarget(Robot robot){
+void StrategyDefense::define_target(Robot robot){
 	target = Point(110,65,0);
 }

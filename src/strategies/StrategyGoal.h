@@ -9,9 +9,9 @@ public:
     StrategyGoal();
 
     virtual Command strategy(Robot, Command);
-    virtual Command stopStrategy(Command);
-    virtual void defineTarget(Robot);
-    virtual void defineCommand(Command);
+    virtual Command stop_strategy(Command);
+    virtual void define_target(Robot);
+    virtual void define_command(Command);
 };
 
 #endif

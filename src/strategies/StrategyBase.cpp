@@ -8,13 +8,13 @@ StrategyBase::StrategyBase(){
 void StrategyBase::apply(map<string, int> _id, State _state){
 
     // update states
-    setState(_id, _state);
+    set_state(_id, _state);
 
     // update robot in this class
-    setRobot(state.robots[id[name]]);
+    set_robot(state.robots[id[name]]);
 
     // define target
-    defineTarget(robot);
+    define_target(robot);
 
     // define basic movimentation
     Command movimentationCommand = movimentation.move_players(robot, target);
@@ -23,28 +23,28 @@ void StrategyBase::apply(map<string, int> _id, State _state){
     Command strategyCommand = strategy(robot, movimentationCommand);
 
     // define command
-    defineCommand(strategyCommand);    
+    define_command(strategyCommand);    
 } 
 
 void StrategyBase::move(map<string, int> _id, State _state){
     
     // update states
-    setState(_id, _state);
+    set_state(_id, _state);
 
     // update robot in this class
-    setRobot(state.robots[id[name]]);
+    set_robot(state.robots[id[name]]);
 
     // define basic movimentation
     Command movimentationCommand = movimentation.move_players(robot, target);
 
     // define strategy
-    Command strategyCommand = stopStrategy(strategyCommand);
+    Command strategyCommand = stop_strategy(strategyCommand);
     
     // define command
-    defineCommand(strategyCommand); 
+    define_command(strategyCommand); 
 }
 
- Command StrategyBase::cornerStrategy(Command command){
+ Command StrategyBase::corner_strategy(Command command){
     Command c = command;
 
 	if (robot.is_board(image_size) && robot.is_stopped()){      
@@ -72,7 +72,7 @@ void StrategyBase::move(map<string, int> _id, State _state){
     return c;
 }
 
-Command StrategyBase::stopStrategy(Command _command){
+Command StrategyBase::stop_strategy(Command _command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
     Command c = _command;
@@ -108,28 +108,28 @@ Command StrategyBase::stopStrategy(Command _command){
     return c;
 }
 
-Command StrategyBase::collisionStrategy(Command _command){   
+Command StrategyBase::collision_strategy(Command _command){   
 }
 
-Command StrategyBase::blockedStrategy(Command _command){
+Command StrategyBase::blocked_strategy(Command _command){
 }
 
-Command StrategyBase::kickStrategy(Command _command){
+Command StrategyBase::kick_strategy(Command _command){
 }
 
-void StrategyBase::setRobot(Robot _robot){
+void StrategyBase::set_robot(Robot _robot){
     robot = _robot;
 }
 
-void StrategyBase::setState(map<string, int> _id, State _state){
+void StrategyBase::set_state(map<string, int> _id, State _state){
     id = _id;    
     state = _state;    
 }
 
-Robot StrategyBase::getRobot(string func){
+Robot StrategyBase::get_robot(string func){
     return state.robots[id[func]];
 }
 
-Command StrategyBase::getCommand(){
+Command StrategyBase::get_command(){
     return command;
 }

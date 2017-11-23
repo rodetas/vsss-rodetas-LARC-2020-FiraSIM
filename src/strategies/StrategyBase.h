@@ -31,31 +31,31 @@ public:
     /**
      * Pure virtual function to define where goes the robot
      */
-    virtual void defineTarget(Robot) = 0;
+    virtual void define_target(Robot) = 0;
 
     /**
      * Pure virtual function to define the final pwm
      */
-    virtual void defineCommand(Command) = 0;
+    virtual void define_command(Command) = 0;
 
     /**
      * Apply the robot strategy when it's on the corner
      */
-    virtual Command cornerStrategy(Command);
+    virtual Command corner_strategy(Command);
 
-    virtual Command stopStrategy(Command);
+    virtual Command stop_strategy(Command);
 
-    virtual Command blockedStrategy(Command);
+    virtual Command blocked_strategy(Command);
 
-    virtual Command kickStrategy(Command);
+    virtual Command kick_strategy(Command);
 
-    virtual Command collisionStrategy(Command);
+    virtual Command collision_strategy(Command);
 
-    void setRobot(Robot);
+    void set_robot(Robot);
 
-    void setState(map<string, int>, State);
+    void set_state(map<string, int>, State);
 
-    Command getCommand();
+    Command get_command();
 
 protected:    
     static float curve_factor;
@@ -74,7 +74,7 @@ protected:
     Command command;
     Movimentation movimentation;
 
-    Robot getRobot(string);
+    Robot get_robot(string);
 
 };
 

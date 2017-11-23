@@ -6,8 +6,8 @@ StrategyAttack::StrategyAttack() : StrategyBase(){
 
 Command StrategyAttack::strategy(Robot robot, Command command){
 	Command c = command;
-	c = kickStrategy(c);
-	c = cornerStrategy(c);
+	c = kick_strategy(c);
+	c = corner_strategy(c);
 
 	if (robot.is_parallel_goal(image_size)){
 
@@ -29,11 +29,11 @@ Command StrategyAttack::strategy(Robot robot, Command command){
 	return c;
 }
 
-void StrategyAttack::defineCommand(Command _command){
+void StrategyAttack::define_command(Command _command){
 	command = _command;
 }
 
-void StrategyAttack::defineTarget(Robot robot){
+void StrategyAttack::define_target(Robot robot){
 
 	target = state.ball.get_projection();
 
@@ -51,7 +51,7 @@ void StrategyAttack::defineTarget(Robot robot){
 	if (target.y > image_size.y) target.y = image_size.y; 
 }
 
-Command StrategyAttack::kickStrategy(Command _command){
+Command StrategyAttack::kick_strategy(Command _command){
 	Command c = _command;
 
 	Point centerGoal = btVector3(image_size.x, image_size.y/2);

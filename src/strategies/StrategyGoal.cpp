@@ -7,16 +7,16 @@ StrategyGoal::StrategyGoal() : StrategyBase() {
 Command StrategyGoal::strategy(Robot robot, Command command){
 	Command c = command;
 
-	c = stopStrategy(c);
+	c = stop_strategy(c);
 	
 	return c;
 }
 
-void StrategyGoal::defineCommand(Command _command){
+void StrategyGoal::define_command(Command _command){
 	command = _command;
 }
 
-void StrategyGoal::defineTarget(Robot robot){
+void StrategyGoal::define_target(Robot robot){
 
 	Point ballProjection = state.ball.get_projection();
 
@@ -24,7 +24,7 @@ void StrategyGoal::defineTarget(Robot robot){
 	target.y = image_size.y/2 - (image_size.y/2 - ballProjection.y)/2;
 }
 
-Command StrategyGoal::stopStrategy(Command command){
+Command StrategyGoal::stop_strategy(Command command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
     Command c = command;

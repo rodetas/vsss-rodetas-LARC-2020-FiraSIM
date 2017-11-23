@@ -69,7 +69,7 @@ void Strategy::apply(){
 	strategies["attack"]->apply(id, state);
 	strategies["defense"]->apply(id, state);
 	
-	commands[id["goal"]] = strategies["goal"]->getCommand();
-	commands[id["attack"]] = strategies["attack"]->getCommand();
-	commands[id["defense"]] = strategies["defense"]->getCommand();
+	commands[id["goal"]] = strategies["goal"]->get_command();
+	commands[id["attack"]] = strategies["attack"]->get_command();
+	commands[id["defense"]] = strategies["defense"]->get_command();
 }
