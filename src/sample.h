@@ -12,7 +12,7 @@
 #include "common.h"
 #include "VSS-Interface/cpp/interface.h"
 #include "vector"
-#include "State.h"
+#include "state.h"
 
 using namespace std;
 using namespace common;

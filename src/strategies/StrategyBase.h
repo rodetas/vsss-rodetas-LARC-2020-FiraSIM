@@ -2,8 +2,8 @@
 #define STRATEGY_HPP_
 
 #include "../common.h"
-#include "../Movimentation.h"
-#include "../State.h"
+#include "../movimentation.h"
+#include "../state.h"
 
 enum {PARADO, DEFENDENDO, ATACANDO};
 

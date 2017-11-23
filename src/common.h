@@ -11,7 +11,6 @@
 
 #include "iostream"
 #include "math.h"
-//#include "State.h"
 #include "VSS-Interface/cpp/interface.h"
 
 using namespace std;
@@ -33,6 +32,12 @@ namespace common{
             this->y = y;
             this->z = z;
         };
+        //! Construtor XY: btVector3 bt3(x, y);
+        btVector3(float x, float y){
+            this->x = x;
+            this->y = y;
+            this->z = 0;
+        };
         //! Constructor copy: btVector3 bt3(btVector3(x, y, z));
         btVector3(btVector3 *b){
             x = b->x;
@@ -44,59 +49,7 @@ namespace common{
             printf("btVector3(%f, %f, %f)\n", x, y, z);
         };
     };
-    typedef btVector3 Point;
-/*
-    //! This strcut represets the pose that one robot can handle. Pos and Vel.
-    struct Robot{
-        //! Data: Pose
-        btVector3 pose;
-        //! Data: V_Pose
-        btVector3 v_pose;
 
-        //! Default constructor: Robot t;
-        Robot(){
-            pose = btVector3(0, 0, 0);
-            v_pose = btVector3(0, 0, 0);
-        };
-
-        //! Constructor 2: Robot t(btVector3(x, y, yaw), btVector3(x, y, yaw))
-        Robot(btVector3 pose, btVector3 v_pose){
-            this->pose = pose;
-            this->v_pose = v_pose;
-        };
-
-        //! Constructor copy: Robot t(Robot());
-        Robot(Robot *r){
-            pose = r->pose;
-            v_pose = r->v_pose;
-        };
-
-        bool isBoard(){
-            Point imageSize = Point(640,480);
-	        return (pose.y > (imageSize.y*0.9) || pose.y < (imageSize.y*0.10) || ((pose.x > (imageSize.x*0.85) || pose.x < (imageSize.x*0.15))));
-        };
-
-        //! Default function: prints all variables.
-        void show(){
-            printf("Robot:\n");
-            printf("\tPose:\t");
-            pose.show();
-            printf("\tV_Pose:\t");
-            v_pose.show();
-        }
-    };
-
-    struct Ball {
-        btVector3 pose;
-
-        //! Default constructor: Robot t;
-        Robot(){
-            pose = btVector3(0, 0, 0);
-            v_pose = btVector3(0, 0, 0);
-        };
-
-    };
-*/
     //! This is a simple structure responsible for represent a path: vector of poses. 
 	struct Path{
 		vector<btVector3> poses;
@@ -117,48 +70,7 @@ namespace common{
         Path robots_path[3];
         Debug(){};
     };
-/*
-    //! This struct represents the state that the workspace can handle.
-    struct State{
-        //! All robots by vision
-        Robot robots[6];
-        //! All robots by kalman
-        Robot robots_kalman[6];
-        //! Pos ball by vision
-        Ball ball;
-        //! Vel ball by vision
-        btVector3 v_ball;
-        //! Pos ball by kalman
-        btVector3 ball_kalman;
-        //! Vel ball by kalman
-        btVector3 v_ball_kalman;
-        //! Default constructor: State s;
-        State(){};
 
-        //! Default function: prints all variables.
-        void show(){
-            cout << endl << endl << "Robots Team 1:" << endl;
-            for(int i = 0 ; i < 3 ; i++){
-                robots[i].show();
-            }
-            cout << endl << endl << "Robots Team 1 Kalman:" << endl;
-            for(int i = 0 ; i < 3 ; i++){
-                robots_kalman[i].show();
-            }
-            cout << endl << endl << "Robots Team 2:" << endl;
-            for(int i = 3 ; i < 6 ; i++){
-                robots[i].show();
-            }
-            cout << endl << endl << "Robots Team 2 Kalman" << endl;
-            for(int i = 3 ; i < 6 ; i++){
-                robots_kalman[i].show();
-            }
-            cout << endl << endl << "Ball:" << endl;
-            ball.show();
-            ball_kalman.show();
-        };
-    };
-*/
     struct Command{
         float left;
         float right;
@@ -190,6 +102,7 @@ namespace common{
     //! Estimate angle between two straight lines in radian.
     double radian(btVector3, btVector3);
 
+    typedef btVector3 Point;
 }
 
 #endif
