@@ -1,14 +1,4 @@
-/*
- * This file is part of the VSS-SampleStrategy project.
- *
- * This Source Code Form is subject to the terms of the GNU GENERAL PUBLIC LICENSE,
- * v. 3.0. If a copy of the GPL was not distributed with this
- * file, You can obtain one at http://www.gnu.org/licenses/gpl-3.0/.
- */
-
 #include "strategy.h"
-
-Strategy* Strategy::instance = NULL;
 
 Strategy::Strategy(){
     main_color = "yellow";
@@ -79,16 +69,7 @@ void Strategy::apply(){
 	strategies["attack"]->apply(id, state);
 	strategies["defense"]->apply(id, state);
 	
-//	cout << strategies["attack"]->getCommand().left << " " << strategies["attack"]->getCommand().right << endl;
+	commands[id["goal"]] = strategies["goal"]->getCommand();
 	commands[id["attack"]] = strategies["attack"]->getCommand();
-}
-
-Strategy* Strategy::getInstance(){
-    
-    if(instance == NULL){
-        instance = new Strategy();
-        instance->initialize_strategies();
-    }
-
-    return instance;
+	commands[id["defense"]] = strategies["defense"]->getCommand();
 }

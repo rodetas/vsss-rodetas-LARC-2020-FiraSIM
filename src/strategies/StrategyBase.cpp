@@ -5,23 +5,21 @@ StrategyBase::StrategyBase(){
 }
 
 void StrategyBase::apply(map<string, int> _id, State _state){
-    // update robot
-    setState(_state);
-    setIds(_id);
-    setRobot(_state.robots[_id[name]]);
 
+    // update states
+    setState(_id, _state);
+
+    // update robot in this class
+    setRobot(state.robots[id[name]]);
 
     // define target
     defineTarget(robot);
     
     // define basic movimentation
-    Command movimentationCommand = movimentation.movePlayers(robot);
+    Command movimentationCommand = movimentation.movePlayers(robot, target);
 
     // define strategy
-    //Command strategyCommand = strategy(robot, movimentationCommand);
-    
-    // adjust final pwm
-    //Command finalPwm = movimentation.progressiveAcell(robot, strategyCommand);
+    Command strategyCommand = strategy(robot, movimentationCommand);
     
     // define command
     defineCommand(movimentationCommand);
@@ -76,7 +74,7 @@ void StrategyBase::move(Robot robot){
 Command StrategyBase::stopStrategy(Command _command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
-    /* Command c = _command;
+    /*Command c = _command;
     float maxDistance = robot.getRadius()*3;
 	float distanceTarget = robot.distanceFrom(robot.getTarget());
 	
@@ -122,12 +120,9 @@ void StrategyBase::setRobot(Robot _robot){
     robot = _robot;
 }
 
-void StrategyBase::setState(State _state){
+void StrategyBase::setState(map<string, int> _id, State _state){
+    id = _id;    
     state = _state;    
-}
-
-void StrategyBase::setIds(map<string, int> _id){
-    id = _id;
 }
 
 Robot StrategyBase::getRobot(string func){

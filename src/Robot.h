@@ -12,20 +12,11 @@ public:
     Robot();
     Robot(int);
 
-    Robot(int _id, int _x, int _y);
-
     Robot& operator=(const Robot& r) {
-        
         if (this != &r){
-            id = r.id;
             radius = r.radius;
             pose = r.pose;
-            target = r.target;
-            velocity = r.velocity;
-            angle = r.angle;
-            command = r.command;
         }
-
         return *this;
     }
 
@@ -40,20 +31,15 @@ public:
      * \return true if is near
      */
     bool isBoard();
-    bool isParallelGoal();
-    
+    bool isParallelGoal();    
     bool isNull();
-
-    bool calculateStopped();
     bool isStopped();
-    bool isStoppedFor(int);
-    
-    bool isBlocked();
+    bool isStoppedFor(int);    
+    bool calculateStopped();
+    bool isBlocked(btVector3);
 
-    float getVelocity();
-
-    void setRobotId(int);
-    int getId();
+    void setRadius(float);
+    float getRadius();
 
     void setPotencyFactor(float);
     float getPotencyFactor();
@@ -63,25 +49,7 @@ public:
 
     void setPosition(btVector3);
     btVector3 getPosition() const;
-
-    void setAngle(float);
-    float getAngle() const;
-
-    void setRadius(float);
-    float getRadius();
-
-    void setCommand(Command);
-    Command getCommand();
-
-    Command getLastCommand();
-
-    void setTarget(btVector3);
-    btVector3 getTarget() const;
-
-    void setLastPositions(vector<btVector3>);
-    vector<btVector3>::iterator getLastPositionsBegin();
-    vector<btVector3>::iterator getLastPositionsEnd();
-
+   
     btVector3 getProjection();
     btVector3 calculateRobotProjection();
 
@@ -97,29 +65,16 @@ public:
 
     // VARIABLES
 
+    btVector3 pose;
     btVector3 v_pose;
+    btVector3 projection;
 
-    const int velocityPrecision = 10;
-
-    int id;
     int stoppedTime;
-
-    float velocity;
-    float angle;
-    float radius;
-
-    float potencyFactor;
-    float curveFactor;
-
     bool stopped;
 
-    btVector3 pose;
-    btVector3 target;
-
-    Command command;
-    Command lastCommand;
-
-    btVector3 projection;
+    float radius;
+    float potencyFactor;
+    float curveFactor;
 };
 
 #endif

@@ -53,9 +53,7 @@ public:
 
     void setRobot(Robot);
 
-    void setState(State);
-
-    void setIds(map<string, int>);
+    void setState(map<string, int>, State);
 
     Command getCommand();
 

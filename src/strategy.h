@@ -35,17 +35,12 @@ public:
 	void init(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name);
 	void loop();
 
-	// Singleton Implementation
-	static Strategy* getInstance();
-
 	void apply();
 	void initialize_strategies();
 	void initialize_robots();
 	void define_function_for_each_robot();
 
 private:
-	static Strategy* instance; ///< holds the class instance
-
 	map<string, int> id;
 	map<string, StrategyBase*> strategies;
 };

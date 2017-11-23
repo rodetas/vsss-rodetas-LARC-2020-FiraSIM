@@ -7,7 +7,7 @@ StrategyGoal::StrategyGoal() : StrategyBase() {
 Command StrategyGoal::strategy(Robot robot, Command command){
 	Command c = command;
 
-	c = stopStrategy(c);
+	// c = stopStrategy(c);
 
 	return c;
 }
@@ -17,14 +17,15 @@ void StrategyGoal::defineCommand(Command _command){
 }
 
 void StrategyGoal::defineTarget(Robot robot){
+	target = Point(140,65,0);
 
-    /* Point goalTarget = Point(0,0);
+    /*
 	Point ballProjection = data->getBall()->getBallProjection();
 
 	goalTarget.x = rodetas::imageSize.x*0.15;
 	goalTarget.y = rodetas::imageSize.y/2 - (rodetas::imageSize.y/2-ballProjection.y)/2;
 
-	return goalTarget; */
+	*/
 }
 
 Command StrategyGoal::stopStrategy(Command command){

@@ -5,9 +5,9 @@ StrategyAttack::StrategyAttack() : StrategyBase(){
 }
 
 Command StrategyAttack::strategy(Robot robot, Command command){
-/* 
+
 	Command c = command;
-//	c = stopStrategy(c);
+/* //	c = stopStrategy(c);
 	c = kickStrategy(c);
 	c = cornerStrategy(c);
 // 	c = blockedStrategy(c);
@@ -28,8 +28,8 @@ Command StrategyAttack::strategy(Robot robot, Command command){
 			}
 		}
 	}
-
-	return c; */
+ */
+	return c;
 }
 
 void StrategyAttack::defineCommand(Command _command){
