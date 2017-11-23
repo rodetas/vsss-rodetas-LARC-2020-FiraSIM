@@ -5,7 +5,6 @@ StrategyAttack::StrategyAttack() : StrategyBase(){
 }
 
 Command StrategyAttack::strategy(Robot robot, Command command){
-
 	Command c = command;
 	c = kickStrategy(c);
 	c = cornerStrategy(c);
@@ -20,9 +19,9 @@ Command StrategyAttack::strategy(Robot robot, Command command){
 		    !(robot.x() > image_size.x * 0.9 && robot.y() < halfGoal2) ){
 			
 			if (robot.y() > state.ball.y()) {
-				c = movimentation.turnRight(255, 255);
+				c = movimentation.turn_right(255, 255);
 			} else {
-				c = movimentation.turnLeft(255, 255);
+				c = movimentation.turn_left(255, 255);
 			}
 		}
 	}

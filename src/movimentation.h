@@ -13,16 +13,13 @@ public:
 
 	Movimentation();
 
-	Command movePlayers(Robot, btVector3);
+	Command move_players(Robot, btVector3);
 	
 	Command stop();
-	Command turnLeft(int, int);
-	Command turnRight(int, int);
+	Command turn_left(int, int);
+	Command turn_right(int, int);
 
-	Command checkPwm(const Command&);
-	Command definePwm(Robot, btVector3, char);
-	
-	void setPotencyFactor(float);
-	void setCurveFactor(float);
+	Command check_pwm(const Command&);
+	Command define_pwm(Robot, btVector3, char);
 };
 #endif

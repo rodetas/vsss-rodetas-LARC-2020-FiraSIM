@@ -17,6 +17,8 @@ public:
 
     void set_position(btVector3 _pose){
         pose = _pose;
+
+        projection = calculate_projection();
     }
 
     btVector3 get_velocity_vector(){
@@ -28,23 +30,15 @@ public:
     }
 
     virtual btVector3 get_projection(){
-        // TODO
-        return pose;
+        return projection;
     }
 
     btVector3 calculate_projection(){
-    /*  Point aux = Point(pose.x+radius/2, pose.y+radius/2);
-        
-        projection.x = aux.x + (lastPositions[0].x - lastPositions[10].x);
-        projection.y = aux.y + (lastPositions[0].y - lastPositions[10].y);
+        btVector3 projection;
+        projection.x = pose.x + v_pose.x;
+        projection.y = pose.y + v_pose.y;
 
-        if(projection.x > image_size.x || projection.x < 0 || projection.y > image_size.y || projection.y < 0){
-            projection = lastRobotProjection;
-        }
-            
-        lastRobotProjection = projection;
-
-        return projection; */
+        return projection; 
     }
 
     float x(){

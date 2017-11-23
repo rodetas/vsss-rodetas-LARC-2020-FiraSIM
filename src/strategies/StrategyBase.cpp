@@ -17,7 +17,7 @@ void StrategyBase::apply(map<string, int> _id, State _state){
     defineTarget(robot);
 
     // define basic movimentation
-    Command movimentationCommand = movimentation.movePlayers(robot, target);
+    Command movimentationCommand = movimentation.move_players(robot, target);
 
     // define strategy
     Command strategyCommand = strategy(robot, movimentationCommand);
@@ -35,7 +35,7 @@ void StrategyBase::move(map<string, int> _id, State _state){
     setRobot(state.robots[id[name]]);
 
     // define basic movimentation
-    Command movimentationCommand = movimentation.movePlayers(robot, target);
+    Command movimentationCommand = movimentation.move_players(robot, target);
 
     // define strategy
     Command strategyCommand = stopStrategy(strategyCommand);
@@ -45,7 +45,6 @@ void StrategyBase::move(map<string, int> _id, State _state){
 }
 
  Command StrategyBase::cornerStrategy(Command command){
-
     Command c = command;
 
 	if (robot.is_board(image_size) && robot.is_stopped()){      
@@ -53,9 +52,9 @@ void StrategyBase::move(map<string, int> _id, State _state){
         // girar caso robo esteja preso de frente pra parede
         if (robot.cos_from(state.ball.pose) > -0.9 && robot.cos_from(state.ball.pose) < 0.9) {
             if (robot.sin_from(state.ball.pose) > 0) {
-                c = movimentation.turnRight(100, 100);
+                c = movimentation.turn_right(100, 100);
             } else {
-                c = movimentation.turnLeft(100, 100);
+                c = movimentation.turn_left(100, 100);
             }
         } 
         
@@ -63,9 +62,9 @@ void StrategyBase::move(map<string, int> _id, State _state){
         if (robot.distance_from(state.ball.pose) < robot.get_radius()*1.5) {
 
             if (robot.y() > (image_size.y/2)){
-                c = movimentation.turnLeft(255, 255);	
+                c = movimentation.turn_left(255, 255);	
             } else {
-                c = movimentation.turnRight(255, 255);
+                c = movimentation.turn_right(255, 255);
             }
         }
     }
@@ -99,9 +98,9 @@ Command StrategyBase::stopStrategy(Command _command){
         } else {
 
             if (robot.sin_from(state.ball.get_position()) > 0) {
-                c = movimentation.turnRight(10, 10);
+                c = movimentation.turn_right(10, 10);
             } else {
-                c = movimentation.turnLeft(10, 10);
+                c = movimentation.turn_left(10, 10);
             }
         }
     }

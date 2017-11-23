@@ -48,6 +48,9 @@ message_compiling:
 message_cleaning:
 	@echo Cleaning SDK-Rodetas ...
 
+run:
+	./$(RELEASE)
+
 yellow:
 	./$(RELEASE) -c yellow
 
