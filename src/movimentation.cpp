@@ -11,14 +11,14 @@ Command Movimentation::movePlayers(Robot robot, btVector3 target){
 	Command command;
 
 	// movement along the field 
-	if (robot.cosFrom(target) < -0.4) {
+	if (robot.cos_from(target) < -0.4) {
 		command = definePwm(robot, target, 'B');
 	
-	} else if (robot.cosFrom(target) > 0.4){  
+	} else if (robot.cos_from(target) > 0.4){  
 		command = definePwm(robot, target, 'F');	
 
 	}  else {
-		if (robot.sinFrom(target) > 0) {
+		if (robot.sin_from(target) > 0) {
 			command = turnRight(40, 40);
 	    } else {
 			command = turnLeft(40, 40);
@@ -47,8 +47,8 @@ Command Movimentation::definePwm(Robot robot, btVector3 target, char direction){
 
 	int standardPower = 50;
 
-	int basePower = standardPower * robot.getPotencyFactor();
-	int correctionPower = standardPower * robot.sinFrom(target) * robot.getCurveFactor();
+	int basePower = standardPower * robot.get_potency_factor();
+	int correctionPower = standardPower * robot.sin_from(target) * robot.get_curve_factor();
 	int pwmMotor1 = (basePower + correctionPower) ;
 	int pwmMotor2 = (basePower - correctionPower) ;
 

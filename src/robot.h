@@ -23,22 +23,20 @@ public:
 
     void initialize();
 
-    bool isParallelGoal(btVector3);    
-    bool isStopped();
-    bool isStoppedFor(int);    
-    bool calculateStopped();
-    bool isBlocked(btVector3);
+    bool is_parallel_goal(btVector3);    
+    bool is_stopped();
+    bool is_stopped_for(int);    
+    bool calculate_stopped();
+    bool is_blocked(btVector3);
 
-    void setRadius(float);
-    float getRadius();
+    void set_radius(float);
+    float get_radius();
 
-    void setPotencyFactor(float);
-    float getPotencyFactor();
+    void set_potency_factor(float);
+    float get_potency_factor();
 
-    void setCurveFactor(float);
-    float getCurveFactor();
-   
-    btVector3 calculateRobotProjection();
+    void set_curve_factor(float);
+    float get_curve_factor();
 
     // VARIABLES
 

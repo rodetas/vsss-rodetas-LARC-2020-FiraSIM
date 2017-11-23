@@ -48,11 +48,11 @@ void StrategyBase::move(map<string, int> _id, State _state){
 
     Command c = command;
 
-	if (robot.isBoard(image_size) && robot.isStopped()){      
+	if (robot.is_board(image_size) && robot.is_stopped()){      
 
         // girar caso robo esteja preso de frente pra parede
-        if (robot.cosFrom(state.ball.pose) > -0.9 && robot.cosFrom(state.ball.pose) < 0.9) {
-            if (robot.sinFrom(state.ball.pose) > 0) {
+        if (robot.cos_from(state.ball.pose) > -0.9 && robot.cos_from(state.ball.pose) < 0.9) {
+            if (robot.sin_from(state.ball.pose) > 0) {
                 c = movimentation.turnRight(100, 100);
             } else {
                 c = movimentation.turnLeft(100, 100);
@@ -60,7 +60,7 @@ void StrategyBase::move(map<string, int> _id, State _state){
         } 
         
         // girar caso robo prenda a bola na parede
-        if (robot.distanceFrom(state.ball.pose) < robot.getRadius()*1.5) {
+        if (robot.distance_from(state.ball.pose) < robot.get_radius()*1.5) {
 
             if (robot.y() > (image_size.y/2)){
                 c = movimentation.turnLeft(255, 255);	
@@ -77,12 +77,12 @@ Command StrategyBase::stopStrategy(Command _command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
     Command c = _command;
-    float maxDistance = robot.getRadius() * (3);
-	float distanceTarget = robot.distanceFrom(target);
+    float maxDistance = robot.get_radius() * (3);
+	float distanceTarget = robot.distance_from(target);
 
 /* 	REVER VELOCIDADE
 	if(robot.getVelocity() > image_size.x * (0.05)){
-		maxDistance = robot.getRadius() * (6);
+		maxDistance = robot.get_radius() * (6);
 	}
  */
 
@@ -91,14 +91,14 @@ Command StrategyBase::stopStrategy(Command _command){
 		c.right = c.right * (distanceTarget/maxDistance);
 	}
 
-	if(distanceTarget < robot.getRadius()){
+	if(distanceTarget < robot.get_radius()){
 
-        if (robot.cosFrom(state.ball.getProjection()) < -0.8 || robot.cosFrom(state.ball.getProjection()) > 0.8) {
+        if (robot.cos_from(state.ball.get_projection()) < -0.8 || robot.cos_from(state.ball.get_projection()) > 0.8) {
             c = movimentation.stop();
  
         } else {
 
-            if (robot.sinFrom(state.ball.getPosition()) > 0) {
+            if (robot.sin_from(state.ball.get_position()) > 0) {
                 c = movimentation.turnRight(10, 10);
             } else {
                 c = movimentation.turnLeft(10, 10);

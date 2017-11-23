@@ -18,16 +18,16 @@ void Robot::initialize(){
     pose = btVector3(0,0,0);
 }
 
-bool Robot::isParallelGoal(btVector3 image){
-    return (cosFrom( btVector3(image.x, y())) > -0.3 && 
-            cosFrom( btVector3(image.x, y())) <  0.3);
+bool Robot::is_parallel_goal(btVector3 image){
+    return (cos_from( btVector3(image.x, y())) > -0.3 && 
+            cos_from( btVector3(image.x, y())) <  0.3);
 }
 
-bool Robot::isStopped(){
+bool Robot::is_stopped(){
     //return stopped;
 }
 
-bool Robot::isStoppedFor(int time){
+bool Robot::is_stopped_for(int time){
     /* if(stoppedTime >= time){
         return true;
     }
@@ -35,16 +35,16 @@ bool Robot::isStoppedFor(int time){
     return false; */
 }
 
-bool Robot::isBlocked(btVector3 target){
+bool Robot::is_blocked(btVector3 target){
     /* // se a distancia pro target e alta e o robo esta parado por muito tempo, entao é considerado travado
-    if(distanceFrom(target) > radius * (6) && isStoppedFor(90)){
+    if(distance_from(target) > radius * (6) && is_stopped_for(90)){
         return true;
     } 
 
     return false; */
 }
 
-bool Robot::calculateStopped(){
+bool Robot::calculate_stopped(){
     /* if(velocity < 5.0){
         stoppedTime++;
         return true;
@@ -55,41 +55,26 @@ bool Robot::calculateStopped(){
     return false; */
 }
 
-Point Robot::calculateRobotProjection(){
-   /*  Point aux = Point(pose.x+radius/2, pose.y+radius/2);
-    
-    projection.x = aux.x + (lastPositions[0].x - lastPositions[10].x);
-    projection.y = aux.y + (lastPositions[0].y - lastPositions[10].y);
-
-    if(projection.x > image_size.x || projection.x < 0 || projection.y > image_size.y || projection.y < 0){
-        projection = lastRobotProjection;
-    }
-        
-    lastRobotProjection = projection;
-
-    return projection; */
-}
-
-void Robot::setPotencyFactor(float _p){
+void Robot::set_potency_factor(float _p){
     potencyFactor = _p;
 }
 
-float Robot::getPotencyFactor(){
+float Robot::get_potency_factor(){
     return potencyFactor;
 }
 
-void Robot::setCurveFactor(float _c){
+void Robot::set_curve_factor(float _c){
     curveFactor = _c;
 }
 
-float Robot::getCurveFactor(){
+float Robot::get_curve_factor(){
     return curveFactor;
 }
 
-void Robot::setRadius(float r){
+void Robot::set_radius(float r){
     radius = r;
 }
 
-float Robot::getRadius(){
+float Robot::get_radius(){
     return radius;
 }

@@ -30,8 +30,8 @@ State State::Global_State2State(vss_state::Global_State global_state, string mai
     v_pose.x = global_state.balls(0).v_pose().x();         // Vel X
     v_pose.y = global_state.balls(0).v_pose().y();         // Vel Y
 
-    state.ball.setPosition(pose);
-    state.ball.setVelocityVector(v_pose);
+    state.ball.set_position(pose);
+    state.ball.set_velocity_vector(v_pose);
 
 //        state.ball_kalman.x = global_state.balls(0).k_pose().x();         // Kalman Pos X
 //        state.ball_kalman.y = global_state.balls(0).k_pose().y();         // kalman Pos Y
@@ -68,8 +68,8 @@ State State::Global_State2State(vss_state::Global_State global_state, string mai
                 v_pose.z += 360;
             }
 
-            state.robots[i].setPosition(pose);
-            state.robots[i].setVelocityVector(v_pose);
+            state.robots[i].set_position(pose);
+            state.robots[i].set_velocity_vector(v_pose);
 
 /*
             // Yellow Robots Kalman predict POSE
@@ -94,8 +94,8 @@ State State::Global_State2State(vss_state::Global_State global_state, string mai
             v_pose.y = global_state.robots_blue(i).v_pose().y();         // Vel Y
             v_pose.z = global_state.robots_blue(i).v_pose().yaw();       // Vel Rotation in Z Axis (YAW)
 
-            state.robots[i+3].setPosition(pose);
-            state.robots[i+3].setVelocityVector(v_pose);
+            state.robots[i+3].set_position(pose);
+            state.robots[i+3].set_velocity_vector(v_pose);
 /*
             // Blue Robots Kalman predict POSE
             state.robots_kalman[i+3].pose.x = global_state.robots_blue(i).k_pose().x();         // Kalman Pos X
