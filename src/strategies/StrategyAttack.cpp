@@ -37,28 +37,20 @@ void StrategyAttack::defineCommand(Command _command){
 }
 
 void StrategyAttack::defineTarget(Robot robot){
-	target = state.ball.pose;
+	target = state.ball.getProjection();
 
-    /* Point target;// = data->getBall()->getPosition();
-	Ball* ball = data->getBall();
+/* 
+	Point centerGoal = btVector3(imageSize.x, imageSize.y/2);
+	float angle_robot_goal = angulation(centerGoal, robot.getPosition());
 
-	target = ball->getBallProjection();
-
-	//target = ball->getPosition();
-
-
-
-	Point centerGoal = Point(imageSize.x, imageSize.y/2);
-	float angle_robot_goal = calcAngle(centerGoal, robot->getPosition());
-
-	if(angle_robot_goal < 45.0 && angle_robot_goal > -45.0 && (robot->cosFrom(centerGoal) < -0.8 || robot->cosFrom(centerGoal) > 0.8) && 
-		(robot->cosFrom(data->getBall()->getPosition()) < -0.8 || robot->cosFrom(data->getBall()->getPosition()) > 0.8) &&
-		robot->x() < data->getBall()->x() && robot->distanceFrom(data->getBall()->getPosition()) < robot->getRadius()*2){
+	if(angle_robot_goal < 45.0 && angle_robot_goal > -45.0 && (robot.cosFrom(centerGoal) < -0.8 || robot.cosFrom(centerGoal) > 0.8) && 
+		(robot.cosFrom(state.ball.getPosition()) < -0.8 || robot.cosFrom(state.ball.getPosition()) > 0.8) &&
+		robot.x() < state.ball.x() && robot.distanceFrom(state.ball.getPosition()) < robot.getRadius()*2){
 
 		target = centerGoal;
 	} 
 
-
+ */
 	
 
 //	cout << calcAngle(centerGoal, robot->getPosition()) << endl; 

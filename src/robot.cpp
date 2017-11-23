@@ -1,10 +1,10 @@
-#include "Robot.h"
+#include "robot.h"
 
-Robot::Robot(){
+Robot::Robot() : Object(){
     initialize();
 }
 
-Robot::Robot(int _id){
+Robot::Robot(int _id) : Object(){
     initialize();
 }
 
@@ -17,22 +17,12 @@ void Robot::initialize(){
     pose = btVector3(0,0,0);
 }
 
-bool Robot::isNull(){
-    /* return (pose.x <= 0 && pose.y <= 0); */
-}
-
-bool Robot::isBoard(){
-    /* btVector3 imageSize = btVector3(640,480,0);
-	return (pose.y > (imageSize.y*0.9) || pose.y < (imageSize.y*0.10) || 
-          ((pose.x > (imageSize.x*0.85) || pose.x < (imageSize.x*0.15)))); */
-}
-
 bool Robot::isParallelGoal(){
-    /* return (cosFrom(Point(imageSize.x, y())) > -0.3 && cosFrom(Point(imageSize.x, y())) < 0.3); */
+    //return (cosFrom(btVector3(common::imageSize.x, y())) > -0.3 && cosFrom(btVector3(common::imageSize.x, y())) < 0.3);
 }
 
 bool Robot::isStopped(){
-    /* return stopped; */
+    //return stopped;
 }
 
 bool Robot::isStoppedFor(int time){
@@ -78,14 +68,6 @@ Point Robot::calculateRobotProjection(){
     return projection; */
 }
 
-int Robot::y() const{
-    return pose.y;
-}
-
-int Robot::x() const{
-    return pose.x;
-}
-
 void Robot::setPotencyFactor(float _p){
     potencyFactor = _p;
 }
@@ -102,53 +84,10 @@ float Robot::getCurveFactor(){
     return curveFactor;
 }
 
-void Robot::setPosition(btVector3 _pos){
-    pose = _pos;
-
-    stopped = calculateStopped();
-    projection = calculateRobotProjection();
-}
-
-Point Robot::getPosition() const {
-    return pose;
-}
-
 void Robot::setRadius(float r){
     radius = r;
 }
 
 float Robot::getRadius(){
     return radius;
-}
-
-Point Robot::getProjection(){
-    return projection;
-}
-
-float Robot::cosFrom(Robot _r) const{
-    return cos((angulation(pose, _r.getPosition()) - pose.z)/(180/M_PI));
-}
-
-float Robot::cosFrom(Point _p) const{
-    return cos((angulation(pose,_p) - pose.z)/(180/M_PI));
-}
-
-float Robot::sinFrom(Robot _r) const{
-    return sin((angulation(pose,_r.getPosition()) - pose.z)/(180/M_PI));
-}
-
-float Robot::sinFrom(Point _p) const{
-    return sin((angulation(pose,_p) - pose.z)/(180/M_PI));
-}
-
-float Robot::distanceFrom(Robot _r) const{
-    return distancePoint(pose, _r.getPosition());
-}
-
-float Robot::distanceFrom(Ball _b) const{
-    return distancePoint(pose, _b.getPosition());
-}
-
-float Robot::distanceFrom(Point _p) const{
-    return distancePoint(pose, _p);
 }
