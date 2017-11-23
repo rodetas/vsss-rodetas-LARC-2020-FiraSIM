@@ -1,7 +1,7 @@
 #include "StrategyBase.h"
 
 StrategyBase::StrategyBase(){
-    imageSize = btVector3(640,480,0);
+    imageSize = btVector3(640,480);
 }
 
 void StrategyBase::apply(map<string, int> _id, State _state){

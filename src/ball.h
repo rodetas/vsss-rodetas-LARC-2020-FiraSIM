@@ -2,16 +2,13 @@
 #define BALL_H_
 
 #include "common.h"
+#include "object.h"
 
-class Ball {
+using namespace common;
+
+class Ball : public Object{
 
 public:
-    common::btVector3 pose;
-    common::btVector3 v_ball;
-
-    common::btVector3 getPosition(){
-        return pose;
-    }
 
 };
 
