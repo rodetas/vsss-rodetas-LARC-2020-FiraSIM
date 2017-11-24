@@ -17,12 +17,12 @@ public:
 
     void initialize();
     void update_robot(Robot);
+    void calculate_stopped();
 
     bool is_stopped();
     bool is_blocked(btVector3);
     bool is_stopped_for(int);    
     bool is_parallel_goal(btVector3);    
-    bool calculate_stopped();
 
     void set_target(btVector3 _t);
     void set_curve_factor(float);
@@ -33,7 +33,7 @@ public:
     float get_potency_factor();
 
 private:
-    int stoppedTime;
+    int stopped_frames;
     bool stopped;
 
     float potencyFactor;

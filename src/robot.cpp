@@ -9,7 +9,7 @@ Robot::Robot(int _id) : Object(){
 }
 
 void Robot::initialize(){
-    stoppedTime = 0;
+    stopped_frames = 0;
 
     curveFactor = 0.4f;
     potencyFactor = 1.0f;
@@ -20,47 +20,36 @@ void Robot::initialize(){
 void Robot::update_robot(Robot r){
     set_position(r.pose);
     set_velocity_vector(r.v_pose);
+    calculate_stopped();
+}
+
+void Robot::calculate_stopped(){
+    if (velocity < (3)) stopped_frames++;
+    else stopped_frames = 0;
 }
 
 void Robot::show(){
     printf("Robot: (X: %f Y: %f Z: %f Vel: %f)\n", pose.x, pose.y, pose.z, velocity);
 }
 
-bool Robot::is_parallel_goal(btVector3 image){
-    return (cos_from( btVector3(image.x, y())) > -0.3 && 
-            cos_from( btVector3(image.x, y())) <  0.3);
-}
-
 bool Robot::is_stopped(){
-    //return stopped;
-}
-
-bool Robot::is_stopped_for(int time){
-    /* if(stoppedTime >= time){
-        return true;
-    }
-
-    return false; */
-}
-
-bool Robot::is_blocked(btVector3 target){
-    // se a distancia pro target e alta e o robo esta parado por muito tempo, entao é considerado travado
-    /* if(distance_from(target) > radius * (6) && is_stopped_for(90)){
-        return true;
-    }  */
-
+    if (stopped_frames > 0) return true;
     return false;
 }
 
-bool Robot::calculate_stopped(){
-    /* if(velocity < 5.0){
-        stoppedTime++;
-        return true;
-    }
+bool Robot::is_stopped_for(int time){
+    if (stopped_frames >= time) return true;
+    return false;
+}
 
-    stoppedTime = 0;
+bool Robot::is_blocked(btVector3 target){
+    if (distance_from(target) > (24) && is_stopped_for(90)) return true;
+    return false;
+}
 
-    return false; */
+bool Robot::is_parallel_goal(btVector3 image){
+    return (cos_from( btVector3(image.x, y())) > -0.3 && 
+            cos_from( btVector3(image.x, y())) <  0.3);
 }
 
 void Robot::set_potency_factor(float _p){
