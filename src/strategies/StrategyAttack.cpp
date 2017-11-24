@@ -6,10 +6,10 @@ StrategyAttack::StrategyAttack() : StrategyBase(){
 
 Command StrategyAttack::strategy(Robot robot, Command command){
 	Command c = command;
-	//c = kick_strategy(c);
-	//c = corner_strategy(c);
+	c = kick_strategy(c);
+	c = corner_strategy(c);
 
-	/* if (robot.is_parallel_goal(image_size)){
+	if (robot.is_parallel_goal(image_size)){
 
 		int halfGoal1 = image_size.y/2 + (goal_size.y/2);
 		int halfGoal2 = image_size.y/2 - (goal_size.y/2);
@@ -24,7 +24,7 @@ Command StrategyAttack::strategy(Robot robot, Command command){
 				c = movimentation.turn_left(255, 255);
 			}
 		}
-	} */
+	}
 
 	return c;
 }

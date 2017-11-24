@@ -18,10 +18,10 @@ int main(int argc, char** argv){
     string name;
     string ip_receive_state, ip_send_debug, ip_send_command;
 
-    Strategy strategy;
-    strategy.init("blue", false, false, "localhost", "localhost", "localhost", "Rodetas");
+    //Strategy strategy;
+    //strategy.init("blue", false, false, "localhost", "localhost", "localhost", "Rodetas");
 
-	/* if(argParse(argc, argv, &color, &debug, &ip_receive_state, &ip_send_debug, &ip_send_command, &name)){
+	if(argParse(argc, argv, &color, &debug, &ip_receive_state, &ip_send_debug, &ip_send_command, &name)){
         if(color == "yellow" || color == "blue"){
 		    Strategy strategy;
 		    strategy.init(color, debug, false, ip_receive_state, ip_send_debug, ip_send_command, name);
@@ -30,7 +30,7 @@ int main(int argc, char** argv){
         }
 	}else{
 		cerr << "ERROR: You must enter a main color." << endl;
-	} */
+	}
 
 	return 0;
 }

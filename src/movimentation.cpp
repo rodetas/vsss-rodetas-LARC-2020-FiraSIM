@@ -9,7 +9,7 @@ Movimentation::Movimentation(){
 Command Movimentation::move_players(Robot robot, btVector3 target){
 
 	Command command;
-	
+
 	// movement along the field 
 	if (robot.cos_from(target) < -0.4) {
 		command = define_pwm(robot, target, 'B');
