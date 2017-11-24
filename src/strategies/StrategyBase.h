@@ -5,10 +5,6 @@
 #include "../movimentation.h"
 #include "../state.h"
 
-enum {PARADO, DEFENDENDO, ATACANDO};
-
-class Strategy;
-
 using namespace common;
 
 class StrategyBase {
@@ -19,7 +15,7 @@ public:
      */
     StrategyBase();
 
-    virtual void apply(map<string, int>, State);
+    virtual Robot apply(map<string, int>, State);
      
     virtual void move(map<string, int>, State);
 

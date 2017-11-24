@@ -68,7 +68,9 @@ void Strategy::apply(){
 	// aplica a estratégia para cada robô
 	//strategies["goal"]->apply(id, state);
 	//strategies["defense"]->apply(id, state);
-	strategies["attack"]->apply(id, state);
+	Robot attack = strategies["attack"]->apply(id, state);
+
+	debug.robots_final_pose[id["attack"]] = attack.get_target();
 
 	//commands[id["goal"]] = strategies["goal"]->get_command();
 	//commands[id["defense"]] = strategies["defense"]->get_command();

@@ -5,7 +5,7 @@ StrategyBase::StrategyBase(){
     image_size = btVector3(150,130);
 }
 
-void StrategyBase::apply(map<string, int> _id, State _state){
+Robot StrategyBase::apply(map<string, int> _id, State _state){
 
     // update states
     set_state(_id, _state);
@@ -24,7 +24,9 @@ void StrategyBase::apply(map<string, int> _id, State _state){
     Command strategyCommand = strategy(robot, movimentationCommand);
 
     // define command
-    define_command(strategyCommand);    
+    define_command(strategyCommand);
+
+    return robot;
 } 
 
 void StrategyBase::move(map<string, int> _id, State _state){
