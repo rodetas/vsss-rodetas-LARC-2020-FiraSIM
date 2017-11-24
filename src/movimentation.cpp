@@ -19,9 +19,9 @@ Command Movimentation::move_players(Robot robot, btVector3 target){
 
 	}  else {
 		if (robot.sin_from(target) > 0) {
-			command = turn_right(40, 40);
+			command = turn_right(20, 20);
 	    } else {
-			command = turn_left(40, 40);
+			command = turn_left(20, 20);
 	    }
 	}
 	
