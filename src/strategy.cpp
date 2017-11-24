@@ -51,8 +51,8 @@ void Strategy::loop(){
 
 void Strategy::define_function_for_each_robot(){
     
-    if (state.robots[id["attack"]].pose.x > (state.ball.pose.x * 1.1) && 
-      !(state.robots[id["attack"]].pose.x > state.ball.pose.x && state.robots[id["defense"]].pose.x > state.ball.pose.x) ){
+    if (state.robots[id["attack"]].x() > (state.ball.x() * 1.1) && 
+      !(state.robots[id["attack"]].x() > state.ball.x() && state.robots[id["defense"]].x() > state.ball.x()) ){
 
         /* int aux = id["attack"];
         id["attack"] = id["defense"];

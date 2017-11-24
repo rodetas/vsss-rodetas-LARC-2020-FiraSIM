@@ -26,12 +26,12 @@ Command StrategyGoal::stop_strategy(Command command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
     Command c = command;
-    float maxDistance = robot.get_radius() * (3);
+    float maxDistance = (12); // 12 cm
 	float distanceTarget = robot.distance_from(robot.get_target());
 
 /*	REVER VELOCIDADE 
 	if(robot.getVelocity() > image_size.x * (0.05)){
-		maxDistance = robot.get_radius() * (6);
+		maxDistance = 24; // 24 cm
 	}
  */
 	if(distanceTarget < maxDistance){
@@ -39,7 +39,7 @@ Command StrategyGoal::stop_strategy(Command command){
 		c.right = command.right * (distanceTarget/maxDistance);
 	}
 
-	if(distanceTarget < robot.get_radius()){
+	if(distanceTarget < (4)){
 
         if ((robot.yaw() > 80 && robot.yaw() < 120) || (robot.yaw() > 260 && robot.yaw() < 300)) {
             c = movimentation.stop();

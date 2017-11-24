@@ -14,7 +14,7 @@ Command StrategyAttack::strategy(Robot robot, Command command){
 		int halfGoal1 = image_size.y/2 + (goal_size.y/2);
 		int halfGoal2 = image_size.y/2 - (goal_size.y/2);
 
-		if ( robot.distance_from(state.ball.get_position()) < robot.get_radius() * 1.2 && 
+		if ( robot.distance_from(state.ball.get_position()) < (6) && 
 		    !(robot.x() < image_size.x * 0.1 && robot.y() < halfGoal1) &&
 		    !(robot.x() < image_size.x * 0.1 && robot.y() > halfGoal2) ){
 			
@@ -38,7 +38,7 @@ btVector3 StrategyAttack::define_target(Robot robot){
 
 	if(angle_robot_goal < 45.0 && angle_robot_goal > -45.0 && (robot.cos_from(centerGoal) < -0.8 || robot.cos_from(centerGoal) > 0.8) && 
 		(robot.cos_from(state.ball.get_position()) < -0.8 || robot.cos_from(state.ball.get_position()) > 0.8) &&
-		robot.x() > state.ball.x() && robot.distance_from(state.ball.get_position()) < robot.get_radius()*2){
+		robot.x() > state.ball.x() && robot.distance_from(state.ball.get_position()) < (8)){
 
 		target = centerGoal;
 	} 
@@ -57,7 +57,7 @@ Command StrategyAttack::kick_strategy(Command _command){
 
 	if(angle_robot_goal < 45.0 && angle_robot_goal > -45.0 && (robot.cos_from(centerGoal) < -0.8 || robot.cos_from(centerGoal) > 0.8) && 
 		(robot.cos_from(state.ball.get_position()) < -0.8 || robot.cos_from(state.ball.get_position()) > 0.8) &&
-		robot.x() > state.ball.x() && robot.distance_from(state.ball.get_position()) < robot.get_radius()*2){
+		robot.x() > state.ball.x() && robot.distance_from(state.ball.get_position()) < (8)){
 
 		c.left  *= 1.5;
 		c.right *= 1.5;

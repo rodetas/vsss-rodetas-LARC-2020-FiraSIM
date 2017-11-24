@@ -46,8 +46,6 @@ public:
 
     virtual Command collision_strategy(Command);
 
-    void set_robot(Robot);
-
     void set_state(map<string, int>, State);
 
     void define_command(Command);

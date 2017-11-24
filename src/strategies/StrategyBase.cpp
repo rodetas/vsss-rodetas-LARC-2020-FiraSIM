@@ -11,7 +11,7 @@ void StrategyBase::apply(map<string, int> _id, State _state){
     set_state(_id, _state);
 
     // update robot in this class
-    set_robot(state.robots[id[name]]);
+    robot.update_robot(_state.robots[id[name]]);
 
     // define target
     btVector3 target = define_target(robot);
@@ -33,7 +33,7 @@ void StrategyBase::move(map<string, int> _id, State _state){
     set_state(_id, _state);
 
     // update robot in this class
-    set_robot(state.robots[id[name]]);
+    robot.update_robot(_state.robots[id[name]]);    
 
     // define basic movimentation
     Command movimentationCommand = movimentation.move_players(robot, robot.get_target());
@@ -51,16 +51,16 @@ void StrategyBase::move(map<string, int> _id, State _state){
 	if (robot.is_board(image_size) && robot.is_stopped()){      
 
         // girar caso robo esteja preso de frente pra parede
-        if (robot.cos_from(state.ball.pose) > -0.9 && robot.cos_from(state.ball.pose) < 0.9) {
-            if (robot.sin_from(state.ball.pose) > 0) {
+        if (robot.cos_from(state.ball.get_position()) > -0.9 && robot.cos_from(state.ball.get_position()) < 0.9) {
+            if (robot.sin_from(state.ball.get_position()) > 0) {
                 c = movimentation.turn_right(100, 100);
             } else {
                 c = movimentation.turn_left(100, 100);
             }
         } 
         
-        // girar caso robo prenda a bola na parede
-        if (robot.distance_from(state.ball.pose) < robot.get_radius()*1.5) {
+        // girar caso robo prenda a bola na parede - 6 cm
+        if (robot.distance_from(state.ball.get_position()) < (6) ) {
 
             if (robot.y() < (image_size.y/2)){
                 c = movimentation.turn_left(255, 255);	
@@ -77,12 +77,12 @@ Command StrategyBase::stop_strategy(Command _command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
     Command c = _command;
-    float max_distance = robot.get_radius() * (3);
+    float max_distance = 12; // 12 cm
 	float distance_target = robot.distance_from(robot.get_target());
 
 /* 	REVER VELOCIDADE
 	if(robot.getVelocity() > image_size.x * (0.05)){
-		max_distance = robot.get_radius() * (6);
+		max_distance = 24; // 24 cm
 	}
  */
 
@@ -91,7 +91,7 @@ Command StrategyBase::stop_strategy(Command _command){
 		c.right = c.right * (distance_target/max_distance);
 	}
 
-	if(distance_target < robot.get_radius()){
+	if(distance_target < 4){ 
 
         if (robot.cos_from(state.ball.get_projection()) < -0.8 || robot.cos_from(state.ball.get_projection()) > 0.8) {
             c = movimentation.stop();
@@ -116,10 +116,6 @@ Command StrategyBase::blocked_strategy(Command _command){
 }
 
 Command StrategyBase::kick_strategy(Command _command){
-}
-
-void StrategyBase::set_robot(Robot _robot){
-    robot = _robot;
 }
 
 void StrategyBase::set_state(map<string, int> _id, State _state){

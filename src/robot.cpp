@@ -11,11 +11,15 @@ Robot::Robot(int _id) : Object(){
 void Robot::initialize(){
     stoppedTime = 0;
 
-    radius = 5.0f;
     curveFactor = 0.4f;
     potencyFactor = 1.0f;
 
     pose = btVector3(0,0,0);
+}
+
+void Robot::update_robot(Robot r){
+    set_position(r.pose);
+    set_velocity_vector(r.v_pose);
 }
 
 void Robot::show(){
@@ -41,9 +45,9 @@ bool Robot::is_stopped_for(int time){
 
 bool Robot::is_blocked(btVector3 target){
     // se a distancia pro target e alta e o robo esta parado por muito tempo, entao é considerado travado
-    if(distance_from(target) > radius * (6) && is_stopped_for(90)){
+    /* if(distance_from(target) > radius * (6) && is_stopped_for(90)){
         return true;
-    } 
+    }  */
 
     return false;
 }
@@ -73,14 +77,6 @@ void Robot::set_curve_factor(float _c){
 
 float Robot::get_curve_factor(){
     return curveFactor;
-}
-
-void Robot::set_radius(float r){
-    radius = r;
-}
-
-float Robot::get_radius(){
-    return radius;
 }
 
 void Robot::set_target(btVector3 _t){

@@ -16,25 +16,24 @@ public:
 
     void set_position(btVector3 _pose){
         pose = _pose;
-
         projection = calculate_projection();
-        velocity = calculate_velocity();
     }
 
     btVector3 get_velocity_vector(){
         return v_pose;
     }
 
+    float get_velocity(){
+        return velocity;
+    }
+
     void set_velocity_vector(btVector3 _v_pose){
         v_pose = _v_pose;
+        velocity = calculate_velocity();
     }
 
     btVector3 get_projection(){
         return projection;
-    }
-
-    float get_velocity(){
-        return velocity;
     }
 
     virtual btVector3 calculate_projection(){
@@ -98,13 +97,12 @@ public:
         return distancePoint(pose, _p);
     }
 
-    btVector3 pose;
-    btVector3 v_pose;
-    btVector3 projection;
-
 protected:
     float velocity;
 
+    btVector3 pose;
+    btVector3 v_pose;
+    btVector3 projection;
 };
 
 #endif
