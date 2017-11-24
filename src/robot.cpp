@@ -18,6 +18,10 @@ void Robot::initialize(){
     pose = btVector3(0,0,0);
 }
 
+void Robot::show(){
+    printf("Robot: (X: %f Y: %f Z: %f Vel: %f)\n", pose.x, pose.y, pose.z, velocity);
+}
+
 bool Robot::is_parallel_goal(btVector3 image){
     return (cos_from( btVector3(image.x, y())) > -0.3 && 
             cos_from( btVector3(image.x, y())) <  0.3);
@@ -36,12 +40,12 @@ bool Robot::is_stopped_for(int time){
 }
 
 bool Robot::is_blocked(btVector3 target){
-    /* // se a distancia pro target e alta e o robo esta parado por muito tempo, entao é considerado travado
+    // se a distancia pro target e alta e o robo esta parado por muito tempo, entao é considerado travado
     if(distance_from(target) > radius * (6) && is_stopped_for(90)){
         return true;
     } 
 
-    return false; */
+    return false;
 }
 
 bool Robot::calculate_stopped(){
@@ -77,4 +81,12 @@ void Robot::set_radius(float r){
 
 float Robot::get_radius(){
     return radius;
+}
+
+void Robot::set_target(btVector3 _t){
+    target = _t;
+}
+
+btVector3 Robot::get_target(){
+    return target;
 }

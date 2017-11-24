@@ -12,16 +12,14 @@ Command StrategyGoal::strategy(Robot robot, Command command){
 	return c;
 }
 
-void StrategyGoal::define_command(Command _command){
-	command = _command;
-}
-
-void StrategyGoal::define_target(Robot robot){
+btVector3 StrategyGoal::define_target(Robot robot){
 
 	Point ballProjection = state.ball.get_projection();
-
+	btVector3 target;
 	target.x = image_size.x * (0.95);
 	target.y = image_size.y/2 - (image_size.y/2 - ballProjection.y)/2;
+
+	return target;
 }
 
 Command StrategyGoal::stop_strategy(Command command){
@@ -29,7 +27,7 @@ Command StrategyGoal::stop_strategy(Command command){
 
     Command c = command;
     float maxDistance = robot.get_radius() * (3);
-	float distanceTarget = robot.distance_from(target);
+	float distanceTarget = robot.distance_from(robot.get_target());
 
 /*	REVER VELOCIDADE 
 	if(robot.getVelocity() > image_size.x * (0.05)){

@@ -44,9 +44,10 @@ namespace common{
             y = b->y;
             z = b->z;
         };
+
         //! Default function: prints all variables.
         void show(){
-            printf("btVector3(%f, %f, %f)\n", x, y, z);
+            printf("btVector3(%f, %f, %f) ", x, y, z);
         };
     };
 

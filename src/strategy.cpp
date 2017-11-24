@@ -28,6 +28,7 @@ void Strategy::initialize_robots(){
 }
 
 void Strategy::loop(){
+
 	while(true){
 		
 		receive_state();
@@ -37,7 +38,7 @@ void Strategy::loop(){
 		if(!real_environment){
 			send_commands();
 
-		}else{
+		} else {
 			// Put your transmission code here
 		}
 
@@ -65,11 +66,11 @@ void Strategy::apply(){
 	define_function_for_each_robot();
 
 	// aplica a estratégia para cada robô
-	strategies["goal"]->apply(id, state);
+	//strategies["goal"]->apply(id, state);
+	//strategies["defense"]->apply(id, state);
 	strategies["attack"]->apply(id, state);
-	strategies["defense"]->apply(id, state);
-	
-	commands[id["goal"]] = strategies["goal"]->get_command();
+
+	//commands[id["goal"]] = strategies["goal"]->get_command();
+	//commands[id["defense"]] = strategies["defense"]->get_command();
 	commands[id["attack"]] = strategies["attack"]->get_command();
-	commands[id["defense"]] = strategies["defense"]->get_command();
 }

@@ -12,10 +12,6 @@ Command StrategyDefense::strategy(Robot robot, Command command){
 	return c;
 }
 
-void StrategyDefense::define_command(Command _command){
-	command = _command;
-}
-
-void StrategyDefense::define_target(Robot robot){
-	target = Point(110,65,0);
+btVector3 StrategyDefense::define_target(Robot robot){
+	return Point(110,65,0);
 }

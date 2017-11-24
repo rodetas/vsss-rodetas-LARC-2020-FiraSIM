@@ -8,8 +8,7 @@ using namespace common;
 class Object {
 
 public:
-    Object(){
-    }
+    Object(){}
 
     btVector3 get_position(){
         return pose;
@@ -19,6 +18,7 @@ public:
         pose = _pose;
 
         projection = calculate_projection();
+        velocity = calculate_velocity();
     }
 
     btVector3 get_velocity_vector(){
@@ -29,16 +29,24 @@ public:
         v_pose = _v_pose;
     }
 
-    virtual btVector3 get_projection(){
+    btVector3 get_projection(){
         return projection;
     }
 
-    btVector3 calculate_projection(){
+    float get_velocity(){
+        return velocity;
+    }
+
+    virtual btVector3 calculate_projection(){
         btVector3 projection;
         projection.x = pose.x + v_pose.x;
         projection.y = pose.y + v_pose.y;
 
         return projection; 
+    }
+
+    float calculate_velocity(){
+        return sqrt(pow(v_pose.x,2) + pow(v_pose.y,2));
     }
 
     float x(){
@@ -63,7 +71,7 @@ public:
     }
 
     virtual void show(){
-        cout << "IMPLEMENTAR" << endl;
+        printf("Object: (X: %f Y: %f Z: %f)\n", pose.x, pose.y, pose.z);
     }
 
     float cos_from(Object _r) const{
@@ -95,6 +103,7 @@ public:
     btVector3 projection;
 
 protected:
+    float velocity;
 
 };
 

@@ -13,13 +13,7 @@ public:
     Robot();
     Robot(int);
 
-    Robot& operator=(const Robot& r) {
-        if (this != &r){
-            pose = r.pose;
-            radius = r.radius;
-        }
-        return *this;
-    }
+    virtual void show();
 
     void initialize();
 
@@ -38,7 +32,10 @@ public:
     void set_curve_factor(float);
     float get_curve_factor();
 
-    // VARIABLES
+    void set_target(btVector3 _t);
+    btVector3 get_target();
+
+private:
 
     int stoppedTime;
     bool stopped;
@@ -46,6 +43,8 @@ public:
     float radius;
     float potencyFactor;
     float curveFactor;
+
+    btVector3 target;
 };
 
 #endif

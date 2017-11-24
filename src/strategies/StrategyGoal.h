@@ -10,8 +10,7 @@ public:
 
     virtual Command strategy(Robot, Command);
     virtual Command stop_strategy(Command);
-    virtual void define_target(Robot);
-    virtual void define_command(Command);
+    virtual btVector3 define_target(Robot);
 };
 
 #endif

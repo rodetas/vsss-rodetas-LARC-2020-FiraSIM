@@ -14,8 +14,6 @@ public:
       
     Ball ball;
 
-    btVector3 v_ball;
-
     //! Default constructor: State s;
     State();
 

@@ -14,10 +14,11 @@ void StrategyBase::apply(map<string, int> _id, State _state){
     set_robot(state.robots[id[name]]);
 
     // define target
-    define_target(robot);
+    btVector3 target = define_target(robot);
+    robot.set_target(target);
 
     // define basic movimentation
-    Command movimentationCommand = movimentation.move_players(robot, target);
+    Command movimentationCommand = movimentation.move_players(robot, robot.get_target());
 
     // define strategy
     Command strategyCommand = strategy(robot, movimentationCommand);
@@ -35,7 +36,7 @@ void StrategyBase::move(map<string, int> _id, State _state){
     set_robot(state.robots[id[name]]);
 
     // define basic movimentation
-    Command movimentationCommand = movimentation.move_players(robot, target);
+    Command movimentationCommand = movimentation.move_players(robot, robot.get_target());
 
     // define strategy
     Command strategyCommand = stop_strategy(strategyCommand);
@@ -61,7 +62,7 @@ void StrategyBase::move(map<string, int> _id, State _state){
         // girar caso robo prenda a bola na parede
         if (robot.distance_from(state.ball.pose) < robot.get_radius()*1.5) {
 
-            if (robot.y() > (image_size.y/2)){
+            if (robot.y() < (image_size.y/2)){
                 c = movimentation.turn_left(255, 255);	
             } else {
                 c = movimentation.turn_right(255, 255);
@@ -76,21 +77,21 @@ Command StrategyBase::stop_strategy(Command _command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
     Command c = _command;
-    float maxDistance = robot.get_radius() * (3);
-	float distanceTarget = robot.distance_from(target);
+    float max_distance = robot.get_radius() * (3);
+	float distance_target = robot.distance_from(robot.get_target());
 
 /* 	REVER VELOCIDADE
 	if(robot.getVelocity() > image_size.x * (0.05)){
-		maxDistance = robot.get_radius() * (6);
+		max_distance = robot.get_radius() * (6);
 	}
  */
 
-	if(distanceTarget < maxDistance){
-		c.left  = c.left  * (distanceTarget/maxDistance);
-		c.right = c.right * (distanceTarget/maxDistance);
+	if(distance_target < max_distance){
+		c.left  = c.left  * (distance_target/max_distance);
+		c.right = c.right * (distance_target/max_distance);
 	}
 
-	if(distanceTarget < robot.get_radius()){
+	if(distance_target < robot.get_radius()){
 
         if (robot.cos_from(state.ball.get_projection()) < -0.8 || robot.cos_from(state.ball.get_projection()) > 0.8) {
             c = movimentation.stop();
@@ -132,4 +133,8 @@ Robot StrategyBase::get_robot(string func){
 
 Command StrategyBase::get_command(){
     return command;
+}
+
+void StrategyBase::define_command(Command _command){
+	command = _command;
 }

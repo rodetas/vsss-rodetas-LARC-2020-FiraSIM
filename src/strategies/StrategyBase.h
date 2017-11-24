@@ -31,12 +31,7 @@ public:
     /**
      * Pure virtual function to define where goes the robot
      */
-    virtual void define_target(Robot) = 0;
-
-    /**
-     * Pure virtual function to define the final pwm
-     */
-    virtual void define_command(Command) = 0;
+    virtual btVector3 define_target(Robot) = 0;
 
     /**
      * Apply the robot strategy when it's on the corner
@@ -55,6 +50,8 @@ public:
 
     void set_state(map<string, int>, State);
 
+    void define_command(Command);
+
     Command get_command();
 
 protected:    
@@ -67,7 +64,7 @@ protected:
     string name;
 
     Robot robot;
-    Point target;
+//    Point target;
     State state;
     map<string, int> id;
 

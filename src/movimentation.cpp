@@ -9,7 +9,7 @@ Movimentation::Movimentation(){
 Command Movimentation::move_players(Robot robot, btVector3 target){
 
 	Command command;
-
+	
 	// movement along the field 
 	if (robot.cos_from(target) < -0.4) {
 		command = define_pwm(robot, target, 'B');
@@ -52,7 +52,7 @@ Command Movimentation::define_pwm(Robot robot, btVector3 target, char direction)
 	int pwmMotor1 = (basePower + correctionPower) ;
 	int pwmMotor2 = (basePower - correctionPower) ;
 
-	if(direction == 'B'){
+	if(direction == 'F'){
 		pwmMotor1 = pwmMotor1 * (-1);
 		pwmMotor2 = pwmMotor2 * (-1);
 	}
