@@ -52,7 +52,7 @@ Command Movimentation::define_pwm(Robot robot, btVector3 target, char direction)
 	int pwmMotor1 = (basePower + correctionPower) ;
 	int pwmMotor2 = (basePower - correctionPower) ;
 
-	if(direction == 'F'){
+	if(direction == 'B'){
 		pwmMotor1 = pwmMotor1 * (-1);
 		pwmMotor2 = pwmMotor2 * (-1);
 	}
