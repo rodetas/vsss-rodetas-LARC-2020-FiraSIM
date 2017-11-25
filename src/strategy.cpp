@@ -8,6 +8,8 @@ Strategy::Strategy(){
 
 	initialize_strategies();
 	initialize_robots();
+
+	timeLastChange = -1;
 }
 
 void Strategy::init(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name){
@@ -51,13 +53,43 @@ void Strategy::loop(){
 
 void Strategy::define_function_for_each_robot(){
     
-    if (state.robots[id["attack"]].x() > (state.ball.x() * 1.1) && 
-      !(state.robots[id["attack"]].x() > state.ball.x() && state.robots[id["defense"]].x() > state.ball.x()) ){
+	btVector3 image_size = btVector3(170,130);
 
-        /* int aux = id["attack"];
-        id["attack"] = id["defense"];
-        id["defense"] = aux; */
-    }
+	 if(timeLastChange == -1){
+
+		if (state.robots[id["attack"]].x()*1.3 < state.ball.x() && 
+			!	(state.robots[id["attack"]].x() < state.ball.x() && 
+				state.robots[id["defense"]].x() < state.ball.x()) && 
+			!state.robots[id["attack"]].is_blocked(image_size) && 
+			!state.robots[id["defense"]].is_blocked(image_size)){
+
+				int aux = id["attack"];
+				id["attack"] = id["defense"];
+				id["defense"] = aux;
+		}
+
+		float distance_defense_ball = distancePoint(state.robots[id["defense"]].get_position(), state.ball.get_position());
+        float distance_attack_ball = distancePoint(state.robots[id["attack"]].get_position(), state.ball.get_position());
+
+		// na defesa, o mais perto é o atacante
+        if(distance_defense_ball < distance_defense_ball && state.ball.x() < image_size.x/2 && 
+            !state.robots[id["attack"]].is_blocked(image_size) && !state.robots[id["defense"]].is_blocked(image_size)){
+
+            	int aux = id["attack"];
+				id["attack"] = id["defense"];
+				id["defense"] = aux;
+        }
+
+		if(state.robots[id["attack"]].is_blocked(image_size)){
+           	int aux = id["attack"];
+            id["attack"] = id["defense"];
+            id["defense"] = aux;
+        }
+
+		timeLastChange = 60;
+	 }
+
+	 if(timeLastChange >= 0) timeLastChange--;
 }
 
 void Strategy::apply(){
@@ -74,9 +106,9 @@ void Strategy::apply(){
 	debug.robots_final_pose[id["defense"]] = defense.get_target();
 	debug.robots_final_pose[id["attack"]] = attack.get_target();
 
-	debug.robots_step_pose[id["goal"]] = goal.get_projection();
+	/* debug.robots_step_pose[id["goal"]] = goal.get_projection();
 	debug.robots_step_pose[id["defense"]] = defense.get_projection();
-	debug.robots_step_pose[id["attack"]] = attack.get_projection();
+	debug.robots_step_pose[id["attack"]] = attack.get_projection(); */
 
 	commands[id["goal"]] = strategies["goal"]->get_command();
 	commands[id["defense"]] = strategies["defense"]->get_command();

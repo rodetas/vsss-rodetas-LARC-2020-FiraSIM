@@ -17,8 +17,8 @@ btVector3 StrategyGoal::define_target(Robot robot){
 	Point goal_target = Point(0,0);
 	Point ball_projection = state.ball.get_projection();
 
-	int halfGoal1 = image_size.y/2 - (goal_size.y)*0.7;
-	int halfGoal2 = image_size.y/2 + (goal_size.y)*0.7;
+	int halfGoal1 = image_size.y/2 - (goal_size.y)*0.8;
+	int halfGoal2 = image_size.y/2 + (goal_size.y)*0.8;
 
 	goal_target.x = image_size.x*0.9;
 	goal_target.y = state.ball.get_projection().y;
@@ -30,7 +30,9 @@ btVector3 StrategyGoal::define_target(Robot robot){
 	}
 
 	// manda ir na bola quando ela está dentro da area
-	if(((ball_projection.y < halfGoal1 && ball_projection.y > halfGoal2 && ball_projection.x < image_size.x*0.20))){
+	if(((ball_projection.y > halfGoal1 && ball_projection.y < halfGoal2 && 
+		ball_projection.x > image_size.x*0.80))){
+
 		goal_target = ball_projection;
 	}
 

@@ -50,14 +50,16 @@ void StrategyBase::move(map<string, int> _id, State _state){
  Command StrategyBase::corner_strategy(Command command){
     Command c = command;
 
-	if (robot.is_board(image_size) && robot.is_stopped()){      
+    //cout << robot.is_board(image_size) << " " << robot.is_stopped() << " " << robot.get_velocity() << endl;
+
+	if (robot.is_board(image_size) && robot.is_stopped()){
 
         // girar caso robo esteja preso de frente pra parede
         if (robot.cos_from(state.ball.get_position()) > -0.9 && robot.cos_from(state.ball.get_position()) < 0.9) {
             if (robot.sin_from(state.ball.get_position()) > 0) {
-                c = movimentation.turn_right(100, 100);
+                c = movimentation.turn_right(50,30);
             } else {
-                c = movimentation.turn_left(100, 100);
+                c = movimentation.turn_left(50,50);
             }
         } 
         
@@ -65,9 +67,9 @@ void StrategyBase::move(map<string, int> _id, State _state){
         if (robot.distance_from(state.ball.get_position()) < (6) ) {
 
             if (robot.y() < (image_size.y/2)){
-                c = movimentation.turn_left(255, 255);	
+                c = movimentation.turn_left(60,60);	
             } else {
-                c = movimentation.turn_right(255, 255);
+                c = movimentation.turn_right(60,60);
             }
         }
     }

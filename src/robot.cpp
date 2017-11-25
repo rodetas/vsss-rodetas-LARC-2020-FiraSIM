@@ -33,7 +33,7 @@ void Robot::show(){
 }
 
 bool Robot::is_stopped(){
-    if (stopped_frames > 0) return true;
+    if (velocity < 6) return true;
     return false;
 }
 

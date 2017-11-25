@@ -43,6 +43,8 @@ public:
 private:
 	map<string, int> id;
 	map<string, StrategyBase*> strategies;
+
+	int timeLastChange;
 };
 
 #endif // _STRATEGY_H_

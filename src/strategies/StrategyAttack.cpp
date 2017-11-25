@@ -7,24 +7,23 @@ StrategyAttack::StrategyAttack() : StrategyBase(){
 Command StrategyAttack::strategy(Robot robot, Command command){
 	Command c = command;
 	c = kick_strategy(c);
-	//c = corner_strategy(c);
+	c = corner_strategy(c);
 
-	/* if (robot.is_parallel_goal(image_size)){
+	if (robot.is_parallel_goal(image_size)){
 
 		int halfGoal1 = image_size.y/2 + (goal_size.y/2);
 		int halfGoal2 = image_size.y/2 - (goal_size.y/2);
 
-		if ( robot.distance_from(state.ball.get_position()) < (6) && 
-		    !(robot.x() < image_size.x * 0.1 && robot.y() < halfGoal1) &&
-		    !(robot.x() < image_size.x * 0.1 && robot.y() > halfGoal2) ){
-			
+		if ( robot.distance_from(state.ball.get_position()) < 8 && 
+		    robot.x() < image_size.x*0.25 && robot.y() > halfGoal2 && robot.y() < halfGoal1){
+				
 			if (robot.y() < state.ball.y()) {
-				c = movimentation.turn_right(255, 255);
+				c = movimentation.turn_right(80, 80);
 			} else {
-				c = movimentation.turn_left(255, 255);
+				c = movimentation.turn_left(80, 80);
 			}
 		}
-	} */
+	}
 
 	return c;
 }
@@ -43,20 +42,20 @@ btVector3 StrategyAttack::define_target(Robot robot){
 		target = centerGoal;
 	} 
 
-	Point ballProjection = state.ball.get_position();
+	Point ballProjection = state.ball.get_projection();
 
-	/* if(ballProjection.x > image_size.x/2 && ballProjection.x > robot.x()){
+	if(ballProjection.x > image_size.x*0.4 && ballProjection.x > robot.x()){
 		if(ballProjection.y < image_size.y/2){
-			target.y = ballProjection.y - (8);
-			target.x = ballProjection.x - (6);
-		} else {
 			target.y = ballProjection.y + (8);
-			target.x = ballProjection.x - (6);
+			target.x = ballProjection.x + (6);
+		} else {
+			target.y = ballProjection.y - (8);
+			target.x = ballProjection.x + (6);
 		}
-	} */
+	}
 
-	int halfGoal1 = image_size.y/2 + goal_size.y * 0.7;
-	int halfGoal2 = image_size.y/2 - goal_size.y * 0.7;
+	int halfGoal1 = image_size.y/2 + goal_size.y * 0.85;
+	int halfGoal2 = image_size.y/2 - goal_size.y * 0.85;
 
 	if(((ballProjection.y < halfGoal1 && ballProjection.y > halfGoal2 && ballProjection.x > image_size.x*0.80))){
 		target = Point(image_size.x/2, image_size.y/2);
@@ -65,8 +64,6 @@ btVector3 StrategyAttack::define_target(Robot robot){
 	// verifies the limits of the destination
 	if (target.y < 0) target.y = 0;
 	if (target.y > image_size.y) target.y = image_size.y;
-
-//	target = btVector3(image_size.x/2, image_size.y/3);
 
 	return target;
 }
