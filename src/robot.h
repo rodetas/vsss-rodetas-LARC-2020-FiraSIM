@@ -13,7 +13,7 @@ public:
     Robot();
     Robot(int);
 
-    virtual void show();
+    virtual string show();
 
     void initialize();
     void update_robot(Robot);

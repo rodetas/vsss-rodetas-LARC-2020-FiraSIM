@@ -69,8 +69,12 @@ public:
                 pose.x > image_size.x * (0.85) || pose.x < image_size.x * (0.15) );
     }
 
-    virtual void show(){
-        printf("Object: (X: %f Y: %f Z: %f)\n", pose.x, pose.y, pose.z);
+    virtual string show(){
+        stringstream ss;
+        ss << "Object: (X: " << pose.x;
+        ss << " Y: " << pose.y;
+        ss << " Z: " << pose.z << ")";
+        return ss.str();
     }
 
     float cos_from(Object _r) const{

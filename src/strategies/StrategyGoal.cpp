@@ -31,7 +31,7 @@ btVector3 StrategyGoal::define_target(Robot robot){
 
 	// manda ir na bola quando ela está dentro da area
 	if(((ball_projection.y > halfGoal1 && ball_projection.y < halfGoal2 && 
-		ball_projection.x > image_size.x*0.80))){
+		ball_projection.x > image_size.x*0.75))){
 
 		goal_target = ball_projection;
 	}

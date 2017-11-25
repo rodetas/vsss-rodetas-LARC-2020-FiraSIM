@@ -19,16 +19,7 @@ using namespace std;
 using namespace common;
 
 class Strategy : public Sample{
-	/*
-		Sample :: string main_color;
-		Sample :: bool is_debug;
-		Sample :: bool real_environment;
-		Sample :: int situation;
-
-		Sample :: common::State state;
-		Sample :: common::Command commands[3];
-		Sample :: common::Debug debug;
-	*/
+	
 public:
 	Strategy();
 

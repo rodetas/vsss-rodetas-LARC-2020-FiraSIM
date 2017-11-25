@@ -7,15 +7,15 @@ State::State(){
 void State::show(){
     cout << endl << endl << "Robots Team 1:" << endl;
     for(int i = 0 ; i < 3 ; i++){
-        robots[i].show();
+        cout << robots[i].show() << endl;
     }
     cout << endl << endl << "Robots Team 2:" << endl;
     for(int i = 3 ; i < 6 ; i++){
-        robots[i].show();
+        cout << robots[i].show() << endl;
     }
 
     cout << endl << endl << "Ball:" << endl;
-    ball.show();
+    cout << ball.show() << endl;
 }
 
 State State::Global_State2State(vss_state::Global_State global_state, string main_color){

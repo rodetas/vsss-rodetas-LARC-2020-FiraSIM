@@ -102,6 +102,8 @@ void Strategy::apply(){
 	Robot defense = strategies["defense"]->apply(id, state);
 	Robot attack = strategies["attack"]->apply(id, state);
 
+	state.show();
+
 	debug.robots_final_pose[id["goal"]] = goal.get_target();
 	debug.robots_final_pose[id["defense"]] = defense.get_target();
 	debug.robots_final_pose[id["attack"]] = attack.get_target();

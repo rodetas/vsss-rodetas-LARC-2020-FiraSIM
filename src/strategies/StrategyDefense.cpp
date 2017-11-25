@@ -21,15 +21,15 @@ btVector3 StrategyDefense::define_target(Robot robot){
 	if(robot.x() < image_size.x*0.4){
 		if(robot.y() > image_size.y/2){
 			if(ballProjection.y < state.ball.y()){
-				target = btVector3(image_size.x*0.5, image_size.y*0.8);
-			} else {
 				target = btVector3(image_size.x*0.5, image_size.y*0.2);
+			} else {
+				target = btVector3(image_size.x*0.5, image_size.y*0.8);
 			}
 		} else {
 			if(ballProjection.y < state.ball.y()){
-				target = btVector3(image_size.x*0.5, image_size.y*0.8);
-			} else {
 				target = btVector3(image_size.x*0.5, image_size.y*0.2);
+			} else {
+				target = btVector3(image_size.x*0.5, image_size.y*0.8);
 			}
 		}	
 		

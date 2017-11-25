@@ -14,7 +14,7 @@ Command StrategyAttack::strategy(Robot robot, Command command){
 		int halfGoal1 = image_size.y/2 + (goal_size.y/2);
 		int halfGoal2 = image_size.y/2 - (goal_size.y/2);
 
-		if ( robot.distance_from(state.ball.get_position()) < 8 && 
+		if ( robot.distance_from(state.ball.get_position()) < 7 && 
 		    robot.x() < image_size.x*0.25 && robot.y() > halfGoal2 && robot.y() < halfGoal1){
 				
 			if (robot.y() < state.ball.y()) {

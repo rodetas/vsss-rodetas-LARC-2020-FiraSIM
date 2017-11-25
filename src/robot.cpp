@@ -24,16 +24,21 @@ void Robot::update_robot(Robot r){
 }
 
 void Robot::calculate_stopped(){
-    if (velocity < (3)) stopped_frames++;
+    if (velocity < (6)) stopped_frames++;
     else stopped_frames = 0;
 }
 
-void Robot::show(){
-    printf("Robot: (X: %f Y: %f Z: %f Vel: %f)\n", pose.x, pose.y, pose.z, velocity);
+string Robot::show(){
+    stringstream ss;
+    ss << "Robot: (X: " << pose.x;
+    ss << " \tY: " << pose.y;
+    ss << " \tZ: " << pose.z;
+    ss << " \t" << velocity << ")";
+    return ss.str();
 }
 
 bool Robot::is_stopped(){
-    if (velocity < 6) return true;
+    if (stopped_frames < 6) return true;
     return false;
 }
 
