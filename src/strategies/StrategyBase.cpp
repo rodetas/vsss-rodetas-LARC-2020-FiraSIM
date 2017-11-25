@@ -61,16 +61,18 @@ void StrategyBase::move(map<string, int> _id, State _state){
             } else {
                 c = movimentation.turn_left(50,50);
             }
+            cout << "preso pra parede" << endl;
         } 
         
-        // girar caso robo prenda a bola na parede - 6 cm
-        if (robot.distance_from(state.ball.get_position()) < (6) ) {
+        // girar caso robo prenda a bola na parede - 8 cm
+        if (robot.distance_from(state.ball.get_position()) < (8) ) {
 
             if (robot.y() < (image_size.y/2)){
                 c = movimentation.turn_left(60,60);	
             } else {
                 c = movimentation.turn_right(60,60);
             }
+            cout << "preso com bola" << endl;
         }
     }
 

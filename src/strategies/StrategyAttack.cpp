@@ -44,7 +44,7 @@ btVector3 StrategyAttack::define_target(Robot robot){
 
 	Point ballProjection = state.ball.get_projection();
 
-	if(ballProjection.x > image_size.x*0.4 && ballProjection.x > robot.x()){
+	if(ballProjection.x > image_size.x*0.3 && ballProjection.x > robot.x()){
 		if(ballProjection.y < image_size.y/2){
 			target.y = ballProjection.y + (8);
 			target.x = ballProjection.x + (6);
