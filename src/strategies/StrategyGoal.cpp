@@ -14,12 +14,33 @@ Command StrategyGoal::strategy(Robot robot, Command command){
 
 btVector3 StrategyGoal::define_target(Robot robot){
 
-	Point ballProjection = state.ball.get_projection();
-	btVector3 target;
-	target.x = image_size.x * (0.95);
-	target.y = image_size.y/2 - (image_size.y/2 - ballProjection.y)/2;
+	Point goal_target = Point(0,0);
+	Point ball_projection = state.ball.get_projection();
 
-	return target;
+	int halfGoal1 = image_size.y/2 - (goal_size.y)*0.7;
+	int halfGoal2 = image_size.y/2 + (goal_size.y)*0.7;
+
+	goal_target.x = image_size.x*0.9;
+	goal_target.y = state.ball.get_projection().y;
+
+	if(goal_target.y > image_size.y/2+goal_size.y/3){
+		goal_target.y = image_size.y/2+goal_size.y/3;
+	} else if(goal_target.y < image_size.y/2-goal_size.y/3){
+		goal_target.y = image_size.y/2-goal_size.y/3;
+	}
+
+	// manda ir na bola quando ela está dentro da area
+	if(((ball_projection.y < halfGoal1 && ball_projection.y > halfGoal2 && ball_projection.x < image_size.x*0.20))){
+		goal_target = ball_projection;
+	}
+
+	// quando esta agarrado manda ir para o centro do gol na tentativa de soltar
+	if(robot.is_stopped_for(90) && robot.distance_from(goal_target) > 6){
+		goal_target.x = image_size.x*0.9;
+		goal_target.y = image_size.y*0.5;
+    }
+
+	return goal_target;
 }
 
 Command StrategyGoal::stop_strategy(Command command){

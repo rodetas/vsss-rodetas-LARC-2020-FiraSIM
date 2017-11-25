@@ -6,7 +6,7 @@ StrategyAttack::StrategyAttack() : StrategyBase(){
 
 Command StrategyAttack::strategy(Robot robot, Command command){
 	Command c = command;
-	//c = kick_strategy(c);
+	c = kick_strategy(c);
 	//c = corner_strategy(c);
 
 	/* if (robot.is_parallel_goal(image_size)){
@@ -33,8 +33,8 @@ btVector3 StrategyAttack::define_target(Robot robot){
 
 	Point target = state.ball.get_position();
 
-	Point centerGoal = Point(image_size.x, image_size.y/2);
-	float angle_robot_goal = angulation(centerGoal, robot.get_position());
+	Point centerGoal = Point(0, image_size.y/2);
+	float angle_robot_goal = angulation(robot.get_position(), centerGoal);
 
 	if(angle_robot_goal < 45.0 && angle_robot_goal > -45.0 && (robot.cos_from(centerGoal) < -0.8 || robot.cos_from(centerGoal) > 0.8) && 
 		(robot.cos_from(state.ball.get_position()) < -0.8 || robot.cos_from(state.ball.get_position()) > 0.8) &&
@@ -66,6 +66,8 @@ btVector3 StrategyAttack::define_target(Robot robot){
 	if (target.y < 0) target.y = 0;
 	if (target.y > image_size.y) target.y = image_size.y;
 
+//	target = btVector3(image_size.x/2, image_size.y/3);
+
 	return target;
 }
 
@@ -73,7 +75,7 @@ Command StrategyAttack::kick_strategy(Command _command){
 	Command c = _command;
 
 	Point centerGoal = btVector3(0, image_size.y/2);
-	float angle_robot_goal = angulation(centerGoal, robot.get_position());
+	float angle_robot_goal = angulation(robot.get_position(), centerGoal);
 
 	if(angle_robot_goal < 45.0 && angle_robot_goal > -45.0 && (robot.cos_from(centerGoal) < -0.8 || robot.cos_from(centerGoal) > 0.8) && 
 		(robot.cos_from(state.ball.get_position()) < -0.8 || robot.cos_from(state.ball.get_position()) > 0.8) &&

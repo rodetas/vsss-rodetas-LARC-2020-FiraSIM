@@ -2,7 +2,7 @@
 
 StrategyBase::StrategyBase(){
     goal_size  = btVector3(10,40);
-    image_size = btVector3(150,130);
+    image_size = btVector3(170,130);
 }
 
 Robot StrategyBase::apply(map<string, int> _id, State _state){
