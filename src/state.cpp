@@ -61,7 +61,7 @@ State State::Global_State2State(vss_state::Global_State global_state, string mai
             v_pose.z = global_state.robots_yellow(i).v_pose().yaw();       // Vel Rotation in Z Axis (YAW)
 
             v_pose.z = v_pose.z * (180.0/M_PI);	// CONVERT TO DEGREES
-                                            
+
             v_pose.z -= 180; // 180 if comes from VSS-Simulator
 
             if(v_pose.z < 0){
@@ -106,7 +106,7 @@ State State::Global_State2State(vss_state::Global_State global_state, string mai
             state.robots_kalman[i+3].v_pose.x = global_state.robots_blue(i).k_v_pose().x();       // Kalman Vel X
             state.robots_kalman[i+3].v_pose.y = global_state.robots_blue(i).k_v_pose().y();       // Kalman Vel Y
             state.robots_kalman[i+3].v_pose.z = global_state.robots_blue(i).k_v_pose().yaw();     // Kalman Vel Rotation in Z Axis (YAW)
-*/                
+*/
         }
     }else{
         for(int i = 0 ; i < 3 ; i++){
@@ -129,7 +129,7 @@ State State::Global_State2State(vss_state::Global_State global_state, string mai
             v_pose.z = global_state.robots_blue(i).v_pose().yaw();       // Vel Rotation in Z Axis (YAW)
 
             v_pose.z = v_pose.z * (180.0/M_PI);	// CONVERT TO DEGREES
-                                            
+
             v_pose.z -= 180; // 180 if comes from VSS-Simulator
 
             if(v_pose.z < 0){

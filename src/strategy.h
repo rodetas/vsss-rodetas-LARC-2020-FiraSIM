@@ -10,6 +10,7 @@
 #define _STRATEGY_H_
 
 #include "sample.h"
+#include "transmission.h"
 #include "strategies/StrategyBase.h"
 #include "strategies/StrategyAttack.h"
 #include "strategies/StrategyDefense.h"
@@ -19,7 +20,7 @@ using namespace std;
 using namespace common;
 
 class Strategy : public Sample{
-	
+
 public:
 	Strategy();
 
@@ -34,6 +35,8 @@ public:
 private:
 	map<string, int> id;
 	map<string, StrategyBase*> strategies;
+
+	Transmission transmission;
 
 	int timeLastChange;
 };

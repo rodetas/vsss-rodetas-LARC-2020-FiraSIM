@@ -32,16 +32,18 @@ void Strategy::initialize_robots(){
 void Strategy::loop(){
 
 	while(true){
-		
+
 		receive_state();
-		
+
 		apply();
 
 		if(!real_environment){
 			send_commands();
 
 		} else {
-			// Put your transmission code here
+            transmission.send(id["goal"],strategies["goal"]->get_command());
+        	transmission.send(id["defense"],strategies["defense"]->get_command());
+        	transmission.send(id["attack"], strategies["attack"]->get_command());
 		}
 
 		// DON'T REMOVE
@@ -52,15 +54,15 @@ void Strategy::loop(){
 }
 
 void Strategy::define_function_for_each_robot(){
-    
+
 	btVector3 image_size = btVector3(170,130);
 
 	 if(timeLastChange == -1){
 
-		if (state.robots[id["attack"]].x()*1.3 < state.ball.x() && 
-			!	(state.robots[id["attack"]].x() < state.ball.x() && 
-				state.robots[id["defense"]].x() < state.ball.x()) && 
-			!state.robots[id["attack"]].is_blocked(image_size) && 
+		if (state.robots[id["attack"]].x()*1.3 < state.ball.x() &&
+			!	(state.robots[id["attack"]].x() < state.ball.x() &&
+				state.robots[id["defense"]].x() < state.ball.x()) &&
+			!state.robots[id["attack"]].is_blocked(image_size) &&
 			!state.robots[id["defense"]].is_blocked(image_size)){
 
 				int aux = id["attack"];
@@ -72,7 +74,7 @@ void Strategy::define_function_for_each_robot(){
         float distance_attack_ball = distancePoint(state.robots[id["attack"]].get_position(), state.ball.get_position());
 
 		// na defesa, o mais perto é o atacante
-        if(distance_defense_ball < distance_defense_ball && state.ball.x() < image_size.x/2 && 
+        if(distance_defense_ball < distance_defense_ball && state.ball.x() < image_size.x/2 &&
             !state.robots[id["attack"]].is_blocked(image_size) && !state.robots[id["defense"]].is_blocked(image_size)){
 
             	int aux = id["attack"];

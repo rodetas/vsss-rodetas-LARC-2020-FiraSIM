@@ -10,6 +10,7 @@
 #define COMMON_H_
 
 #include "iostream"
+#include "iomanip"
 #include "math.h"
 #include "VSS-Interface/cpp/interface.h"
 
@@ -51,7 +52,7 @@ namespace common{
         };
     };
 
-    //! This is a simple structure responsible for represent a path: vector of poses. 
+    //! This is a simple structure responsible for represent a path: vector of poses.
 	struct Path{
 		vector<btVector3> poses;
 		Path(){};
@@ -82,13 +83,34 @@ namespace common{
             this->left = left;
             this->right = right;
         };
+
         Command(Command *cmd){
             left = cmd->left;
             right = cmd->right;
         };
-        void show(){
-            cout << "Command (" << left << ", " << right << ")" << endl;
-        };
+
+        string to_string(){
+    		stringstream ss;
+    		ss << setfill('0') << setw(3) << left;
+    		ss << setfill('0') << setw(3) << right;
+    		return ss.str();
+    	}
+
+    	friend std::ostream& operator<< (std::ostream& stream, const Command& c) {
+    		stream << c.left << " " << c.right;
+    		return stream;
+        }
+
+    	vector<int> to_hex(){
+    		string cmd = this->to_string();
+    		vector<int> vec;
+
+    		for(int i=0 ; i<cmd.size() ; i++){
+    			vec.push_back(int(cmd[i]));
+    		}
+
+    		return vec;
+    	}
     };
 
     //! Estimate distance between a set of points.
