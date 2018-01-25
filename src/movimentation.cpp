@@ -8,23 +8,42 @@ Movimentation::Movimentation(){
  */
 Command Movimentation::move_players(Robot robot, btVector3 target){
 
+	// Vl = v - (w*L)/2
+	// Vr = v + (w*L)/2
+
 	Command command;
+	btVector3 r(0,0,0); // final orientation
+	btVector3 g(0,0,0); // target
 
-	// movement along the field 
-	if (robot.cos_from(target) < -0.4) {
-		command = define_pwm(robot, target, 'B');
-	
-	} else if (robot.cos_from(target) > 0.4){  
-		command = define_pwm(robot, target, 'F');	
+	const float n = 1;
+	const float D_g = 1;
+	const float K_theta = 1;
+	const float vmc = 80;
 
-	}  else {
-		if (robot.sin_from(target) > 0) {
-			command = turn_right(20, 20);
-	    } else {
-			command = turn_left(20, 20);
-	    }
+	float d_fi_xc = (((n+1)*(g.y-robot.y())) / (pow(g.y,2) - 2*g.y*robot.y() + pow(g.x,2) - 2*g.x * robot.x() + pow(robot.x(), 2) + pow(robot.y(), 2) )) + n*(robot.y() - r.y)/(pow(r.y,2)-2*r.y*robot.y()+pow(r.x,2)-2*r.x*robot.x()+pow(robot.x(),2)+pow(robot.y(),2));
+	float d_fi_yc = ((-(n+1)*(g.x-robot.x())) / (pow(g.y,2) - 2*g.y*robot.y() + pow(g.x,2) - 2*g.x * robot.x() + pow(robot.x(), 2) + pow(robot.y(), 2) )) + n*(r.x - robot.x())/(pow(r.y,2)-2*r.y*robot.y()+pow(r.x,2)-2*r.x*robot.x()+pow(robot.x(),2)+pow(robot.y(),2));
+
+	float fi; // TODO
+	float theta_e = 
+
+	btVector3 pc_pg(robot.x()-g.x, robot.y()-g.y);
+	float mod_pc_pg = sqrt(pow(robot.x(),2) + pow(robot.y(),2));
+
+	float v = [&](){
+		if(mod_pc_pg > D_g){
+			v = vmc;
+		} else {
+			v = (mod_pc_pg/D_g)*vmc;
+		}
 	}
-	
+
+	float w = [&](){
+		float cos_c = cos(robot.angle());
+		float sen_c = sin(robot.angle());
+
+		float aux = (d_fi_xc*cos_c + d_fi_yc*sen_c)*v - K_theta*()
+	}
+
 	return command;
 }
 
