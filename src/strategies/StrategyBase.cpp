@@ -21,13 +21,13 @@ Robot StrategyBase::apply(map<string, int> _id, State _state){
     Command movimentationCommand = movimentation.move_players(robot, robot.get_target());
 
     // define strategy
-    Command strategyCommand = strategy(robot, movimentationCommand);
+    //Command strategyCommand = strategy(robot, movimentationCommand);
 
     // define command
-    define_command(strategyCommand);
+    define_command(movimentationCommand);
 
     return robot;
-} 
+}
 
 void StrategyBase::move(map<string, int> _id, State _state){
     

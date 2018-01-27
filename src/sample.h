@@ -10,6 +10,7 @@
 #define _SAMPLE_H
 
 #include "common.h"
+//#include <interface.h>
 #include "VSS-Interface/cpp/interface.h"
 #include "vector"
 #include "state.h"

@@ -80,3 +80,11 @@ void Robot::set_target(btVector3 _t){
 btVector3 Robot::get_target(){
     return target;
 }
+
+void Robot::set_potencial_direction(btVector3 bt){
+    potencial_direction = bt;
+}
+
+btVector3 Robot::get_potencial_direction(){
+    return potencial_direction;
+}

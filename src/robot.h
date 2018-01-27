@@ -27,10 +27,12 @@ public:
     void set_target(btVector3 _t);
     void set_curve_factor(float);
     void set_potency_factor(float);
+    void set_potencial_direction(btVector3);
 
     btVector3 get_target();
     float get_curve_factor();
     float get_potency_factor();
+    btVector3 get_potencial_direction();
 
 private:
     int stopped_frames;
@@ -40,6 +42,7 @@ private:
     float curveFactor;
 
     btVector3 target;
+    btVector3 potencial_direction;
 };
 
 #endif

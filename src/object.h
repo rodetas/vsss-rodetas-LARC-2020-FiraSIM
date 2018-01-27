@@ -60,6 +60,14 @@ public:
         return pose.z;
     }
 
+    float angle(){
+        return pose.z;
+    }
+
+    float rad_angle(){
+        return (2*M_PI*angle())/360;
+    }
+
     bool is_null(){
         return (pose.x <= 0 && pose.y <= 0);
     }
