@@ -71,7 +71,7 @@ void Strategy::define_function_for_each_robot(){
 		}
 
 		float distance_defense_ball = distancePoint(state.robots[id["defense"]].get_position(), state.ball.get_position());
-        float distance_attack_ball = distancePoint(state.robots[id["attack"]].get_position(), state.ball.get_position());
+        //float distance_attack_ball = distancePoint(state.robots[id["attack"]].get_position(), state.ball.get_position());
 
 		// na defesa, o mais perto é o atacante
         if(distance_defense_ball < distance_defense_ball && state.ball.x() < image_size.x/2 &&
