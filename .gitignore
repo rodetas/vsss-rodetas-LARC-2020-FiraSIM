@@ -1,5 +1,6 @@
 *.o
 build/*
 .vscode/*
+.idea/*
 *.json
 SDK-Rodetas
