@@ -1,7 +1,6 @@
 #include "movimentation.h"
 
-Movimentation::Movimentation(){
-}
+Movimentation::Movimentation() = default;
 
 /*
  * calculates the basic movimentation to goal to target
@@ -10,32 +9,91 @@ Command Movimentation::move_players(Robot robot, btVector3 target){
 
 	Command command;
 
-	// movement along the field 
-	if (robot.cos_from(target) < -0.4) {
-		command = define_pwm(robot, target, 'B');
-	
-	} else if (robot.cos_from(target) > 0.4){  
-		command = define_pwm(robot, target, 'F');	
+/*	const float n = 3.f;
+	const float D_g = 100.f;
+	const float K_omega = 3.f;
+	const float vmc = 20.f;
+*/
 
-	}  else {
-		if (robot.sin_from(target) > 0) {
-			command = turn_right(20, 20);
-	    } else {
-			command = turn_left(20, 20);
-	    }
-	}
-	
+    float fi = define_fi(robot, r, g);
+
+    command.left = 80 - 50*sin(fi - robot.rad_angle());
+    command.right = 80 + 50*sin(fi - robot.rad_angle());
+
+    /*
+    double d_fi_xc = (((n + 1) * (g.y - robot.y())) /
+                      (pow(g.y, 2) - 2 * g.y * robot.y() + pow(g.x, 2) - 2 * g.x * robot.x() + pow(robot.x(), 2) +
+                       pow(robot.y(), 2))) + n * (robot.y() - r.y) /
+                                             (pow(r.y, 2) - 2 * r.y * robot.y() + pow(r.x, 2) -
+                                              2 * r.x * robot.x() + pow(robot.x(), 2) + pow(robot.y(), 2));
+    double d_fi_yc = ((-(n + 1) * (g.x - robot.x())) /
+                      (pow(g.y, 2) - 2 * g.y * robot.y() + pow(g.x, 2) - 2 * g.x * robot.x() + pow(robot.x(), 2) +
+                       pow(robot.y(), 2))) + n * (r.x - robot.x()) /
+                                             (pow(r.y, 2) - 2 * r.y * robot.y() + pow(r.x, 2) -
+                                              2 * r.x * robot.x() + pow(robot.x(), 2) + pow(robot.y(), 2));
+
+    float fi = define_fi(robot, r, g);
+    float theta_e = robot.rad_angle() - fi;
+    //cout << "THETA: " << robot.rad_angle() << " FI: " << fi << " ERRO: " << theta_e << endl;
+
+    btVector3 pc_pg(robot.x() - g.x, robot.y() - g.y);
+    double mod_pc_pg = sqrt(pow(pc_pg.x, 2) + pow(pc_pg.y, 2));
+
+    double v = [&]() {
+        if (mod_pc_pg > D_g) {
+            v = vmc;
+        } else {
+            v = (mod_pc_pg / D_g) * vmc;
+        }
+
+        return v;
+    }();
+
+    double w = [&]() {
+
+        float cos_c = cos(robot.rad_angle());
+        float sen_c = sin(robot.rad_angle());
+        float sgn_func = [&]() {
+            if (theta_e < 0) return -1;
+            return 1;
+        }();
+
+        w = (d_fi_xc * cos_c + d_fi_yc * sen_c) * v - K_omega * sgn_func * sqrt(fabs(theta_e));
+        return w;
+    }();
+*/
+
+    cout << "FI: " << sin(fi) << endl;
+	//cout << "V: " << v << "\t\t W: " << w << endl;
+	cout << "1: " << command.left << "\t 2: " << command.right << endl;
 	return command;
+}
+
+float Movimentation::define_fi(Robot& p, btVector3 r, btVector3 g){
+
+	float theta_pr = atan2((r.y - p.y()),(r.x-p.x()));
+	float theta_pg = atan2((g.y - p.y()),(g.x-p.x()));
+
+	float alpha = theta_pr - theta_pg;
+    float fi = theta_pg - 1.7*alpha;
+
+	// just for draw purposes
+	float coss = cos(fi);
+    float sen = sin(fi);
+	p.set_potencial_direction(btVector3((p.x() + coss)*1.2f, (p.y() + sen)*1.2f));
+
+	return fi;
+
 }
 
 Command Movimentation::check_pwm(const Command& pwm){
  	Command command(pwm);
 
-	if(pwm.left  > 255) command.left  = 255;
-	if(pwm.right > 255) command.right = 255;
+	if(pwm.left  > 80) command.left  = 80;
+	if(pwm.right > 80) command.right = 80;
 	
-	if(pwm.left  < -255) command.left  = -255;
-	if(pwm.right < -255) command.right = -255;
+	if(pwm.left  < 0) command.left  = 0;
+	if(pwm.right < 0) command.right = 0;
 
 	return command;
 }

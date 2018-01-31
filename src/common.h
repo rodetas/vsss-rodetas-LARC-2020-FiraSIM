@@ -12,8 +12,8 @@
 #include "iostream"
 #include "iomanip"
 #include "math.h"
-//#include <interface.h>
-#include "VSS-Interface/cpp/interface.h"
+#include <interface.h>
+//#include "VSS-Interface/cpp/interface.h"
 
 using namespace std;
 
@@ -48,8 +48,10 @@ namespace common{
         };
 
         //! Default function: prints all variables.
-        void show(){
-            printf("btVector3(%f, %f, %f) ", x, y, z);
+        string toString(){
+            stringstream ss;
+            ss << "btVector3(" << x << ", " << y << ", " << z << ")";
+            return ss.str();
         };
     };
 
@@ -61,7 +63,7 @@ namespace common{
 			poses = path->poses;
 		};
 		void show(){
-			for(int i = 0 ; i < poses.size() ; i++)
+			for(unsigned int i = 0 ; i < poses.size() ; i++)
 			cout << "(" << poses.at(i).x << ", " << poses.at(i).y << ", " << poses.at(i).z << ")" << endl;
 		}
 	};
@@ -106,7 +108,7 @@ namespace common{
     		string cmd = this->to_string();
     		vector<int> vec;
 
-    		for(int i=0 ; i<cmd.size() ; i++){
+    		for(unsigned int i=0 ; i<cmd.size() ; i++){
     			vec.push_back(int(cmd[i]));
     		}
 

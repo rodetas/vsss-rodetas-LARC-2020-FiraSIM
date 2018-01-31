@@ -41,7 +41,7 @@ void StrategyBase::move(map<string, int> _id, State _state){
     Command movimentationCommand = movimentation.move_players(robot, robot.get_target());
 
     // define strategy
-    Command strategyCommand = stop_strategy(strategyCommand);
+    Command strategyCommand = stop_strategy(movimentationCommand);
     
     // define command
     define_command(strategyCommand); 
@@ -115,13 +115,16 @@ Command StrategyBase::stop_strategy(Command _command){
     return c;
 }
 
-Command StrategyBase::collision_strategy(Command _command){   
+Command StrategyBase::collision_strategy(Command _command){
+    return Command(0,0);
 }
 
 Command StrategyBase::blocked_strategy(Command _command){
+    return Command(0,0);
 }
 
 Command StrategyBase::kick_strategy(Command _command){
+    return Command(0,0);
 }
 
 void StrategyBase::set_state(map<string, int> _id, State _state){

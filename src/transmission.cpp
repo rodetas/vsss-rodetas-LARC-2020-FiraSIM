@@ -68,6 +68,8 @@ bool Transmission::openConection(){
             openStatus = true;
         }
     }
+
+    return true;
 }
 
 void Transmission::send(int i, Command c){
@@ -100,7 +102,7 @@ string Transmission::generateMessage(int robot, Command comand){
     ss << std::hex << 0x0 << 0x0 << 0x0 << address;
     ss << std::hex << 0x0 << option;
 
-    for(int i=0 ; i<hex_message.size() ; i++){
+    for(uint i=0 ; i<hex_message.size() ; i++){
         ss << std::hex << hex_message[i];
     }
     ss << std::hex << checksum;
@@ -113,7 +115,7 @@ int Transmission::generateCheckSum(int frame_type, int frame_id, int address, in
     char check = frame_type + frame_id + address + option;
     unsigned char sum = 0;
 
-    for(int i=0 ; i<hex_message.size() ; i++){
+    for(uint i=0 ; i<hex_message.size() ; i++){
         sum = sum + (hex_message[i]);
     }
 
@@ -145,7 +147,7 @@ void Transmission::serialTransmit(string comand){
         openConection();
 
     } else {*/
-        for(int i=0, cont=0 ; i<comand.size() ; i++){
+        for(uint i=0, cont=0 ; i<comand.size() ; i++){
             stringstream parcial;
             parcial << comand[i];
             i++;

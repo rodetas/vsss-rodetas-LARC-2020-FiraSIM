@@ -47,15 +47,15 @@ void Sample::init_sample(string main_color, bool is_debug, bool real_environment
 void Sample::receive_state(){
     interface_receive.receiveState();
 	state = State::Global_State2State(global_state, main_color);
-	situation = global_state.situation();
+	//situation = global_state.situation();
 }
 
 void Sample::send_commands(){
     global_commands = vss_command::Global_Commands();
-	global_commands.set_situation(NONE);
+	//global_commands.set_situation(NONE);
 
 	if(flag_init == 0){
-		global_commands.set_name(name);
+		//global_commands.set_name(name);
 		flag_init = 1;
 	}
 
@@ -103,7 +103,7 @@ void Sample::send_debug(){
 	for(int i = 0 ; i < 3 ; i++){
 		vss_debug::Path *paths = global_debug.add_paths();
 		paths->set_id(i);
-		for(int j = 0 ; j < debug.robots_path[i].poses.size() ; j++){
+		for(uint j = 0 ; j < debug.robots_path[i].poses.size() ; j++){
 			vss_debug::Pose *poses = paths->add_poses();
 			poses->set_id(i);
 			poses->set_x(debug.robots_path[i].poses.at(j).x);

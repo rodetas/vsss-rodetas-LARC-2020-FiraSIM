@@ -71,7 +71,7 @@ void Strategy::define_function_for_each_robot(){
 		}
 
 		float distance_defense_ball = distancePoint(state.robots[id["defense"]].get_position(), state.ball.get_position());
-        float distance_attack_ball = distancePoint(state.robots[id["attack"]].get_position(), state.ball.get_position());
+        //float distance_attack_ball = distancePoint(state.robots[id["attack"]].get_position(), state.ball.get_position());
 
 		// na defesa, o mais perto é o atacante
         if(distance_defense_ball < distance_defense_ball && state.ball.x() < image_size.x/2 &&
@@ -110,13 +110,11 @@ void Strategy::apply(){
 	debug.robots_final_pose[id["defense"]] = defense.get_target();
 	debug.robots_final_pose[id["attack"]] = attack.get_target();
 
-	/* debug.robots_step_pose[id["goal"]] = goal.get_projection();
-	debug.robots_step_pose[id["defense"]] = defense.get_projection();
-	debug.robots_step_pose[id["attack"]] = attack.get_projection(); */
+	//debug.robots_step_pose[id["goal"]] = goal.get_potencial_direction();
+	//debug.robots_step_pose[id["defense"]] = defense.get_potencial_direction();
+	//debug.robots_step_pose[id["attack"]] = attack.get_potencial_direction();
 
-	/* debug.robots_path[id["goal"]] = vector of btVector3
-	debug.robots_path[id["defense"]] = vector of btVector3
-	debug.robots_path[id["attack"]] = vector of btVector3 */
+    //debug.robots_path[id["attack"]] = attack.path;
 
 	commands[id["goal"]] = strategies["goal"]->get_command();
 	commands[id["defense"]] = strategies["defense"]->get_command();
