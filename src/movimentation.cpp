@@ -5,11 +5,9 @@ Movimentation::Movimentation() = default;
 /*
  * calculates the basic movimentation to goal to target
  */
-Command Movimentation::move_players(Robot& robot, btVector3 target){
+Command Movimentation::move_players(Robot robot, btVector3 target){
 
 	Command command;
-	btVector3 r = btVector3(target.x+10, target.y); // final orientation
-	btVector3 g = target; // target
 
 /*	const float n = 3.f;
 	const float D_g = 100.f;
@@ -85,6 +83,7 @@ float Movimentation::define_fi(Robot& p, btVector3 r, btVector3 g){
 	p.set_potencial_direction(btVector3((p.x() + coss)*1.2f, (p.y() + sen)*1.2f));
 
 	return fi;
+
 }
 
 Command Movimentation::check_pwm(const Command& pwm){

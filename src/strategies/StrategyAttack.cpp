@@ -32,7 +32,7 @@ btVector3 StrategyAttack::define_target(Robot robot){
 
 	Point target = state.ball.get_position();
 
-	/* Point centerGoal = Point(0, image_size.y/2);
+	Point centerGoal = Point(0, image_size.y/2);
 	float angle_robot_goal = angulation(robot.get_position(), centerGoal);
 
 	if(angle_robot_goal < 45.0 && angle_robot_goal > -45.0 && (robot.cos_from(centerGoal) < -0.8 || robot.cos_from(centerGoal) > 0.8) && 
@@ -63,7 +63,7 @@ btVector3 StrategyAttack::define_target(Robot robot){
 
 	// verifies the limits of the destination
 	if (target.y < 0) target.y = 0;
-	if (target.y > image_size.y) target.y = image_size.y; */
+	if (target.y > image_size.y) target.y = image_size.y;
 
 	return target;
 }
