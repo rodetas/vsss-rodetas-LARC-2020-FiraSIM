@@ -34,6 +34,8 @@ public:
     float get_potency_factor();
     btVector3 get_potencial_direction();
 
+    Path path;
+
 private:
     int stopped_frames;
     bool stopped;

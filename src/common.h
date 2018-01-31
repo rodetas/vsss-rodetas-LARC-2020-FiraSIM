@@ -48,8 +48,10 @@ namespace common{
         };
 
         //! Default function: prints all variables.
-        void show(){
-            printf("btVector3(%f, %f, %f) ", x, y, z);
+        string toString(){
+            stringstream ss;
+            ss << "btVector3(" << x << ", " << y << ", " << z << ")";
+            return ss.str();
         };
     };
 

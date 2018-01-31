@@ -110,7 +110,9 @@ void Strategy::apply(){
 
 	//debug.robots_step_pose[id["goal"]] = goal.get_potencial_direction();
 	//debug.robots_step_pose[id["defense"]] = defense.get_potencial_direction();
-	debug.robots_step_pose[id["attack"]] = attack.get_potencial_direction();
+	//debug.robots_step_pose[id["attack"]] = attack.get_potencial_direction();
+
+    //debug.robots_path[id["attack"]] = attack.path;
 
 	//commands[id["goal"]] = strategies["goal"]->get_command();
 	//commands[id["defense"]] = strategies["defense"]->get_command();
