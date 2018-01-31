@@ -97,17 +97,17 @@ void Strategy::define_function_for_each_robot(){
 void Strategy::apply(){
 
 	// define as funções de cada robô
-	define_function_for_each_robot();
+	//define_function_for_each_robot();
 
 	// aplica a estratégia para cada robô
-	Robot goal = strategies["goal"]->apply(id, state);
-	Robot defense = strategies["defense"]->apply(id, state);
+	//Robot goal = strategies["goal"]->apply(id, state);
+	//Robot defense = strategies["defense"]->apply(id, state);
 	Robot attack = strategies["attack"]->apply(id, state);
 
-	state.show();
+	//state.show();
 
-	debug.robots_final_pose[id["goal"]] = goal.get_target();
-	debug.robots_final_pose[id["defense"]] = defense.get_target();
+	//debug.robots_final_pose[id["goal"]] = goal.get_target();
+	//debug.robots_final_pose[id["defense"]] = defense.get_target();
 	debug.robots_final_pose[id["attack"]] = attack.get_target();
 
 	//debug.robots_step_pose[id["goal"]] = goal.get_potencial_direction();

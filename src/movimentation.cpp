@@ -8,6 +8,8 @@ Movimentation::Movimentation() = default;
 Command Movimentation::move_players(Robot robot, btVector3 target){
 
 	Command command;
+    btVector3 r = btVector3(target.x+10, target.y); // final orientation
+    btVector3 g = target; // target
 
 /*	const float n = 3.f;
 	const float D_g = 100.f;
