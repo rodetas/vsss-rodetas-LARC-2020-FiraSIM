@@ -16,6 +16,7 @@ public:
 	Movimentation();
 
 	Command move_players(Robot, btVector3);
+	float define_fi(Robot& p, btVector3 r, btVector3 g);
 
 	Command stop();
 	Command turn_left(int, int);
