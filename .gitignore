@@ -3,4 +3,5 @@ build/*
 .vscode/*
 .idea/*
 *.json
+cmake-build-debug/*
 SDK-Rodetas
