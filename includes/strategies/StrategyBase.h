@@ -1,9 +1,9 @@
 #ifndef STRATEGY_HPP_
 #define STRATEGY_HPP_
 
-#include "../common.h"
-#include "../movimentation.h"
-#include "../state.h"
+#include <common.h>
+#include <movimentation.h>
+#include <state.h>
 
 using namespace common;
 

@@ -1,9 +1,9 @@
 #ifndef ROBOT_H_
 #define ROBOT_H_
 
-#include "common.h"
-#include "ball.h"
-#include "object.h"
+#include <common.h>
+#include <ball.h>
+#include <object.h>
 
 using namespace common;
 
@@ -11,9 +11,9 @@ class Robot : public Object {
 
 public:
     Robot();
-    Robot(int);
+    explicit Robot(int);
 
-    virtual string show();
+    string show() override;
 
     void initialize();
     void update_robot(Robot);

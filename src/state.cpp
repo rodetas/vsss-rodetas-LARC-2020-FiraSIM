@@ -1,9 +1,5 @@
 #include "state.h"
 
-State::State(){
-
-}
-
 void State::show(){
     cout << endl << endl << "Robots Team 1:" << endl;
     for(int i = 0 ; i < 3 ; i++){

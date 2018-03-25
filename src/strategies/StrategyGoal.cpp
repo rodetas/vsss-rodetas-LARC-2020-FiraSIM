@@ -1,4 +1,4 @@
-#include "StrategyGoal.h"
+#include <StrategyGoal.h>
 
 StrategyGoal::StrategyGoal() : StrategyBase() {
 	name = "goal";

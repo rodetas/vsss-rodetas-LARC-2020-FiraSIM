@@ -7,13 +7,12 @@
  */
 
 #ifndef _SAMPLE_H_
-#define _SAMPLE_H
+#define _SAMPLE_H_
 
-#include "common.h"
+#include <common.h>
 #include <interface.h>
-//#include "VSS-Interface/cpp/interface.h"
-#include "vector"
-#include "state.h"
+#include <vector>
+#include <state.h>
 
 using namespace std;
 using namespace common;
@@ -42,7 +41,7 @@ protected:
     common::Debug debug;
 
 public:
-    Sample();
+    Sample() = default;
 
     void init_sample(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name);
     void receive_state();

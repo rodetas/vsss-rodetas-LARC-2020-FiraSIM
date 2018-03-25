@@ -1,4 +1,4 @@
-#include "StrategyBase.h"
+#include <StrategyBase.h>
 
 StrategyBase::StrategyBase(){
     goal_size  = btVector3(10,40);

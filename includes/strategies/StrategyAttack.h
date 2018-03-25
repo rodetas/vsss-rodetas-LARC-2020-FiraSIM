@@ -1,7 +1,7 @@
 #ifndef ATTACK_STRATEGY_H_
 #define ATTACK_STRATEGY_H_
 
-#include "StrategyBase.h"
+#include <StrategyBase.h>
 
 class StrategyAttack : public StrategyBase {
 

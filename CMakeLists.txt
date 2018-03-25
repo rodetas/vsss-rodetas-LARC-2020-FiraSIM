@@ -18,8 +18,7 @@ find_library(ZeroMQ_LIBRARY
         )
 
 include_directories(${PROTOBUF_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
-include_directories(src src/strategies src/VSS-Interface)
-include_directories(include include/Interfaces)
+include_directories(includes includes/strategies)
 include_directories(usr/local/include)
 
 file(GLOB_RECURSE SRC src/*.cpp)

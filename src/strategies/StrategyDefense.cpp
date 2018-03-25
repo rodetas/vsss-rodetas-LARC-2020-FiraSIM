@@ -1,4 +1,4 @@
-#include "StrategyDefense.h"
+#include <StrategyDefense.h>
 
 StrategyDefense::StrategyDefense() : StrategyBase()	{
 	name = "defense";

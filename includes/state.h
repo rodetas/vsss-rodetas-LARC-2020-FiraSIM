@@ -1,9 +1,9 @@
 #ifndef STATE_H_
 #define STATE_H_
 
-#include "common.h"
-#include "robot.h"
-#include "ball.h"
+#include <common.h>
+#include <robot.h>
+#include <ball.h>
 
 using namespace common;
 
@@ -15,7 +15,7 @@ public:
     Ball ball;
 
     //! Default constructor: State s;
-    State();
+    State() = default;
 
     static State Global_State2State(vss_state::Global_State global_state, string main_color);
 

@@ -1,4 +1,4 @@
-#include "strategy.h"
+#include <strategy.h>
 
 Strategy::Strategy(){
     main_color = "yellow";

@@ -1,6 +1,4 @@
-#include "movimentation.h"
-
-Movimentation::Movimentation() = default;
+#include <movimentation.h>
 
 /*
  * calculates the basic movimentation to goal to target

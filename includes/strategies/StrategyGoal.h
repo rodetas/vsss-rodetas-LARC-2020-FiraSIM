@@ -1,7 +1,7 @@
 #ifndef STRATEGY_GOAL_H_
 #define STRATEGY_GOAL_H_
 
-#include "StrategyBase.h"
+#include <StrategyBase.h>
 
 class StrategyGoal : public StrategyBase {
 

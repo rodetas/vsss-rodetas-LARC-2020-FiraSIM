@@ -1,14 +1,14 @@
 #ifndef OBJECT_H_
 #define OBJECT_H_
 
-#include "common.h"
+#include <common.h>
 
 using namespace common;
 
 class Object {
 
 public:
-    Object(){}
+    Object() = default;
 
     btVector3 get_position(){
         return pose;

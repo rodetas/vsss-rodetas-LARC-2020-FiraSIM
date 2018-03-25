@@ -1,9 +1,9 @@
 #ifndef MOVIMENTATION_H_
 #define MOVIMENTATION_H_
 
-#include "common.h"
-#include "robot.h"
-#include "ball.h"
+#include <common.h>
+#include <robot.h>
+#include <ball.h>
 
 #include <functional>
 
@@ -13,7 +13,7 @@ class Movimentation {
 
 public:
 
-	Movimentation();
+	Movimentation() = default;
 
 	Command move_players(Robot, btVector3);
 	float define_fi(Robot& p, btVector3 r, btVector3 g);
