@@ -1,9 +1,9 @@
 #ifndef MOVIMENTATION_H_
 #define MOVIMENTATION_H_
 
-#include "common.h"
-#include "robot.h"
-#include "ball.h"
+#include <common.h>
+#include <robot.h>
+#include <ball.h>
 
 #include <functional>
 
@@ -13,16 +13,16 @@ class Movimentation {
 
 public:
 
-	Movimentation();
+	Movimentation() = default;
 
-	Command move_players(Robot, btVector3);
+	virtual Command move_players(Robot, btVector3);
 
-	Command stop();
-	Command turn_left(int, int);
-	Command turn_right(int, int);
+    virtual Command stop();
+    virtual Command turn_left(int, int);
+    virtual Command turn_right(int, int);
 
-	Command check_pwm(const Command&);
-	Command define_pwm(Robot, btVector3, char);
+    virtual Command check_pwm(const Command&);
+	virtual Command define_pwm(Robot, btVector3, char);
 
 };
 #endif

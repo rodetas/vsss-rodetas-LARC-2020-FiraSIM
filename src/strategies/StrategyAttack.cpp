@@ -18,9 +18,9 @@ Command StrategyAttack::strategy(Robot robot, Command command){
 		    robot.x() < image_size.x*0.25 && robot.y() > halfGoal2 && robot.y() < halfGoal1){
 				
 			if (robot.y() < state.ball.y()) {
-				c = movimentation.turn_right(80, 80);
+				c = movimentation->turn_right(80, 80);
 			} else {
-				c = movimentation.turn_left(80, 80);
+				c = movimentation->turn_left(80, 80);
 			}
 		}
 	}

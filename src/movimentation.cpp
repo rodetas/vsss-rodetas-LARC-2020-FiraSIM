@@ -1,7 +1,5 @@
 #include "movimentation.h"
 
-Movimentation::Movimentation(){
-}
 
 /*
  * calculates the basic movimentation to goal to target

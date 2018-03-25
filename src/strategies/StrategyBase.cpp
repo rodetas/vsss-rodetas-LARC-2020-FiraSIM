@@ -3,6 +3,7 @@
 StrategyBase::StrategyBase(){
     goal_size  = btVector3(10,40);
     image_size = btVector3(170,130);
+    movimentation = new UnivectorField();
 }
 
 Robot StrategyBase::apply(map<string, int> _id, State _state){
@@ -18,7 +19,7 @@ Robot StrategyBase::apply(map<string, int> _id, State _state){
     robot.set_target(target);
 
     // define basic movimentation
-    Command movimentationCommand = movimentation.move_players(robot, robot.get_target());
+    Command movimentationCommand = movimentation->move_players(robot, robot.get_target());
 
     // define strategy
     Command strategyCommand = strategy(robot, movimentationCommand);
@@ -38,7 +39,7 @@ void StrategyBase::move(map<string, int> _id, State _state){
     robot.update_robot(_state.robots[id[name]]);    
 
     // define basic movimentation
-    Command movimentationCommand = movimentation.move_players(robot, robot.get_target());
+    Command movimentationCommand = movimentation->move_players(robot, robot.get_target());
 
     // define strategy
     Command strategyCommand = stop_strategy(movimentationCommand);
@@ -57,9 +58,9 @@ void StrategyBase::move(map<string, int> _id, State _state){
         // girar caso robo esteja preso de frente pra parede
         if (robot.cos_from(state.ball.get_position()) > -0.9 && robot.cos_from(state.ball.get_position()) < 0.9) {
             if (robot.sin_from(state.ball.get_position()) > 0) {
-                c = movimentation.turn_right(50,30);
+                c = movimentation->turn_right(50,30);
             } else {
-                c = movimentation.turn_left(50,50);
+                c = movimentation->turn_left(50,50);
             }
 //            cout << "preso pra parede" << endl;
         } 
@@ -68,9 +69,9 @@ void StrategyBase::move(map<string, int> _id, State _state){
         if (robot.distance_from(state.ball.get_position()) < (8) ) {
 
             if (robot.y() < (image_size.y/2)){
-                c = movimentation.turn_left(60,60);	
+                c = movimentation->turn_left(60,60);
             } else {
-                c = movimentation.turn_right(60,60);
+                c = movimentation->turn_right(60,60);
             }
 //            cout << "preso com bola" << endl;
         }
@@ -100,14 +101,14 @@ Command StrategyBase::stop_strategy(Command _command){
 	if(distance_target < 4){ 
 
         if (robot.cos_from(state.ball.get_projection()) < -0.8 || robot.cos_from(state.ball.get_projection()) > 0.8) {
-            c = movimentation.stop();
+            c = movimentation->stop();
  
         } else {
 
             if (robot.sin_from(state.ball.get_position()) > 0) {
-                c = movimentation.turn_right(10, 10);
+                c = movimentation->turn_right(10, 10);
             } else {
-                c = movimentation.turn_left(10, 10);
+                c = movimentation->turn_left(10, 10);
             }
         }
     }

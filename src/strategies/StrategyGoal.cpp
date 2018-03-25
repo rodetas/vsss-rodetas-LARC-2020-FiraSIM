@@ -65,9 +65,9 @@ Command StrategyGoal::stop_strategy(Command command){
 	if(distanceTarget < (4)){
 
         if ((robot.yaw() > 80 && robot.yaw() < 120) || (robot.yaw() > 260 && robot.yaw() < 300)) {
-            c = movimentation.stop();
+            c = movimentation->stop();
         } else {
-			c = movimentation.turn_right(10, 10);
+			c = movimentation->turn_right(10, 10);
         }
     }
 

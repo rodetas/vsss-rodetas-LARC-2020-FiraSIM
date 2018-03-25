@@ -3,6 +3,7 @@
 
 #include <common.h>
 #include <movimentation.h>
+#include <univectorfield.h>
 #include <state.h>
 
 using namespace common;
@@ -63,7 +64,7 @@ protected:
     map<string, int> id;
 
     Command command;
-    Movimentation movimentation;
+    Movimentation* movimentation;
 
     Robot get_robot(string);
 
