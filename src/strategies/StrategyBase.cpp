@@ -21,10 +21,10 @@ Robot StrategyBase::apply(map<string, int> _id, State _state){
     Command movimentationCommand = movimentation.move_players(robot, robot.get_target());
 
     // define strategy
-    //Command strategyCommand = strategy(robot, movimentationCommand);
+    Command strategyCommand = strategy(robot, movimentationCommand);
 
     // define command
-    define_command(movimentationCommand);
+    define_command(strategyCommand);
 
     return robot;
 }
@@ -61,7 +61,7 @@ void StrategyBase::move(map<string, int> _id, State _state){
             } else {
                 c = movimentation.turn_left(50,50);
             }
-            cout << "preso pra parede" << endl;
+//            cout << "preso pra parede" << endl;
         } 
         
         // girar caso robo prenda a bola na parede - 8 cm
@@ -72,7 +72,7 @@ void StrategyBase::move(map<string, int> _id, State _state){
             } else {
                 c = movimentation.turn_right(60,60);
             }
-            cout << "preso com bola" << endl;
+//            cout << "preso com bola" << endl;
         }
     }
 
