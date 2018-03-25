@@ -31,7 +31,7 @@ Command StrategyAttack::strategy(Robot robot, Command command){
 btVector3 StrategyAttack::define_target(Robot robot){
 
 	Point target = state.ball.get_position();
-/*
+
 	Point centerGoal = Point(0, image_size.y/2);
 	float angle_robot_goal = angulation(robot.get_position(), centerGoal);
 
@@ -64,7 +64,7 @@ btVector3 StrategyAttack::define_target(Robot robot){
 	// verifies the limits of the destination
 	if (target.y < 0) target.y = 0;
 	if (target.y > image_size.y) target.y = image_size.y;
-*/
+
 	return target;
 }
 
