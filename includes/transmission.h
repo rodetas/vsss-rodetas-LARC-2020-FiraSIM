@@ -1,27 +1,18 @@
 #ifndef TRANSMISSION_H_
 #define TRANSMISSION_H_
 
-#include "common.h"
+#include <common.h>
 
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <cstring>
 #include <bitset>
-#include <mutex>
 
 using namespace std;
 using namespace common;
 
 class Transmission {
-
-private:
-    int usb;
-    int last_time;
-    bool transmittingStatus;
-    bool openStatus;
-
-    string port;
 
 public:
 	Transmission();
@@ -37,7 +28,7 @@ public:
      * Open the serial connection with xbee
      * \return true if connection succeed
      */
-    bool openConection();
+    bool openConnection();
 
     /**
      * Send a command to a specific robot
@@ -75,6 +66,14 @@ public:
      * \return true if connection is established
      */
     bool getConnectionStatus();
+
+private:
+    int usb;
+    int last_time;
+    bool transmittingStatus;
+    bool openStatus;
+
+    string port;
 
 };
 #endif

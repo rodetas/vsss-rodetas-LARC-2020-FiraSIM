@@ -8,8 +8,7 @@ Transmission::Transmission() {
 
     port = "/dev/ttyUSB0";
 
-    openConection();
-    time(NULL);
+    openConnection();
 }
 
 Transmission::~Transmission(){
@@ -21,7 +20,7 @@ void Transmission::closeConnection(){
     close(usb);
 }
 
-bool Transmission::openConection(){
+bool Transmission::openConnection(){
 
     usb = open(port.c_str(), O_RDWR | O_NOCTTY | O_SYNC);
 
@@ -73,8 +72,7 @@ bool Transmission::openConection(){
 }
 
 void Transmission::send(int i, Command c){
-    string comand = "";
-    comand = generateMessage(i, c);
+    string comand = generateMessage(i, c);;
     serialTransmit(comand);
 }
 
@@ -129,7 +127,7 @@ int Transmission::generateCheckSum(int frame_type, int frame_id, int address, in
 
 // recebe uma string para enviar
 void Transmission::serialTransmit(string comand){
-    const int size = comand.size();
+    const long size = comand.size();
     unsigned char send_bytes[size/2];
 
     // verifica o estado da conexao de 2 em 2 segundos

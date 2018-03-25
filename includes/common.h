@@ -9,11 +9,10 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
-#include "iostream"
-#include "iomanip"
-#include "math.h"
+#include <iostream>
+#include <iomanip>
+#include <cmath>
 #include <interface.h>
-//#include "VSS-Interface/cpp/interface.h"
 
 using namespace std;
 
@@ -41,7 +40,7 @@ namespace common{
             this->z = 0;
         };
         //! Constructor copy: btVector3 bt3(btVector3(x, y, z));
-        btVector3(btVector3 *b){
+        explicit btVector3(btVector3 *b){
             x = b->x;
             y = b->y;
             z = b->z;
@@ -58,13 +57,16 @@ namespace common{
     //! This is a simple structure responsible for represent a path: vector of poses.
 	struct Path{
 		vector<btVector3> poses;
-		Path(){};
-		Path(Path *path){
+
+		Path() = default;
+
+		explicit Path(Path *path){
 			poses = path->poses;
 		};
+
 		void show(){
-			for(unsigned int i = 0 ; i < poses.size() ; i++)
-			cout << "(" << poses.at(i).x << ", " << poses.at(i).y << ", " << poses.at(i).z << ")" << endl;
+			for(auto pose : poses)
+			    cout << "(" << pose.x << ", " << pose.y << ", " << pose.z << ")" << endl;
 		}
 	};
 
@@ -73,7 +75,7 @@ namespace common{
         btVector3 robots_step_pose[3];
         btVector3 robots_final_pose[3];
         Path robots_path[3];
-        Debug(){};
+        Debug() = default;
     };
 
     struct Command{
@@ -87,7 +89,7 @@ namespace common{
             this->right = right;
         };
 
-        Command(Command *cmd){
+        explicit Command(Command *cmd){
             left = cmd->left;
             right = cmd->right;
         };
@@ -108,8 +110,8 @@ namespace common{
     		string cmd = this->to_string();
     		vector<int> vec;
 
-    		for(unsigned int i=0 ; i<cmd.size() ; i++){
-    			vec.push_back(int(cmd[i]));
+    		for(const auto _cmd : cmd){
+    			vec.push_back(int(_cmd));
     		}
 
     		return vec;

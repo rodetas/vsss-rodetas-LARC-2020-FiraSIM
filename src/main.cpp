@@ -6,9 +6,9 @@
  * file, You can obtain one at http://www.gnu.org/licenses/gpl-3.0/.
  */
 
-#include "sstream"
-#include "strategy.h"
-#include "boost.h"
+#include <sstream>
+#include <strategy.h>
+#include <boost.h>
 
 bool argParse(int argc, char** argv, string *color, bool *debug, string *ip_receive_state, string *ip_send_debug, string *ip_send_command, string *name);
 

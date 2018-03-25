@@ -6,7 +6,7 @@
  * file, You can obtain one at http://www.gnu.org/licenses/gpl-3.0/.
  */
 
-#include "common.h"
+#include <common.h>
 
 namespace common{
     double distancePoint(btVector3 a, btVector3 b){

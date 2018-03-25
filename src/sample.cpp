@@ -6,11 +6,7 @@
  * file, You can obtain one at http://www.gnu.org/licenses/gpl-3.0/.
  */
 
-#include "sample.h"
-
-Sample::Sample(){
-
-}
+#include <sample.h>
 
 void Sample::init_sample(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name){
 	flag_init = 0;

@@ -1,4 +1,4 @@
-#include "StrategyAttack.h"
+#include <StrategyAttack.h>
 
 StrategyAttack::StrategyAttack() : StrategyBase(){
 	name = "attack";

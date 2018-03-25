@@ -9,12 +9,12 @@
 #ifndef _STRATEGY_H_
 #define _STRATEGY_H_
 
-#include "sample.h"
-#include "transmission.h"
-#include "strategies/StrategyBase.h"
-#include "strategies/StrategyAttack.h"
-#include "strategies/StrategyDefense.h"
-#include "strategies/StrategyGoal.h"
+#include <sample.h>
+#include <transmission.h>
+#include <strategies/StrategyBase.h>
+#include <strategies/StrategyAttack.h>
+#include <strategies/StrategyDefense.h>
+#include <strategies/StrategyGoal.h>
 
 using namespace std;
 using namespace common;
