@@ -9,8 +9,8 @@
 #include <sample.h>
 
 void Sample::init_sample(string team_color, bool is_debug, bool real_environment){
-	flag_init = 0;
-    this->is_debug = is_debug;
+    
+	this->is_debug = is_debug;
     this->team_color = team_color;
     this->real_environment = real_environment;
 	this->ip_send_debug = "tcp://localhost";
@@ -42,16 +42,10 @@ void Sample::init_sample(string team_color, bool is_debug, bool real_environment
 void Sample::receive_state(){
     interface_receive.receiveState();
 	state = State::Global_State2State(global_state, team_color);
-	//situation = global_state.situation();
 }
 
 void Sample::send_commands(){
     global_commands = vss_command::Global_Commands();
-	//global_commands.set_situation(NONE);
-
-	if(flag_init == 0){
-		flag_init = 1;
-	}
 
 	if(team_color == "yellow"){
 		global_commands.set_is_team_yellow(true);

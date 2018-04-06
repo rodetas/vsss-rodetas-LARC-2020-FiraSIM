@@ -28,8 +28,6 @@ private:
 	vss_debug::Global_Debug global_debug;
 
 protected:
-    int situation;
-    int flag_init;
     bool is_debug;
     bool real_environment;
     string team_color;

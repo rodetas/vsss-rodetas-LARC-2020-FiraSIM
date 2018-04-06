@@ -32,9 +32,9 @@ void Config::argument_parse(int argc, char** argv) {
 }
 
 bool Config::ready_param() {
-    if (team_color == " ") {
-        cout << "ERROR: You must set a color to your team." << endl;
+    if (team_color == "yellow" || team_color == "blue") {
         return true;
     }
+    cout << "ERROR: You must set a color to your team." << endl;
     return false;
 }
