@@ -12,8 +12,8 @@ Strategy::Strategy(){
 	timeLastChange = -1;
 }
 
-void Strategy::init(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name){
-	init_sample(main_color, is_debug, real_environment, ip_receive_state, ip_send_debug, ip_send_command, name);
+void Strategy::init(){
+	init_sample(Config::color_team, Config::debug, Config::real_environment, Config::ip_receive_state, Config::ip_send_debug, Config::ip_send_command, Config::name);
 	loop();
 }
 
