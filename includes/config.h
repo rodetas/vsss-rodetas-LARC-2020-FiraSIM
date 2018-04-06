@@ -19,21 +19,12 @@ using namespace std;
 class Config{
 
 public:
-    static int argc;
-    static char** argv;
-
     static bool debug;
     static bool real_environment;
+    static string team_side;
+    static string team_color;
 
-    static string name;
-    static string side_team;
-    static string color_team;
-    static string ip_send_debug;
-    static string ip_send_command;
-    static string ip_receive_state;
-
-    static void init(int ,char**);    
-    static void argument_parse();
+    static void argument_parse(int ,char**);
     static bool ready_param();    
 };
 #endif // _CONFIG_H_

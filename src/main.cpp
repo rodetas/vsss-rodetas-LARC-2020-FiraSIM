@@ -11,11 +11,11 @@
 
 int main(int argc, char** argv){
 	
-    Config::init(argc, argv);
+    Config::argument_parse(argc, argv);
 
     if (Config::ready_param()){
-        //Strategy strategy;
-        //strategy.init(color, debug, false, ip_receive_state, ip_send_debug, ip_send_command, name);
+        Strategy strategy;
+        strategy.init();
     }
 
 	return 0;

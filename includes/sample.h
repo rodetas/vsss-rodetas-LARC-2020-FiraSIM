@@ -28,13 +28,14 @@ private:
 	vss_debug::Global_Debug global_debug;
 
 protected:
-	string ip_receive_state, ip_send_debug, ip_send_command;
-    string main_color;
+    int situation;
+    int flag_init;
     bool is_debug;
     bool real_environment;
-    int situation;
-    string name;
-    int flag_init;
+    string team_color;
+    string ip_send_debug;
+    string ip_send_command;
+    string ip_receive_state;
 
     State state;
 	common::Command commands[3];
@@ -43,7 +44,7 @@ protected:
 public:
     Sample() = default;
 
-    void init_sample(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name);
+    void init_sample(string, bool, bool);
     void receive_state();
     void send_commands();
     void send_debug();
