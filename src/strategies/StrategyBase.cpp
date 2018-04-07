@@ -1,8 +1,16 @@
 #include <StrategyBase.h>
 
 StrategyBase::StrategyBase(){
-    goal_size  = btVector3(10,40);
-    image_size = btVector3(170,130);
+    image_size = btVector3(170, 130);
+    goal_size  = btVector3(10, 40);
+    goal_area_size = btVector3(15, 70);
+    
+    if (Config::team_side == "left") {
+        goal_center_position = btVector3(0, 65);
+
+    } else if (Config::team_side == "right"){
+        goal_center_position = btVector3(170, 65);        
+    }
 }
 
 Robot StrategyBase::apply(map<string, int> _id, State _state){

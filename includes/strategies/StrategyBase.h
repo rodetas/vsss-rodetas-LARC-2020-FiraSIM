@@ -4,6 +4,7 @@
 #include <common.h>
 #include <movimentation.h>
 #include <state.h>
+#include <config.h>
 
 using namespace common;
 
@@ -54,8 +55,11 @@ protected:
 
     btVector3 goal_size;
     btVector3 image_size;
+    btVector3 goal_center_position;
+    btVector3 goal_area_size;
 
     string name;
+    string side;
 
     Robot robot;
 //    Point target;
