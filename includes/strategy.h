@@ -9,6 +9,7 @@
 #ifndef _STRATEGY_H_
 #define _STRATEGY_H_
 
+#include <config.h>
 #include <sample.h>
 #include <transmission.h>
 #include <strategies/StrategyBase.h>
@@ -24,7 +25,7 @@ class Strategy : public Sample{
 public:
 	Strategy();
 
-	void init(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name);
+	void init();
 	void loop();
 
 	void apply();

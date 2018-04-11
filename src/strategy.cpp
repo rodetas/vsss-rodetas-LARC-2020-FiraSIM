@@ -1,9 +1,6 @@
 #include <strategy.h>
 
 Strategy::Strategy(){
-    main_color = "yellow";
-    is_debug = false;
-    real_environment = false;
 	srand(time(NULL));
 
 	initialize_strategies();
@@ -12,8 +9,8 @@ Strategy::Strategy(){
 	timeLastChange = -1;
 }
 
-void Strategy::init(string main_color, bool is_debug, bool real_environment, string ip_receive_state, string ip_send_debug, string ip_send_command, string name){
-	init_sample(main_color, is_debug, real_environment, ip_receive_state, ip_send_debug, ip_send_command, name);
+void Strategy::init(){
+	init_sample(Config::team_color, Config::debug, Config::real_environment);
 	loop();
 }
 

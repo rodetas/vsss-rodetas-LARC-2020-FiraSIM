@@ -43,7 +43,7 @@ State State::Global_State2State(vss_state::Global_State global_state, string mai
             pose.y = global_state.robots_yellow(i).pose().y();           // Pos Y
             pose.z =  global_state.robots_yellow(i).pose().yaw();         // Rotation in Z Axis (YAW)
 
-            pose.z = pose.z * (180.0/M_PI);	// CONVERT TO DEGREES
+            //pose.z = pose.z * (180.0/M_PI);	// CONVERT TO DEGREES
 
             pose.z -= 180; // 180 if comes from VSS-Simulator
 
@@ -111,7 +111,7 @@ State State::Global_State2State(vss_state::Global_State global_state, string mai
             pose.y = global_state.robots_blue(i).pose().y();           // Pos Y
             pose.z =  global_state.robots_blue(i).pose().yaw();         // Rotation in Z Axis (YAW)
 
-            pose.z = pose.z * (180.0/M_PI);	// CONVERT TO DEGREES
+            //pose.z = pose.z * (180.0/M_PI);	// CONVERT TO DEGREES
 
             pose.z -= 180; // 180 if comes from VSS-Simulator
 
