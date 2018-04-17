@@ -11,15 +11,18 @@
 
 #include <common.h>
 #include <interface.h>
+#include <InterfaceCore.h>
+#include <FieldTransformation.h>
+#include <State.h>
 #include <vector>
-#include <state.h>
+#include "StateReceiverAdapter.h"
 
 using namespace std;
 using namespace common;
 
-class Sample{
+class Sample {
 private:
-    Interface interface_receive;
+
     Interface interface_send;
     Interface interface_debug;
 
@@ -33,9 +36,7 @@ protected:
     string team_color;
     string ip_send_debug;
     string ip_send_command;
-    string ip_receive_state;
 
-    State state;
 	common::Command commands[3];
     common::Debug debug;
 
@@ -43,7 +44,6 @@ public:
     Sample() = default;
 
     void init_sample(string, bool, bool);
-    void receive_state();
     void send_commands();
     void send_debug();
 };

@@ -21,7 +21,7 @@ public:
 
     bool is_stopped();
     bool is_blocked(btVector3);
-    bool is_stopped_for(int);    
+    bool is_stopped_for(int);
     bool is_parallel_goal(btVector3);    
 
     void set_target(btVector3 _t);

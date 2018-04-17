@@ -7,15 +7,15 @@
  */
 
 #include "config.h"
-#include <strategy.h>
+#include <Kernel.h>
 
 int main(int argc, char** argv){
 	
     Config::argument_parse(argc, argv);
 
     if (Config::ready_param()){
-        Strategy strategy;
-        strategy.init();
+        Kernel Kernel;
+        Kernel.init();
     }
 
 	return 0;

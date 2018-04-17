@@ -10,6 +10,10 @@ class Object {
 public:
     Object() = default;
 
+    Object(btVector3 _p){
+        pose = _p;
+    }
+
     btVector3 get_position(){
         return pose;
     }

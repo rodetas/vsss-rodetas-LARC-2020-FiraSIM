@@ -21,7 +21,7 @@ class Config{
 public:
     static bool debug;
     static bool real_environment;
-    static string team_side;
+    static bool change_side;
     static string team_color;
 
     static void argument_parse(int ,char**);

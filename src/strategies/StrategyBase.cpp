@@ -6,7 +6,7 @@ StrategyBase::StrategyBase(){
     movimentation = new UnivectorField();
 }
 
-Robot StrategyBase::apply(map<string, int> _id, State _state){
+Robot StrategyBase::apply(map<string, int> _id, RodetasState _state){
 
     // update states
     set_state(_id, _state);
@@ -30,7 +30,7 @@ Robot StrategyBase::apply(map<string, int> _id, State _state){
     return robot;
 }
 
-void StrategyBase::move(map<string, int> _id, State _state){
+void StrategyBase::move(map<string, int> _id, RodetasState _state){
     
     // update states
     set_state(_id, _state);
@@ -128,9 +128,9 @@ Command StrategyBase::kick_strategy(Command _command){
     return Command(0,0);
 }
 
-void StrategyBase::set_state(map<string, int> _id, State _state){
-    id = _id;    
-    state = _state;    
+void StrategyBase::set_state(map<string, int> _id, RodetasState _state){
+    id = _id;
+    state = _state;
 }
 
 Robot StrategyBase::get_robot(string func){

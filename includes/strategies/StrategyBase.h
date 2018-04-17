@@ -4,7 +4,7 @@
 #include <common.h>
 #include <movimentation.h>
 #include <univectorfield.h>
-#include <state.h>
+#include <RodetasState.h>
 #include <config.h>
 
 using namespace common;
@@ -17,9 +17,9 @@ public:
      */
     StrategyBase();
 
-    virtual Robot apply(map<string, int>, State);
+    virtual Robot apply(map<string, int>, vss::State);
      
-    virtual void move(map<string, int>, State);
+    virtual void move(map<string, int>, vss::State);
 
     /**
      * Pure virtual function to apply the strategy
@@ -44,7 +44,7 @@ public:
 
     virtual Command collision_strategy(Command);
 
-    void set_state(map<string, int>, State);
+    void set_state(map<string, int>, vss::State);
 
     void define_command(Command);
 
@@ -64,7 +64,7 @@ protected:
 
     Robot robot;
 //    Point target;
-    State state;
+    RodetasState state;
     map<string, int> id;
 
     Command command;

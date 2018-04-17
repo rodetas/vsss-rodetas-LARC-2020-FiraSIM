@@ -118,18 +118,6 @@ namespace common{
     	}
     };
 
-    //! Estimate distance between a set of points.
-    double distancePoint(btVector3, btVector3);
-
-    //! Estimate midpoint between a set of points.
-    btVector3 midpoint(btVector3, btVector3);
-
-    //! Estimate angle between two straight lines.
-    double angulation(btVector3, btVector3);
-
-    //! Estimate angle between two straight lines in radian.
-    double radian(btVector3, btVector3);
-
     typedef btVector3 Point;
 }
 

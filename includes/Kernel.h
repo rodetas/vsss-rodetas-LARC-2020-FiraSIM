@@ -17,13 +17,17 @@
 #include <strategies/StrategyDefense.h>
 #include <strategies/StrategyGoal.h>
 
+#include <RodetasRobot.h>
+#include <DebugSenderAdapter.h>
+#include <StateReceiverAdapter.h>
+
 using namespace std;
 using namespace common;
 
-class Strategy : public Sample{
+class Kernel : public Sample {
 
 public:
-	Strategy();
+    Kernel();
 
 	void init();
 	void loop();
@@ -38,6 +42,7 @@ private:
 	map<string, StrategyBase*> strategies;
 
 	Transmission transmission;
+    RodetasState state;
 
 	int timeLastChange;
 };

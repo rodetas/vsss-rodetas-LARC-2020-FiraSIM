@@ -7,6 +7,7 @@
  */
 
 #include <sample.h>
+#include <config.h>
 
 void Sample::init_sample(string team_color, bool is_debug, bool real_environment){
     
@@ -15,9 +16,6 @@ void Sample::init_sample(string team_color, bool is_debug, bool real_environment
     this->real_environment = real_environment;
 	this->ip_send_debug = "tcp://localhost";
 	this->ip_send_command = "tcp://localhost";
-	this->ip_receive_state = "tcp://localhost:5555";
-
-    interface_receive.createSocketReceiveState(&global_state, this->ip_receive_state);
 
 	if(team_color == "yellow"){
 		this->ip_send_command += ":5556";
@@ -28,7 +26,7 @@ void Sample::init_sample(string team_color, bool is_debug, bool real_environment
 			interface_debug.createSendDebugTeam1(&global_debug, this->ip_send_debug);
 		}
 
-	}else{
+	} else {
 		this->ip_send_command += ":5557";
 		interface_send.createSendCommandsTeam2(&global_commands, this->ip_send_command);
 
@@ -37,11 +35,6 @@ void Sample::init_sample(string team_color, bool is_debug, bool real_environment
 			interface_debug.createSendDebugTeam2(&global_debug, this->ip_send_debug);
 		}
 	}
-}
-
-void Sample::receive_state(){
-    interface_receive.receiveState();
-	state = State::Global_State2State(global_state, team_color);
 }
 
 void Sample::send_commands(){
