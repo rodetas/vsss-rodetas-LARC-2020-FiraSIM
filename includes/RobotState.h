@@ -6,19 +6,25 @@
 #define SDK_RODETAS_ROBOTSTATE_H
 
 #include <common.h>
+#include "MathHelper.h"
 
 class RobotState {
 
 public:
 
-    btVector3 position;
-
+    common::btVector3 position;
     double angle;
-    double angleSpeed;
-
+    double angularSpeed;
     double linearSpeed;
 
-    void setPosition(btVector3 p){
+    RobotState(){
+        this->position = common::btVector3(0,0,0);
+        this->angle = 0;
+        this->angularSpeed = 0;
+        this->linearSpeed = 0;
+    };
+
+    void setPosition(common::btVector3 p){
         this->position = p;
     }
 
@@ -26,12 +32,26 @@ public:
         this->angle = angle;
     }
 
-    void setAngleSpeed(double speed){
-        this->angleSpeed = speed;
+    void setAngularSpeed(double speed){
+        this->angularSpeed = speed;
     }
 
     void setLinearSpeed(double speed){
         this->linearSpeed = speed;
+    }
+
+//@TODO: tirar as contas daqui e jogar pro MathHelper, deixar apenas as chamadas
+
+    double cosFrom(common::btVector3 _p) {
+        return cos((Math::angulation(position,_p) - angle)/(180/M_PI));
+    }
+
+    double sinFrom(common::btVector3 _p) {
+        return sin((Math::angulation(position,_p) - angle)/(180/M_PI));
+    }
+
+    double distanceFrom(common::btVector3 _p) {
+        return Math::distancePoint(position, _p);
     }
 
 };

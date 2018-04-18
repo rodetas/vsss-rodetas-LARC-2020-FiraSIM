@@ -8,31 +8,30 @@ RodetasRobot::RodetasRobot() {
 
 }
 
-void RodetasRobot::updateSelfState(Robot selfState) {
-    this->selfState.x = selfState.x;
+void RodetasRobot::calcAction(){
+    //strategy->apply((RodetasRobot&)this);
+}
+
+void RodetasRobot::updateSelfState(RobotState selfState) {
+    this->selfState = selfState;
 }
 
 void RodetasRobot::updateState(RodetasState state){
     this->state = state;
 }
 
-void RodetasRobot::setMindSet(MindSet mind) {
-    this->mindSet = mind;
-
-    switch(mindSet){
-        case MindSet::GoalKeeper:
-            // strategy = goalKeeper()
-            break;
-        case MindSet::Defender:
-            // strategy = defender()
-            break;
-        case MindSet::Attacker:
-            // strategy = attacker()
-            break;
-    }
-
+void RodetasRobot::setDebug(RobotDebug debug) {
+    this->debug = debug;
 }
 
-void RodetasRobot::setDebug(Debug& debug) {
-    this->debug = debug;
+Command RodetasRobot::getCommand(){
+    return this->command;
+}
+
+RobotDebug RodetasRobot::getRobotDebug() {
+    return this->debug;
+}
+
+RobotState RodetasRobot::getSelfState() {
+    return this->selfState;
 }

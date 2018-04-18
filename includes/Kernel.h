@@ -12,10 +12,10 @@
 #include <config.h>
 #include <sample.h>
 #include <transmission.h>
-#include <strategies/StrategyBase.h>
-#include <strategies/StrategyAttack.h>
-#include <strategies/StrategyDefense.h>
-#include <strategies/StrategyGoal.h>
+//#include <strategies/RobotStrategyBase.h>
+//#include <strategies/StrategyAttack.h>
+//#include <strategies/StrategyDefense.h>
+//#include <strategies/StrategyGoal.h>
 
 #include <RodetasRobot.h>
 #include <DebugSenderAdapter.h>
@@ -38,8 +38,6 @@ public:
 	void define_function_for_each_robot();
 
 private:
-	map<string, int> id;
-	map<string, StrategyBase*> strategies;
 
 	Transmission transmission;
     RodetasState state;

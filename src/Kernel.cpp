@@ -15,15 +15,15 @@ void Kernel::init(){
 }
 
 void Kernel::initialize_strategies(){
-    strategies["goal"] = new StrategyGoal();
-    strategies["attack"] = new StrategyAttack();
-    strategies["defense"] = new StrategyDefense();
+//    strategies["goal"] = new StrategyGoal();
+//    strategies["attack"] = new StrategyAttack();
+//    strategies["defense"] = new StrategyDefense();
 }
 
 void Kernel::initialize_robots(){
-	id["goal"] = 0;
-	id["attack"] = 1;
-	id["defense"] = 2;
+//	id["goal"] = 0;
+//	id["attack"] = 1;
+//	id["defense"] = 2;
 }
 
 void Kernel::loop(){
@@ -32,11 +32,6 @@ void Kernel::loop(){
     DebugSendAdapter debugInterface(Config::team_color, Config::debug);
 
     RodetasRobot robots[3];
-
-    robots[0].setMindSet(MindSet::GoalKeeper);
-    robots[1].setMindSet(MindSet::Defender);
-    robots[2].setMindSet(MindSet::Attacker);
-
     RodetasState state;
 
 	while(true){
@@ -48,18 +43,18 @@ void Kernel::loop(){
             RodetasRobot& robot = robots[i];
 
             robot.updateSelfState(state.robots[i]);
+            robot.updateState(state);
+            robot.calcAction();
         }
 
-        // run Rodeta's strategy
-		apply();
 
 		if(!real_environment){
 			send_commands();
 
 		} else {
-            transmission.send(id["goal"],strategies["goal"]->get_command());
-        	transmission.send(id["defense"],strategies["defense"]->get_command());
-        	transmission.send(id["attack"], strategies["attack"]->get_command());
+//            transmission.send(id["goal"],strategies["goal"]->get_command());
+//        	transmission.send(id["defense"],strategies["defense"]->get_command());
+//        	transmission.send(id["attack"], strategies["attack"]->get_command());
 		}
 
 		debugInterface.sendDebug(debug);
@@ -115,13 +110,13 @@ void Kernel::apply(){
 	// aplica a estratégia para cada robô
 	//Robot goal = strategies["goal"]->apply(id, state);
 	//Robot defense = strategies["defense"]->apply(id, state);
-	Robot attack = strategies["attack"]->apply(id, state);
+	//Robot attack = strategies["attack"]->apply(id, state);
 
 	//state.show();
 
 	//debug.robots_final_pose[id["goal"]] = goal.get_target();
 	//debug.robots_final_pose[id["defense"]] = defense.get_target();
-	debug.robots_final_pose[id["attack"]] = attack.get_target();
+	//debug.robots_final_pose[id["attack"]] = attack.get_target();
 
 	//debug.robots_step_pose[id["goal"]] = goal.get_potencial_direction();
 	//debug.robots_step_pose[id["defense"]] = defense.get_potencial_direction();
@@ -129,7 +124,7 @@ void Kernel::apply(){
 
     //debug.robots_path[id["attack"]] = attack.path;
 
-	commands[id["goal"]] = strategies["goal"]->get_command();
-	commands[id["defense"]] = strategies["defense"]->get_command();
-	commands[id["attack"]] = strategies["attack"]->get_command();
+//	commands[id["goal"]] = strategies["goal"]->get_command();
+//	commands[id["defense"]] = strategies["defense"]->get_command();
+//	commands[id["attack"]] = strategies["attack"]->get_command();
 }

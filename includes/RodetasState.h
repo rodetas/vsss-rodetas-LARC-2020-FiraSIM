@@ -5,9 +5,9 @@
 #ifndef SDK_RODETAS_STATE_H
 #define SDK_RODETAS_STATE_H
 
-#include <ball.h>
 #include <vector>
 #include "RobotState.h"
+#include "BallState.h"
 
 class RodetasState {
 
@@ -15,7 +15,7 @@ public:
 
     RodetasState() = default;
 
-    Ball ball;
+    BallState ball;
     std::vector<RobotState> robots;
 
 };

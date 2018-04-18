@@ -20,14 +20,16 @@ RodetasState StateReceiverAdapter::receiveState(bool change_side, string main_co
 
     // converts vss::State to RodetasState
     RodetasState newState;
-//    newState.ball.set_position(btVector3(state.ball.x, state.ball.y, 0));
-//    newState.ball.set_velocity_vector(btVector3(state.ball.speedX, state.ball.speedY));
+    newState.ball.setPosition(btVector3(state.ball.x, state.ball.y, 0));
+    newState.ball.setLinearSpeed(Math::calculateLinearSpeed(state.ball.speedX, state.ball.speedY));
 
     // inserts team robots in the beginning of the vector and push opponents in the end
     if(main_color == "yellow"){
         for(auto vssRobot : state.teamYellow){
             RobotState robot;
             robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
+            robot.setAngle(vssRobot.angle);
+            robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
@@ -35,6 +37,8 @@ RodetasState StateReceiverAdapter::receiveState(bool change_side, string main_co
         for(auto vssRobot : state.teamBlue){
             RobotState robot;
             robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
+            robot.setAngle(vssRobot.angle);
+            robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
@@ -44,6 +48,8 @@ RodetasState StateReceiverAdapter::receiveState(bool change_side, string main_co
         for(auto vssRobot : state.teamBlue){
             RobotState robot;
             robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
+            robot.setAngle(vssRobot.angle);
+            robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
@@ -51,7 +57,9 @@ RodetasState StateReceiverAdapter::receiveState(bool change_side, string main_co
         for(auto vssRobot : state.teamYellow){
             RobotState robot;
             robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
-            robot.setLinearSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
+            robot.setAngle(vssRobot.angle);
+            robot.setAngularSpeed(vssRobot.speedAngle);
+            robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
     }

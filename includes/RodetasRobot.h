@@ -5,10 +5,17 @@
 #ifndef SDK_RODETAS_RODETASROBOT_H
 #define SDK_RODETAS_RODETASROBOT_H
 
-#include <Mindset.h>
 #include <RodetasState.h>
 #include <common.h>
 #include <RobotState.h>
+#include <RobotDebug.h>
+#include <strategies/RobotStrategy.h>
+#include <MathHelper.h>
+#include <cmath>
+//#include <strategies/StrategyAttack.h>
+//#include <strategies/StrategyDefense.h>
+//#include <strategies/StrategyGoal.h>
+//#include <strategies/RobotStrategyBase.h>
 
 using namespace common;
 
@@ -18,22 +25,24 @@ public:
 
     RodetasRobot();
 
-    void updateSelfState(RodetasRobot);
+    void calcAction();
+
+    void updateSelfState(RobotState);
     void updateState(RodetasState);
 
-    void setMindSet(MindSet);
-    void setDebug(Debug&);
+    void setDebug(RobotDebug);
+
+    Command getCommand();
+    RobotDebug getRobotDebug();
+    RobotState getSelfState();
 
 private:
 
-    MindSet mindSet;
     Command command;
-    Debug debug;
     RodetasState state;
-    RobotState robotState;
-//    GameStrategy strategy;
-
-
+    RobotDebug debug;
+    RobotState selfState;
+    RobotStrategy* strategy;
 
 };
 

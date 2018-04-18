@@ -10,7 +10,7 @@ namespace common {
     enum MindSet {
         GoalKeeper,
         Defender,
-        Attacker;
+        Attacker
     };
 }
 
