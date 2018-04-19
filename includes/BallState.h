@@ -14,14 +14,20 @@ public:
     common::btVector3 position;
     double linearSpeed;
 
-
-
     void setPosition(common::btVector3 p){
         this->position = p;
     }
 
     void setLinearSpeed(double speed){
         this->linearSpeed = speed;
+    }
+
+    common::btVector3 getPosition(){
+        return this->position;
+    }
+
+    double getLinearSpeed(){
+        return this->linearSpeed;
     }
 
 };

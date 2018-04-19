@@ -31,6 +31,7 @@ public:
     void updateState(RodetasState);
 
     void setDebug(RobotDebug);
+    void setStrategy(RobotStrategy*);
 
     Command getCommand();
     RobotDebug getRobotDebug();

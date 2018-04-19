@@ -6,6 +6,8 @@
 
 RobotStrategyBase::RobotStrategyBase() = default;
 
+//@TODO: implementar as funcoes daqui
+
 bool RobotStrategyBase::isBlocked(btVector3 target) {
     return false;
 

@@ -24,6 +24,10 @@ void RodetasRobot::setDebug(RobotDebug debug) {
     this->debug = debug;
 }
 
+void RodetasRobot::setStrategy(RobotStrategy* s) {
+    this->strategy = s;
+}
+
 Command RodetasRobot::getCommand(){
     return this->command;
 }

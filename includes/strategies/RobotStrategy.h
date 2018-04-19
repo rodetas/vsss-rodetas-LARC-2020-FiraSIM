@@ -9,6 +9,7 @@
 #include "RobotStrategyBase.h"
 #include <RobotState.h>
 #include <RodetasState.h>
+#include <movimentation.h>
 
 using namespace common;
 
@@ -17,9 +18,13 @@ class RobotStrategy {
 public:
     RobotStrategy();
 
-    /**
-     * Apply the robot strategy when it's on the corner
-     */
+    virtual Command applyStrategy(RobotState, RodetasState);
+
+    virtual Command specificStrategy(Command) = 0;
+
+    virtual btVector3 defineTarget() = 0;
+
+    //@TODO: inserir comentarios em cada estrategia
     virtual Command corner_strategy(Command);
 
     virtual Command stop_strategy(Command);
@@ -37,7 +42,7 @@ protected:
     RobotStrategyBase strategyBase;
 
     Command command;
-    btVector3 finalPose;
+    btVector3 target;
     btVector3 stepPose;
     Path path;
 
@@ -46,6 +51,13 @@ protected:
 
     btVector3 ballProjection;
     btVector3 robotProjection;
+
+    Movimentation* movimentation;
+
+    //@TODO: jogar imageSize e goalSize para Config
+    btVector3 imageSize;
+    btVector3 goalSize;
+
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGY_H
