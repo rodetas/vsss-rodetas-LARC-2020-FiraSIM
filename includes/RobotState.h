@@ -41,13 +41,12 @@ public:
     }
 
 //@TODO: tirar as contas daqui e jogar pro MathHelper, deixar apenas as chamadas
-
     double cosFrom(common::btVector3 _p) {
-        return cos((Math::angulation(position,_p) - angle)/(180/M_PI));
+        return cos(Math::angulation(position,_p) - angle);
     }
 
     double sinFrom(common::btVector3 _p) {
-        return sin((Math::angulation(position,_p) - angle)/(180/M_PI));
+        return sin(Math::angulation(position,_p) - angle);
     }
 
     double distanceFrom(common::btVector3 _p) {

@@ -33,6 +33,7 @@ void Config::argument_parse(int argc, char** argv) {
     debug = vm.count("debug");
     real_environment = vm.count("environment");
 
+//@TODO: deixar valor padrao para cor
     team_color = vm["color"].as<string>();
 }
 

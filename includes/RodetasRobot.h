@@ -12,7 +12,7 @@
 #include <strategies/RobotStrategy.h>
 #include <MathHelper.h>
 #include <cmath>
-//#include <strategies/StrategyAttack.h>
+#include <strategies/RobotStrategyAttack.h>
 //#include <strategies/StrategyDefense.h>
 //#include <strategies/StrategyGoal.h>
 //#include <strategies/RobotStrategyBase.h>

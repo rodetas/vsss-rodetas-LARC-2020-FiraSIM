@@ -117,8 +117,6 @@ namespace common{
     		return vec;
     	}
     };
-
-    typedef btVector3 Point;
 }
 
 #endif

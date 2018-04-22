@@ -11,21 +11,22 @@ RobotStrategy::RobotStrategy() {
 Command RobotStrategy::applyStrategy(RobotState r, RodetasState s) {
     this->robot = r;
     this->state = s;
+    this->strategyBase.updateStopped(r);
 
     // defines robot's target
-    this->target = this->defineTarget();
+    target = this->defineTarget();
 
     // defines robot's pwm
-    Command c = movimentation->move_players(robot, target);
+    command = movimentation->move_players(robot, target);
 
     // defines specific strategy such as corner strategy or kick strategy - can be applied or not
-    c = this->specificStrategy(c);
+//    command = this->specificStrategy(command);
 
-    return c;
+    return command;
 }
 
 Command RobotStrategy::corner_strategy(Command c) {
-    if (strategyBase.isBoard() && strategyBase.isStopped()){
+    if (strategyBase.isBoard(robot) && strategyBase.isStopped()){
 
         // girar caso robo esteja preso de frente pra parede
         if (robot.cosFrom(state.ball.position) > -0.9 && robot.cosFrom(state.ball.position) < 0.9) {

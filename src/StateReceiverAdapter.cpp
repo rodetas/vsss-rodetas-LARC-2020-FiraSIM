@@ -49,11 +49,12 @@ RodetasState StateReceiverAdapter::receiveState(bool change_side, string main_co
             RobotState robot;
             robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
             robot.setAngle(vssRobot.angle);
+            cout << vssRobot.angle << endl;
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
-
+        cout << endl;
         for(auto vssRobot : state.teamYellow){
             RobotState robot;
             robot.setPosition(btVector3(vssRobot.x, vssRobot.y));

@@ -5,11 +5,11 @@
 #include <RodetasRobot.h>
 
 RodetasRobot::RodetasRobot() {
-
+    strategy = new RobotStrategyAttack();
 }
 
 void RodetasRobot::calcAction(){
-    //strategy->apply((RodetasRobot&)this);
+    this->command = strategy->applyStrategy(this->selfState, this->state);
 }
 
 void RodetasRobot::updateSelfState(RobotState selfState) {

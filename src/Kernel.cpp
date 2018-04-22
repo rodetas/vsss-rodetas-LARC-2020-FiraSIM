@@ -32,6 +32,7 @@ void Kernel::loop(){
     DebugSendAdapter debugInterface(Config::team_color, Config::debug);
 
     RodetasRobot robots[3];
+//    Command commands[3];
     RodetasState state;
 
 	while(true){
@@ -39,12 +40,14 @@ void Kernel::loop(){
         // method which waits and receives a new state from simulator or vision
 		state = receiveInterface.receiveState(Config::change_side, Config::team_color);
 
-        for(int i=0 ; i<3 ; i++){
+        for(int i=0 ; i<1 ; i++){
             RodetasRobot& robot = robots[i];
 
             robot.updateSelfState(state.robots[i]);
             robot.updateState(state);
             robot.calcAction();
+
+            commands[i] = robot.getCommand();
         }
 
 
