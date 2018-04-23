@@ -1,5 +1,6 @@
 #include <Kernel.h>
 #include <strategies/RobotStrategyDefender.h>
+#include <strategies/RobotStrategyGoal.h>
 
 Kernel::Kernel(){
 	srand(time(NULL));
@@ -32,7 +33,7 @@ void Kernel::loop(){
     StateReceiverAdapter receiveInterface;
     DebugSendAdapter debugInterface(Config::team_color, Config::debug);
 
-    RodetasRobot robots[3];
+    vector<RodetasRobot> robots(3);
 //    Command commands[3];
     RodetasState state;
 
@@ -42,6 +43,7 @@ void Kernel::loop(){
 
     robots[0].setStrategy(new RobotStrategyAttack());
     robots[1].setStrategy(new RobotStrategyDefender());
+    robots[2].setStrategy(new RobotStrategyGoal());
 
 	while(true){
 
@@ -51,7 +53,7 @@ void Kernel::loop(){
 
 //        cout << state.toString() << endl;
 
-        for(int i=0 ; i<2 ; i++){
+        for(unsigned int i=0 ; i<robots.size() ; i++){
             RodetasRobot& robot = robots[i];
 
             robot.updateSelfState(state.robots[i]);
