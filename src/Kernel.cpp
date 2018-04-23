@@ -4,54 +4,29 @@
 
 Kernel::Kernel(){
 	srand(time(NULL));
-
-	initialize_strategies();
-	initialize_robots();
-
-	timeLastChange = -1;
-}
-
-void Kernel::init(){
-	init_sample(Config::team_color,Config::real_environment);
-	loop();
-}
-
-void Kernel::initialize_strategies(){
-//    strategies["goal"] = new StrategyGoal();
-//    strategies["attack"] = new StrategyAttack();
-//    strategies["defense"] = new StrategyDefense();
-}
-
-void Kernel::initialize_robots(){
-//	id["goal"] = 0;
-//	id["attack"] = 1;
-//	id["defense"] = 2;
 }
 
 void Kernel::loop(){
 
     StateReceiverAdapter receiveInterface;
     DebugSendAdapter debugInterface(Config::team_color, Config::debug);
+    CommandSendAdapter sendInterface(Config::team_color, Config::real_environment);
 
     vector<RodetasRobot> robots(3);
-//    Command commands[3];
+    vector<Command> commands(3);
+
     RodetasState state;
+    Debug debug;
 
-    commands[0] = Command(0,0);
-    commands[1] = Command(0,0);
-    commands[2] = Command(0,0);
-
-    robots[0].setStrategy(new RobotStrategyAttack());
+    robots[2].setStrategy(new RobotStrategyAttack());
     robots[1].setStrategy(new RobotStrategyDefender());
-    robots[2].setStrategy(new RobotStrategyGoal());
+    robots[0].setStrategy(new RobotStrategyGoal());
 
 	while(true){
 
         // method which waits and receives a new state from simulator or vision
-        //@TODO jogar parametros para o construtor da classe
+        //@TODO jogar parametros para o construtor da classe StateReceiveAdapter
 		state = receiveInterface.receiveState(Config::change_side, Config::team_color);
-
-//        cout << state.toString() << endl;
 
         for(unsigned int i=0 ; i<robots.size() ; i++){
             RodetasRobot& robot = robots[i];
@@ -61,20 +36,14 @@ void Kernel::loop(){
             robot.calcAction();
 
             commands[i] = robot.getCommand();
+
             debug.robots_final_pose[i] = robot.getRobotDebug().robotFinalPose;
+            debug.robots_step_pose[i] = robot.getRobotDebug().robotStepPose;
+            debug.robots_path[i] = robot.getRobotDebug().path;
 
         }
 
-
-		if(!real_environment){
-			send_commands();
-
-		} else {
-//            transmission.send(id["goal"],strategies["goal"]->get_command());
-//        	transmission.send(id["defense"],strategies["defense"]->get_command());
-//        	transmission.send(id["attack"], strategies["attack"]->get_command());
-		}
-
+		sendInterface.sendCommands(commands);
 		debugInterface.sendDebug(debug);
 	}
 }
@@ -118,31 +87,4 @@ void Kernel::define_function_for_each_robot(){
 //	 }
 //
 //	 if(timeLastChange >= 0) timeLastChange--;
-}
-
-void Kernel::apply(){
-
-	// define as funções de cada robô
-	//define_function_for_each_robot();
-
-	// aplica a estratégia para cada robô
-	//Robot goal = strategies["goal"]->apply(id, state);
-	//Robot defense = strategies["defense"]->apply(id, state);
-	//Robot attack = strategies["attack"]->apply(id, state);
-
-	//state.show();
-
-	//debug.robots_final_pose[id["goal"]] = goal.get_target();
-	//debug.robots_final_pose[id["defense"]] = defense.get_target();
-	//debug.robots_final_pose[id["attack"]] = attack.get_target();
-
-	//debug.robots_step_pose[id["goal"]] = goal.get_potencial_direction();
-	//debug.robots_step_pose[id["defense"]] = defense.get_potencial_direction();
-	//debug.robots_step_pose[id["attack"]] = attack.get_potencial_direction();
-
-    //debug.robots_path[id["attack"]] = attack.path;
-
-//	commands[id["goal"]] = strategies["goal"]->get_command();
-//	commands[id["defense"]] = strategies["defense"]->get_command();
-//	commands[id["attack"]] = strategies["attack"]->get_command();
 }

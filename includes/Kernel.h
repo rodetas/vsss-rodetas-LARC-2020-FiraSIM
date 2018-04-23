@@ -9,40 +9,30 @@
 #ifndef _STRATEGY_H_
 #define _STRATEGY_H_
 
+
+#include <RodetasRobot.h>
+#include <DebugSenderAdapter.h>
+#include <StateReceiverAdapter.h>
+#include <CommandSendAdapter.h>
 #include <config.h>
-#include <sample.h>
-#include <transmission.h>
+
 //#include <strategies/RobotStrategyBase.h>
 //#include <strategies/StrategyAttack.h>
 //#include <strategies/StrategyDefense.h>
 //#include <strategies/StrategyGoal.h>
 
-#include <RodetasRobot.h>
-#include <DebugSenderAdapter.h>
-#include <StateReceiverAdapter.h>
-
 using namespace std;
 using namespace common;
 
-class Kernel : public Sample {
+class Kernel {
 
 public:
     Kernel();
 
-	void init();
 	void loop();
 
-	void apply();
-	void initialize_strategies();
-	void initialize_robots();
 	void define_function_for_each_robot();
 
-private:
-
-	Transmission transmission;
-    RodetasState state;
-
-	int timeLastChange;
 };
 
 #endif // _STRATEGY_H_

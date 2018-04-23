@@ -15,7 +15,7 @@ int main(int argc, char** argv){
 
     if (Config::ready_param()){
         Kernel Kernel;
-        Kernel.init();
+        Kernel.loop();
     }
 
 	return 0;

@@ -4,9 +4,7 @@
 
 #include <RodetasRobot.h>
 
-RodetasRobot::RodetasRobot() {
-//    strategy = new RobotStrategyAttack();
-}
+RodetasRobot::RodetasRobot() = default;
 
 void RodetasRobot::calcAction(){
     this->command = strategy->applyStrategy(this->selfState, this->state);
