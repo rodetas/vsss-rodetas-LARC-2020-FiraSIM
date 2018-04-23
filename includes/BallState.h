@@ -12,10 +12,16 @@ class BallState {
 public:
 
     common::btVector3 position;
+    common::btVector3 projection;
+
     double linearSpeed;
 
     void setPosition(common::btVector3 p){
         this->position = p;
+    }
+
+    void setProjection(common::btVector3 p){
+        this->projection = p;
     }
 
     void setLinearSpeed(double speed){

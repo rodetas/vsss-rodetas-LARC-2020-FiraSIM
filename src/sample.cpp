@@ -9,31 +9,20 @@
 #include <sample.h>
 #include <config.h>
 
-void Sample::init_sample(string team_color, bool is_debug, bool real_environment){
+void Sample::init_sample(string team_color, bool real_environment){
     
-	this->is_debug = is_debug;
     this->team_color = team_color;
     this->real_environment = real_environment;
-	this->ip_send_debug = "tcp://localhost";
 	this->ip_send_command = "tcp://localhost";
 
 	if(team_color == "yellow"){
 		this->ip_send_command += ":5556";
 		interface_send.createSendCommandsTeam1(&global_commands, this->ip_send_command);
-		
-		if(is_debug){
-			this->ip_send_debug += ":5558";
-			interface_debug.createSendDebugTeam1(&global_debug, this->ip_send_debug);
-		}
 
 	} else {
 		this->ip_send_command += ":5557";
 		interface_send.createSendCommandsTeam2(&global_commands, this->ip_send_command);
 
-		if(is_debug){
-			this->ip_send_debug += ":5559";
-			interface_debug.createSendDebugTeam2(&global_debug, this->ip_send_debug);
-		}
 	}
 }
 
@@ -58,44 +47,4 @@ void Sample::send_commands(){
     }else{
         interface_send.sendCommandTeam2();
     }	
-}
-
-void Sample::send_debug(){
-	global_debug = vss_debug::Global_Debug();
-	
-	// Add step pose, if exists
-	for(int i = 0 ; i < 3 ; i++){
-		vss_debug::Pose *steps = global_debug.add_step_poses();
-		steps->set_id(i);
-		steps->set_x(debug.robots_step_pose[i].x);
-		steps->set_y(debug.robots_step_pose[i].y);
-		steps->set_yaw(debug.robots_step_pose[i].z);
-	}
-
-	// Add final pose, if exists
-	for(int i = 0 ; i < 3 ; i++){
-		vss_debug::Pose *finals = global_debug.add_final_poses();
-		finals->set_id(i);
-		finals->set_x(debug.robots_final_pose[i].x);
-		finals->set_y(debug.robots_final_pose[i].y);
-		finals->set_yaw(debug.robots_final_pose[i].z);
-	}
-
-	for(int i = 0 ; i < 3 ; i++){
-		vss_debug::Path *paths = global_debug.add_paths();
-		paths->set_id(i);
-		for(uint j = 0 ; j < debug.robots_path[i].poses.size() ; j++){
-			vss_debug::Pose *poses = paths->add_poses();
-			poses->set_id(i);
-			poses->set_x(debug.robots_path[i].poses.at(j).x);
-			poses->set_y(debug.robots_path[i].poses.at(j).y);
-			poses->set_yaw(debug.robots_path[i].poses.at(j).z);
-		}
-	}
-
-	if(team_color == "yellow"){
-		interface_debug.sendDebugTeam1();
-	}else{
-		interface_debug.sendDebugTeam2();
-	}	
 }

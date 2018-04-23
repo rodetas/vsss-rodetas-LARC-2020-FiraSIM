@@ -6,6 +6,7 @@
 
 RobotStrategy::RobotStrategy() {
     movimentation = new Movimentation();
+    imageSize = {150,130};
 }
 
 Command RobotStrategy::applyStrategy(RobotState r, RodetasState s) {
@@ -16,11 +17,13 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s) {
     // defines robot's target
     target = this->defineTarget();
 
+//    cout << "TARGET: " << target.x << " " << target.y << endl;
+
     // defines robot's pwm
     command = movimentation->move_players(robot, target);
 
     // defines specific strategy such as corner strategy or kick strategy - can be applied or not
-//    command = this->specificStrategy(command);
+    command = this->specificStrategy(command);
 
     return command;
 }
@@ -72,7 +75,7 @@ Command RobotStrategy::stop_strategy(Command c) {
 
     if(distance_target < 4){
 
-        if (robot.cosFrom(ballProjection) < -0.8 || robot.cosFrom(ballProjection) > 0.8) {
+        if (robot.cosFrom(state.ball.projection) < -0.8 || robot.cosFrom(state.ball.projection) > 0.8) {
             c = movimentation->stop();
 
         } else {

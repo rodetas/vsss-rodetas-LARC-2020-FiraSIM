@@ -49,9 +49,6 @@ protected:
     RobotState robot;
     RodetasState state;
 
-    btVector3 ballProjection;
-    btVector3 robotProjection;
-
     Movimentation* movimentation;
 
     //@TODO: jogar imageSize e goalSize para Config

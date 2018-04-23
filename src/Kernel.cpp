@@ -10,7 +10,7 @@ Kernel::Kernel(){
 }
 
 void Kernel::init(){
-	init_sample(Config::team_color, Config::debug, Config::real_environment);
+	init_sample(Config::team_color,Config::real_environment);
 	loop();
 }
 
@@ -35,10 +35,16 @@ void Kernel::loop(){
 //    Command commands[3];
     RodetasState state;
 
+    commands[0] = Command(0,0);
+    commands[1] = Command(0,0);
+    commands[2] = Command(0,0);
+
 	while(true){
 
         // method which waits and receives a new state from simulator or vision
 		state = receiveInterface.receiveState(Config::change_side, Config::team_color);
+
+//        cout << state.toString() << endl;
 
         for(int i=0 ; i<1 ; i++){
             RodetasRobot& robot = robots[i];
@@ -48,6 +54,8 @@ void Kernel::loop(){
             robot.calcAction();
 
             commands[i] = robot.getCommand();
+            debug.robots_final_pose[i] = robot.getRobotDebug().robotFinalPose;
+
         }
 
 

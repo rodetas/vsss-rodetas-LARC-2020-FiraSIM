@@ -24,17 +24,12 @@ class Sample {
 private:
 
     Interface interface_send;
-    Interface interface_debug;
 
-    vss_state::Global_State global_state;
 	vss_command::Global_Commands global_commands;
-	vss_debug::Global_Debug global_debug;
 
 protected:
-    bool is_debug;
     bool real_environment;
     string team_color;
-    string ip_send_debug;
     string ip_send_command;
 
 	common::Command commands[3];
@@ -43,9 +38,8 @@ protected:
 public:
     Sample() = default;
 
-    void init_sample(string, bool, bool);
+    void init_sample(string, bool);
     void send_commands();
-    void send_debug();
 };
 
 #endif // _SAMPLE_H_

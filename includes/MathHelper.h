@@ -23,6 +23,9 @@ public:
 
     static double calculateLinearSpeed(double, double);
 
+    //! Given a initial point and two velocities returns the initial point projection considering these two velocities
+    static btVector3 calculateProjection(btVector3, double, double);
+
 };
 
 #endif //SDK_RODETAS_MATHHELPER_H

@@ -10,10 +10,10 @@ Command Movimentation::move_players(RobotState robot, btVector3 target){
 
 	// movement along the field
 	if (robot.cosFrom(target) < -0.4) {
-		command = define_pwm(robot, target, 'B');
+		command = define_pwm(robot, target, 'F');
 
 	} else if (robot.cosFrom(target) > 0.4){
-		command = define_pwm(robot, target, 'F');
+		command = define_pwm(robot, target, 'B');
 
 	} else {
 		if (robot.sinFrom(target) > 0) {
@@ -23,12 +23,7 @@ Command Movimentation::move_players(RobotState robot, btVector3 target){
 		}
 	}
 
-//    command = define_pwm(robot, target, 'F');
-
-//    cout << "COS: " << robot.cosFrom(target) << endl;
-//    cout << "SIN: " << robot.sinFrom(target) << endl << endl;
-
-	return command;
+    return command;
 }
 
 /*
@@ -37,10 +32,10 @@ Command Movimentation::move_players(RobotState robot, btVector3 target){
 Command Movimentation::define_pwm(RobotState robot, btVector3 target, char direction){
 
 	int standardPower = 50;
-	int basePower = standardPower * 1.0;//robot.get_potency_factor();
+	int basePower = standardPower * 1;//robot.get_potency_factor();
 	int correctionPower = standardPower * robot.sinFrom(target) * 0.7;//robot.get_curve_factor();
-	int pwmMotor1 = (basePower + correctionPower);
-	int pwmMotor2 = (basePower - correctionPower);
+	int pwmMotor1 = (basePower - correctionPower);
+	int pwmMotor2 = (basePower + correctionPower);
 
 	if(direction == 'B'){
 		pwmMotor1 = pwmMotor1 * (-1);

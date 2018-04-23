@@ -14,7 +14,7 @@ void Config::argument_parse(int argc, char** argv) {
         ("help,h", "(Optional) produce help message")
         ("debug,d", "(Optional) open the debug rotine")
         ("environment,e", "(Optional) set real environment")
-        ("side,s", bpo::value<std::string>()->default_value(" "), "(Required) Specify the team's side;")
+        ("side,s", bpo::value<std::string>()->default_value("left"), "(Required) Specify the team's side;")
         ("color,c", bpo::value<std::string>()->default_value(" "), "(Required) Specify the main color of your team, may be yellow or blue.");
 
     bpo::variables_map vm;
@@ -25,8 +25,8 @@ void Config::argument_parse(int argc, char** argv) {
         cout << desc << endl;
     }
 
-    // passar left ou right
-    if (vm.count("side")){
+    //@TODO passar left ou right mas manter default value como left
+    if (vm["side"].as<string>() == "right"){
         change_side = true;
     }
 

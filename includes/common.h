@@ -81,6 +81,7 @@ namespace common{
     struct Command{
         float left;
         float right;
+
         Command(){
             left = right = 0;
         };

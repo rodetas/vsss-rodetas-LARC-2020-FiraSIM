@@ -45,26 +45,26 @@ btVector3 RobotStrategyAttack::defineTarget() {
 //        target = centerGoal;
 //    }
 //
-//    if(ballProjection.x > imageSize.x*0.3 && ballProjection.x > robot.position.x){
-//        if(ballProjection.y < imageSize.y/2){
-//            target.y = ballProjection.y + (8);
-//            target.x = ballProjection.x + (6);
+//    if(state.ball.projection.x > imageSize.x*0.3 && state.ball.projection.x > robot.position.x){
+//        if(state.ball.projection.y < imageSize.y/2){
+//            target.y = state.ball.projection.y + (8);
+//            target.x = state.ball.projection.x + (6);
 //        } else {
-//            target.y = ballProjection.y - (8);
-//            target.x = ballProjection.x + (6);
+//            target.y = state.ball.projection.y - (8);
+//            target.x = state.ball.projection.x + (6);
 //        }
 //    }
 //
 //    int halfGoal1 = imageSize.y/2 + goalSize.y * 0.85;
 //    int halfGoal2 = imageSize.y/2 - goalSize.y * 0.85;
 //
-//    if(((ballProjection.y < halfGoal1 && ballProjection.y > halfGoal2 && ballProjection.x > imageSize.x*0.80))){
+//    if(((state.ball.projection.y < halfGoal1 && state.ball.projection.y > halfGoal2 && state.ball.projection.x > imageSize.x*0.80))){
 //        target = btVector3(imageSize.x/2, imageSize.y/2);
 //    }
-//
-//    // verifies the limits of the destination
-//    if (target.y < 0) target.y = 0;
-//    if (target.y > imageSize.y) target.y = imageSize.y;
+
+    // verifies the limits of the destination
+    if (target.y < 0) target.y = 0;
+    if (target.y > imageSize.y) target.y = imageSize.y;
 
     return target;
 

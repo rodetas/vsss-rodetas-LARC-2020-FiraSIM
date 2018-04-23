@@ -10,6 +10,7 @@ RodetasRobot::RodetasRobot() {
 
 void RodetasRobot::calcAction(){
     this->command = strategy->applyStrategy(this->selfState, this->state);
+    this->debug.robotFinalPose = strategy->getFinalPose();
 }
 
 void RodetasRobot::updateSelfState(RobotState selfState) {

@@ -8,16 +8,16 @@ DebugSendAdapter::DebugSendAdapter(string teamColor, bool isDebug) {
     this->teamColor = teamColor;
     this->isDebug = isDebug;
 
-    createSocketDebug();
+    if(isDebug)
+        createSocketDebug();
 }
 
 void DebugSendAdapter::createSocketDebug() {
-    if(this->teamColor == "yellow"){
+    if(this->teamColor == "yellow")
         interfaceDebug.createSendDebugTeam1(&this->globalDebug);
-
-    } else {
+    else
         interfaceDebug.createSendDebugTeam2(&this->globalDebug);
-    }
+
 }
 
 void DebugSendAdapter::sendDebug(common::Debug debug) {
