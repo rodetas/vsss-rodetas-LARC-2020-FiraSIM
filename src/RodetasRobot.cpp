@@ -5,7 +5,7 @@
 #include <RodetasRobot.h>
 
 RodetasRobot::RodetasRobot() {
-    strategy = new RobotStrategyAttack();
+//    strategy = new RobotStrategyAttack();
 }
 
 void RodetasRobot::calcAction(){

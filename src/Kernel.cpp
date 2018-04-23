@@ -1,4 +1,5 @@
 #include <Kernel.h>
+#include <strategies/RobotStrategyDefender.h>
 
 Kernel::Kernel(){
 	srand(time(NULL));
@@ -39,14 +40,18 @@ void Kernel::loop(){
     commands[1] = Command(0,0);
     commands[2] = Command(0,0);
 
+    robots[0].setStrategy(new RobotStrategyAttack());
+    robots[1].setStrategy(new RobotStrategyDefender());
+
 	while(true){
 
         // method which waits and receives a new state from simulator or vision
+        //@TODO jogar parametros para o construtor da classe
 		state = receiveInterface.receiveState(Config::change_side, Config::team_color);
 
 //        cout << state.toString() << endl;
 
-        for(int i=0 ; i<1 ; i++){
+        for(int i=0 ; i<2 ; i++){
             RodetasRobot& robot = robots[i];
 
             robot.updateSelfState(state.robots[i]);
