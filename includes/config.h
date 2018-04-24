@@ -24,7 +24,6 @@ public:
     static bool change_side;
     static string team_color;
 
-    static void argument_parse(int ,char**);
-    static bool ready_param();    
+    static bool argument_parse(int ,char**);
 };
 #endif // _CONFIG_H_

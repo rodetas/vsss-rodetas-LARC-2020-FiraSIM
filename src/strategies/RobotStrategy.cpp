@@ -7,17 +7,18 @@
 RobotStrategy::RobotStrategy() {
     movimentation = new Movimentation();
     imageSize = {150,130};
+    goalSize = {10,40};
+    //@TODO: definir valor de goalAreaSize
+    goalAreaSize = {};
 }
 
-Command RobotStrategy::applyStrategy(RobotState r, RodetasState s) {
+Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategyBase base) {
     this->robot = r;
     this->state = s;
-    this->strategyBase.updateStopped(r);
+    this->strategyBase = base;
 
-    // defines robot's target
+    // defines robot's target,
     target = this->defineTarget();
-
-//    cout << "TARGET: " << target.x << " " << target.y << endl;
 
     // defines robot's pwm
     command = movimentation->move_players(robot, target);

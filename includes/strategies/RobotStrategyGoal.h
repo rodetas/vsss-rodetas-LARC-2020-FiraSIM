@@ -18,6 +18,7 @@ public:
 
     Command specificStrategy(Command) override;
     btVector3 defineTarget() override;
+    Command stop_strategy(Command) override;
 
 
 };
