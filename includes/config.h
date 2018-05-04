@@ -23,7 +23,8 @@ public:
     static bool realEnvironment;
     static bool changeSide;
     static string teamColor;
-
     static bool argumentParse(int ,char**);
+
+   
 };
 #endif // _CONFIG_H_

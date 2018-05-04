@@ -19,7 +19,7 @@ btVector3 RobotStrategyGoal::defineTarget() {
     // posição para seguir linha da bola
     goalTarget.x = imageSize.x - 20;
     goalTarget.y = ballProjection.y;
-	printf("ball position: %f  %f",state.ball.position.x,state.ball.position.y);
+  
     // máximo que pode ir até a lateral da área
     if(goalTarget.y > imageSize.y/2 + goalAreaSize.y/2){
         goalTarget.y = imageSize.y/2 + goalAreaSize.y/2;
