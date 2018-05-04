@@ -2,7 +2,7 @@
 
 Transmission::Transmission() {
 
-    last_time = 0;
+   lastTime = 0;
     transmittingStatus = false;
     openStatus = false;
 
@@ -79,65 +79,65 @@ void Transmission::send(int i, Command c){
 // recebe um comando e retorna a string equivalente para ser enviada
 string Transmission::generateMessage(int robot, Command comand){
 
-    short int start_delimiter = 0x7E;
-    short int frame_type = 0x01;
-    short int frame_id = 0x01;
+    short int startDelimiter = 0x7E;
+    short int frameType = 0x01;
+    short int frameId = 0x01;
     short int option = 0x00;
 
     short int address = robot;
     int lenght = 0xC;
 
-    vector<int> hex_message = comand.to_hex();
+    vector<int> hexMessage = comand.to_hex();
 
-    int checksum = generateCheckSum(frame_type, frame_id, address, option, hex_message);
+    int checkSum = generatecheckSum(frameType, frameId, address, option, hexMessage);
 
     // agrupa os parametros formando a mensagem pronta para ser enviada
     stringstream ss;
-    ss << std::hex << start_delimiter;
+    ss << std::hex << startDelimiter;
     ss << std::hex << 0x0 << 0x0 << 0x0 << lenght;
-    ss << std::hex << 0x0 << frame_type;
-    ss << std::hex << 0x0 << frame_id;
+    ss << std::hex << 0x0 << frameType;
+    ss << std::hex << 0x0 << frameId;
     ss << std::hex << 0x0 << 0x0 << 0x0 << address;
     ss << std::hex << 0x0 << option;
 
-    for(uint i=0 ; i<hex_message.size() ; i++){
-        ss << std::hex << hex_message[i];
+    for(uint i=0 ; i<hexMessage.size() ; i++){
+        ss << std::hex << hexMessage[i];
     }
-    ss << std::hex << checksum;
+    ss << std::hex << checkSum;
 
     return ss.str();
 }
 
-int Transmission::generateCheckSum(int frame_type, int frame_id, int address, int option, vector<int> hex_message){
+int Transmission::generatecheckSum(int frameType, int frameId, int address, int option, vector<int> hexMessage){
 
-    char check = frame_type + frame_id + address + option;
+    char check = frameType + frameId + address + option;
     unsigned char sum = 0;
 
-    for(uint i=0 ; i<hex_message.size() ; i++){
-        sum = sum + (hex_message[i]);
+    for(uint i=0 ; i<hexMessage.size() ; i++){
+        sum = sum + (hexMessage[i]);
     }
 
-    int checksum = check+sum;
-    std::string binary = std::bitset<8>(checksum).to_string();	// Pega os 8 primeiros bits do valor
+    int checkSum = check+sum;
+    std::string binary = std::bitset<8>(checkSum).to_string();	// Pega os 8 primeiros bits do valor
     unsigned long decimal = std::bitset<8>(binary).to_ulong();	// Volta para decimal
-    checksum = 0xFF-decimal;
+    checkSum = 0xFF-decimal;
 
-    return checksum;
+    return checkSum;
 }
 
 // recebe uma string para enviar
 void Transmission::serialTransmit(string comand){
     const long size = comand.size();
-    unsigned char send_bytes[size/2];
+    unsigned char sendBytes[size/2];
 
     // verifica o estado da conexao de 2 em 2 segundos
-    /*if(clock() - last_time > 2000){
+    /*if(clock() -lastTime > 2000){
         string out = executeCommand("ls " + port + " 2> /dev/null");
 
         if(out.compare("") == 0) transmittingStatus = false;
         else transmittingStatus = true;
 
-        last_time = timer.getTime();
+       lastTime = timer.getTime();
     }
 
     if(!getConnectionStatus()){
@@ -150,11 +150,11 @@ void Transmission::serialTransmit(string comand){
             parcial << comand[i];
             i++;
             parcial << comand[i];
-            send_bytes[cont] = stoi(parcial.str().c_str(), 0, 16);
+            sendBytes[cont] = stoi(parcial.str().c_str(), 0, 16);
             cont++;
         }
-//        cout << send_bytes << endl;
-        write(usb, send_bytes, sizeof(send_bytes));
+//        cout << sendBytes << endl;
+        write(usb, sendBytes, sizeof(sendBytes));
     //}
 }
 

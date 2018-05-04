@@ -36,9 +36,9 @@ btVector3 RobotStrategyAttack::defineTarget() {
     btVector3 target = state.ball.position;
 
     btVector3 centerGoal = btVector3(0, imageSize.y/2);
-    double angle_robot_goal = Math::angulation(robot.position, centerGoal);
+    double angleRobotGoal = Math::angulation(robot.position, centerGoal);
 
-    if(angle_robot_goal < 45.0 && angle_robot_goal > -45.0 && (robot.cosFrom(centerGoal) < -0.8 || robot.cosFrom(centerGoal) > 0.8) &&
+    if(angleRobotGoal < 45.0 && angleRobotGoal > -45.0 && (robot.cosFrom(centerGoal) < -0.8 || robot.cosFrom(centerGoal) > 0.8) &&
        (robot.cosFrom(state.ball.position) < -0.8 || robot.cosFrom(state.ball.getPosition()) > 0.8) &&
        robot.position.x > state.ball.position.x && robot.distanceFrom(state.ball.position) < (8)){
 

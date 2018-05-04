@@ -60,21 +60,21 @@ Command RobotStrategy::corner_strategy(Command c) {
 Command RobotStrategy::stop_strategy(Command c) {
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
-    float max_distance = 12; // 12 cm
-    float distance_target = robot.distanceFrom(target);
+    float maxDistance = 12; // 12 cm
+    float distanceTarget = robot.distanceFrom(target);
 
 /* 	REVER VELOCIDADE
 	if(robot.getVelocity() > image_size.x * (0.05)){
-		max_distance = 24; // 24 cm
+		maxDistance = 24; // 24 cm
 	}
 */
 
-    if(distance_target < max_distance){
-        c.left  = c.left  * (distance_target/max_distance);
-        c.right = c.right * (distance_target/max_distance);
+    if(distanceTarget < maxDistance){
+        c.left  = c.left  * (distanceTarget/maxDistance);
+        c.right = c.right * (distanceTarget/maxDistance);
     }
 
-    if(distance_target < 4){
+    if(distanceTarget < 4){
 
         if (robot.cosFrom(state.ball.projection) < -0.8 || robot.cosFrom(state.ball.projection) > 0.8) {
             c = movimentation->stop();

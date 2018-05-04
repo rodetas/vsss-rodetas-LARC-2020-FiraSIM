@@ -13,36 +13,36 @@ Command RobotStrategyGoal::specificStrategy(Command c) {
 }
 
 btVector3 RobotStrategyGoal::defineTarget() {
-    btVector3 goal_target;
-    btVector3 ball_projection = state.ball.projection;
+    btVector3 goalTarget;
+    btVector3 ballProjection = state.ball.projection;
 
     // posição para seguir linha da bola
-    goal_target.x = imageSize.x - 20;
-    goal_target.y = ball_projection.y;
-
+    goalTarget.x = imageSize.x - 20;
+    goalTarget.y = ballProjection.y;
+  
     // máximo que pode ir até a lateral da área
-    if(goal_target.y > imageSize.y/2 + goalAreaSize.y/2){
-        goal_target.y = imageSize.y/2 + goalAreaSize.y/2;
+    if(goalTarget.y > imageSize.y/2 + goalAreaSize.y/2){
+        goalTarget.y = imageSize.y/2 + goalAreaSize.y/2;
 
-    } else if(goal_target.y < imageSize.y/2 - goalAreaSize.y/2){
-        goal_target.y = imageSize.y/2 - goalAreaSize.y/2;
+    } else if(goalTarget.y < imageSize.y/2 - goalAreaSize.y/2){
+        goalTarget.y = imageSize.y/2 - goalAreaSize.y/2;
     }
 
     // ir na bola quando ela está dentro da area
-    if (ball_projection.y > (imageSize.y/2 - goalAreaSize.y/2) &&
-        ball_projection.y < (imageSize.y/2 + goalAreaSize.y/2) &&
-        ball_projection.x > imageSize.x - 30){
+    if (ballProjection.y > (imageSize.y/2 - goalAreaSize.y/2) &&
+        ballProjection.y < (imageSize.y/2 + goalAreaSize.y/2) &&
+        ballProjection.x > imageSize.x - 30){
 
-        goal_target = ball_projection;
+        goalTarget = ballProjection;
     }
 
     // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
-    if(strategyBase.isStoppedFor(90) && robot.distanceFrom(goal_target) > 6){
-        goal_target.x = imageSize.x - 10;
-        goal_target.y = imageSize.y/2;
+    if(strategyBase.isStoppedFor(90) && robot.distanceFrom(goalTarget) > 6){
+        goalTarget.x = imageSize.x - 10;
+        goalTarget.y = imageSize.y/2;
     }
 
-    return goal_target;
+    return goalTarget;
 }
 
 Command RobotStrategyGoal::stop_strategy(Command command){
