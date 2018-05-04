@@ -10,10 +10,8 @@
 #include <Kernel.h>
 
 int main(int argc, char** argv){
-	
-    Config::argument_parse(argc, argv);
 
-    if (Config::ready_param()){
+    if (Config::argument_parse(argc, argv)){
         Kernel Kernel;
         Kernel.loop();
     }

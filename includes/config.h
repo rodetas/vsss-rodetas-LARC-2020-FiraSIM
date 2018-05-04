@@ -20,11 +20,10 @@ class Config{
 
 public:
     static bool debug;
-    static bool real_environment;
-    static bool change_side;
-    static string team_color;
+    static bool realEnvironment;
+    static bool changeSide;
+    static string teamColor;
 
-    static void argument_parse(int ,char**);
-    static bool ready_param();    
+    static bool argumentParse(int ,char**);
 };
 #endif // _CONFIG_H_

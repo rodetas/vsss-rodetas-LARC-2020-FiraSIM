@@ -7,7 +7,13 @@
 RodetasRobot::RodetasRobot() = default;
 
 void RodetasRobot::calcAction(){
-    this->command = strategy->applyStrategy(this->selfState, this->state);
+    // updates robot's strategy base data
+    this->strategyBase.updateStopped(selfState);
+
+    // applies robot strategy returning a pwm
+    this->command = strategy->applyStrategy(this->selfState, this->state, this->strategyBase);
+
+    // receives robot target from strategy
     this->debug.robotFinalPose = strategy->getFinalPose();
 }
 
@@ -37,4 +43,8 @@ RobotDebug RodetasRobot::getRobotDebug() {
 
 RobotState RodetasRobot::getSelfState() {
     return this->selfState;
+}
+
+RobotStrategyBase RodetasRobot::getRobotStrategyBase() {
+    return this->strategyBase;
 }

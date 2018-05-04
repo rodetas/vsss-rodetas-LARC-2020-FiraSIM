@@ -18,10 +18,10 @@ public:
     StateReceiverAdapter();
 
     void createSocketReceiveState();
-    RodetasState receiveState(bool change_side, string main_color);
+    RodetasState receiveState(bool changeSide, string mainColor);
 
 private:
-    vss::InterfaceCore interface_receive;
+    vss::InterfaceCore interfaceReceive;
 
 };
 

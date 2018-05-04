@@ -13,9 +13,6 @@
 #include <MathHelper.h>
 #include <cmath>
 #include <strategies/RobotStrategyAttack.h>
-//#include <strategies/StrategyDefense.h>
-//#include <strategies/StrategyGoal.h>
-//#include <strategies/RobotStrategyBase.h>
 
 using namespace common;
 
@@ -36,6 +33,7 @@ public:
     Command getCommand();
     RobotDebug getRobotDebug();
     RobotState getSelfState();
+    RobotStrategyBase getRobotStrategyBase();
 
 private:
 
@@ -44,6 +42,7 @@ private:
     RobotDebug debug;
     RobotState selfState;
     RobotStrategy* strategy;
+    RobotStrategyBase strategyBase;
 
 };
 

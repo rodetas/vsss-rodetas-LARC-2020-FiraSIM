@@ -18,7 +18,7 @@ class RobotStrategy {
 public:
     RobotStrategy();
 
-    virtual Command applyStrategy(RobotState, RodetasState);
+    virtual Command applyStrategy(RobotState, RodetasState, RobotStrategyBase);
 
     virtual Command specificStrategy(Command) = 0;
 
