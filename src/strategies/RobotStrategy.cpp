@@ -6,10 +6,9 @@
 
 RobotStrategy::RobotStrategy() {
     movimentation = new Movimentation();
-    imageSize = {150,130};
+    imageSize = {170,130};
     goalSize = {10,40};
-    //@TODO: definir valor de goalAreaSize
-    goalAreaSize = {};
+    goalAreaSize = btVector3(imageSize.x*0.2, imageSize.y*0.6);
 }
 
 Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategyBase base) {

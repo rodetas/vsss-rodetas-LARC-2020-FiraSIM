@@ -10,13 +10,13 @@ StateReceiverAdapter::StateReceiverAdapter() {
 }
 
 void StateReceiverAdapter::createSocketReceiveState() {
-    interface_receive.createSocketReceiveState();
+    interfaceReceive.createSocketReceiveState();
 }
 
 RodetasState StateReceiverAdapter::receiveState(bool changeSide, string mainColor) {
 
     // receives a vss::State from sdk or wait until a new packet comes
-    vss::State state = interface_receive.receiveState((vss::FieldTransformation)changeSide);
+    vss::State state = interfaceReceive.receiveState((vss::FieldTransformation)changeSide);
 
     // converts vss::State to RodetasState
     RodetasState newState;

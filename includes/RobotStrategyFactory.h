@@ -6,15 +6,23 @@
 #define SDK_RODETAS_ROBOTSTRATEGYFACTORY_H
 
 #include "strategies/RobotStrategy.h"
+#include "MathHelper.h"
 #include "RodetasState.h"
 
 class RobotStrategyFactory {
 
 public:
 
+    RobotStrategyFactory();
     void manage(RodetasState);
 
     RobotStrategy* getStrategyForRobot(int);
+
+private:
+    //@TODO tirar imageSize
+    btVector3 imageSize;
+
+    int timeLastChange;
 
 };
 

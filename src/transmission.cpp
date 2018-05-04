@@ -2,7 +2,6 @@
 
 Transmission::Transmission() {
 
-   lastTime = 0;
     transmittingStatus = false;
     openStatus = false;
 
@@ -89,7 +88,7 @@ string Transmission::generateMessage(int robot, Command comand){
 
     vector<int> hexMessage = comand.to_hex();
 
-    int checkSum = generatecheckSum(frameType, frameId, address, option, hexMessage);
+    int checkSum = generateCheckSum(frameType, frameId, address, option, hexMessage);
 
     // agrupa os parametros formando a mensagem pronta para ser enviada
     stringstream ss;
@@ -108,7 +107,7 @@ string Transmission::generateMessage(int robot, Command comand){
     return ss.str();
 }
 
-int Transmission::generatecheckSum(int frameType, int frameId, int address, int option, vector<int> hexMessage){
+int Transmission::generateCheckSum(int frameType, int frameId, int address, int option, vector<int> hexMessage){
 
     char check = frameType + frameId + address + option;
     unsigned char sum = 0;
