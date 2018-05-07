@@ -6,6 +6,7 @@
 
 RobotStrategy::RobotStrategy() {
     movimentation = new Movimentation();
+    target = {0,0};
     imageSize = {170,130};
     goalSize = {10,40};
     goalAreaSize = btVector3(imageSize.x*0.2, imageSize.y*0.6);
@@ -29,7 +30,7 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
 }
 
 Command RobotStrategy::corner_strategy(Command c) {
-    if (strategyBase.isBoard(robot) && strategyBase.isStopped()){
+    if (strategyBase.isBoard() && strategyBase.isStopped()){
 
         // girar caso robo esteja preso de frente pra parede
         if (robot.cosFrom(state.ball.position) > -0.9 && robot.cosFrom(state.ball.position) < 0.9) {

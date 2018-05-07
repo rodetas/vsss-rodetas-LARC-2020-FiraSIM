@@ -12,7 +12,7 @@ Command RobotStrategyAttack::specificStrategy(Command c){
     c = kick_strategy(c);
     c = corner_strategy(c);
 
-    if (strategyBase.isParallelToGoal(robot)){
+    if (strategyBase.isParallelToGoal()){
 
         int halfGoal1 = imageSize.y/2 + (goalSize.y/2);
         int halfGoal2 = imageSize.y/2 - (goalSize.y/2);
@@ -48,10 +48,10 @@ btVector3 RobotStrategyAttack::defineTarget() {
     if(state.ball.projection.x > imageSize.x*0.3 && state.ball.projection.x > robot.position.x){
         if(state.ball.projection.y < imageSize.y/2){
             target.y = state.ball.projection.y + (8);
-            target.x = state.ball.projection.x + (6);
+            target.x = state.ball.projection.x;
         } else {
             target.y = state.ball.projection.y - (8);
-            target.x = state.ball.projection.x + (6);
+            target.x = state.ball.projection.x;
         }
     }
 
@@ -67,5 +67,4 @@ btVector3 RobotStrategyAttack::defineTarget() {
     if (target.y > imageSize.y) target.y = imageSize.y;
 
     return target;
-
 }

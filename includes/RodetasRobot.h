@@ -13,6 +13,7 @@
 #include <MathHelper.h>
 #include <cmath>
 #include <strategies/RobotStrategyAttack.h>
+#include "Mindset.h"
 
 using namespace common;
 
@@ -21,6 +22,7 @@ class RodetasRobot {
 public:
 
     RodetasRobot();
+    RodetasRobot(int, MindSet);
 
     void calcAction();
 
@@ -30,12 +32,19 @@ public:
     void setDebug(RobotDebug);
     void setStrategy(RobotStrategy*);
 
+    int getId();
+
     Command getCommand();
     RobotDebug getRobotDebug();
     RobotState getSelfState();
     RobotStrategyBase getRobotStrategyBase();
 
+    MindSet getMindSet();
+    void setMindSet(MindSet);
+
 private:
+
+    int id;
 
     Command command;
     RodetasState state;
@@ -43,6 +52,7 @@ private:
     RobotState selfState;
     RobotStrategy* strategy;
     RobotStrategyBase strategyBase;
+    MindSet mindSet;
 
 };
 

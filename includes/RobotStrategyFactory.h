@@ -8,21 +8,23 @@
 #include "strategies/RobotStrategy.h"
 #include "MathHelper.h"
 #include "RodetasState.h"
+#include "RodetasRobot.h"
+#include "StateInterpreter.h"
+#include <strategies/RobotStrategyBase.h>
+#include <strategies/RobotStrategyAttack.h>
+#include <strategies/RobotStrategyDefender.h>
+#include <strategies/RobotStrategyGoal.h>
 
 class RobotStrategyFactory {
 
 public:
 
     RobotStrategyFactory();
-    void manage(RodetasState);
-
-    RobotStrategy* getStrategyForRobot(int);
+    void manage(vector<RodetasRobot>&, RodetasState&);
 
 private:
-    //@TODO tirar imageSize
-    btVector3 imageSize;
 
-    int timeLastChange;
+    StateInterpreter interpreter;
 
 };
 
