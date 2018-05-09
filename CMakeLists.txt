@@ -23,7 +23,7 @@ include_directories(usr/local/include)
 
 file(GLOB_RECURSE SRC src/*.cpp)
 
-set (VSS_INTERFACE libvss-interface.so)
+set (VSS_INTERFACE libvss-core.so)
 
 ADD_EXECUTABLE(SDK-Rodetas ${SRC})
 

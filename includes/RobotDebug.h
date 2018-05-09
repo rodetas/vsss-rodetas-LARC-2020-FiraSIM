@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_ROBOTDEBUG_H
 #define SDK_RODETAS_ROBOTDEBUG_H
 
-#include <common.h>
+#include <Common.h>
 
 class RobotDebug {
 

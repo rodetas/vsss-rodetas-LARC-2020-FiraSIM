@@ -48,7 +48,7 @@ void Kernel::loop(){
 	}
 }
 
-void Kernel::define_function_for_each_robot(){
+void Kernel::defineFunctionForEachRobot(){
 
 //	btVector3 image_size = btVector3(170,130);
 //

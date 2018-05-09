@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_MATHHELPER_H
 #define SDK_RODETAS_MATHHELPER_H
 
-#include <common.h>
+#include <Common.h>
 
 using namespace common;
 
