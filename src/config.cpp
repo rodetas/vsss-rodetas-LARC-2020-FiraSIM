@@ -1,9 +1,11 @@
 #include <config.h>
 
 bool Config::debug = false;
-bool Config::real_environment = false;
-bool Config::change_side = false;
-string Config::team_color;
+bool Config::realEnvironment = false;
+bool Config::changeSide = false;
+string Config::teamColor;
+btVector3 Config::fieldSize = {150,130};
+btVector3 Config::image = {150,130};
 
 void Config::argument_parse(int argc, char** argv) {
     namespace bpo = boost::program_options;
@@ -27,18 +29,18 @@ void Config::argument_parse(int argc, char** argv) {
 
     //@TODO passar left ou right mas manter default value como left
     if (vm["side"].as<string>() == "right"){
-        change_side = true;
+        changeSide = true;
     }
 
     debug = vm.count("debug");
-    real_environment = vm.count("environment");
+    realEnvironment = vm.count("environment");
 
 //@TODO: deixar valor padrao para cor
-    team_color = vm["color"].as<string>();
+    teamColor = vm["color"].as<string>();
 }
 
 bool Config::ready_param() {
-    if (team_color == "yellow" || team_color == "blue") {
+    if (teamColor == "yellow" || teamColor == "blue") {
         return true;
     }
     cout << "ERROR: You must set a color to your team." << endl;

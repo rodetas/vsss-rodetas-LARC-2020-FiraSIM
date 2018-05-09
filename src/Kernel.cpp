@@ -9,8 +9,8 @@ Kernel::Kernel(){
 void Kernel::loop(){
 
     StateReceiverAdapter receiveInterface;
-    DebugSendAdapter debugInterface(Config::team_color, Config::debug);
-    CommandSendAdapter sendInterface(Config::team_color, Config::real_environment);
+    DebugSendAdapter debugInterface(Config::teamColor, Config::debug);
+    CommandSendAdapter sendInterface(Config::teamColor, Config::realEnvironment);
 
     vector<RodetasRobot> robots(3);
     vector<Command> commands(3);
@@ -26,7 +26,7 @@ void Kernel::loop(){
 
         // method which waits and receives a new state from simulator or vision
         //@TODO jogar parametros para o construtor da classe StateReceiveAdapter
-		state = receiveInterface.receiveState(Config::change_side, Config::team_color);
+		state = receiveInterface.receiveState(config::changeSide, Config::teamColor);
 
         for(unsigned int i=0 ; i<robots.size() ; i++){
             RodetasRobot& robot = robots[i];
