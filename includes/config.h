@@ -26,6 +26,7 @@ public:
 	static btVector3 fieldSize;
 	static btVector3 goalSize;
 	static btVector3 image;
+	static btVector3 goalAreaSize;
 
     static void argumentParse(int ,char**);
     static bool readyParam();    

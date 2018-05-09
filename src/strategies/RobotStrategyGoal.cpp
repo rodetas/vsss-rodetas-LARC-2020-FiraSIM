@@ -21,16 +21,16 @@ btVector3 RobotStrategyGoal::defineTarget() {
     goal_target.y = ball_projection.y;
 
     // máximo que pode ir até a lateral da área
-    if(goal_target.y > Config::fieldSize.y/2 + goalAreaSize.y/2){
-        goal_target.y = Config::fieldSize.y/2 + goalAreaSize.y/2;
+    if(goal_target.y > Config::fieldSize.y/2 + Config::goalAreaSize.y/2){
+        goal_target.y = Config::fieldSize.y/2 + Config::goalAreaSize.y/2;
 
-    } else if(goal_target.y < Config::fieldSize.y/2 - goalAreaSize.y/2){
-        goal_target.y = Config::fieldSize.y/2 - goalAreaSize.y/2;
+    } else if(goal_target.y < Config::fieldSize.y/2 - Config::goalAreaSize.y/2){
+        goal_target.y = Config::fieldSize.y/2 - Config::goalAreaSize.y/2;
     }
 
     // ir na bola quando ela está dentro da area
-    if (ball_projection.y > (Config::fieldSize.y/2 - goalAreaSize.y/2) &&
-        ball_projection.y < (Config::fieldSize.y/2 + goalAreaSize.y/2) &&
+    if (ball_projection.y > (Config::fieldSize.y/2 - Config::goalAreaSize.y/2) &&
+        ball_projection.y < (Config::fieldSize.y/2 + Config::goalAreaSize.y/2) &&
         ball_projection.x > Config::fieldSize.x - 30){
 
         goal_target = ball_projection;

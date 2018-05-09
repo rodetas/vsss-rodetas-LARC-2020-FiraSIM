@@ -6,6 +6,8 @@ bool Config::changeSide = false;
 string Config::teamColor;
 btVector3 Config::fieldSize = {150,130};
 btVector3 Config::image = {150,130};
+btVector3 Config::goalAreaSize;
+btVector3 Config::goalSize;
 
 void Config::argument_parse(int argc, char** argv) {
     namespace bpo = boost::program_options;

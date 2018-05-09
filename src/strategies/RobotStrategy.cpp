@@ -6,7 +6,6 @@
 
 RobotStrategy::RobotStrategy() {
     movimentation = new Movimentation();
-    Config::fieldSize = {150,130};
 }
 
 Command RobotStrategy::applyStrategy(RobotState r, RodetasState s) {

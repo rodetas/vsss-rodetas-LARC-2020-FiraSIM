@@ -52,7 +52,7 @@ protected:
     Movimentation* movimentation;
 
     //@TODO: jogar imageSize e goalSize para Config
-    btVector3 goalAreaSize;
+  
 
 };
 
