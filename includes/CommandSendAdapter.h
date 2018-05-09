@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_COMMANDSENDADAPTER_H
 #define SDK_RODETAS_COMMANDSENDADAPTER_H
 
-#include <common.h>
+#include <Common.h>
 
 class CommandSendAdapter{
 

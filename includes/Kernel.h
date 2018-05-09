@@ -14,7 +14,7 @@
 #include <DebugSenderAdapter.h>
 #include <StateReceiverAdapter.h>
 #include <CommandSendAdapter.h>
-#include <config.h>
+#include <Config.h>
 
 //#include <strategies/RobotStrategyBase.h>
 //#include <strategies/StrategyAttack.h>
@@ -31,7 +31,7 @@ public:
 
 	void loop();
 
-	void define_function_for_each_robot();
+	void defineFunctionForEachRobot();
 
 };
 

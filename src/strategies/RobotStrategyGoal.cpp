@@ -7,7 +7,7 @@
 RobotStrategyGoal::RobotStrategyGoal() = default;
 
 Command RobotStrategyGoal::specificStrategy(Command c) {
-    c = stop_strategy(c);
+    c = stopStrategy(c);
 
     return c;
 }
@@ -45,7 +45,7 @@ btVector3 RobotStrategyGoal::defineTarget() {
     return goalTarget;
 }
 
-Command RobotStrategyGoal::stop_strategy(Command command){
+Command RobotStrategyGoal::stopStrategy(Command command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
     Command c = command;
@@ -67,7 +67,7 @@ Command RobotStrategyGoal::stop_strategy(Command command){
         if ((robot.angle > 80 && robot.angle < 120) || (robot.angle > 260 && robot.angle < 300)) {
             c = movimentation->stop();
         } else {
-            c = movimentation->turn_right(10, 10);
+            c = movimentation->turnRight(10, 10);
         }
     }
 

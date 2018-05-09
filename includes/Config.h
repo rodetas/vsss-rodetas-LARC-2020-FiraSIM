@@ -9,7 +9,7 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-#include <boost.h>
+#include <Boost.h>
 #include <sstream>
 #include <iostream>
 #include <string>

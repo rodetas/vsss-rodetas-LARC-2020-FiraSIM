@@ -1,4 +1,4 @@
-#include <config.h>
+#include <Config.h>
 
 bool Config::debug = false;
 bool Config::realEnvironment = false;
