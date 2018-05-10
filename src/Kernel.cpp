@@ -7,7 +7,7 @@ Kernel::Kernel(){
 	srand(time(NULL));
 }
 
-void Kernel::loop(){
+void Kernel::loop() {
 
     RobotStrategyFactory coach;
 
@@ -18,7 +18,7 @@ void Kernel::loop(){
     vector<RodetasRobot> robots;
     vector<Command> commands(3);
 
-    for(unsigned int i=0 ; i<3 ; i++) robots.emplace_back(RodetasRobot(i, (MindSet)i));
+    for (unsigned int i = 0; i < 3; i++) robots.emplace_back(RodetasRobot(i, (MindSet) i));
 
     RodetasState state;
     Debug debug;
@@ -27,14 +27,14 @@ void Kernel::loop(){
     robots[1].setStrategy(new RobotStrategyDefender());
     robots[0].setStrategy(new RobotStrategyGoal());
 
-	while(true){
+    while (true) {
 
         // method which waits and receives a new state from simulator or vision
         //@TODO jogar parametros para o construtor da classe StateReceiveAdapter
-		state = receiveInterface.receiveState(Config::changeSide, Config::teamColor);
+        state = receiveInterface.receiveState(Config::changeSide, Config::teamColor);
 
-        for(unsigned int i=0 ; i<robots.size() ; i++){
-            RodetasRobot& robot = robots[i];
+        for (unsigned int i = 0; i < robots.size(); i++) {
+            RodetasRobot &robot = robots[i];
 
             robot.updateSelfState(state.robots[i]);
             robot.updateState(state);
@@ -50,6 +50,7 @@ void Kernel::loop(){
 
         coach.manage(robots, state);
 
-		sendInterface.sendCommands(commands);
-		debugInterface.sendDebug(debug);
-	}
+        sendInterface.sendCommands(commands);
+        debugInterface.sendDebug(debug);
+    }
+}

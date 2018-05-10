@@ -18,7 +18,7 @@ bool Config::argumentParse(int argc, char** argv) {
         ("help,h", "(Optional) print this help message")
         ("debug,d", "(Optional) enables the debug rotine")
         ("environment,e", "(Optional) set real environment")
-        ("side,s", bpo::value<std::string>()->default_value("left"), "(Optional) Specify the team's side;")
+        ("rotate,r", "(Optional) rotate robots positions")
         ("color,c", bpo::value<std::string>()->default_value("blue"), "(Optional) Specify the main color of your team, may be yellow or blue.");
     bpo::variables_map vm;
     bpo::store(bpo::parse_command_line(argc, argv, desc), vm);
@@ -29,10 +29,7 @@ bool Config::argumentParse(int argc, char** argv) {
         return false;
     }
 
-    if (vm["side"].as<string>() == "right"){
-        changeSide = true;
-    }
-
+    changeSide = (bool) vm.count("rotate");
     debug = (bool) vm.count("debug");
     realEnvironment = (bool) vm.count("environment");
 
