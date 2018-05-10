@@ -26,7 +26,7 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
 }
 
 Command RobotStrategy::cornerStrategy(Command c) {
-    if (strategyBase.isBoard(robot) && strategyBase.isStopped()){
+    if (strategyBase.isBoard() && strategyBase.isStopped()){
 
         // girar caso robo esteja preso de frente pra parede
         if (robot.cosFrom(state.ball.position) > -0.9 && robot.cosFrom(state.ball.position) < 0.9) {

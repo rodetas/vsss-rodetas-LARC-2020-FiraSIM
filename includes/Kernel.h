@@ -16,11 +16,6 @@
 #include <CommandSendAdapter.h>
 #include <Config.h>
 
-//#include <strategies/RobotStrategyBase.h>
-//#include <strategies/StrategyAttack.h>
-//#include <strategies/StrategyDefense.h>
-//#include <strategies/StrategyGoal.h>
-
 using namespace std;
 using namespace common;
 
@@ -30,9 +25,6 @@ public:
     Kernel();
 
 	void loop();
-
-	void defineFunctionForEachRobot();
-
 };
 
 #endif // _STRATEGY_H_
