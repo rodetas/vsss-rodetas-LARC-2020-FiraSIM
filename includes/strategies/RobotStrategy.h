@@ -52,9 +52,6 @@ protected:
 
     Movimentation* movimentation;
 
-    //@TODO: jogar imageSize e goalSize para Config
-  
-
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGY_H

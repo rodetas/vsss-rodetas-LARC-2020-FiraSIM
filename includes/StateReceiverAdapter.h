@@ -15,12 +15,15 @@ class StateReceiverAdapter {
 
 public:
 
-    StateReceiverAdapter();
+    StateReceiverAdapter(string, bool);
 
     void createSocketReceiveState();
-    RodetasState receiveState(bool changeSide, string mainColor);
+    RodetasState receiveState();
 
 private:
+    bool changeSide;
+    string teamColor;
+
     vss::InterfaceCore interfaceReceive;
 
 };

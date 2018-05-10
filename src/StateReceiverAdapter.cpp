@@ -5,7 +5,10 @@
 #include <RodetasRobot.h>
 #include "StateReceiverAdapter.h"
 
-StateReceiverAdapter::StateReceiverAdapter() {
+StateReceiverAdapter::StateReceiverAdapter(string teamColor, bool changeSide) {
+    this->teamColor = teamColor;
+    this->changeSide = changeSide;
+
     createSocketReceiveState();
 }
 
@@ -13,7 +16,7 @@ void StateReceiverAdapter::createSocketReceiveState() {
     interfaceReceive.createSocketReceiveState();
 }
 
-RodetasState StateReceiverAdapter::receiveState(bool changeSide, string mainColor) {
+RodetasState StateReceiverAdapter::receiveState() {
 
     // receives a vss::State from sdk or wait until a new packet comes
     vss::State state = interfaceReceive.receiveState((vss::FieldTransformation)changeSide);
@@ -25,7 +28,7 @@ RodetasState StateReceiverAdapter::receiveState(bool changeSide, string mainColo
     newState.ball.setProjection(Math::calculateProjection(btVector3(state.ball.x, state.ball.y), state.ball.speedX, state.ball.speedY));
 
     // inserts team robots in the beginning of the vector and push opponents in the end
-    if(mainColor == "yellow"){
+    if(teamColor == "yellow"){
         for(auto vssRobot : state.teamYellow){
             RobotState robot;
             robot.setPosition(btVector3(vssRobot.x, vssRobot.y));

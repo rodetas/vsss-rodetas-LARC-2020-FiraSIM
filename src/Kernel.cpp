@@ -11,7 +11,7 @@ void Kernel::loop() {
 
     RobotStrategyFactory coach;
 
-    StateReceiverAdapter receiveInterface;
+    StateReceiverAdapter receiveInterface(Config::teamColor, Config::changeSide);
     DebugSendAdapter debugInterface(Config::teamColor, Config::debug);
     CommandSendAdapter sendInterface(Config::teamColor, Config::realEnvironment);
 
@@ -30,8 +30,7 @@ void Kernel::loop() {
     while (true) {
 
         // method which waits and receives a new state from simulator or vision
-        //@TODO jogar parametros para o construtor da classe StateReceiveAdapter
-        state = receiveInterface.receiveState(Config::changeSide, Config::teamColor);
+        state = receiveInterface.receiveState();
 
         for (unsigned int i = 0; i < robots.size(); i++) {
             RodetasRobot &robot = robots[i];

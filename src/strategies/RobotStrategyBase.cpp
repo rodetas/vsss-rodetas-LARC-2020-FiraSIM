@@ -3,10 +3,9 @@
 //
 
 #include <strategies/RobotStrategyBase.h>
+#include <Config.h>
 
-RobotStrategyBase::RobotStrategyBase() {
-    image = {150,130};
-}
+RobotStrategyBase::RobotStrategyBase() = default;
 
 void RobotStrategyBase::update(RobotState robot, btVector3 target) {
     this->robot = robot;
@@ -21,8 +20,8 @@ bool RobotStrategyBase::isBlocked() {
 }
 
 bool RobotStrategyBase::isParallelToGoal() {
-    return (robot.cosFrom(btVector3(image.x, robot.position.y)) > -0.3 &&
-            robot.cosFrom(btVector3(image.x, robot.position.y)) < 0.3);
+    return (robot.cosFrom(btVector3(Config::fieldSize.x, robot.position.y)) > -0.3 &&
+            robot.cosFrom(btVector3(Config::fieldSize.x, robot.position.y)) < 0.3);
 }
 
 bool RobotStrategyBase::isStopped() {
@@ -34,6 +33,6 @@ bool RobotStrategyBase::isStoppedFor(int time){
 }
 
 bool RobotStrategyBase::isBoard() {
-    return (robot.position.y > image.y * (0.90) || robot.position.y < image.y * (0.10) ||
-            robot.position.x > image.x * (0.85) || robot.position.x < image.x * (0.15) );
+    return (robot.position.y > Config::fieldSize.y * (0.90) || robot.position.y < Config::fieldSize.y * (0.10) ||
+            robot.position.x > Config::fieldSize.x * (0.85) || robot.position.x < Config::fieldSize.x * (0.15) );
 }

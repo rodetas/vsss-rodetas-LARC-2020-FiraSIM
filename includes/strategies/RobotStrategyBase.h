@@ -30,9 +30,6 @@ private:
     RobotState robot;
     btVector3 target;
 
-    //@TODO: tirar image daqui
-    btVector3 image;
-
 };
 
 #endif //SDK_RODETAS_STRATEGYBASE_H
