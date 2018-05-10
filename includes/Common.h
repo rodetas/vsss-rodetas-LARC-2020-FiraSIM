@@ -17,7 +17,7 @@
 using namespace std;
 
 namespace common{
-    enum { NONE = 0, GOAL_TEAM1 = 1, GOAL_TEAM2 = 2, FAULT_TEAM1 = 3, FAULT_TEAM2 = 4, PENALTY_TEAM1 = 5, PENALTY_TEAM2 = 6 };
+    enum { none = 0, goalTeam1 = 1, goalTeam2 = 2, faultTeam1 = 3, faultTeam2 = 4, penaltyTeam1 = 5, penaltyTeam2 = 6 };
 
     //! This struct represents a Vector in R^3.
     struct btVector3{
@@ -72,9 +72,9 @@ namespace common{
 
     //! This is a simple structure that represents a Debug packet
     struct Debug{
-        btVector3 robots_step_pose[3];
-        btVector3 robots_final_pose[3];
-        Path robots_path[3];
+        btVector3 robotsStepPose[3];
+        btVector3 robotsFinalPose[3];
+        Path robotsPath[3];
         Debug() = default;
     };
 

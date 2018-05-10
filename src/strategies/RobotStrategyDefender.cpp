@@ -7,7 +7,7 @@
 RobotStrategyDefender::RobotStrategyDefender() = default;
 
 Command RobotStrategyDefender::specificStrategy(Command c) {
-    c = stop_strategy(c);
+    c = stopStrategy(c);
 
     return c;
 }

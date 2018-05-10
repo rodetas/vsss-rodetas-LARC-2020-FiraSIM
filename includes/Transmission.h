@@ -1,7 +1,7 @@
 #ifndef TRANSMISSION_H_
 #define TRANSMISSION_H_
 
-#include <common.h>
+#include <Common.h>
 
 #include <termios.h>
 #include <unistd.h>

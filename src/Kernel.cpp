@@ -26,7 +26,7 @@ void Kernel::loop(){
 
         // method which waits and receives a new state from simulator or vision
         //@TODO jogar parametros para o construtor da classe StateReceiveAdapter
-		state = receiveInterface.receiveState(config::changeSide, Config::teamColor);
+		state = receiveInterface.receiveState(Config::changeSide, Config::teamColor);
 
         for(unsigned int i=0 ; i<robots.size() ; i++){
             RodetasRobot& robot = robots[i];
@@ -37,9 +37,9 @@ void Kernel::loop(){
 
             commands[i] = robot.getCommand();
 
-            debug.robots_final_pose[i] = robot.getRobotDebug().robotFinalPose;
-            debug.robots_step_pose[i] = robot.getRobotDebug().robotStepPose;
-            debug.robots_path[i] = robot.getRobotDebug().path;
+            debug.robotsFinalPose[i] = robot.getRobotDebug().robotFinalPose;
+            debug.robotsStepPose[i] = robot.getRobotDebug().robotStepPose;
+            debug.robotsPath[i] = robot.getRobotDebug().path;
 
         }
 
@@ -48,7 +48,7 @@ void Kernel::loop(){
 	}
 }
 
-void Kernel::define_function_for_each_robot(){
+void Kernel::defineFunctionForEachRobot(){
 
 //	btVector3 image_size = btVector3(170,130);
 //

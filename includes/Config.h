@@ -9,10 +9,11 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-#include <boost.h>
+#include <Boost.h>
 #include <sstream>
 #include <iostream>
 #include <string>
+#include "Common.h"
 
 using namespace std;
 
@@ -23,12 +24,12 @@ public:
     static bool realEnvironment;
     static bool changeSide;
     static string teamColor;
-	static btVector3 fieldSize;
-	static btVector3 goalSize;
-	static btVector3 image;
-	static btVector3 goalAreaSize;
 
-    static void argumentParse(int ,char**);
-    static bool readyParam();    
+	static common::btVector3 fieldSize;
+	static common::btVector3 goalSize;
+	static common::btVector3 goalAreaSize;
+
+    static bool argumentParse(int ,char**);
+
 };
 #endif // _CONFIG_H_

@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_STATERECEIVERADAPTER_H
 #define SDK_RODETAS_STATERECEIVERADAPTER_H
 
-#include <common.h>
+#include <Common.h>
 #include <RodetasState.h>
 #include <InterfaceCore.h>
 #include <State.h>
@@ -18,10 +18,10 @@ public:
     StateReceiverAdapter();
 
     void createSocketReceiveState();
-    RodetasState receiveState(bool change_side, string main_color);
+    RodetasState receiveState(bool changeSide, string mainColor);
 
 private:
-    vss::InterfaceCore interface_receive;
+    vss::InterfaceCore interfaceReceive;
 
 };
 

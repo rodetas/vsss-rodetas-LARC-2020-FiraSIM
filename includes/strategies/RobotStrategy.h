@@ -5,11 +5,12 @@
 #ifndef SDK_RODETAS_ROBOTSTRATEGY_H
 #define SDK_RODETAS_ROBOTSTRATEGY_H
 
-#include <common.h>
+#include <Common.h>
 #include "RobotStrategyBase.h"
 #include <RobotState.h>
 #include <RodetasState.h>
-#include <movimentation.h>
+#include <Movimentation.h>
+#include "Config.h"
 
 using namespace common;
 
@@ -18,20 +19,20 @@ class RobotStrategy {
 public:
     RobotStrategy();
 
-    virtual Command applyStrategy(RobotState, RodetasState);
+    virtual Command applyStrategy(RobotState, RodetasState, RobotStrategyBase);
 
     virtual Command specificStrategy(Command) = 0;
 
     virtual btVector3 defineTarget() = 0;
 
     //@TODO: inserir comentarios em cada estrategia
-    virtual Command corner_strategy(Command);
+    virtual Command cornerStrategy(Command);
 
-    virtual Command stop_strategy(Command);
+    virtual Command stopStrategy(Command);
 
-    virtual Command blocked_strategy(Command);
+    virtual Command blockedStrategy(Command);
 
-    virtual Command kick_strategy(Command);
+    virtual Command kickStrategy(Command);
 
     Command getCommand();
     btVector3 getFinalPose();

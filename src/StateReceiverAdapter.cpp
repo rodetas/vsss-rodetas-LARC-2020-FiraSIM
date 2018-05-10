@@ -10,13 +10,13 @@ StateReceiverAdapter::StateReceiverAdapter() {
 }
 
 void StateReceiverAdapter::createSocketReceiveState() {
-    interface_receive.createSocketReceiveState();
+    interfaceReceive.createSocketReceiveState();
 }
 
-RodetasState StateReceiverAdapter::receiveState(bool change_side, string main_color) {
+RodetasState StateReceiverAdapter::receiveState(bool changeSide, string mainColor) {
 
     // receives a vss::State from sdk or wait until a new packet comes
-    vss::State state = interface_receive.receiveState((vss::FieldTransformation)change_side);
+    vss::State state = interfaceReceive.receiveState((vss::FieldTransformation)changeSide);
 
     // converts vss::State to RodetasState
     RodetasState newState;
@@ -25,7 +25,7 @@ RodetasState StateReceiverAdapter::receiveState(bool change_side, string main_co
     newState.ball.setProjection(Math::calculateProjection(btVector3(state.ball.x, state.ball.y), state.ball.speedX, state.ball.speedY));
 
     // inserts team robots in the beginning of the vector and push opponents in the end
-    if(main_color == "yellow"){
+    if(mainColor == "yellow"){
         for(auto vssRobot : state.teamYellow){
             RobotState robot;
             robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
