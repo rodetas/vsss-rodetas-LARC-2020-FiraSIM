@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_STRATEGYBASE_H
 #define SDK_RODETAS_STRATEGYBASE_H
 
-#include <common.h>
+#include <Common.h>
 #include <RobotState.h>
 
 using namespace common;

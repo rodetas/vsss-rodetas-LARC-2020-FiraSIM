@@ -53,4 +53,3 @@ void Kernel::loop(){
 		sendInterface.sendCommands(commands);
 		debugInterface.sendDebug(debug);
 	}
-}

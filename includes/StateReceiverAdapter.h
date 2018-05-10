@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_STATERECEIVERADAPTER_H
 #define SDK_RODETAS_STATERECEIVERADAPTER_H
 
-#include <common.h>
+#include <Common.h>
 #include <RodetasState.h>
 #include <InterfaceCore.h>
 #include <State.h>

@@ -6,8 +6,15 @@
  * file, You can obtain one at http://www.gnu.org/licenses/gpl-3.0/.
  */
 
-#include <common.h>
+#include "Config.h"
+#include <Kernel.h>
 
-namespace common{
+int main(int argc, char** argv){
 
-};
+    if (Config::argumentParse(argc, argv)){
+        Kernel Kernel;
+        Kernel.loop();
+    }
+
+	return 0;
+}

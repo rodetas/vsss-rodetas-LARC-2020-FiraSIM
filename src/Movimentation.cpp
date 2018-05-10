@@ -1,25 +1,25 @@
-#include "movimentation.h"
+#include "Movimentation.h"
 
 
 /*
  * calculates the basic movimentation to goal to target
  */
-Command Movimentation::move_players(RobotState robot, btVector3 target){
+Command Movimentation::movePlayers(RobotState robot, btVector3 target){
 
 	Command command;
 
 	// movement along the field
 	if (robot.cosFrom(target) < -0.4) {
-		command = define_pwm(robot, target, 'F');
+		command = definePwm(robot, target, 'F');
 
 	} else if (robot.cosFrom(target) > 0.4){
-		command = define_pwm(robot, target, 'B');
+		command = definePwm(robot, target, 'B');
 
 	} else {
 		if (robot.sinFrom(target) > 0) {
-			command = turn_right(20, 20);
+			command = turnRight(20, 20);
 		} else {
-			command = turn_left(20, 20);
+			command = turnLeft(20, 20);
 		}
 	}
 
@@ -29,7 +29,7 @@ Command Movimentation::move_players(RobotState robot, btVector3 target){
 /*
  * Correct robot pwm to follow the destination
  */
-Command Movimentation::define_pwm(RobotState robot, btVector3 target, char direction){
+Command Movimentation::definePwm(RobotState robot, btVector3 target, char direction){
 
 	int standardPower = 50;
 	int basePower = standardPower * 1;//robot.get_potency_factor();
@@ -42,12 +42,12 @@ Command Movimentation::define_pwm(RobotState robot, btVector3 target, char direc
 		pwmMotor2 = pwmMotor2 * (-1);
 	}
 
-	Command verifiedPwm = check_pwm(Command(pwmMotor1, pwmMotor2));
+	Command verifiedPwm = checkPwm(Command(pwmMotor1, pwmMotor2));
 
 	return verifiedPwm;
 }
 
-Command Movimentation::check_pwm(const Command& pwm){
+Command Movimentation::checkPwm(const Command& pwm){
     Command command(pwm);
 
     if(pwm.left  > 255) command.left  = 255;
@@ -59,12 +59,12 @@ Command Movimentation::check_pwm(const Command& pwm){
     return command;
 }
 
-Command Movimentation::turn_left(int pwm1, int pwm2){
+Command Movimentation::turnLeft(int pwm1, int pwm2){
 	Command command(-pwm1, pwm2);
 	return command;
 }
 
-Command Movimentation::turn_right(int pwm1, int pwm2){
+Command Movimentation::turnRight(int pwm1, int pwm2){
 	Command command(pwm1, -pwm2);
 	return command;
 }

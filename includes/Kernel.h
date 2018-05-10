@@ -14,7 +14,7 @@
 #include <DebugSenderAdapter.h>
 #include <StateReceiverAdapter.h>
 #include <CommandSendAdapter.h>
-#include <config.h>
+#include <Config.h>
 
 using namespace std;
 using namespace common;
