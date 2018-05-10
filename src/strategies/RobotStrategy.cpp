@@ -6,9 +6,6 @@
 
 RobotStrategy::RobotStrategy() {
     movimentation = new Movimentation();
-    imageSize = {170,130};
-    goalSize = {10,40};
-    goalAreaSize = btVector3(imageSize.x*0.2, imageSize.y*0.6);
 }
 
 Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategyBase base) {
@@ -44,7 +41,7 @@ Command RobotStrategy::cornerStrategy(Command c) {
         // girar caso robo prenda a bola na parede - 8 cm
         if (robot.distanceFrom(state.ball.position) < (8) ) {
 
-            if (robot.position.y < (imageSize.y/2)){
+            if (robot.position.y < (Config::fieldSize.y/2)){
                 c = movimentation->turnLeft(60,60);
             } else {
                 c = movimentation->turnRight(60,60);

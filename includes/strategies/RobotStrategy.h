@@ -10,6 +10,7 @@
 #include <RobotState.h>
 #include <RodetasState.h>
 #include <Movimentation.h>
+#include "Config.h"
 
 using namespace common;
 
@@ -52,9 +53,7 @@ protected:
     Movimentation* movimentation;
 
     //@TODO: jogar imageSize e goalSize para Config
-    btVector3 imageSize;
-    btVector3 goalSize;
-    btVector3 goalAreaSize;
+  
 
 };
 

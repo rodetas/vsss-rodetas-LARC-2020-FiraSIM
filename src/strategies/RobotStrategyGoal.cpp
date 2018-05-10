@@ -17,29 +17,30 @@ btVector3 RobotStrategyGoal::defineTarget() {
     btVector3 ballProjection = state.ball.projection;
 
     // posição para seguir linha da bola
-    goalTarget.x = imageSize.x - 20;
+    goalTarget.x = Config::fieldSize.x - 20;
     goalTarget.y = ballProjection.y;
   
     // máximo que pode ir até a lateral da área
-    if(goalTarget.y > imageSize.y/2 + goalAreaSize.y/2){
-        goalTarget.y = imageSize.y/2 + goalAreaSize.y/2;
+    if(goalTarget.y > Config::fieldSize.y/2 + Config::goalAreaSize.y/2){
+        goalTarget.y = Config::fieldSize.y/2 + Config::goalAreaSize.y/2;
 
-    } else if(goalTarget.y < imageSize.y/2 - goalAreaSize.y/2){
-        goalTarget.y = imageSize.y/2 - goalAreaSize.y/2;
+    } else if(goalTarget.y < Config::fieldSize.y/2 - Config::goalAreaSize.y/2){
+        goalTarget.y = Config::fieldSize.y/2 - Config::goalAreaSize.y/2;
     }
 
     // ir na bola quando ela está dentro da area
-    if (ballProjection.y > (imageSize.y/2 - goalAreaSize.y/2) &&
-        ballProjection.y < (imageSize.y/2 + goalAreaSize.y/2) &&
-        ballProjection.x > imageSize.x - 30){
+    if (ballProjection.y > (Config::fieldSize.y/2 - Config::goalAreaSize.y/2) &&
+        ballProjection.y < (Config::fieldSize.y/2 + Config::goalAreaSize.y/2) &&
+        ballProjection.x > Config::fieldSize.x - 30){
 
         goalTarget = ballProjection;
     }
 
     // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
     if(strategyBase.isStoppedFor(90) && robot.distanceFrom(goalTarget) > 6){
-        goalTarget.x = imageSize.x - 10;
-        goalTarget.y = imageSize.y/2;
+        goalTarget.x = Config::fieldSize.x - 10;
+        goalTarget.y = Config::fieldSize.y/2;
+
     }
 
     return goalTarget;
