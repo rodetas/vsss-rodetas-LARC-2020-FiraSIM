@@ -4,9 +4,6 @@
 
 #include "StateInterpreter.h"
 
-//@TODO: tirar imageSize daqui
-btVector3 imageSize = {170,130};
-
 StateInterpreter::StateInterpreter() {
     strategiesById.resize(3);
     timeLastChange = -1;
@@ -39,7 +36,7 @@ vector<MindSet> StateInterpreter::defineStrategy(vector<RodetasRobot>& robots,  
 
 		// na defesa, o mais perto é o atacante
         if(distanceDefenderBall < distanceAttackerBall &&
-           state.ball.position.x < imageSize.x/2 &&
+           state.ball.position.x < Config::fieldSize.x/2 &&
            !attackerRobot.getRobotStrategyBase().isBlocked() &&
            !defenderRobot.getRobotStrategyBase().isBlocked()){
 

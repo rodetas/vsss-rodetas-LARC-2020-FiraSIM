@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_STATEINTERPRETER_H
 #define SDK_RODETAS_STATEINTERPRETER_H
 
-#include "common.h"
+#include "Common.h"
 #include "RodetasRobot.h"
 
 class StateInterpreter {
