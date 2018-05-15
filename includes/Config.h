@@ -23,6 +23,7 @@ public:
     static bool debug;
     static bool realEnvironment;
     static bool changeSide;
+    static bool playersSwap;
     static string teamColor;
 
 	static common::btVector3 fieldSize;

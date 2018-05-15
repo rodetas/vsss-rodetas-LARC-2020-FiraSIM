@@ -3,6 +3,7 @@
 bool Config::debug = false;
 bool Config::realEnvironment = false;
 bool Config::changeSide = false;
+bool Config::playersSwap = true;
 string Config::teamColor;
 
 common::btVector3 Config::fieldSize = {150,130};
@@ -19,6 +20,7 @@ bool Config::argumentParse(int argc, char** argv) {
         ("debug,d", "(Optional) enables the debug rotine")
         ("environment,e", "(Optional) set real environment")
         ("rotate,r", "(Optional) rotate robots positions")
+	("swap,s", bpo::value<std::string>()->default_value("on"), "(Optional) Turn On/off the player's swap.") 
         ("color,c", bpo::value<std::string>()->default_value("blue"), "(Optional) Specify the main color of your team, may be yellow or blue.");
     bpo::variables_map vm;
     bpo::store(bpo::parse_command_line(argc, argv, desc), vm);
@@ -28,6 +30,11 @@ bool Config::argumentParse(int argc, char** argv) {
         cout << desc << endl;
         return false;
     }
+    
+    if (vm["swap"].as<string>() == "off"){
+		playersSwap= false;
+	}
+		
 
     changeSide = (bool) vm.count("rotate");
     debug = (bool) vm.count("debug");
