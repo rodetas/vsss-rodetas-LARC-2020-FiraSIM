@@ -2,6 +2,7 @@
 #include <strategies/RobotStrategyDefender.h>
 #include <strategies/RobotStrategyGoal.h>
 #include <RobotStrategyFactory.h>
+#include <Config.h>
 
 Kernel::Kernel(){
 	srand(time(NULL));
@@ -47,7 +48,7 @@ void Kernel::loop() {
 
         }
 
-        coach.manage(robots, state);
+        coach.manage(robots, state,Config::playersSwap);
 
         sendInterface.sendCommands(commands);
         debugInterface.sendDebug(debug);
