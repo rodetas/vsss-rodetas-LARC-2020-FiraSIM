@@ -6,8 +6,8 @@
 #define SDK_RODETAS_DEBUGSENDERADAPTER_H
 
 #include <interface.h>
-#include <common.h>
-#include <config.h>
+#include <Common.h>
+#include <Config.h>
 
 class DebugSendAdapter {
 

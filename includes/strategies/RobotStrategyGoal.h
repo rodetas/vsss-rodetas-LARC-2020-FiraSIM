@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_ROBOSTRATEGYGOAL_H
 #define SDK_RODETAS_ROBOSTRATEGYGOAL_H
 
-#include "common.h"
+#include "Common.h"
 #include "RobotStrategy.h"
 
 using namespace common;
@@ -18,7 +18,7 @@ public:
 
     Command specificStrategy(Command) override;
     btVector3 defineTarget() override;
-    Command stop_strategy(Command) override;
+    Command stopStrategy(Command) override;
 
 
 };

@@ -31,7 +31,7 @@ ADD_LIBRARY(core ${SRC} ${INCLUDE})
 
 SET (VSS_INTERFACE libvss-core.so)
 
-ADD_EXECUTABLE(SDK-Rodetas src/main.cpp)
+ADD_EXECUTABLE(SDK-Rodetas src/Main.cpp)
 
 TARGET_LINK_LIBRARIES(core ${VSS_INTERFACE} ${PROTOBUF_LIBRARY} ${PROTOBUF_LIBRARIES} ${Boost_LIBRARIES})
 TARGET_LINK_LIBRARIES(SDK-Rodetas core)
@@ -52,5 +52,3 @@ if(TESTS)
             core)
 
 endif()
-
-# INSTALL(TARGETS SDK-Rodetas DESTINATION bin)
