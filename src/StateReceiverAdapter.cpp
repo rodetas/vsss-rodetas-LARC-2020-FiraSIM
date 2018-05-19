@@ -36,6 +36,7 @@ RodetasState StateReceiverAdapter::receiveState() {
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
 
@@ -46,6 +47,7 @@ RodetasState StateReceiverAdapter::receiveState() {
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
 
@@ -58,6 +60,7 @@ RodetasState StateReceiverAdapter::receiveState() {
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
 
@@ -68,6 +71,7 @@ RodetasState StateReceiverAdapter::receiveState() {
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
     }
