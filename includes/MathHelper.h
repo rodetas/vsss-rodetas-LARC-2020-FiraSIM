@@ -26,6 +26,9 @@ public:
     //! Given a initial point and two velocities returns the initial point projection considering these two velocities
     static btVector3 calculateProjection(btVector3, double, double);
 
+    //! Transforms an angle to radian
+    static double toRadian(double);
+
 };
 
 #endif //SDK_RODETAS_MATHHELPER_H

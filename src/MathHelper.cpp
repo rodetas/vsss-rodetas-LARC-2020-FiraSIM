@@ -23,3 +23,7 @@ double Math::calculateLinearSpeed(double velX, double velY){
 btVector3 Math::calculateProjection(btVector3 initialPoint, double velX, double velY) {
     return btVector3(initialPoint.x + velX, initialPoint.y + velY);
 }
+
+double Math::toRadian(double angle) {
+    return angle * (M_PI/180);
+}

@@ -16,8 +16,23 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
     // defines robot's target,
     target = this->defineTarget();
 
+    UnivectorField univectorField(1.7, 0.12, 3.48, 4.5);
+
+    btVector3 arrivalOrientation(0, 75);
+    vector<btVector3> points;
+    btVector3 point(robot.position.x, robot.position.y);
+    float fi = univectorField.defineMoveFi(point, target, arrivalOrientation);
     // defines robot's pwm
-    command = movimentation->movePlayers(robot, target);
+    command = movimentation->movePlayers(robot,target,fi);
+
+    while (Math::radian(point,target) > 2){
+        point.x = point.x + cos(fi)*0.8;
+        point.y = point.y + sin(fi)*0.8;
+        points.push_back(point);
+        fi = univectorField.defineMoveFi(point, target, arrivalOrientation);
+    }
+
+    path.poses = points;
 
     // defines specific strategy such as corner strategy or kick strategy - can be applied or not
     command = this->specificStrategy(command);

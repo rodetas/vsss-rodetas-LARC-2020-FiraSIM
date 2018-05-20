@@ -10,6 +10,7 @@
 #include <RobotState.h>
 #include <RodetasState.h>
 #include <Movimentation.h>
+#include <UnivectorField.h>
 #include "Config.h"
 
 using namespace common;

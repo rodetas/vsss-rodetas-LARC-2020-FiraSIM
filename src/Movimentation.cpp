@@ -4,16 +4,16 @@
 /*
  * calculates the basic movimentation to goal to target
  */
-Command Movimentation::movePlayers(RobotState robot, btVector3 target){
+Command Movimentation::movePlayers(RobotState robot, btVector3 target, float fi){
 
 	Command command;
 
 	// movement along the field
 	if (robot.cosFrom(target) < -0.4) {
-		command = definePwm(robot, target, 'F');
+		command = definePwm(robot, target, 'F', fi);
 
 	} else if (robot.cosFrom(target) > 0.4){
-		command = definePwm(robot, target, 'B');
+		command = definePwm(robot, target, 'B', fi);
 
 	} else {
 		if (robot.sinFrom(target) > 0) {
@@ -29,11 +29,10 @@ Command Movimentation::movePlayers(RobotState robot, btVector3 target){
 /*
  * Correct robot pwm to follow the destination
  */
-Command Movimentation::definePwm(RobotState robot, btVector3 target, char direction){
-
-	int standardPower = 50;
+Command Movimentation::definePwm(RobotState robot, btVector3 target, char direction, float fi){
+	int standardPower = 30;
 	int basePower = standardPower * 1;//robot.get_potency_factor();
-	int correctionPower = standardPower * robot.sinFrom(target) * 0.7;//robot.get_curve_factor();
+	int correctionPower =20*sin(fi - Math::toRadian(robot.angle));//robot.get_curve_factor();
 	int pwmMotor1 = (basePower - correctionPower);
 	int pwmMotor2 = (basePower + correctionPower);
 
