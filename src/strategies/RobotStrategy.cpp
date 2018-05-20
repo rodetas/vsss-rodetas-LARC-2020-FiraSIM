@@ -16,20 +16,28 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
     // defines robot's target,
     target = this->defineTarget();
 
-    UnivectorField univectorField(1.7, 0.12, 3.48, 4.5);
+    UnivectorField univectorField(5, 0.12, 3.48, 4.5);
 
     btVector3 arrivalOrientation(0, 75);
     vector<btVector3> points;
-    btVector3 point(robot.position.x, robot.position.y);
-    float fi = univectorField.defineMoveFi(point, target, arrivalOrientation);
+    btVector3 rob(robot.position.x, robot.position.y);
+    float fi = univectorField.defineMoveFi(rob, target, arrivalOrientation);
     // defines robot's pwm
     command = movimentation->movePlayers(robot,target,fi);
 
-    while (Math::radian(point,target) > 2){
-        point.x = point.x + cos(fi)*0.8;
-        point.y = point.y + sin(fi)*0.8;
+    int sentido = 1;
+    if (robot.cosFrom(target) > 0.4){
+        sentido = -1;
+
+    }
+    btVector3 point = rob;
+    float fi2 = fi;
+    while (Math::distancePoint(point, target) > 5 && Math::distancePoint(point, target) < 100 ){
+        std::cout<<Math::distancePoint(point,target)<<std::endl;
+        point.x = point.x + cos(fi2)*sentido*2;
+        point.y = point.y + sin(fi2)*sentido*2;
         points.push_back(point);
-        fi = univectorField.defineMoveFi(point, target, arrivalOrientation);
+        fi2 = univectorField.defineMoveFi(point, target, arrivalOrientation);
     }
 
     path.poses = points;
