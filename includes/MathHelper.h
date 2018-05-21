@@ -29,6 +29,12 @@ public:
     //! Transforms an angle to radian
     static double toRadian(double);
 
+    //! Calculates the norm of a vector
+    static double norm(btVector3);
+
+    //! Calculates the gaussian
+    static double gaussian(double, double);
+
 };
 
 #endif //SDK_RODETAS_MATHHELPER_H

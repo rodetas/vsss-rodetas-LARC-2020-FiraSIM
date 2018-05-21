@@ -21,23 +21,24 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
     btVector3 arrivalOrientation(0, 75);
     vector<btVector3> points;
     btVector3 rob(robot.position.x, robot.position.y);
-    float fi = univectorField.defineMoveFi(rob, target, arrivalOrientation);
+
+    float fi = univectorField.defineFi(r, rob, target, arrivalOrientation, s.robots);
     // defines robot's pwm
-    command = movimentation->movePlayers(robot,target,fi);
+    command = movimentation->movePlayers(robot, target, fi);
 
     int sentido = 1;
-    if (robot.cosFrom(target) > 0.4){
+    if (robot.cosFrom(target) > 0.4) {
         sentido = -1;
 
     }
     btVector3 point = rob;
     float fi2 = fi;
-    while (Math::distancePoint(point, target) > 5 && Math::distancePoint(point, target) < 100 ){
-        std::cout<<Math::distancePoint(point,target)<<std::endl;
-        point.x = point.x + cos(fi2)*sentido*2;
-        point.y = point.y + sin(fi2)*sentido*2;
+    while (Math::distancePoint(point, target) > 5 && Math::distancePoint(point, target) < 100) {
+        std::cout << Math::distancePoint(point, target) << std::endl;
+        point.x = point.x + cos(fi2) * sentido * 2;
+        point.y = point.y + sin(fi2) * sentido * 2;
         points.push_back(point);
-        fi2 = univectorField.defineMoveFi(point, target, arrivalOrientation);
+        fi2 = univectorField.defineFi(r, rob, target, arrivalOrientation, s.robots);
     }
 
     path.poses = points;
@@ -49,25 +50,25 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
 }
 
 Command RobotStrategy::cornerStrategy(Command c) {
-    if (strategyBase.isBoard() && strategyBase.isStopped()){
+    if (strategyBase.isBoard() && strategyBase.isStopped()) {
 
         // girar caso robo esteja preso de frente pra parede
         if (robot.cosFrom(state.ball.position) > -0.9 && robot.cosFrom(state.ball.position) < 0.9) {
             if (robot.sinFrom(state.ball.position) > 0) {
-                c = movimentation->turnRight(50,30);
+                c = movimentation->turnRight(50, 30);
             } else {
-                c = movimentation->turnLeft(50,50);
+                c = movimentation->turnLeft(50, 50);
             }
 //            cout << "preso pra parede" << endl;
         }
 
         // girar caso robo prenda a bola na parede - 8 cm
-        if (robot.distanceFrom(state.ball.position) < (8) ) {
+        if (robot.distanceFrom(state.ball.position) < (8)) {
 
-            if (robot.position.y < (Config::fieldSize.y/2)){
-                c = movimentation->turnLeft(60,60);
+            if (robot.position.y < (Config::fieldSize.y / 2)) {
+                c = movimentation->turnLeft(60, 60);
             } else {
-                c = movimentation->turnRight(60,60);
+                c = movimentation->turnRight(60, 60);
             }
 //            cout << "preso com bola" << endl;
         }
@@ -88,12 +89,12 @@ Command RobotStrategy::stopStrategy(Command c) {
 	}
 */
 
-    if(distanceTarget < maxDistance){
-        c.left  = c.left  * (distanceTarget/maxDistance);
-        c.right = c.right * (distanceTarget/maxDistance);
+    if (distanceTarget < maxDistance) {
+        c.left = c.left * (distanceTarget / maxDistance);
+        c.right = c.right * (distanceTarget / maxDistance);
     }
 
-    if(distanceTarget < 4){
+    if (distanceTarget < 4) {
 
         if (robot.cosFrom(state.ball.projection) < -0.8 || robot.cosFrom(state.ball.projection) > 0.8) {
             c = movimentation->stop();
