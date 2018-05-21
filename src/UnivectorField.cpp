@@ -15,12 +15,17 @@ float UnivectorField::defineMoveFi(btVector3 robot, btVector3 target, btVector3 
 
     float alpha = pr - pg;
     float fi = pg - n * alpha;
-    return fi;
+    return toDomain(fi);
 }
 
 float UnivectorField::defineRepulsiveFi(btVector3 robot, btVector3 virtualObstacle) {
-    float fi = Math::radian(robot, virtualObstacle);
-    return fi;
+    float fi;
+    if(robot.x - virtualObstacle.x < 0){
+        fi = Math::radian(robot, virtualObstacle) + M_PI;
+    }else{
+        fi = Math::radian(robot, virtualObstacle);
+    }
+    return toDomain(fi);
 }
 
 float
@@ -51,17 +56,33 @@ UnivectorField::defineFi(RobotState robot, btVector3 robotPosition, btVector3 ta
             }
         }
 
+        //std::cout<<distance<<std::endl;
         float repulsiveFi = defineRepulsiveFi(robotPosition, closestVirtualObstacle);
 
         if (distance <= dmin) {
+            std::cout<<"Só repulsivo: "<< repulsiveFi<<std::endl;
             return repulsiveFi;
         } else {
             float g = Math::gaussian(distance - dmin, delta);
-            float diff = repulsiveFi - moveFi;
-            return (g * diff + moveFi);
+            float diff = toDomain(repulsiveFi - moveFi);
+            float fi = g * diff + moveFi;
+            std::cout<<"Move: "<<moveFi<<" Repulsive: "<<repulsiveFi<<std::endl;
+            std::cout<<toDomain(fi)<<std::endl;
+            return toDomain(fi);
         }
     } else {
+        std::cout<<"Só move"<<std::endl;
         return moveFi;
+    }
+}
+
+float UnivectorField::toDomain(float fi) {
+    if(fi > M_PI){
+        return (fi -2*M_PI);
+    }else if(fi < -M_PI){
+        return (2*M_PI + fi);
+    } else{
+        return fi;
     }
 }
 

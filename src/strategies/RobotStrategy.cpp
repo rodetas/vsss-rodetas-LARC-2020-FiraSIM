@@ -16,7 +16,7 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
     // defines robot's target,
     target = this->defineTarget();
 
-    UnivectorField univectorField(5, 0.12, 3.48, 4.5);
+    UnivectorField univectorField(3, 20, 50, 4.5);
 
     btVector3 arrivalOrientation(0, 75);
     vector<btVector3> points;
@@ -26,19 +26,18 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
     // defines robot's pwm
     command = movimentation->movePlayers(robot, target, fi);
 
-    int sentido = 1;
-    if (robot.cosFrom(target) > 0.4) {
-        sentido = -1;
-
-    }
     btVector3 point = rob;
+
     float fi2 = fi;
     while (Math::distancePoint(point, target) > 5 && Math::distancePoint(point, target) < 100) {
-        std::cout << Math::distancePoint(point, target) << std::endl;
-        point.x = point.x + cos(fi2) * sentido * 2;
-        point.y = point.y + sin(fi2) * sentido * 2;
+        //std::cout << Math::distancePoint(point, target) << std::endl;
+        point.x = point.x + cos(fi2) * 2;
+        point.y = point.y + sin(fi2) * 2;
+        btVector3 orientation = point;
+        orientation.x = orientation.x + 2;
+        orientation.y = orientation.y + 2;
         points.push_back(point);
-        fi2 = univectorField.defineFi(r, rob, target, arrivalOrientation, s.robots);
+        fi2 = univectorField.defineMoveFi(point, target, orientation);
     }
 
     path.poses = points;

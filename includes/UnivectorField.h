@@ -22,6 +22,8 @@ public:
     float defineFi(RobotState robot, btVector3 robotPosition, btVector3 target, btVector3 arrivalOrientation,
                    std::vector<RobotState> robots);
 
+    float toDomain(float fi);
+
     btVector3 getS(btVector3 robotSpeed, btVector3 obstacleSpeed);
 
     btVector3 getVirtualPosition(btVector3 robot, btVector3 obstacle, btVector3 s);
