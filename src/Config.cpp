@@ -5,6 +5,7 @@ bool Config::realEnvironment = false;
 bool Config::changeSide = false;
 bool Config::playersSwap = true;
 string Config::teamColor;
+string Config::test;
 
 common::btVector3 Config::fieldSize = {150,130};
 common::btVector3 Config::goalSize = {10, 40};
@@ -20,8 +21,9 @@ bool Config::argumentParse(int argc, char** argv) {
         ("debug,d", "(Optional) enables the debug rotine")
         ("environment,e", "(Optional) set real environment")
         ("rotate,r", "(Optional) rotate robots positions")
-	("swap,s", "(Optional) Turn off player's swap.") 
+		("swap,s", "(Optional) Turn off player's swap.") 
         ("color,c", bpo::value<std::string>()->default_value("blue"), "(Optional) Specify the main color of your team, may be yellow or blue.");
+		//("tests,t", bpo::value<std::string>()->default_value("t1"), "(Optional) Specify the test you want to do: t1- generateMessage test; t2- checkSum test.");
     bpo::variables_map vm;
     bpo::store(bpo::parse_command_line(argc, argv, desc), vm);
     bpo::notify(vm);
@@ -39,6 +41,7 @@ bool Config::argumentParse(int argc, char** argv) {
 
     //@TODO: transformar cor de string para enum
     teamColor = vm["color"].as<string>();
+	//	test= vm["tests"].as<string>();
 
     return true;
 }
