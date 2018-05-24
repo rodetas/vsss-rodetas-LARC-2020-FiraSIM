@@ -44,7 +44,7 @@ if(TESTS)
 
     # Tests. *-test.cpp should be added here.
     add_executable(tests
-           test/MainTest.cpp test/RobotStrategyTest.cpp test/Tests.cpp)
+           test/MainTest.cpp test/RobotStrategyTest.cpp test/TransmissionTests.h )
 
     # Link core, pthread and gtest to test.
     target_link_libraries(tests
