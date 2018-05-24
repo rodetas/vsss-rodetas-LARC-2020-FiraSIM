@@ -8,7 +8,7 @@
 #include <assert.h>
 using namespace std;
 using namespace common;
-class transmissionTests{
+class TransmissionTests{
 	public:
 	void testGenerateMessage(){
 		Transmission t;
