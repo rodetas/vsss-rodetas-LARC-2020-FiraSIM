@@ -9,7 +9,7 @@
 using namespace std;
 using namespace common;
 int main(int argc, char** argv){
-		transmissionTests transmissionTests;
+		TransmissionTests transmissionTests;
 			
 		transmissionTests.testGenerateMessage();
 		transmissionTests.testCheckSum();
