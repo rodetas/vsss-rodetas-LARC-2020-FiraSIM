@@ -19,12 +19,7 @@ float UnivectorField::defineMoveFi(btVector3 robot, btVector3 target, btVector3 
 }
 
 float UnivectorField::defineRepulsiveFi(btVector3 robot, btVector3 virtualObstacle) {
-    float fi;
-    if(robot.x - virtualObstacle.x < 0){
-        fi = Math::radian(robot, virtualObstacle) + M_PI;
-    }else{
-        fi = Math::radian(robot, virtualObstacle);
-    }
+    float fi = Math::radian(robot, virtualObstacle);
     return toDomain(fi);
 }
 
@@ -64,8 +59,8 @@ UnivectorField::defineFi(RobotState robot, btVector3 robotPosition, btVector3 ta
             return repulsiveFi;
         } else {
             float g = Math::gaussian(distance - dmin, delta);
-            float diff = toDomain(repulsiveFi - moveFi);
-            float fi = g * diff + moveFi;
+            //float diff = toDomain(repulsiveFi - moveFi);
+            float fi = toDomain((1+g)*moveFi) + toDomain(g*repulsiveFi);
             std::cout<<"Move: "<<moveFi<<" Repulsive: "<<repulsiveFi<<std::endl;
             std::cout<<toDomain(fi)<<std::endl;
             return toDomain(fi);
