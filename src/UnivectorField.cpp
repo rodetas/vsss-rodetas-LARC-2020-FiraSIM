@@ -59,8 +59,9 @@ UnivectorField::defineFi(RobotState robot, btVector3 robotPosition, btVector3 ta
             return repulsiveFi;
         } else {
             float g = Math::gaussian(distance - dmin, delta);
-            //float diff = toDomain(repulsiveFi - moveFi);
-            float fi = toDomain((1+g)*moveFi) + toDomain(g*repulsiveFi);
+            float diff = toDomain(repulsiveFi - moveFi);
+            //float fi = toDomain((1+g)*moveFi) + toDomain(g*repulsiveFi);
+            float fi = toDomain(g*diff) + toDomain(moveFi);
             std::cout<<"Move: "<<moveFi<<" Repulsive: "<<repulsiveFi<<std::endl;
             std::cout<<toDomain(fi)<<std::endl;
             return toDomain(fi);

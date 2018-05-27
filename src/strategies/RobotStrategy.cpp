@@ -16,14 +16,15 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
     // defines robot's target,
     target = this->defineTarget();
 
-    UnivectorField univectorField(3, 0.12, 15, 4.5);
+    UnivectorField univectorField(3, 0.12, 4.5, 4.5);
 
     //btVector3 arrivalOrientation = btVector3(0, 75);
     btVector3 arrivalOrientation = btVector3(target.x - 10, target.y + 10);
 
     btVector3 robotPosition = btVector3(robot.position.x, robot.position.y);
 
-    float fi = univectorField.defineMoveFi(robotPosition, target, arrivalOrientation);
+    //float fi = univectorField.defineMoveFi(robotPosition, target, arrivalOrientation);
+    float fi = univectorField.defineFi(r,robotPosition,target, arrivalOrientation, s.robots);
     // defines robot's pwm
     command = movimentation->movePlayers(robot, target, fi);
 
@@ -32,12 +33,12 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
 
     float fi_draw = fi;
     for (int i = 0; i < 250; i++){
-      point.x = point.x + cos(fi_draw);
-      point.y = point.y + sin(fi_draw);
-      points.push_back(point);
-      fi_draw = univectorField.defineMoveFi(point, target, arrivalOrientation);
-      if (Math::distancePoint(point, target) < 5)
-        i = 250;
+        point.x = point.x + cos(fi_draw);
+        point.y = point.y + sin(fi_draw);
+        points.push_back(point);
+        fi_draw = univectorField.defineFi(r,point,target, arrivalOrientation, s.robots);
+        if (Math::distancePoint(point, target) < 5)
+            i = 250;
     }
 
     path.poses = points;
