@@ -73,9 +73,9 @@ UnivectorField::defineFi(RobotState robot, btVector3 robotPosition, btVector3 ta
 
 float UnivectorField::toDomain(float fi) {
     if(fi > M_PI){
-        return (fi -2*M_PI);
+        return (fi - 2 * M_PI);
     }else if(fi < -M_PI){
-        return (2*M_PI + fi);
+        return (2 * M_PI + fi);
     } else{
         return fi;
     }

@@ -34,7 +34,7 @@ Command RobotStrategyAttack::specificStrategy(Command c){
 btVector3 RobotStrategyAttack::defineTarget() {
 
     btVector3 target = state.ball.position;
-
+/*
     btVector3 centerGoal = btVector3(0, Config::fieldSize.y/2);
     double angleRobotGoal = Math::angulation(robot.position, centerGoal);
 
@@ -65,6 +65,6 @@ btVector3 RobotStrategyAttack::defineTarget() {
     // verifies the limits of the destination
     if (target.y < 0) target.y = 0;
     if (target.y > Config::fieldSize.y) target.y = Config::fieldSize.y;
-
+*/
     return target;
 }
