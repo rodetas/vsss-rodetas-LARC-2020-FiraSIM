@@ -7,9 +7,10 @@
 
 #include <Common.h>
 #include <RodetasState.h>
-#include <InterfaceCore.h>
+#include <StateReceiver.h>
 #include <State.h>
 #include <MathHelper.h>
+#include <Domain/FieldTransformationType.h>
 
 class StateReceiverAdapter {
 
@@ -24,7 +25,7 @@ private:
     bool changeSide;
     string teamColor;
 
-    vss::InterfaceCore interfaceReceive;
+    vss::StateReceiver stateReceiver;
 
 };
 
