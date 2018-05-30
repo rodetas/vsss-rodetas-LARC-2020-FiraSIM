@@ -51,33 +51,18 @@ btVector3 RobotStrategyDefender::defineTarget() {
 }
 
 float RobotStrategyDefender::applyUnivectorField(btVector3 target) {
-    float n = 3;
-    btVector3 arrivalOrientation = btVector3(0, 75);
+
+    btVector3 arrivalOrientation = btVector3(target.x - 10, target.y + 10);
 
     vector<pair<btVector3, btVector3>> obstacles;
-
-    if (target.x == state.ball.projection.x && target.y == state.ball.projection.y) {
-        if (target.y < 8 || target.y > 120 || target.x > 150) {
-            n = 0;
+    for (auto &r: state.robots) {
+        if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+            obstacles.push_back(make_pair(r.position, r.vectorSpeed));
         }
-        //Se o robo estiver longe da bola adiciona todos os obstáculos
-        if (Math::distancePoint(robot.position, target) > 5) {
-            for (auto &r: state.robots) {
-                if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-                    obstacles.push_back(make_pair(r.position, r.vectorSpeed));
-                }
-            }
-        }
-    } else {
-        n = 0;
     }
 
-    //Adicionar também obstáculos da área do gol
-
-    UnivectorField univectorField(n, 0.12, 4.5, 4.5);
-
+    UnivectorField univectorField(2, 0.12, 4.5, 4.5);
     path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
-
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
 }
 

@@ -8,17 +8,18 @@ RobotStrategyAttack::RobotStrategyAttack() {
 
 }
 
-Command RobotStrategyAttack::specificStrategy(Command c){
+Command RobotStrategyAttack::specificStrategy(Command c) {
     c = kickStrategy(c);
     c = cornerStrategy(c);
 
-    if (strategyBase.isParallelToGoal()){
+    if (strategyBase.isParallelToGoal()) {
 
-        int halfGoal1 = Config::fieldSize.y/2 + (Config::goalSize.y/2);
-        int halfGoal2 = Config::fieldSize.y/2 - (Config::goalSize.y/2);
+        int halfGoal1 = Config::fieldSize.y / 2 + (Config::goalSize.y / 2);
+        int halfGoal2 = Config::fieldSize.y / 2 - (Config::goalSize.y / 2);
 
-        if ( robot.distanceFrom(state.ball.position) < 7 &&
-             robot.position.x < Config::fieldSize.x*0.25 && robot.position.y > halfGoal2 && robot.position.y < halfGoal1){
+        if (robot.distanceFrom(state.ball.position) < 7 &&
+            robot.position.x < Config::fieldSize.x * 0.25 && robot.position.y > halfGoal2 &&
+            robot.position.y < halfGoal1) {
 
             if (robot.position.y < state.ball.position.y) {
                 c = movimentation->turnRight(80, 80);
@@ -72,34 +73,19 @@ btVector3 RobotStrategyAttack::defineTarget() {
 float RobotStrategyAttack::applyUnivectorField(btVector3 target) {
     /*Se o target for a bola e o robô está a conduzindo não irá desviar de nada
      *Se o target for a bola e o robô não está a conduzindo irá desviar de todos os outros robôs
-     *Se o robo estiver conduzindo a bola pelos cantos, n = 0, para ir reto na bola e não tentar fazer curva contra a parede
+     *Se o robo estiver conduzindo a bola pelos cantos definir orientação para ir reto na bola e não tentar fazer curva contra a parede
      *O angulo de chegada na bola deve ser apontando para o gol*/
 
-    float n = 3;
-    btVector3 arrivalOrientation = btVector3(0, 75);
+    btVector3 arrivalOrientation = btVector3(target.x - 10, target.y + 10);
 
     vector<pair<btVector3, btVector3>> obstacles;
-
-    if(target.x==state.ball.projection.x && target.y==state.ball.projection.y){
-        if(target.y < 8 || target.y > 120){
-            n = 0;
+    for (auto &r: state.robots) {
+        if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+            obstacles.push_back(make_pair(r.position, r.vectorSpeed));
         }
-
-        //Se o robo estiver longe da bola adiciona todos os obstáculos
-        if(Math::distancePoint(robot.position, target) > 5){
-            for (auto &r: state.robots) {
-                if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-                    obstacles.push_back(make_pair(r.position, r.vectorSpeed));
-                }
-            }
-        }
-    }else{
-        n = 0;
     }
 
-    UnivectorField univectorField(n, 0.12, 4.5, 4.5);
-
+    UnivectorField univectorField(2, 0.12, 4.5, 4.5);
     path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
-
-    return univectorField.defineFi(robot,target, arrivalOrientation, obstacles);
+    return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
 }
