@@ -46,6 +46,40 @@ btVector3 RobotStrategyGoal::defineTarget() {
     return goalTarget;
 }
 
+float RobotStrategyGoal::applyUnivectorField(btVector3 target) {
+    /* Se o target for a bola e se a bola estiver atrás do goleiro indo pro gol, n = 3 assim o arrivalOrientation
+     * irá fazer efeito e o robô pegará a bola por trás evitando gol contra e a levará pra fora do gol*/
+
+    float n = 0;
+    btVector3 arrivalOrientation = btVector3(state.ball.position.x + 5, state.ball.position.y);
+
+    if(target.x==state.ball.projection.x && target.y==state.ball.projection.y){
+        if(robot.position.x < target.x){
+            n = 3;
+        }
+    }
+
+    //Para o goleiro são adicionados obstáculos estáticos referentes aos cantos do gol para que ele não fique preso ali
+
+    vector<pair<btVector3, btVector3>> obstacles;
+    pair<btVector3, btVector3> obstacle;
+
+    obstacle.first.x = 165;
+    obstacle.first.y = 88;
+    obstacle.second.x = 0;
+    obstacle.second.y = 0;
+    obstacles.push_back(obstacle);
+
+    obstacle.first.y = 40;
+    obstacles.push_back(obstacle);
+
+    UnivectorField univectorField(n, 0.12, 4.5, 4.5);
+
+    //path = univectorField.drawPath(robot,target, arrivalOrientation, obstacles);
+
+    return univectorField.defineFi(robot,target, arrivalOrientation, obstacles);
+}
+
 Command RobotStrategyGoal::stopStrategy(Command command){
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 

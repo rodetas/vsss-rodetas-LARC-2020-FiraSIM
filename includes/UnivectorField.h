@@ -7,6 +7,7 @@
 
 #include <RobotState.h>
 #include <RodetasState.h>
+#include <Common.h>
 
 class UnivectorField {
 public:
@@ -15,18 +16,11 @@ public:
 
     UnivectorField();
 
-    float defineMoveFi(btVector3 robot, btVector3 target, btVector3 arrivalOrientation);
+    float defineFi(RobotState robot, btVector3 target, btVector3 arrivalOrientation,
+                   vector<pair<btVector3, btVector3>> obstacles);
 
-    float defineRepulsiveFi(btVector3 robot, btVector3 virtualObstacle);
-
-    float defineFi(RobotState robot, btVector3 robotPosition, btVector3 target, btVector3 arrivalOrientation,
-                   std::vector<RobotState> robots);
-
-    float toDomain(float fi);
-
-    btVector3 getS(btVector3 robotSpeed, btVector3 obstacleSpeed);
-
-    btVector3 getVirtualPosition(btVector3 robot, btVector3 obstacle, btVector3 s);
+    Path drawPath(RobotState robot, btVector3 target, btVector3 arrivalOrientation,
+                  vector<pair<btVector3, btVector3>> obstacles);
 
 private:
 
@@ -34,6 +28,16 @@ private:
     float k0;
     float dmin;
     float delta;
+
+    float toDomain(float fi);
+
+    btVector3 getS(btVector3 robotSpeed, btVector3 obstacleSpeed);
+
+    btVector3 getVirtualPosition(btVector3 robot, btVector3 obstacle, btVector3 s);
+
+    float defineMoveFi(btVector3 robot, btVector3 target, btVector3 arrivalOrientation);
+
+    float defineRepulsiveFi(btVector3 robot, btVector3 virtualObstacle);
 };
 
 #endif //SDK_RODETAS_UNIVECTORFIELD_H

@@ -24,60 +24,73 @@ float UnivectorField::defineRepulsiveFi(btVector3 robot, btVector3 virtualObstac
 }
 
 float
-UnivectorField::defineFi(RobotState robot, btVector3 robotPosition, btVector3 target, btVector3 arrivalOrientation,
-                         std::vector<RobotState> robots) {
+UnivectorField::defineFi(RobotState robot, btVector3 target, btVector3 arrivalOrientation,
+                         vector<pair<btVector3, btVector3>> obstacles) {
     btVector3 robotSpeed = robot.vectorSpeed;
 
-    float moveFi = defineMoveFi(robotPosition, target, arrivalOrientation);
+    float moveFi = defineMoveFi(robot.position, target, arrivalOrientation);
 
     std::vector<btVector3> virtualObstacles;
-    for (auto &r: robots) {
-        if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-            btVector3 obstaclePosition = r.position;
-            btVector3 obstacleSpeed = r.vectorSpeed;
-            btVector3 s = getS(robotSpeed, obstacleSpeed);
-            btVector3 virtualObstacle = getVirtualPosition(robotPosition, obstaclePosition, s);
-            virtualObstacles.push_back(virtualObstacle);
-        }
+
+    for (auto &r: obstacles) {
+        btVector3 s = getS(robotSpeed, r.second);
+        btVector3 virtualObstacle = getVirtualPosition(robot.position, r.first, s);
+        virtualObstacles.push_back(virtualObstacle);
     }
+
     if (virtualObstacles.size() > 0) {
-        float distance = Math::distancePoint(robotPosition, virtualObstacles[0]);
+        float distance = Math::distancePoint(robot.position, virtualObstacles[0]);
         btVector3 closestVirtualObstacle = virtualObstacles[0];
         for (unsigned i = 1; i < virtualObstacles.size(); i++) {
-            float d = Math::distancePoint(robotPosition, virtualObstacles[i]);
+            float d = Math::distancePoint(robot.position, virtualObstacles[i]);
             if (d < distance) {
                 distance = d;
                 closestVirtualObstacle = virtualObstacles[i];
             }
         }
 
-        //std::cout<<distance<<std::endl;
-        float repulsiveFi = defineRepulsiveFi(robotPosition, closestVirtualObstacle);
+        float repulsiveFi = defineRepulsiveFi(robot.position, closestVirtualObstacle);
 
         if (distance <= dmin) {
-            std::cout<<"Só repulsivo: "<< repulsiveFi<<std::endl;
             return repulsiveFi;
         } else {
             float g = Math::gaussian(distance - dmin, delta);
             float diff = toDomain(repulsiveFi - moveFi);
-            //float fi = toDomain((1+g)*moveFi) + toDomain(g*repulsiveFi);
-            float fi = toDomain(g*diff) + toDomain(moveFi);
-            std::cout<<"Move: "<<moveFi<<" Repulsive: "<<repulsiveFi<<std::endl;
-            std::cout<<toDomain(fi)<<std::endl;
+            float fi = toDomain(g * diff) + toDomain(moveFi);
             return toDomain(fi);
         }
     } else {
-        std::cout<<"Só move"<<std::endl;
         return moveFi;
     }
 }
 
+Path UnivectorField::drawPath(RobotState robot, btVector3 target, btVector3 arrivalOrientation,
+                              vector<pair<btVector3, btVector3>> obstacles) {
+    vector<btVector3> points;
+    btVector3 point = robot.position;
+    RobotState r = robot;
+
+    float fi = defineFi(robot, target, arrivalOrientation, obstacles);
+    for (int i = 0; i < 250; i++) {
+        point.x = point.x + cos(fi);
+        point.y = point.y + sin(fi);
+        r.position = point;
+        points.push_back(point);
+        fi = defineFi(r, target, arrivalOrientation, obstacles);
+        if (Math::distancePoint(point, target) < 5)
+            i = 250;
+    }
+    Path path;
+    path.poses = points;
+    return path;
+}
+
 float UnivectorField::toDomain(float fi) {
-    if(fi > M_PI){
+    if (fi > M_PI) {
         return (fi - 2 * M_PI);
-    }else if(fi < -M_PI){
+    } else if (fi < -M_PI) {
         return (2 * M_PI + fi);
-    } else{
+    } else {
         return fi;
     }
 }

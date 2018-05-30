@@ -26,6 +26,8 @@ public:
 
     virtual btVector3 defineTarget() = 0;
 
+    virtual float applyUnivectorField(btVector3) = 0;
+
     //@TODO: inserir comentarios em cada estrategia
     virtual Command cornerStrategy(Command);
 

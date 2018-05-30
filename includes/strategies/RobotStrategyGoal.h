@@ -18,6 +18,7 @@ public:
 
     Command specificStrategy(Command) override;
     btVector3 defineTarget() override;
+    float applyUnivectorField(btVector3) override;
     Command stopStrategy(Command) override;
 
 
