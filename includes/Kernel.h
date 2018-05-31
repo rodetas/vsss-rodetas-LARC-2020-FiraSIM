@@ -14,7 +14,9 @@
 #include <DebugSenderAdapter.h>
 #include <StateReceiverAdapter.h>
 #include <CommandSendAdapter.h>
+#include <WindowControl.h>
 #include <Config.h>
+#include <thread>
 
 using namespace std;
 using namespace common;
@@ -25,6 +27,17 @@ public:
     Kernel();
 
 	void loop();
+
+private:
+
+	thread* threadWindowControl;
+
+	bool isPlaying;
+	bool isTestingTransmission;
+
+	WindowControl windowControl;
+
+	void windowThreadWrapper();
 };
 
 #endif // _STRATEGY_H_

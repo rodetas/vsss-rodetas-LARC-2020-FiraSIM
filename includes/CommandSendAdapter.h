@@ -14,7 +14,7 @@ public:
     CommandSendAdapter(string, bool);
 
     void createSocketSendCommand();
-    void sendCommands(vector<common::Command>);
+    void sendCommands(vector<common::Command>, bool, bool);
 
 private:
 

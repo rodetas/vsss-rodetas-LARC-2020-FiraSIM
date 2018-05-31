@@ -10,6 +10,8 @@ Kernel::Kernel(){
 
 void Kernel::loop() {
 
+    threadWindowControl = new thread(std::bind(&Kernel::windowThreadWrapper, this));
+
     RobotStrategyFactory coach;
 
     StateReceiverAdapter receiveInterface(Config::teamColor, Config::changeSide);
@@ -48,9 +50,18 @@ void Kernel::loop() {
 
         }
 
-        coach.manage(robots, state,Config::playersSwap);
+        coach.manage(robots, state, Config::playersSwap);
 
-        sendInterface.sendCommands(commands);
+        sendInterface.sendCommands(commands, isPlaying, isTestingTransmission);
         debugInterface.sendDebug(debug);
     }
+}
+
+void Kernel::windowThreadWrapper() {
+
+    windowControl.setPlayingVariable(&isPlaying);
+    windowControl.setTestingVariable(&isTestingTransmission);
+
+    windowControl.start();
+
 }

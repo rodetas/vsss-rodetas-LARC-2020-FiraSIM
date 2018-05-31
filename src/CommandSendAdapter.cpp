@@ -21,7 +21,7 @@ void CommandSendAdapter::createSocketSendCommand() {
 
 }
 
-void CommandSendAdapter::sendCommands(vector<common::Command> commands) {
+void CommandSendAdapter::sendCommands(vector<common::Command> commands, bool isPlaying, bool isTestingTransmission) {
 
     if(!isRealEnvironment) {
         globalCommands = vss_command::Global_Commands();
@@ -45,11 +45,15 @@ void CommandSendAdapter::sendCommands(vector<common::Command> commands) {
             interfaceSend.sendCommandTeam2();
         }
 
-    } else {
+    } else if (isPlaying) {
         //@TODO: invocar funcoes do transmission
-//            transmission.send(id["goal"],strategies["goal"]->get_command());
+//          transmission.send(id["goal"],strategies["goal"]->get_command());
 //        	transmission.send(id["defense"],strategies["defense"]->get_command());
 //        	transmission.send(id["attack"], strategies["attack"]->get_command());
+    } else if (isTestingTransmission) {
+        // @TODO: send transmission test command
+    } else {
+        // @TODO send stopped command
     }
 }
 
