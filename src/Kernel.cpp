@@ -59,9 +59,16 @@ void Kernel::loop() {
 
 void Kernel::windowThreadWrapper() {
 
-    windowControl.setPlayingVariable(&isPlaying);
-    windowControl.setTestingVariable(&isTestingTransmission);
+    windowControl.signalUpdatePlaying.connect(sigc::mem_fun(this, &Kernel::updatePlayingState));
+    windowControl.signalUpdateTesting.connect(sigc::mem_fun(this, &Kernel::updateTestingState));
 
     windowControl.start();
+}
 
+void Kernel::updatePlayingState(bool playing) {
+    this->isPlaying = playing;
+}
+
+void Kernel::updateTestingState(bool testing) {
+    this->isTestingTransmission = testing;
 }

@@ -6,6 +6,8 @@
 #define SDK_RODETAS_WINDOWCONTROL_H
 
 #include <iostream>
+#include <sigc++/sigc++.h>
+#include <gtkmm.h>
 
 using namespace std;
 
@@ -15,8 +17,16 @@ public:
 
     void start();
 
-    void setPlayingVariable(bool* isPlaying);
-    void setTestingVariable(bool* isTesting);
+    void initializeWidgets();
+    void setSignals();
+
+    void onPressButtonPlaying();
+    void onPressButtonTesting();
+
+    // signals to Kernel
+    sigc::signal <void, bool> signalUpdatePlaying;
+    sigc::signal <void, bool> signalUpdateTesting;
+
 
 private:
 

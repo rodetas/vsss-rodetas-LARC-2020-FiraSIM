@@ -6,39 +6,43 @@
 
 void WindowControl::start() {
 
-    *isPlaying = false;
-    *isTestingTransmission = false;
+    initializeWidgets();
+    setSignals();
 
-    int option;
+    //Gtk::Main::run(window);
+}
 
-    while(true){
+void WindowControl::initializeWidgets(){
 
-        cout << "1 - Play/Pause" << endl;
-        cout << "2 - Test Transmission" << endl;
+    auto builder = Gtk::Builder::create();
 
-        cin >> option;
+    try {
 
-        switch (option){
+        builder->add_from_file("../glade/Vision.glade");
 
-            case 1:{
-                *isPlaying = !*isPlaying;
-            } break;
+        // inicializar os buttons aqui
 
-            case 2:{
-                *isTestingTransmission = !*isTestingTransmission;
-            } break;
-
-            default: break;
-        }
-
+    } catch (const Glib::FileError &ex) {
+        std::cerr << "FileError: " << ex.what() << std::endl;
+    } catch (const Glib::MarkupError &ex) {
+        std::cerr << "MarkupError: " << ex.what() << std::endl;
+    } catch (const Gtk::BuilderError &ex) {
+        std::cerr << "BuilderError: " << ex.what() << std::endl;
     }
 
 }
 
-void WindowControl::setPlayingVariable(bool* isPlaying){
-    this->isPlaying = isPlaying;
+void WindowControl::setSignals(){
+    // definir os eventos dos botoes
+
 }
 
-void WindowControl::setTestingVariable(bool* isTesting){
-    this->isTestingTransmission = isTesting;
+void WindowControl::onPressButtonPlaying(){
+    // invocar o signal para atualizar o kernel que houve uma variavel
+    //signalUpdatePlaying.emit( valor )
+}
+
+void WindowControl::onPressButtonTesting(){
+    // invocar o signal para atualizar o kernel que houve uma na variavel
+    //signalUpdateTesting.emit ...
 }

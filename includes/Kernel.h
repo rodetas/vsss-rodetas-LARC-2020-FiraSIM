@@ -28,6 +28,9 @@ public:
 
 	void loop();
 
+	void updatePlayingState(bool);
+	void updateTestingState(bool);
+
 private:
 
 	thread* threadWindowControl;
