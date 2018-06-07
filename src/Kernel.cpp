@@ -4,9 +4,7 @@
 #include <RobotStrategyFactory.h>
 #include <Config.h>
 
-Kernel::Kernel(){
-	srand(time(NULL));
-}
+Kernel::Kernel() = default;
 
 void Kernel::loop() {
 

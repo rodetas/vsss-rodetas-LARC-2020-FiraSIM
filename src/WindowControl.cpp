@@ -1,7 +1,7 @@
 //
 // Created by manoel on 30/05/18.
 //
-#include "IWindowControl.h"
+
 #include "WindowControl.h"
 
 void WindowControl::start() {
@@ -9,7 +9,12 @@ void WindowControl::start() {
     initializeWidgets();
 	setSignals();
 
-    //Gtk::Main::run(window);
+    Gtk::Main::run(*window);
+}
+
+bool WindowControl::onKeyboard(GdkEventKey* event, Gtk::Window* window) {
+
+    return true;
 }
 
 void WindowControl::initializeWidgets(){
@@ -39,12 +44,12 @@ void WindowControl::initializeWidgets(){
 
 void WindowControl::setSignals(){
     // definir os eventos dos botoes
-	window->signal_key_press_event().connect(sigc::bind<Gtk::Window*>(sigc::mem_fun(this, &IWindowControl::onKeyboard), window) , false);
-	buttonPlay->signal_clicked().connect(sigc::mem_fun(this, &IWindowControl::onPressButtonPlaying));
-	buttonTests->signal_clicked().connect(sigc::mem_fun(this, &IWindowControl::onPressButtonTesting));
+	window->signal_key_press_event().connect(sigc::bind<Gtk::Window*>(sigc::mem_fun(this, &WindowControl::onKeyboard), window) , false);
+	buttonPlay->signal_clicked().connect(sigc::mem_fun(this, &WindowControl::onPressButtonPlaying));
+	buttonTests->signal_clicked().connect(sigc::mem_fun(this, &WindowControl::onPressButtonTesting));
 }
 
- void WindowControl::onPressButtonPlaying(){
+void WindowControl::onPressButtonPlaying(){
     // invocar o signal para atualizar o kernel que houve uma variavel
     //signalUpdatePlaying.emit( valor )
 	//bool state;
@@ -53,7 +58,7 @@ void WindowControl::setSignals(){
 
 }
 
- void WindowControl::onPressButtonTesting(){
+void WindowControl::onPressButtonTesting(){
     // invocar o signal para atualizar o kernel que houve uma na variavel
     //signalUpdateTesting.emit ...
 	//bool state;

@@ -5,15 +5,14 @@
 #ifndef SDK_RODETAS_WINDOWCONTROL_H
 #define SDK_RODETAS_WINDOWCONTROL_H
 
+#include <gtkmm.h>
 #include <iostream>
 #include <sigc++/sigc++.h>
-#include <gtkmm.h>
-#include <gtk/gtk.h>
 #include <stdlib.h>
-#include <IWindowControl.h>
+
 using namespace std;
 
-class WindowControl : public IWindowControl {
+class WindowControl {
 
 public:
 
@@ -25,21 +24,22 @@ public:
    	void onPressButtonPlaying();
     void onPressButtonTesting();
 
-    // signals to Kernel
+	bool onKeyboard(GdkEventKey*, Gtk::Window*);
+
+	// signals to Kernel
     sigc::signal <void, bool> signalUpdatePlaying;
     sigc::signal <void, bool> signalUpdateTesting;
-	
-bool onKeyboard(GdkEventKey*, Gtk::Window*);
 
 
 private:
 
     bool* isPlaying;
     bool* isTestingTransmission;
+
 	Gtk::Window* window = nullptr;
 
-		Gtk::Button* buttonPlay = nullptr;
-		Gtk::Button* buttonTests = nullptr;
+    Gtk::Button* buttonPlay = nullptr;
+    Gtk::Button* buttonTests = nullptr;
 
 };
 
