@@ -16,6 +16,7 @@ include_directories(${PROTOBUF_INCLUDE_DIR} ${GTKMM_INCLUDE_DIRS} ${Boost_INCLUD
 include_directories(includes includes/strategies)
 include_directories(src src/strategies)
 include_directories(usr/local/include)
+include_directories(usr/local/glade)
 
 link_libraries(${GTKMM_LIBRARIES})
 link_directories(/usr/lib ${GTKMM_LIBRARY_DIRS})

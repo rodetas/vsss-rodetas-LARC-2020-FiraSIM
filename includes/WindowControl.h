@@ -8,7 +8,8 @@
 #include <iostream>
 #include <sigc++/sigc++.h>
 #include <gtkmm.h>
-
+#include <gtk/gtk.h>
+#include <stdlib.h>
 using namespace std;
 
 class WindowControl {
@@ -20,18 +21,24 @@ public:
     void initializeWidgets();
     void setSignals();
 
-    void onPressButtonPlaying();
+   	void onPressButtonPlaying();
     void onPressButtonTesting();
 
     // signals to Kernel
     sigc::signal <void, bool> signalUpdatePlaying;
     sigc::signal <void, bool> signalUpdateTesting;
+	
+bool onKeyboard(GdkEventKey*, Gtk::Window*);
 
 
 private:
 
     bool* isPlaying;
     bool* isTestingTransmission;
+	Gtk::Window* window = nullptr;
+
+		Gtk::Button* buttonPlay = nullptr;
+		Gtk::Button* buttonTests = nullptr;
 
 };
 
