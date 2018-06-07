@@ -39,14 +39,16 @@ void WindowControl::initializeWidgets(){
 
 void WindowControl::setSignals(){
     // definir os eventos dos botoes
-	window->signal_key_press_event().connect(sigc::bind<Gtk::Window*>(sigc::mem_fun(this, IWindowControl::onKeyboard), window) , false);
-	buttonPlay->signal_clicked().connect(sigc::mem_fun(this, IWindowControl::onPressButtonPlaying));
-	buttonTests->signal_clicked().connect(sigc::mem_fun(this, IWindowControl::onPressButtonTesting));
+	window->signal_key_press_event().connect(sigc::bind<Gtk::Window*>(sigc::mem_fun(this, &IWindowControl::onKeyboard), window) , false);
+	buttonPlay->signal_clicked().connect(sigc::mem_fun(this, &IWindowControl::onPressButtonPlaying));
+	buttonTests->signal_clicked().connect(sigc::mem_fun(this, &IWindowControl::onPressButtonTesting));
 }
 
  void WindowControl::onPressButtonPlaying(){
     // invocar o signal para atualizar o kernel que houve uma variavel
     //signalUpdatePlaying.emit( valor )
+	//bool state;
+	//state=Gtk::ToggleButton::get_active();
 	signalUpdatePlaying.emit(true);
 
 }
@@ -54,5 +56,7 @@ void WindowControl::setSignals(){
  void WindowControl::onPressButtonTesting(){
     // invocar o signal para atualizar o kernel que houve uma na variavel
     //signalUpdateTesting.emit ...
+	//bool state;
+	// state=Gtk::ToggleButton::get_active();
 	signalUpdateTesting.emit(true);
 }

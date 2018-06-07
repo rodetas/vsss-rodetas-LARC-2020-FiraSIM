@@ -129,11 +129,12 @@
             <property name="orientation">vertical</property>
             <property name="layout_style">start</property>
             <child>
-              <object class="GtkButton" id="buttonPlay">
-                <property name="label" translatable="yes">button</property>
+              <object class="GtkToggleButton" id="buttonPlay">
+                <property name="label" translatable="yes">Play / Pause</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="toggled" handler="onPressButtonPlaying" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -155,12 +156,13 @@
             <property name="orientation">vertical</property>
             <property name="layout_style">start</property>
             <child>
-              <object class="GtkButton" id="buttonTests">
-                <property name="label" translatable="yes">button</property>
+              <object class="GtkToggleButton" id="buttonTests">
+                <property name="label" translatable="yes">Testes</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="onpressButtonTesting" swapped="no"/>
+                <property name="image_position">right</property>
+                <signal name="toggled" handler="onPressButtonTesting" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">True</property>

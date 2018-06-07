@@ -10,9 +10,10 @@
 #include <gtkmm.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
+#include <IWindowControl.h>
 using namespace std;
 
-class WindowControl {
+class WindowControl : public IWindowControl {
 
 public:
 
