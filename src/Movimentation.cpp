@@ -8,7 +8,7 @@ Command Movimentation::movePlayers(RobotState robot, btVector3 target, float fi)
 
 	Command command;
 
-	std::cout << cos(fi - Math::toRadian(robot.angle)) << std::endl;
+	//std::cout << cos(fi - Math::toRadian(robot.angle)) << std::endl;
 
 	if ( cos(fi - Math::toRadian(robot.angle)) < 0) {
 		command = definePwm(robot, target, 'B', fi);

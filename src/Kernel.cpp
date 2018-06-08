@@ -42,7 +42,7 @@ void Kernel::loop() {
 
             commands[i] = robot.getCommand();
 
-            debug.robotsFinalPose[i] = robot.getRobotDebug().robotFinalPose;
+            //debug.robotsFinalPose[i] = robot.getRobotDebug().robotFinalPose;
             debug.robotsStepPose[i] = robot.getRobotDebug().robotStepPose;
             debug.robotsPath[i] = robot.getRobotDebug().path;
 

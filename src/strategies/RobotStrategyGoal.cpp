@@ -50,8 +50,14 @@ float RobotStrategyGoal::applyUnivectorField(btVector3 target) {
     /* Se o target for a bola e se a bola estiver atrás do goleiro indo pro gol, definir angulo de chegada
      * para que o robô chega até a bola por trás evitando gol contra e a levando para fora do gol*/
 
-    btVector3 arrivalOrientation = btVector3(target.x - 10, target.y + 10);
+    float n = 0;
+    btVector3 arrivalOrientation = defineArrivalOrientation(target);
 
+    if((target.x == state.ball.projection.x) && (target.y == state.ball.projection.y)){
+        if(target.x > robot.position.x - 3){
+            n = 2;
+        }
+    }
     vector<pair<btVector3, btVector3>> obstacles;
     for (auto &r: state.robots) {
         if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
@@ -61,15 +67,15 @@ float RobotStrategyGoal::applyUnivectorField(btVector3 target) {
 
     //Obstáculos de canto de gol
     pair<btVector3, btVector3> obstacle;
-    obstacle.first.x = 165;
-    obstacle.first.y = 88;
+    obstacle.first.x = 169;
+    obstacle.first.y = 90;
     obstacle.second.x = 0;
     obstacle.second.y = 0;
-    obstacles.push_back(obstacle);
+    //obstacles.push_back(obstacle);
     obstacle.first.y = 40;
-    obstacles.push_back(obstacle);
+    //obstacles.push_back(obstacle);
 
-    UnivectorField univectorField(0, 0.12, 4.5, 4.5);
+    UnivectorField univectorField(n, 0.12, 4.5, 4.5);
     path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
 }
@@ -101,4 +107,13 @@ Command RobotStrategyGoal::stopStrategy(Command command) {
     }
 
     return c;
+}
+
+btVector3 RobotStrategyGoal::defineArrivalOrientation(btVector3 target) {
+    btVector3 arrivalOrientation;
+
+    arrivalOrientation.x = target.x - 10;
+    arrivalOrientation.y = target.y;
+
+    return arrivalOrientation;
 }

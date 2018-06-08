@@ -52,7 +52,7 @@ btVector3 RobotStrategyDefender::defineTarget() {
 
 float RobotStrategyDefender::applyUnivectorField(btVector3 target) {
 
-    btVector3 arrivalOrientation = btVector3(target.x - 10, target.y + 10);
+    btVector3 arrivalOrientation = defineArrivalOrientation(target);
 
     vector<pair<btVector3, btVector3>> obstacles;
     for (auto &r: state.robots) {
@@ -65,4 +65,32 @@ float RobotStrategyDefender::applyUnivectorField(btVector3 target) {
     path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
 }
+
+btVector3 RobotStrategyDefender::defineArrivalOrientation(btVector3 target) {
+    btVector3 goal(0, 75);
+    btVector3 arrivalOrientation;
+
+    if((target.x == state.ball.projection.x) && (target.y == state.ball.projection.y)){
+
+        float numerator = abs(target.y - goal.y);
+        float denominator = abs(target.x - goal.x);
+        float tg = (numerator/denominator);
+        float deltaX = 10 * (1/sqrt(1 + (tg*tg)));
+        float deltaY = tg * deltaX;
+
+        if(target.y < goal.y){
+            arrivalOrientation.x = target.x - deltaX;
+            arrivalOrientation.y = target.y + deltaY;
+        }else{
+            arrivalOrientation.x = target.x - deltaX;
+            arrivalOrientation.y = target.y - deltaY;
+        }
+        return arrivalOrientation;
+    } else{
+        arrivalOrientation.x = target.x - 10;
+        arrivalOrientation.y = target.y;
+        return arrivalOrientation;
+    }
+}
+
 

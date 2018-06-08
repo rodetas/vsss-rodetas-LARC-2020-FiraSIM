@@ -28,6 +28,8 @@ public:
 
     virtual float applyUnivectorField(btVector3) = 0;
 
+    virtual btVector3 defineArrivalOrientation(btVector3) = 0;
+
     //@TODO: inserir comentarios em cada estrategia
     virtual Command cornerStrategy(Command);
 

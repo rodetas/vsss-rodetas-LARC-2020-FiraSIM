@@ -22,6 +22,8 @@ public:
 
     float applyUnivectorField(btVector3) override;
 
+    btVector3 defineArrivalOrientation(btVector3) override;
+
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGYDEFENDER_H

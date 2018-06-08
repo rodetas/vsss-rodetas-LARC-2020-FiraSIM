@@ -66,7 +66,7 @@ Path UnivectorField::drawPath(RobotState robot, btVector3 target, btVector3 arri
         r.position = point;
         points.push_back(point);
         fi = defineFi(r, target, arrivalOrientation, obstacles);
-        if (Math::distancePoint(point, target) < 5)
+        if (Math::distancePoint(point, target) < 2)
             i = 250;
     }
     Path path;
