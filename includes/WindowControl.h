@@ -6,6 +6,7 @@
 #define SDK_RODETAS_WINDOWCONTROL_H
 
 #include <gtkmm.h>
+#include<gtkmm/togglebutton.h>
 #include <iostream>
 #include <sigc++/sigc++.h>
 #include <stdlib.h>
@@ -21,8 +22,8 @@ public:
     void initializeWidgets();
     void setSignals();
 
-   	void onPressButtonPlaying();
-    void onPressButtonTesting();
+   	void onPressButtonPlaying(Gtk::ToggleButton * );
+    void onPressButtonTesting(Gtk::ToggleButton * );
 
 	bool onKeyboard(GdkEventKey*, Gtk::Window*);
 
@@ -38,8 +39,8 @@ private:
 
 	Gtk::Window* window = nullptr;
 
-    Gtk::Button* buttonPlay = nullptr;
-    Gtk::Button* buttonTests = nullptr;
+    Gtk::ToggleButton* buttonPlay = nullptr;
+    Gtk::ToggleButton* buttonTests = nullptr;
 
 };
 
