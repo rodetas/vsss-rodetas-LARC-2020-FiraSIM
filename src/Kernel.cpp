@@ -24,9 +24,9 @@ void Kernel::loop() {
     RodetasState state;
     Debug debug;
 
-    robots[2].setStrategy(new RobotStrategyAttack());
+    robots[0].setStrategy(new RobotStrategyAttack());
     robots[1].setStrategy(new RobotStrategyDefender());
-    robots[0].setStrategy(new RobotStrategyGoal());
+    robots[2].setStrategy(new RobotStrategyGoal());
 
     while (true) {
 

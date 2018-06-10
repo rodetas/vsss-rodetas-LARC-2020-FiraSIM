@@ -5,6 +5,7 @@
 #ifndef SDK_RODETAS_COMMANDSENDADAPTER_H
 #define SDK_RODETAS_COMMANDSENDADAPTER_H
 
+#include <Transmission.h>
 #include <Common.h>
 
 class CommandSendAdapter{
@@ -23,6 +24,8 @@ private:
 
     bool isRealEnvironment;
     string teamColor;
+
+    Transmission transmission;
 
 };
 

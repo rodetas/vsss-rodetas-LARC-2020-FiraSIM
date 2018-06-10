@@ -95,7 +95,7 @@ namespace common{
             right = cmd->right;
         };
 
-        string to_string(){
+        virtual string to_string(){
     		stringstream ss;
     		ss << setfill('0') << setw(3) << left;
     		ss << setfill('0') << setw(3) << right;
@@ -107,7 +107,7 @@ namespace common{
     		return stream;
         }
 
-    	vector<int> to_hex(){
+    	virtual vector<int> to_hex(){
     		string cmd = this->to_string();
     		vector<int> vec;
 
@@ -117,6 +117,55 @@ namespace common{
 
     		return vec;
     	}
+    };
+
+    struct OldCommand  : public Command {
+
+        char direction;
+
+        OldCommand(){
+            left = 0;
+            right = 0;
+            direction = 'F';
+        }
+
+        explicit OldCommand(Command c){
+
+            if(c.left < 0 and c.right < 0){
+                direction = 'B';
+            } else if(c.left < 0){
+                direction = 'L';
+            } else if(c.right < 0){
+                direction = 'R';
+            } else {
+                direction = 'F';
+            }
+
+            left = (int)(255*abs(c.left))/80;
+            right = (int)(255*abs(c.right))/80;
+
+            //std::cout << direction << " " << left << " " << right << std::endl;
+        }
+
+        virtual string to_string(){
+            stringstream ss;
+            ss << direction;
+            ss << setfill('0') << setw(3) << left;
+            ss << setfill('0') << setw(3) << right;
+            return ss.str();
+        }
+
+        virtual vector<int> to_hex(){
+            string cmd = this->to_string();
+            vector<int> vec;
+
+            for(const auto _cmd : cmd){
+                vec.push_back(int(_cmd));
+            }
+
+            return vec;
+        }
+
     };
 }
 

@@ -47,7 +47,7 @@ void CommandSendAdapter::sendCommands(vector<common::Command> commands) {
 
     } else {
         //@TODO: invocar funcoes do transmission
-//            transmission.send(id["goal"],strategies["goal"]->get_command());
+        transmission.send(2,commands[0]);
 //        	transmission.send(id["defense"],strategies["defense"]->get_command());
 //        	transmission.send(id["attack"], strategies["attack"]->get_command());
     }

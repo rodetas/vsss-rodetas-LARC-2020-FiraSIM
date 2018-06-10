@@ -32,7 +32,7 @@ bool Config::argumentParse(int argc, char** argv) {
     }
     
    
-    playersSwap = (bool) vm.count("swap");
+    playersSwap = !(bool) vm.count("swap");
     changeSide = (bool) vm.count("rotate");
     debug = (bool) vm.count("debug");
     realEnvironment = (bool) vm.count("environment");
