@@ -6,6 +6,7 @@
 
 void WindowControl::start() {
 
+
     initializeWidgets();
 	setSignals();
 

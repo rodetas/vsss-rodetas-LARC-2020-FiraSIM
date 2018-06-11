@@ -2,7 +2,7 @@
 <interface>
   <!-- interface-requires gtk+ 3.12 -->
   <!-- interface-naming-policy toplevel-contextual -->
-  <object class="GtkWindow" id="window1">
+  <object class="GtkWindow" id="window">
     <property name="can_focus">False</property>
     <child>
       <object class="GtkVBox" id="vbox1">
@@ -49,8 +49,8 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkButton" id="buttonTests">
-                <property name="label" translatable="yes">Testes</property>
+              <object class="GtkToggleButton" id="buttonTests">
+                <property name="label" translatable="yes">Teste</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
