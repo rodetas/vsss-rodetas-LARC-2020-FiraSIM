@@ -18,6 +18,7 @@ void RodetasRobot::calcAction(){
 
     // receives robot target from strategy
     this->debug.robotFinalPose = strategy->getFinalPose();
+    this->debug.path = strategy->getPath();
 }
 
 void RodetasRobot::updateSelfState(RobotState selfState) {

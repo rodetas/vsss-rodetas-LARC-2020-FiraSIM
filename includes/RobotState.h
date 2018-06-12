@@ -18,12 +18,14 @@ public:
     double angle;
     double angularSpeed;
     double linearSpeed;
+    btVector3 vectorSpeed;
 
     RobotState(){
         this->position = common::btVector3(0,0,0);
         this->angle = 0;
         this->angularSpeed = 0;
         this->linearSpeed = 0;
+        this->vectorSpeed = btVector3();
     };
 
     void setPosition(common::btVector3 p){
@@ -44,6 +46,10 @@ public:
 
     void setLinearSpeed(double speed){
         this->linearSpeed = speed;
+    }
+
+    void setVectorSpeed(btVector3 speed){
+        this->vectorSpeed = speed;
     }
 
 //@TODO: tirar as contas daqui e jogar pro MathHelper, deixar apenas as chamadas

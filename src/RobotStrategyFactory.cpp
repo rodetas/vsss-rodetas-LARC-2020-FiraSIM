@@ -8,8 +8,8 @@ RobotStrategyFactory::RobotStrategyFactory() = default;
 
 void RobotStrategyFactory::manage(vector<RodetasRobot>& robots, RodetasState& state, bool swap) {
 
-    if(swap == true){
-	vector<MindSet> strategiesById = interpreter.defineStrategy(robots, state);
+    if(swap){
+	    vector<MindSet> strategiesById = interpreter.defineStrategy(robots, state);
 
     	for(RodetasRobot& robot : robots){
         	MindSet robotMindSet = strategiesById[robot.getId()];
@@ -30,5 +30,4 @@ void RobotStrategyFactory::manage(vector<RodetasRobot>& robots, RodetasState& st
         	}
     	}
 	}
-
 }

@@ -29,17 +29,16 @@ file(GLOB_RECURSE INCLUDE includes/*.h)
 
 ADD_LIBRARY(core ${SRC} ${INCLUDE})
 
-SET (VSS_INTERFACE libvss-core.so)
+SET (VSS_CORE libvss-core.so)
 
 ADD_EXECUTABLE(SDK-Rodetas src/Main.cpp)
 
-TARGET_LINK_LIBRARIES(core ${VSS_INTERFACE} ${PROTOBUF_LIBRARY} ${PROTOBUF_LIBRARIES} ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(core ${VSS_CORE} ${PROTOBUF_LIBRARY} ${PROTOBUF_LIBRARIES} ${Boost_LIBRARIES})
 TARGET_LINK_LIBRARIES(SDK-Rodetas core)
 
 # USAGE: cmake -D TESTS=ON ..
 
 if(TESTS)
-
     enable_testing()
 
     # Tests. *-test.cpp should be added here.

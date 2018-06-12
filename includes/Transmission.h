@@ -15,7 +15,7 @@ using namespace common;
 class Transmission {
 
 public:
-	Transmission();
+    Transmission();
 
     virtual ~Transmission();
 
@@ -43,7 +43,7 @@ public:
      * \param c: the command to send
      * \return the prepared string
      */
-    string generateMessage(int id, Command c);
+    string generateMessage(int id, Command* c);
 
     /**
      * Generated the checksum correspondent; The 8-bit sum of the parameters

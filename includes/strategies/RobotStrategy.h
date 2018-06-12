@@ -10,6 +10,7 @@
 #include <RobotState.h>
 #include <RodetasState.h>
 #include <Movimentation.h>
+#include <UnivectorField.h>
 #include "Config.h"
 
 using namespace common;
@@ -24,6 +25,10 @@ public:
     virtual Command specificStrategy(Command) = 0;
 
     virtual btVector3 defineTarget() = 0;
+
+    virtual float applyUnivectorField(btVector3) = 0;
+
+    virtual btVector3 defineArrivalOrientation(btVector3) = 0;
 
     //@TODO: inserir comentarios em cada estrategia
     virtual Command cornerStrategy(Command);

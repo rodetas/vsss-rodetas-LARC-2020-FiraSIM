@@ -8,17 +8,18 @@ RobotStrategyAttack::RobotStrategyAttack() {
 
 }
 
-Command RobotStrategyAttack::specificStrategy(Command c){
+Command RobotStrategyAttack::specificStrategy(Command c) {
     c = kickStrategy(c);
     c = cornerStrategy(c);
 
-    if (strategyBase.isParallelToGoal()){
+    if (strategyBase.isParallelToGoal()) {
 
-        int halfGoal1 = Config::fieldSize.y/2 + (Config::goalSize.y/2);
-        int halfGoal2 = Config::fieldSize.y/2 - (Config::goalSize.y/2);
+        int halfGoal1 = Config::fieldSize.y / 2 + (Config::goalSize.y / 2);
+        int halfGoal2 = Config::fieldSize.y / 2 - (Config::goalSize.y / 2);
 
-        if ( robot.distanceFrom(state.ball.position) < 7 &&
-             robot.position.x < Config::fieldSize.x*0.25 && robot.position.y > halfGoal2 && robot.position.y < halfGoal1){
+        if (robot.distanceFrom(state.ball.position) < 7 &&
+            robot.position.x < Config::fieldSize.x * 0.25 && robot.position.y > halfGoal2 &&
+            robot.position.y < halfGoal1) {
 
             if (robot.position.y < state.ball.position.y) {
                 c = movimentation->turnRight(80, 80);
@@ -34,7 +35,7 @@ Command RobotStrategyAttack::specificStrategy(Command c){
 btVector3 RobotStrategyAttack::defineTarget() {
 
     btVector3 target = state.ball.position;
-
+/*
     btVector3 centerGoal = btVector3(0, Config::fieldSize.y/2);
     double angleRobotGoal = Math::angulation(robot.position, centerGoal);
 
@@ -65,6 +66,75 @@ btVector3 RobotStrategyAttack::defineTarget() {
     // verifies the limits of the destination
     if (target.y < 0) target.y = 0;
     if (target.y > Config::fieldSize.y) target.y = Config::fieldSize.y;
-
+*/
     return target;
+}
+
+float RobotStrategyAttack::applyUnivectorField(btVector3 target) {
+
+    btVector3 arrivalOrientation = defineArrivalOrientation(target);
+
+    //Obstáculos roboôs
+    vector<pair<btVector3, btVector3>> obstacles;
+    for (auto &r: state.robots) {
+        if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+            obstacles.push_back(make_pair(r.position, r.vectorSpeed));
+        }
+    }
+
+    UnivectorField univectorField(2, 0.12, 4.5, 4.5);
+    path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
+    return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
+}
+
+btVector3 RobotStrategyAttack::defineArrivalOrientation(btVector3 target) {
+    btVector3 goal(0, 75);
+    btVector3 arrivalOrientation;
+
+    if((target.x == state.ball.position.x) && (target.y == state.ball.position.y)){
+
+        if(target.y < 13){
+            arrivalOrientation.x = target.x - 10;
+            arrivalOrientation.y = target.y - 7;
+            return arrivalOrientation;
+        }
+
+        if(target.y > 115){
+            arrivalOrientation.x = target.x - 10;
+            arrivalOrientation.y = target.y + 7;
+            return arrivalOrientation;
+        }
+
+        if(target.x > 140 && target.y < 48){
+            arrivalOrientation.x = target.x;
+            arrivalOrientation.y = target.y - 10;
+            return arrivalOrientation;
+        }
+
+        if(target.x > 140 && target.y > 86){
+            arrivalOrientation.x = target.x;
+            arrivalOrientation.y = target.y + 10;
+            return arrivalOrientation;
+        }
+
+
+        float numerator = abs(target.y - goal.y);
+        float denominator = abs(target.x - goal.x);
+        float tg = (numerator/denominator);
+        float deltaX = 10 * (1/sqrt(1 + (tg*tg)));
+        float deltaY = tg * deltaX;
+
+        if(target.y < goal.y){
+            arrivalOrientation.x = target.x - deltaX;
+            arrivalOrientation.y = target.y + deltaY;
+        }else{
+            arrivalOrientation.x = target.x - deltaX;
+            arrivalOrientation.y = target.y - deltaY;
+        }
+        return arrivalOrientation;
+    } else{
+        arrivalOrientation.x = target.x - 10;
+        arrivalOrientation.y = target.y;
+        return arrivalOrientation;
+    }
 }
