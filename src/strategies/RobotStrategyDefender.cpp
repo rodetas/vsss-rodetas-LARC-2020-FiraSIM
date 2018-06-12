@@ -72,6 +72,30 @@ btVector3 RobotStrategyDefender::defineArrivalOrientation(btVector3 target) {
 
     if((target.x == state.ball.projection.x) && (target.y == state.ball.projection.y)){
 
+        if(target.y < 13){
+            arrivalOrientation.x = target.x - 10;
+            arrivalOrientation.y = target.y - 7;
+            return arrivalOrientation;
+        }
+
+        if(target.y > 115){
+            arrivalOrientation.x = target.x - 10;
+            arrivalOrientation.y = target.y + 7;
+            return arrivalOrientation;
+        }
+
+        if(target.x > 140 && target.y < 48){
+            arrivalOrientation.x = target.x;
+            arrivalOrientation.y = target.y - 10;
+            return arrivalOrientation;
+        }
+
+        if(target.x > 140 && target.y > 86){
+            arrivalOrientation.x = target.x;
+            arrivalOrientation.y = target.y + 10;
+            return arrivalOrientation;
+        }
+
         float numerator = abs(target.y - goal.y);
         float denominator = abs(target.x - goal.x);
         float tg = (numerator/denominator);

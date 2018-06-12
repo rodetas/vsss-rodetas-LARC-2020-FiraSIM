@@ -71,13 +71,10 @@ btVector3 RobotStrategyAttack::defineTarget() {
 }
 
 float RobotStrategyAttack::applyUnivectorField(btVector3 target) {
-    /*Se o target for a bola e o robô está a conduzindo não irá desviar de nada
-     *Se o target for a bola e o robô não está a conduzindo irá desviar de todos os outros robôs
-     *Se o robo estiver conduzindo a bola pelos cantos definir orientação para ir reto na bola e não tentar fazer curva contra a parede
-     *O angulo de chegada na bola deve ser apontando para o gol*/
 
     btVector3 arrivalOrientation = defineArrivalOrientation(target);
 
+    //Obstáculos roboôs
     vector<pair<btVector3, btVector3>> obstacles;
     for (auto &r: state.robots) {
         if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
@@ -95,6 +92,31 @@ btVector3 RobotStrategyAttack::defineArrivalOrientation(btVector3 target) {
     btVector3 arrivalOrientation;
 
     if((target.x == state.ball.position.x) && (target.y == state.ball.position.y)){
+
+        if(target.y < 13){
+            arrivalOrientation.x = target.x - 10;
+            arrivalOrientation.y = target.y - 7;
+            return arrivalOrientation;
+        }
+
+        if(target.y > 115){
+            arrivalOrientation.x = target.x - 10;
+            arrivalOrientation.y = target.y + 7;
+            return arrivalOrientation;
+        }
+
+        if(target.x > 140 && target.y < 48){
+            arrivalOrientation.x = target.x;
+            arrivalOrientation.y = target.y - 10;
+            return arrivalOrientation;
+        }
+
+        if(target.x > 140 && target.y > 86){
+            arrivalOrientation.x = target.x;
+            arrivalOrientation.y = target.y + 10;
+            return arrivalOrientation;
+        }
+
 
         float numerator = abs(target.y - goal.y);
         float denominator = abs(target.x - goal.x);
