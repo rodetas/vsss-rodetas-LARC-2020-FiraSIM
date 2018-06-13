@@ -15,7 +15,11 @@ Command Movimentation::movePlayers(RobotState robot, btVector3 target, float fi)
 	} else if ( cos(fi - Math::toRadian(robot.angle)) > 0.4){
 		command = definePwm(robot, target, 'F', fi);
 	}else{
-		turnRight(20,20);
+		if (sin(fi - Math::toRadian(robot.angle)) > 0) {
+			command = turnRight(20, 20);
+		} else {
+			command = turnLeft(20, 20);
+		}
 	}
 
 

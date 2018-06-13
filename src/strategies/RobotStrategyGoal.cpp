@@ -17,7 +17,7 @@ btVector3 RobotStrategyGoal::defineTarget() {
     btVector3 ballProjection = state.ball.projection;
 
     // posição para seguir linha da bola
-    goalTarget.x = Config::fieldSize.x - 20;
+    goalTarget.x = Config::fieldSize.x - 16;
     goalTarget.y = ballProjection.y;
 
     // máximo que pode ir até a lateral da área
@@ -67,7 +67,7 @@ float RobotStrategyGoal::applyUnivectorField(btVector3 target) {
 
     //Obstáculos de canto de gol
     pair<btVector3, btVector3> obstacle;
-    obstacle.first.x = 163;
+    obstacle.first.x = 167;
     obstacle.first.y = 40;
     obstacle.second.x = 0;
     obstacle.second.y = 0;

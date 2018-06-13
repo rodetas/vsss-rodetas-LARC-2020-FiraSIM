@@ -84,6 +84,30 @@ float RobotStrategyAttack::applyUnivectorField(btVector3 target) {
         }
     }
 
+    //Obstáculos de área do gol
+    pair<btVector3, btVector3> obstacle;
+    obstacle.first.x = 150;
+    obstacle.first.y = 38;
+    obstacle.second.x = 0;
+    obstacle.second.y = 0;
+    obstacles.push_back(obstacle);
+    obstacle.first.y = 50;
+    obstacles.push_back(obstacle);
+    obstacle.first.y = 60;
+    obstacles.push_back(obstacle);
+    obstacle.first.y = 70;
+    obstacles.push_back(obstacle);
+    obstacle.first.y = 80;
+    obstacles.push_back(obstacle);
+    obstacle.first.y = 90;
+    obstacles.push_back(obstacle);
+    obstacle.first.x = 160;
+    obstacle.first.y = 92;
+    obstacles.push_back(obstacle);
+    obstacle.first.x = 160;
+    obstacle.first.y = 40;
+    obstacles.push_back(obstacle);
+
     UnivectorField univectorField(2, 0.12, 4.5, 4.5);
     path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
