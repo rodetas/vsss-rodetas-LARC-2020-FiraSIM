@@ -17,18 +17,18 @@ public:
     RobotStrategyBase();
 
     bool isStopped();
-    bool isBlocked(RobotState, btVector3);
+    bool isBlocked();
     bool isStoppedFor(int);
-    bool isParallelToGoal(RobotState);
-    bool isBoard(RobotState);
+    bool isParallelToGoal();
+    bool isBoard();
 
-    void updateStopped(RobotState);
+    void update(RobotState, btVector3);
 
 private:
     int stoppedFrames;
 
-    //@TODO: tirar image daqui
-    btVector3 image;
+    RobotState robot;
+    btVector3 target;
 
 };
 

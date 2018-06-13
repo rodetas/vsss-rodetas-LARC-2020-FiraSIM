@@ -7,6 +7,7 @@
 
 #include <Common.h>
 #include <TeamColor.h>
+#include <Transmission.h>
 
 class CommandSendAdapter{
 
@@ -24,6 +25,8 @@ private:
 
     bool isRealEnvironment;
     TeamColor::Color teamColor;
+
+    Transmission transmission;
 
 };
 

@@ -5,18 +5,21 @@
 #include <RodetasRobot.h>
 #include "StateReceiverAdapter.h"
 
-StateReceiverAdapter::StateReceiverAdapter() {
+StateReceiverAdapter::StateReceiverAdapter(string teamColor, bool changeSide) {
+    this->teamColor = teamColor;
+    this->changeSide = changeSide;
+
     createSocketReceiveState();
 }
 
 void StateReceiverAdapter::createSocketReceiveState() {
-    interfaceReceive.createSocketReceiveState();
+    stateReceiver.createSocket();
 }
 
 RodetasState StateReceiverAdapter::receiveState(bool changeSide, TeamColor::Color mainColor) {
 
     // receives a vss::State from sdk or wait until a new packet comes
-    vss::State state = interfaceReceive.receiveState((vss::FieldTransformation)changeSide);
+    vss::State state = stateReceiver.receiveState((vss::FieldTransformationType)changeSide);
 
     // converts vss::State to RodetasState
     RodetasState newState;
@@ -25,7 +28,9 @@ RodetasState StateReceiverAdapter::receiveState(bool changeSide, TeamColor::Colo
     newState.ball.setProjection(Math::calculateProjection(btVector3(state.ball.x, state.ball.y), state.ball.speedX, state.ball.speedY));
 
     // inserts team robots in the beginning of the vector and push opponents in the end
+
     if(mainColor == TeamColor::YELLOW){
+
         for(auto vssRobot : state.teamYellow){
             RobotState robot;
             robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
@@ -33,6 +38,7 @@ RodetasState StateReceiverAdapter::receiveState(bool changeSide, TeamColor::Colo
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
 
@@ -43,6 +49,7 @@ RodetasState StateReceiverAdapter::receiveState(bool changeSide, TeamColor::Colo
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
 
@@ -55,6 +62,7 @@ RodetasState StateReceiverAdapter::receiveState(bool changeSide, TeamColor::Colo
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
 
@@ -65,6 +73,7 @@ RodetasState StateReceiverAdapter::receiveState(bool changeSide, TeamColor::Colo
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
     }

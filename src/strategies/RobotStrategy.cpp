@@ -6,9 +6,6 @@
 
 RobotStrategy::RobotStrategy() {
     movimentation = new Movimentation();
-    imageSize = {170,130};
-    goalSize = {10,40};
-    goalAreaSize = btVector3(imageSize.x*0.2, imageSize.y*0.6);
 }
 
 Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategyBase base) {
@@ -19,8 +16,12 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
     // defines robot's target,
     target = this->defineTarget();
 
+    std::cout<<s.ball.position.x<<" - "<<s.ball.position.y<<std::endl;
+
+    float fi = this->applyUnivectorField(target);
+
     // defines robot's pwm
-    command = movimentation->movePlayers(robot, target);
+    command = movimentation->movePlayers(robot, target, fi);
 
     // defines specific strategy such as corner strategy or kick strategy - can be applied or not
     command = this->specificStrategy(command);
@@ -29,25 +30,25 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
 }
 
 Command RobotStrategy::cornerStrategy(Command c) {
-    if (strategyBase.isBoard(robot) && strategyBase.isStopped()){
+
+    if (strategyBase.isBoard() && strategyBase.isStopped()) {
 
         // girar caso robo esteja preso de frente pra parede
         if (robot.cosFrom(state.ball.position) > -0.9 && robot.cosFrom(state.ball.position) < 0.9) {
             if (robot.sinFrom(state.ball.position) > 0) {
-                c = movimentation->turnRight(50,30);
+                c = movimentation->turnRight(50, 30);
             } else {
-                c = movimentation->turnLeft(50,50);
+                c = movimentation->turnLeft(50, 50);
             }
 //            cout << "preso pra parede" << endl;
         }
 
         // girar caso robo prenda a bola na parede - 8 cm
-        if (robot.distanceFrom(state.ball.position) < (8) ) {
-
-            if (robot.position.y < (imageSize.y/2)){
-                c = movimentation->turnLeft(60,60);
+        if (robot.distanceFrom(state.ball.position) < (8)) {
+            if (robot.position.y < (Config::fieldSize.y / 2)) {
+                c = movimentation->turnLeft(60, 60);
             } else {
-                c = movimentation->turnRight(60,60);
+                c = movimentation->turnRight(60, 60);
             }
 //            cout << "preso com bola" << endl;
         }
@@ -68,12 +69,12 @@ Command RobotStrategy::stopStrategy(Command c) {
 	}
 */
 
-    if(distanceTarget < maxDistance){
-        c.left  = c.left  * (distanceTarget/maxDistance);
-        c.right = c.right * (distanceTarget/maxDistance);
+    if (distanceTarget < maxDistance) {
+        c.left = c.left * (distanceTarget / maxDistance);
+        c.right = c.right * (distanceTarget / maxDistance);
     }
 
-    if(distanceTarget < 4){
+    if (distanceTarget < 4) {
 
         if (robot.cosFrom(state.ball.projection) < -0.8 || robot.cosFrom(state.ball.projection) > 0.8) {
             c = movimentation->stop();

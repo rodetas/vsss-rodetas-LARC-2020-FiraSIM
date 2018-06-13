@@ -9,6 +9,7 @@
 #include <Common.h>
 #include <Config.h>
 #include <TeamColor.h>
+
 class DebugSendAdapter {
 
 public:

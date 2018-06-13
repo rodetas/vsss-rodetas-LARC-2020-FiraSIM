@@ -7,22 +7,26 @@
 
 #include <Common.h>
 #include <RodetasState.h>
-#include <InterfaceCore.h>
-#include <State.h>
+#include <Communications/StateReceiver.h>
+#include <Domain/State.h>
 #include <MathHelper.h>
 #include <TeamColor.h>
+#include <Domain/FieldTransformationType.h>
 
 class StateReceiverAdapter {
 
 public:
 
-    StateReceiverAdapter();
+    StateReceiverAdapter(string, bool);
 
     void createSocketReceiveState();
     RodetasState receiveState(bool changeSide, TeamColor::Color mainColor);
 
 private:
-    vss::InterfaceCore interfaceReceive;
+    bool changeSide;
+    string teamColor;
+
+    vss::StateReceiver stateReceiver;
 
 };
 
