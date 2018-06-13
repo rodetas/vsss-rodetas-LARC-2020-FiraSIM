@@ -4,7 +4,7 @@
 
 #include <DebugSenderAdapter.h>
 
-DebugSendAdapter::DebugSendAdapter(string teamColor, bool isDebug) {
+DebugSendAdapter::DebugSendAdapter(TeamColor::Color teamColor, bool isDebug) {
     this->teamColor = teamColor;
     this->isDebug = isDebug;
 
@@ -13,7 +13,7 @@ DebugSendAdapter::DebugSendAdapter(string teamColor, bool isDebug) {
 }
 
 void DebugSendAdapter::createSocketDebug() {
-    if(this->teamColor == "yellow")
+    if(this->teamColor == TeamColor::YELLOW)
         interfaceDebug.createSendDebugTeam1(&this->globalDebug);
     else
         interfaceDebug.createSendDebugTeam2(&this->globalDebug);
@@ -56,7 +56,7 @@ void DebugSendAdapter::sendDebug(common::Debug debug) {
             }
         }
 
-        if (teamColor == "yellow") {
+        if (teamColor == TeamColor::YELLOW) {
             interfaceDebug.sendDebugTeam1();
         } else {
             interfaceDebug.sendDebugTeam2();

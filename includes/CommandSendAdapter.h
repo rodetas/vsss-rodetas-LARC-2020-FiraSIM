@@ -5,13 +5,14 @@
 #ifndef SDK_RODETAS_COMMANDSENDADAPTER_H
 #define SDK_RODETAS_COMMANDSENDADAPTER_H
 
-#include <common.h>
+#include <Common.h>
+#include <TeamColor.h>
 
 class CommandSendAdapter{
 
 public:
 
-    CommandSendAdapter(string, bool);
+    CommandSendAdapter(TeamColor::Color, bool);
 
     void createSocketSendCommand();
     void sendCommands(vector<common::Command>);
@@ -22,7 +23,7 @@ private:
     vss_command::Global_Commands globalCommands;
 
     bool isRealEnvironment;
-    string teamColor;
+    TeamColor::Color teamColor;
 
 };
 

@@ -9,8 +9,8 @@ RobotStrategyAttack::RobotStrategyAttack() {
 }
 
 Command RobotStrategyAttack::specificStrategy(Command c){
-    c = kick_strategy(c);
-    c = corner_strategy(c);
+    c = kickStrategy(c);
+    c = cornerStrategy(c);
 
     if (strategyBase.isParallelToGoal(robot)){
 
@@ -21,9 +21,9 @@ Command RobotStrategyAttack::specificStrategy(Command c){
              robot.position.x < imageSize.x*0.25 && robot.position.y > halfGoal2 && robot.position.y < halfGoal1){
 
             if (robot.position.y < state.ball.position.y) {
-                c = movimentation->turn_right(80, 80);
+                c = movimentation->turnRight(80, 80);
             } else {
-                c = movimentation->turn_left(80, 80);
+                c = movimentation->turnLeft(80, 80);
             }
         }
     }

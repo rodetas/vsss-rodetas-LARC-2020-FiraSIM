@@ -6,7 +6,7 @@
 #define SDK_RODETAS_RODETASROBOT_H
 
 #include <RodetasState.h>
-#include <common.h>
+#include <Common.h>
 #include <RobotState.h>
 #include <RobotDebug.h>
 #include <strategies/RobotStrategy.h>

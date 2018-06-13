@@ -4,7 +4,7 @@
 
 #include "CommandSendAdapter.h"
 
-CommandSendAdapter::CommandSendAdapter(string teamColor, bool isRealEnvironment) {
+CommandSendAdapter::CommandSendAdapter(TeamColor::Color teamColor,bool isRealEnvironment) {
     this->isRealEnvironment = isRealEnvironment;
     this->teamColor = teamColor;
 
@@ -13,7 +13,7 @@ CommandSendAdapter::CommandSendAdapter(string teamColor, bool isRealEnvironment)
 
 void CommandSendAdapter::createSocketSendCommand() {
 
-    if(teamColor == "yellow"){
+    if(teamColor == TeamColor::YELLOW){
         interfaceSend.createSendCommandsTeam1(&this->globalCommands);
     } else {
         interfaceSend.createSendCommandsTeam2(&this->globalCommands);
@@ -26,7 +26,7 @@ void CommandSendAdapter::sendCommands(vector<common::Command> commands) {
     if(!isRealEnvironment) {
         globalCommands = vss_command::Global_Commands();
 
-        if (teamColor == "yellow") {
+        if (teamColor == TeamColor::YELLOW) {
             globalCommands.set_is_team_yellow(true);
         } else {
             globalCommands.set_is_team_yellow(false);
@@ -39,7 +39,7 @@ void CommandSendAdapter::sendCommands(vector<common::Command> commands) {
             robot->set_right_vel(commands[i].right);
         }
 
-        if (teamColor == "yellow") {
+        if (teamColor == TeamColor::YELLOW) {
             interfaceSend.sendCommandTeam1();
         } else {
             interfaceSend.sendCommandTeam2();

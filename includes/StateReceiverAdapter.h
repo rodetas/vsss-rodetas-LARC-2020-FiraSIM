@@ -5,11 +5,12 @@
 #ifndef SDK_RODETAS_STATERECEIVERADAPTER_H
 #define SDK_RODETAS_STATERECEIVERADAPTER_H
 
-#include <common.h>
+#include <Common.h>
 #include <RodetasState.h>
 #include <InterfaceCore.h>
 #include <State.h>
 #include <MathHelper.h>
+#include <TeamColor.h>
 
 class StateReceiverAdapter {
 
@@ -18,7 +19,7 @@ public:
     StateReceiverAdapter();
 
     void createSocketReceiveState();
-    RodetasState receiveState(bool changeSide, string mainColor);
+    RodetasState receiveState(bool changeSide, TeamColor::Color mainColor);
 
 private:
     vss::InterfaceCore interfaceReceive;
