@@ -8,7 +8,7 @@
 #include <Common.h>
 #include <RodetasState.h>
 #include <Communications/StateReceiver.h>
-#include <State.h>
+#include <Domain/State.h>
 #include <MathHelper.h>
 #include <Domain/FieldTransformationType.h>
 
