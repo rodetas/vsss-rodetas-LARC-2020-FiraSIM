@@ -16,6 +16,8 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
     // defines robot's target,
     target = this->defineTarget();
 
+    std::cout<<s.ball.position.x<<" - "<<s.ball.position.y<<std::endl;
+
     float fi = this->applyUnivectorField(target);
 
     // defines robot's pwm
