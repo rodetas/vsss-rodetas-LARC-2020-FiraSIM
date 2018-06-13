@@ -21,7 +21,7 @@ double Math::calculateLinearSpeed(double velX, double velY) {
 }
 
 btVector3 Math::calculateProjection(btVector3 initialPoint, double velX, double velY) {
-    return btVector3(initialPoint.x + velX, initialPoint.y + velY);
+    return btVector3(initialPoint.x + velX/3, initialPoint.y + velY/3);
 }
 
 double Math::toRadian(double angle) {
