@@ -33,7 +33,8 @@ vector<MindSet> StateInterpreter::defineStrategy(vector<RodetasRobot>& robots,  
 
 		double distanceDefenderBall = Math::distancePoint(defenderRobot.getSelfState().position, state.ball.getPosition());
         double distanceAttackerBall = Math::distancePoint(attackerRobot.getSelfState().position, state.ball.getPosition());
-		double distanceGoalKeeperBall = Math::distancePoint(goalRobot.getSelfState().position, state.ball.getPosition());
+//		double distanceGoalKeeperBall = Math::distancePoint(goalRobot.getSelfState().position, state.ball.getPosition());
+
 		// na defesa, o mais perto é o atacante
         if(distanceDefenderBall < distanceAttackerBall &&
            state.ball.position.x < Config::fieldSize.x/2 &&
@@ -48,16 +49,16 @@ vector<MindSet> StateInterpreter::defineStrategy(vector<RodetasRobot>& robots,  
             strategiesById[attackerRobot.getId()] = MindSet::Defender;
             strategiesById[defenderRobot.getId()] = MindSet::Attacker;
         }
-		//trocar goleiro
-		if(distanceGoalKeeperBall < distanceAttackerBall &&
-           state.ball.position.x > Config::fieldSize.x/4 &&
-           !attackerRobot.getRobotStrategyBase().isBlocked() &&
-           !goalRobot.getRobotStrategyBase().isBlocked()){
-			
-			strategiesById[attackerRobot.getId()] = MindSet::Defender;
-			strategiesById[defenderRobot.getId()] = MindSet::GoalKeeper;
-			strategiesById[goalRobot.getId()] = MindSet::Attacker;
-		}
+
+//		//trocar goleiro
+//		if(distanceGoalKeeperBall < distanceAttackerBall &&
+//           state.ball.position.x > Config::fieldSize.x/4 &&
+//           !attackerRobot.getRobotStrategyBase().isBlocked() &&
+//           !goalRobot.getRobotStrategyBase().isBlocked()){
+//			strategiesById[attackerRobot.getId()] = MindSet::Defender;
+//			strategiesById[defenderRobot.getId()] = MindSet::GoalKeeper;
+//			strategiesById[goalRobot.getId()] = MindSet::Attacker;
+//		}
 
         timeLastChange = 60;
     }

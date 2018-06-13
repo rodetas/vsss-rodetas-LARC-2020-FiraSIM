@@ -7,9 +7,9 @@ bool Config::playersSwap = true;
 string Config::teamColor;
 
 
-common::btVector3 Config::fieldSize = {150,130};
+common::btVector3 Config::fieldSize = {170,130};
 common::btVector3 Config::goalSize = {10, 40};
-common::btVector3 Config::goalAreaSize = common::btVector3(fieldSize.x*0.2, fieldSize.y*0.6);
+common::btVector3 Config::goalAreaSize = common::btVector3(fieldSize.x*0.1, fieldSize.y*0.6);
 
 bool Config::argumentParse(int argc, char** argv) {
     namespace bpo = boost::program_options;

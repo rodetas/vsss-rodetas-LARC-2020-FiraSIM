@@ -35,7 +35,7 @@ Command RobotStrategyAttack::specificStrategy(Command c) {
 btVector3 RobotStrategyAttack::defineTarget() {
 
     btVector3 target = state.ball.position;
-/*
+
     btVector3 centerGoal = btVector3(0, Config::fieldSize.y/2);
     double angleRobotGoal = Math::angulation(robot.position, centerGoal);
 
@@ -46,19 +46,21 @@ btVector3 RobotStrategyAttack::defineTarget() {
         target = centerGoal;
     }
 
-    if(state.ball.projection.x > Config::fieldSize.x*0.3 && state.ball.projection.x > robot.position.x){
-        if(state.ball.projection.y < Config::fieldSize.y/2){
-            target.y = state.ball.projection.y + (8);
-            target.x = state.ball.projection.x;
-        } else {
-            target.y = state.ball.projection.y - (8);
-            target.x = state.ball.projection.x;
-        }
-    }
+//    // posiciona atras da bola para defender
+//    if(state.ball.projection.x > Config::fieldSize.x*0.3 && state.ball.projection.x > robot.position.x){
+//        if(state.ball.projection.y < Config::fieldSize.y/2){
+//            target.y = state.ball.projection.y + (8);
+//            target.x = state.ball.projection.x;
+//        } else {
+//            target.y = state.ball.projection.y - (8);
+//            target.x = state.ball.projection.x;
+//        }
+//    }
 
     int halfGoal1 = Config::fieldSize.y/2 + Config::goalSize.y * 0.85;
     int halfGoal2 = Config::fieldSize.y/2 - Config::goalSize.y * 0.85;
 
+    // caso a bola esteja entrando na area manda o atacante para o meio do campo para evitar cometer penalti
     if(((state.ball.projection.y < halfGoal1 && state.ball.projection.y > halfGoal2 && state.ball.projection.x > Config::fieldSize.x*0.80))){
         target = btVector3(Config::fieldSize.x/2, Config::fieldSize.y/2);
     }
@@ -66,7 +68,7 @@ btVector3 RobotStrategyAttack::defineTarget() {
     // verifies the limits of the destination
     if (target.y < 0) target.y = 0;
     if (target.y > Config::fieldSize.y) target.y = Config::fieldSize.y;
-*/
+
     return target;
 }
 
