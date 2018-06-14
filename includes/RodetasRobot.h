@@ -5,15 +5,15 @@
 #ifndef SDK_RODETAS_RODETASROBOT_H
 #define SDK_RODETAS_RODETASROBOT_H
 
-#include <RodetasState.h>
+#include <Domain/RodetasState.h>
 #include <Common.h>
-#include <RobotState.h>
-#include <RobotDebug.h>
+#include <Domain/RobotState.h>
+#include <Domain/Debug.h>
 #include <strategies/RobotStrategy.h>
-#include <MathHelper.h>
+#include <Helpers/MathHelper.h>
 #include <cmath>
 #include <strategies/RobotStrategyAttack.h>
-#include "Mindset.h"
+#include "Domain/Mindset.h"
 
 using namespace common;
 
@@ -29,18 +29,20 @@ public:
     void updateSelfState(RobotState);
     void updateState(RodetasState);
 
-    void setDebug(RobotDebug);
     void setStrategy(RobotStrategy*);
 
     int getId();
 
     Command getCommand();
-    RobotDebug getRobotDebug();
     RobotState getSelfState();
     RobotStrategyBase getRobotStrategyBase();
 
     MindSet getMindSet();
     void setMindSet(MindSet);
+
+    vss::Path getPath();
+    vss::Pose getFinalPose();
+    vss::Point getStepPoint();
 
 private:
 
@@ -48,11 +50,14 @@ private:
 
     Command command;
     RodetasState state;
-    RobotDebug debug;
     RobotState selfState;
     RobotStrategy* strategy;
     RobotStrategyBase strategyBase;
     MindSet mindSet;
+
+    vss::Path path;
+    vss::Pose target;
+    vss::Point stepPoint;
 
 };
 

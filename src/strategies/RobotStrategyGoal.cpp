@@ -12,9 +12,9 @@ Command RobotStrategyGoal::specificStrategy(Command c) {
     return c;
 }
 
-btVector3 RobotStrategyGoal::defineTarget() {
-    btVector3 goalTarget;
-    btVector3 ballProjection = state.ball.projection;
+vss::Pose RobotStrategyGoal::defineTarget() {
+    vss::Pose goalTarget;
+    vss::Point ballProjection = state.ball.projection;
 
     // posição para seguir linha da bola
     goalTarget.x = Config::fieldSize.x - 16;
@@ -33,7 +33,8 @@ btVector3 RobotStrategyGoal::defineTarget() {
         ballProjection.y < (Config::fieldSize.y / 2 + Config::goalAreaSize.y / 2) &&
         ballProjection.x > Config::fieldSize.x - 30) {
 
-        goalTarget = ballProjection;
+        goalTarget.x = ballProjection.x;
+        goalTarget.y = ballProjection.y;
     }
 
     // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
@@ -46,19 +47,19 @@ btVector3 RobotStrategyGoal::defineTarget() {
     return goalTarget;
 }
 
-float RobotStrategyGoal::applyUnivectorField(btVector3 target) {
+float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     /* Se o target for a bola e se a bola estiver atrás do goleiro indo pro gol, definir angulo de chegada
      * para que o robô chega até a bola por trás evitando gol contra e a levando para fora do gol*/
 
     float n = 0;
-    btVector3 arrivalOrientation = defineArrivalOrientation(target);
+    vss::Point arrivalOrientation = defineArrivalOrientation(target);
 
     if((target.x == state.ball.projection.x) && (target.y == state.ball.projection.y)){
         if(target.x > robot.position.x - 3){
             n = 1.6;
         }
     }
-    vector<pair<btVector3, btVector3>> obstacles;
+    vector<pair<vss::Point, vss::Point>> obstacles;
     for (auto &r: state.robots) {
         if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
             obstacles.push_back(make_pair(r.position, r.vectorSpeed));
@@ -66,7 +67,7 @@ float RobotStrategyGoal::applyUnivectorField(btVector3 target) {
     }
 
     //Obstáculos de canto de gol
-    pair<btVector3, btVector3> obstacle;
+    pair<vss::Point, vss::Point> obstacle;
     obstacle.first.x = 167;
     obstacle.first.y = 40;
     obstacle.second.x = 0;
@@ -109,8 +110,8 @@ Command RobotStrategyGoal::stopStrategy(Command command) {
     return c;
 }
 
-btVector3 RobotStrategyGoal::defineArrivalOrientation(btVector3 target) {
-    btVector3 arrivalOrientation;
+vss::Point RobotStrategyGoal::defineArrivalOrientation(vss::Pose target) {
+    vss::Point arrivalOrientation;
 
     if(robot.position.y < target.y){
         arrivalOrientation.x = target.x - 8;

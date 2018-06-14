@@ -4,11 +4,9 @@
 /*
  * calculates the basic movimentation to goal to target
  */
-Command Movimentation::movePlayers(RobotState robot, btVector3 target, float fi){
+Command Movimentation::movePlayers(RobotState robot, vss::Pose target, float fi){
 
 	Command command;
-
-	//std::cout << cos(fi - Math::toRadian(robot.angle)) << std::endl;
 
 	if ( cos(fi - Math::toRadian(robot.angle)) < -0.4) {
 		command = definePwm(robot, target, 'B', fi);
@@ -29,7 +27,7 @@ Command Movimentation::movePlayers(RobotState robot, btVector3 target, float fi)
 /*
  * Correct robot pwm to follow the destination
  */
-Command Movimentation::definePwm(RobotState robot, btVector3 target, char direction, float fi){
+Command Movimentation::definePwm(RobotState robot, vss::Pose target, char direction, float fi){
 	int standardPower = 50;
 	int basePower = standardPower * 1;
 	int correctionPower = standardPower * sin(fi - Math::toRadian(robot.angle)) * 0.8;

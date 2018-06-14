@@ -7,9 +7,9 @@ vss::TeamType Config::teamColor = vss::TeamType::Blue;
 bool Config::playersSwap = true;
 
 
-common::btVector3 Config::fieldSize = {170,130};
-common::btVector3 Config::goalSize = {10, 40};
-common::btVector3 Config::goalAreaSize = common::btVector3(fieldSize.x*0.1, fieldSize.y*0.6);
+vss::Point Config::fieldSize = {170,130};
+vss::Point Config::goalSize = {10, 40};
+vss::Point Config::goalAreaSize = vss::Point(fieldSize.x*0.1, fieldSize.y*0.6);
 
 bool Config::argumentParse(int argc, char** argv) {
     namespace bpo = boost::program_options;

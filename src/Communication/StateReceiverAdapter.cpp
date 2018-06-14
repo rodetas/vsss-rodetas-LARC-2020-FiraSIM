@@ -23,32 +23,33 @@ RodetasState StateReceiverAdapter::receiveState() {
 
     // converts vss::State to RodetasState
     RodetasState newState;
-    newState.ball.setPosition(btVector3(state.ball.x, state.ball.y, 0));
+    newState.ball.setPosition(vss::Point(state.ball.x, state.ball.y));
     newState.ball.setLinearSpeed(Math::calculateLinearSpeed(state.ball.speedX, state.ball.speedY));
-    newState.ball.setProjection(Math::calculateProjection(btVector3(state.ball.x, state.ball.y), state.ball.speedX, state.ball.speedY));
+    newState.ball.setVectorSpeed(vss::Point(state.ball.speedX, state.ball.speedY));
+    newState.ball.setProjection(Math::calculateProjection(vss::Point(state.ball.x, state.ball.y), state.ball.speedX, state.ball.speedY));
 
     // inserts team robots in the beginning of the vector and push opponents in the end
     if(teamColor == vss::TeamType::Yellow){
 
         for(auto vssRobot : state.teamYellow){
             RobotState robot;
-            robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
-            robot.setProjection(Math::calculateProjection(btVector3(vssRobot.x, vssRobot.y), vssRobot.speedX, vssRobot.speedY));
+            robot.setPosition(vss::Point(vssRobot.x, vssRobot.y));
+            robot.setProjection(Math::calculateProjection(vss::Point(vssRobot.x, vssRobot.y), vssRobot.speedX, vssRobot.speedY));
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
-            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(vss::Point(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
 
         for(auto vssRobot : state.teamBlue){
             RobotState robot;
-            robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
-            robot.setProjection(Math::calculateProjection(btVector3(vssRobot.x, vssRobot.y), vssRobot.speedX, vssRobot.speedY));
+            robot.setPosition(vss::Point(vssRobot.x, vssRobot.y));
+            robot.setProjection(Math::calculateProjection(vss::Point(vssRobot.x, vssRobot.y), vssRobot.speedX, vssRobot.speedY));
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
-            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(vss::Point(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
 
@@ -56,23 +57,23 @@ RodetasState StateReceiverAdapter::receiveState() {
 
         for(auto vssRobot : state.teamBlue){
             RobotState robot;
-            robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
-            robot.setProjection(Math::calculateProjection(btVector3(vssRobot.x, vssRobot.y), vssRobot.speedX, vssRobot.speedY));
+            robot.setPosition(vss::Point(vssRobot.x, vssRobot.y));
+            robot.setProjection(Math::calculateProjection(vss::Point(vssRobot.x, vssRobot.y), vssRobot.speedX, vssRobot.speedY));
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
-            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(vss::Point(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
 
         for(auto vssRobot : state.teamYellow){
             RobotState robot;
-            robot.setPosition(btVector3(vssRobot.x, vssRobot.y));
-            robot.setProjection(Math::calculateProjection(btVector3(vssRobot.x, vssRobot.y), vssRobot.speedX, vssRobot.speedY));
+            robot.setPosition(vss::Point(vssRobot.x, vssRobot.y));
+            robot.setProjection(Math::calculateProjection(vss::Point(vssRobot.x, vssRobot.y), vssRobot.speedX, vssRobot.speedY));
             robot.setAngle(vssRobot.angle);
             robot.setAngularSpeed(vssRobot.speedAngle);
             robot.setLinearSpeed(Math::calculateLinearSpeed(vssRobot.speedX, vssRobot.speedY));
-            robot.setVectorSpeed(btVector3(vssRobot.speedX, vssRobot.speedY));
+            robot.setVectorSpeed(vss::Point(vssRobot.speedX, vssRobot.speedY));
             newState.robots.emplace_back(robot);
         }
     }

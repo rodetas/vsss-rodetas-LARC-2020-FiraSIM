@@ -5,7 +5,6 @@
 #include <Config.h>
 
 Kernel::Kernel(){
-	srand(time(NULL));
 }
 
 void Kernel::loop() {
@@ -22,7 +21,10 @@ void Kernel::loop() {
     for (unsigned int i = 0; i < 3; i++) robots.emplace_back(RodetasRobot(i, (MindSet) i));
 
     RodetasState state;
-    Debug debug;
+
+    vss::Debug debug;
+    debug.paths.resize(3);
+    debug.finalPoses.resize(3);
 
     robots[0].setStrategy(new RobotStrategyAttack());
     robots[1].setStrategy(new RobotStrategyDefender());
@@ -42,13 +44,11 @@ void Kernel::loop() {
 
             commands[i] = robot.getCommand();
 
-            debug.robotsFinalPose[i] = robot.getRobotDebug().robotFinalPose;
-            debug.robotsStepPose[i] = robot.getRobotDebug().robotStepPose;
-            debug.robotsPath[i] = robot.getRobotDebug().path;
-
+            debug.finalPoses[i] = robot.getFinalPose();
+            debug.paths[i] = robot.getPath();
         }
 
-        coach.manage(robots, state,Config::playersSwap);
+        coach.manage(robots, state, Config::playersSwap);
 
         sendInterface.sendCommands(commands);
         debugInterface.sendDebug(debug);

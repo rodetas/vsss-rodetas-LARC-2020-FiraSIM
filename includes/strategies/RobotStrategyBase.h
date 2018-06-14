@@ -6,7 +6,7 @@
 #define SDK_RODETAS_STRATEGYBASE_H
 
 #include <Common.h>
-#include <RobotState.h>
+#include <Domain/RobotState.h>
 
 using namespace common;
 
@@ -22,13 +22,13 @@ public:
     bool isParallelToGoal();
     bool isBoard();
 
-    void update(RobotState, btVector3);
+    void update(RobotState, vss::Point);
 
 private:
     int stoppedFrames;
 
     RobotState robot;
-    btVector3 target;
+    vss::Point target;
 
 };
 

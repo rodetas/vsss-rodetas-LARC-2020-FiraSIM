@@ -30,9 +30,9 @@ public:
 	static vss::TeamType teamColor;
 	static bool playersSwap;
 
-	static common::btVector3 fieldSize;
-	static common::btVector3 goalSize;
-	static common::btVector3 goalAreaSize;
+	static vss::Point fieldSize;
+	static vss::Point goalSize;
+	static vss::Point goalAreaSize;
 
     static bool argumentParse(int ,char**);
 

@@ -18,11 +18,11 @@ public:
 
     Command specificStrategy(Command) override;
 
-    btVector3 defineTarget() override;
+    vss::Pose defineTarget() override;
 
-    float applyUnivectorField(btVector3) override;
+    float applyUnivectorField(vss::Pose) override;
 
-    btVector3 defineArrivalOrientation(btVector3) override;
+    vss::Point defineArrivalOrientation(vss::Pose) override;
 
 };
 

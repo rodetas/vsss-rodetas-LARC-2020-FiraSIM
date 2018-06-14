@@ -7,10 +7,12 @@
 
 #include <Common.h>
 #include "RobotStrategyBase.h"
-#include <RobotState.h>
-#include <RodetasState.h>
+#include <Domain/RobotState.h>
+#include <Domain/RodetasState.h>
 #include <Movimentation.h>
 #include <UnivectorField.h>
+#include <Domain/Pose.h>
+#include <Domain/Path.h>
 #include "Config.h"
 
 using namespace common;
@@ -24,11 +26,11 @@ public:
 
     virtual Command specificStrategy(Command) = 0;
 
-    virtual btVector3 defineTarget() = 0;
+    virtual vss::Pose defineTarget() = 0;
 
-    virtual float applyUnivectorField(btVector3) = 0;
+    virtual float applyUnivectorField(vss::Pose) = 0;
 
-    virtual btVector3 defineArrivalOrientation(btVector3) = 0;
+    virtual vss::Point defineArrivalOrientation(vss::Pose) = 0;
 
     //@TODO: inserir comentarios em cada estrategia
     virtual Command cornerStrategy(Command);
@@ -40,17 +42,18 @@ public:
     virtual Command kickStrategy(Command);
 
     Command getCommand();
-    btVector3 getFinalPose();
-    btVector3 getStepPose();
-    Path getPath();
+    vss::Pose getFinalPose();
+    vss::Point getStepPose();
+    vss::Path getPath();
 
 protected:
     RobotStrategyBase strategyBase;
 
     Command command;
-    btVector3 target;
-    btVector3 stepPose;
-    Path path;
+
+    vss::Pose target;
+    vss::Point stepPose;
+    vss::Path path;
 
     RobotState robot;
     RodetasState state;

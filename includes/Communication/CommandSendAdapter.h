@@ -8,6 +8,7 @@
 #include <Common.h>
 #include <Domain/TeamType.h>
 #include <Communication/Transmission.h>
+#include <Communications/CommandSender.h>
 
 class CommandSendAdapter{
 
@@ -20,13 +21,14 @@ public:
 
 private:
 
-    Interface interfaceSend;
-    vss_command::Global_Commands globalCommands;
+    vss::CommandSender interfaceSend;
 
     bool isRealEnvironment;
     vss::TeamType teamColor;
 
     Transmission transmission;
+
+    vss::WheelsCommand commandToWheelsCommand(int, Command);
 
 };
 

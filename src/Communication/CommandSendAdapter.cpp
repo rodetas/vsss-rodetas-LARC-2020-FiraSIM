@@ -12,38 +12,21 @@ CommandSendAdapter::CommandSendAdapter(vss::TeamType teamColor, bool isRealEnvir
 }
 
 void CommandSendAdapter::createSocketSendCommand() {
-
-    if(teamColor == vss::TeamType::Yellow){
-        interfaceSend.createSendCommandsTeam1(&this->globalCommands);
-    } else {
-        interfaceSend.createSendCommandsTeam2(&this->globalCommands);
-    }
-
+    interfaceSend.createSocket(teamColor);
 }
 
 void CommandSendAdapter::sendCommands(vector<common::Command> commands) {
 
     if(!isRealEnvironment) {
-        globalCommands = vss_command::Global_Commands();
 
-        if (teamColor == vss::TeamType::Yellow) {
-            globalCommands.set_is_team_yellow(true);
-        } else {
-            globalCommands.set_is_team_yellow(false);
+        vss::Command vssCommand;
+        vssCommand.id = 0;
+
+        for(unsigned int i=0 ; i<commands.size() ; i++){
+            vssCommand.commands.push_back(commandToWheelsCommand(i, commands[i]));
         }
 
-        for (int i = 0; i < 3; i++) {
-            vss_command::Robot_Command *robot = globalCommands.add_robot_commands();
-            robot->set_id(i);
-            robot->set_left_vel(commands[i].left);
-            robot->set_right_vel(commands[i].right);
-        }
-
-        if (teamColor == vss::TeamType::Yellow) {
-            interfaceSend.sendCommandTeam1();
-        } else {
-            interfaceSend.sendCommandTeam2();
-        }
+        interfaceSend.sendCommand(vssCommand);
 
     } else {
         //@TODO: invocar funcoes do transmission
@@ -51,5 +34,15 @@ void CommandSendAdapter::sendCommands(vector<common::Command> commands) {
 //        	transmission.send(id["defense"],strategies["defense"]->get_command());
 //        	transmission.send(id["attack"], strategies["attack"]->get_command());
     }
+}
+
+vss::WheelsCommand CommandSendAdapter::commandToWheelsCommand(int id, Command command){
+
+    vss::WheelsCommand wheelsCommand;
+    wheelsCommand.id = id;
+    wheelsCommand.leftVel = command.left;
+    wheelsCommand.rightVel = command.right;
+
+    return wheelsCommand;
 }
 

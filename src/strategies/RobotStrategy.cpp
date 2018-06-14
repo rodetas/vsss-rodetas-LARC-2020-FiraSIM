@@ -16,8 +16,6 @@ Command RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategy
     // defines robot's target,
     target = this->defineTarget();
 
-    std::cout<<s.ball.position.x<<" - "<<s.ball.position.y<<std::endl;
-
     float fi = this->applyUnivectorField(target);
 
     // defines robot's pwm
@@ -104,14 +102,14 @@ Command RobotStrategy::getCommand() {
     return this->command;
 }
 
-btVector3 RobotStrategy::getFinalPose() {
+vss::Pose RobotStrategy::getFinalPose() {
     return this->target;
 }
 
-btVector3 RobotStrategy::getStepPose() {
+vss::Point RobotStrategy::getStepPose() {
     return this->stepPose;
 }
 
-Path RobotStrategy::getPath() {
+vss::Path RobotStrategy::getPath() {
     return this->path;
 }

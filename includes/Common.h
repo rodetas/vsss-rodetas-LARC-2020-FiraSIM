@@ -12,71 +12,13 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
-#include <interface.h>
+#include <Domain/Point.h>
+#include <vector>
+#include <sstream>
 
 using namespace std;
 
 namespace common{
-    enum { none = 0, goalTeam1 = 1, goalTeam2 = 2, faultTeam1 = 3, faultTeam2 = 4, penaltyTeam1 = 5, penaltyTeam2 = 6 };
-
-    //! This struct represents a Vector in R^3.
-    struct btVector3{
-        //! Data: x, y, z.
-        float x, y, z;
-        //! Default constructor: btVector3 bt3;
-        btVector3(){
-            x = y = z = 0;
-        };
-        //! Construtor XYZ: btVector3 bt3(x, y, z);
-        btVector3(float x, float y, float z){
-            this->x = x;
-            this->y = y;
-            this->z = z;
-        };
-        //! Construtor XY: btVector3 bt3(x, y);
-        btVector3(float x, float y){
-            this->x = x;
-            this->y = y;
-            this->z = 0;
-        };
-        //! Constructor copy: btVector3 bt3(btVector3(x, y, z));
-        explicit btVector3(btVector3 *b){
-            x = b->x;
-            y = b->y;
-            z = b->z;
-        };
-
-        //! Default function: prints all variables.
-        string toString(){
-            stringstream ss;
-            ss << "btVector3(" << x << ", " << y << ", " << z << ")";
-            return ss.str();
-        };
-    };
-
-    //! This is a simple structure responsible for represent a path: vector of poses.
-	struct Path{
-		vector<btVector3> poses;
-
-		Path() = default;
-
-		explicit Path(Path *path){
-			poses = path->poses;
-		};
-
-		void show(){
-			for(auto pose : poses)
-			    cout << "(" << pose.x << ", " << pose.y << ", " << pose.z << ")" << endl;
-		}
-	};
-
-    //! This is a simple structure that represents a Debug packet
-    struct Debug{
-        btVector3 robotsStepPose[3];
-        btVector3 robotsFinalPose[3];
-        Path robotsPath[3];
-        Debug() = default;
-    };
 
     struct Command{
         float left;
