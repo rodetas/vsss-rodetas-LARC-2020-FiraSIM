@@ -41,7 +41,7 @@ vss::WheelsCommand RobotStrategy::cornerStrategy(vss::WheelsCommand c) {
 
         // girar caso robo prenda a bola na parede - 8 cm
         if (robot.distanceFrom(state.ball.position) < (8)) {
-            if (robot.position.y < (Config::fieldSize.y / 2)) {
+            if (robot.position.y < (vss::MAX_COORDINATE_Y / 2)) {
                 c = movimentation.turnLeft(60, 60);
             } else {
                 c = movimentation.turnRight(60, 60);

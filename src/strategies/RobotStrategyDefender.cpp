@@ -18,32 +18,32 @@ vss::Pose RobotStrategyDefender::defineTarget() {
     vss::Point ballProjection = state.ball.projection;
 
     // altera o ponto de destino dependendo do sentido da bola, evitando bater no outro robo
-    if (robot.position.x < Config::fieldSize.x * 0.4) {
-        if (robot.position.y > Config::fieldSize.y / 2) {
+    if (robot.position.x < vss::MAX_COORDINATE_X * 0.4) {
+        if (robot.position.y > vss::MAX_COORDINATE_Y / 2) {
             if (ballProjection.y < state.ball.position.y) {
-                target = vss::Pose(Config::fieldSize.x * 0.5, Config::fieldSize.y * 0.2, 0);
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.5, vss::MAX_COORDINATE_Y * 0.2, 0);
             } else {
-                target = vss::Pose(Config::fieldSize.x * 0.5, Config::fieldSize.y * 0.8, 0);
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.5, vss::MAX_COORDINATE_Y * 0.8, 0);
             }
         } else {
             if (ballProjection.y < state.ball.position.y) {
-                target = vss::Pose(Config::fieldSize.x * 0.5, Config::fieldSize.y * 0.2, 0);
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.5, vss::MAX_COORDINATE_Y * 0.2, 0);
             } else {
-                target = vss::Pose(Config::fieldSize.x * 0.5, Config::fieldSize.y * 0.8, 0);
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.5, vss::MAX_COORDINATE_Y * 0.8, 0);
             }
         }
 
     } else {
         // se a bola esta no ataque posiciona o robo no meio do campo
-        target = vss::Pose(Config::fieldSize.x / 2, Config::fieldSize.y / 2, 0);
+        target = vss::Pose(vss::MAX_COORDINATE_X / 2, vss::MAX_COORDINATE_Y / 2, 0);
     }
 
     // posiciona o robo na defesa para facilitar a troca de posicao com o goleiro
-    if (ballProjection.x > Config::fieldSize.x / 2) {
-        if (ballProjection.y > Config::fieldSize.y / 2) {
-            target = vss::Pose(Config::fieldSize.x * 0.7, Config::fieldSize.y * 0.2, 0);
+    if (ballProjection.x > vss::MAX_COORDINATE_X / 2) {
+        if (ballProjection.y > vss::MAX_COORDINATE_Y / 2) {
+            target = vss::Pose(vss::MAX_COORDINATE_X * 0.7, vss::MAX_COORDINATE_Y * 0.2, 0);
         } else {
-            target = vss::Pose(Config::fieldSize.x * 0.7, Config::fieldSize.y * 0.8, 0);
+            target = vss::Pose(vss::MAX_COORDINATE_X * 0.7, vss::MAX_COORDINATE_Y * 0.8, 0);
         }
     }
 

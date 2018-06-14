@@ -17,21 +17,21 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     vss::Point ballProjection = state.ball.projection;
 
     // posição para seguir linha da bola
-    goalTarget.x = Config::fieldSize.x - 16;
+    goalTarget.x = vss::MAX_COORDINATE_X - 16;
     goalTarget.y = ballProjection.y;
 
     // máximo que pode ir até a lateral da área
-    if (goalTarget.y > Config::fieldSize.y / 2 + Config::goalAreaSize.y / 2) {
-        goalTarget.y = Config::fieldSize.y / 2 + Config::goalAreaSize.y / 2;
+    if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) {
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2;
 
-    } else if (goalTarget.y < Config::fieldSize.y / 2 - Config::goalAreaSize.y / 2) {
-        goalTarget.y = Config::fieldSize.y / 2 - Config::goalAreaSize.y / 2;
+    } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2) {
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2;
     }
 
     // ir na bola quando ela está dentro da area
-    if (ballProjection.y > (Config::fieldSize.y / 2 - Config::goalAreaSize.y / 2) &&
-        ballProjection.y < (Config::fieldSize.y / 2 + Config::goalAreaSize.y / 2) &&
-        ballProjection.x > Config::fieldSize.x - 30) {
+    if (ballProjection.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2) &&
+        ballProjection.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) &&
+        ballProjection.x > vss::MAX_COORDINATE_X - 30) {
 
         goalTarget.x = ballProjection.x;
         goalTarget.y = ballProjection.y;
@@ -39,8 +39,8 @@ vss::Pose RobotStrategyGoal::defineTarget() {
 
     // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
     if (strategyBase.isStoppedFor(90) && robot.distanceFrom(goalTarget) > 6) {
-        goalTarget.x = Config::fieldSize.x - 10;
-        goalTarget.y = Config::fieldSize.y / 2;
+        goalTarget.x = vss::MAX_COORDINATE_X - 10;
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2;
 
     }
 

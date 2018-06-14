@@ -14,11 +14,11 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
 
     if (strategyBase.isParallelToGoal()) {
 
-        int halfGoal1 = Config::fieldSize.y / 2 + (Config::goalSize.y / 2);
-        int halfGoal2 = Config::fieldSize.y / 2 - (Config::goalSize.y / 2);
+        int halfGoal1 = vss::MAX_COORDINATE_Y / 2 + (Config::goalSize.y / 2);
+        int halfGoal2 = vss::MAX_COORDINATE_Y / 2 - (Config::goalSize.y / 2);
 
         if (robot.distanceFrom(state.ball.position) < 7 &&
-            robot.position.x < Config::fieldSize.x * 0.25 && robot.position.y > halfGoal2 &&
+            robot.position.x < vss::MAX_COORDINATE_X * 0.25 && robot.position.y > halfGoal2 &&
             robot.position.y < halfGoal1) {
 
             if (robot.position.y < state.ball.position.y) {
@@ -38,7 +38,7 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     target.x = state.ball.position.x;
     target.y = state.ball.position.y;
 
-    vss::Point centerGoal = vss::Point(0, Config::fieldSize.y/2);
+    vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
     double angleRobotGoal = Math::angulation(robot.position, centerGoal);
 
     if(angleRobotGoal < 45.0 && angleRobotGoal > -45.0 && (robot.cosFrom(centerGoal) < -0.8 || robot.cosFrom(centerGoal) > 0.8) &&
@@ -50,17 +50,17 @@ vss::Pose RobotStrategyAttack::defineTarget() {
 
     }
 
-    int halfGoal1 = Config::fieldSize.y/2 + Config::goalSize.y * 0.85;
-    int halfGoal2 = Config::fieldSize.y/2 - Config::goalSize.y * 0.85;
+    int halfGoal1 = vss::MAX_COORDINATE_Y/2 + Config::goalSize.y * 0.85;
+    int halfGoal2 = vss::MAX_COORDINATE_Y/2 - Config::goalSize.y * 0.85;
 
     // caso a bola esteja entrando na area manda o atacante para o meio do campo para evitar cometer penalti
-    if(((state.ball.projection.y < halfGoal1 && state.ball.projection.y > halfGoal2 && state.ball.projection.x > Config::fieldSize.x*0.80))){
-        target = vss::Pose(Config::fieldSize.x/2, Config::fieldSize.y/2, 0);
+    if(((state.ball.projection.y < halfGoal1 && state.ball.projection.y > halfGoal2 && state.ball.projection.x > vss::MAX_COORDINATE_X*0.80))){
+        target = vss::Pose(vss::MAX_COORDINATE_X/2, vss::MAX_COORDINATE_Y/2, 0);
     }
 
     // verifies the limits of the destination
     if (target.y < 0) target.y = 0;
-    if (target.y > Config::fieldSize.y) target.y = Config::fieldSize.y;
+    if (target.y > vss::MAX_COORDINATE_Y) target.y = vss::MAX_COORDINATE_Y;
 
     return target;
 }
