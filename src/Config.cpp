@@ -2,9 +2,9 @@
 
 bool Config::debug = false;
 bool Config::realEnvironment = false;
-bool Config::changeSide = false;
+vss::FieldTransformationType Config::changeSide = vss::FieldTransformationType::None;
+vss::TeamType Config::teamColor = vss::TeamType::Blue;
 bool Config::playersSwap = true;
-string Config::teamColor;
 
 
 common::btVector3 Config::fieldSize = {170,130};
@@ -35,11 +35,14 @@ bool Config::argumentParse(int argc, char** argv) {
     
    
     playersSwap = !(bool) vm.count("swap");
-    changeSide = (bool) vm.count("rotate");
+    changeSide = (vss::FieldTransformationType) vm.count("rotate");
     debug = (bool) vm.count("debug");
     realEnvironment = (bool) vm.count("environment");
 
-    //@TODO: transformar cor de string para enum
-    teamColor = vm["color"].as<string>();
+    string color = vm["color"].as<string>();
+    if(color == "yellow"){
+        teamColor = vss::TeamType::Yellow;
+    }
+
     return true;
 }

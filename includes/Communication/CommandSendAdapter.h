@@ -6,14 +6,14 @@
 #define SDK_RODETAS_COMMANDSENDADAPTER_H
 
 #include <Common.h>
-#include <TeamColor.h>
-#include <Transmission.h>
+#include <Domain/TeamType.h>
+#include <Communication/Transmission.h>
 
 class CommandSendAdapter{
 
 public:
 
-    CommandSendAdapter(TeamColor::Color, bool);
+    CommandSendAdapter(vss::TeamType, bool);
 
     void createSocketSendCommand();
     void sendCommands(vector<common::Command>);
@@ -24,7 +24,7 @@ private:
     vss_command::Global_Commands globalCommands;
 
     bool isRealEnvironment;
-    TeamColor::Color teamColor;
+    vss::TeamType teamColor;
 
     Transmission transmission;
 

@@ -10,21 +10,21 @@
 #include <Communications/StateReceiver.h>
 #include <Domain/State.h>
 #include <MathHelper.h>
-#include <TeamColor.h>
 #include <Domain/FieldTransformationType.h>
+#include <Domain/TeamType.h>
 
 class StateReceiverAdapter {
 
 public:
 
-    StateReceiverAdapter(string, bool);
+    StateReceiverAdapter(vss::TeamType, vss::FieldTransformationType);
 
     void createSocketReceiveState();
-    RodetasState receiveState(bool changeSide, TeamColor::Color mainColor);
+    RodetasState receiveState();
 
 private:
-    bool changeSide;
-    string teamColor;
+    vss::FieldTransformationType changeSide;
+    vss::TeamType teamColor;
 
     vss::StateReceiver stateReceiver;
 

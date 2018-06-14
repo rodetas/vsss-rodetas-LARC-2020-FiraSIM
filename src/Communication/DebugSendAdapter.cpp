@@ -2,9 +2,9 @@
 // Created by manoel on 16/04/18.
 //
 
-#include <DebugSenderAdapter.h>
+#include <Communication/DebugSenderAdapter.h>
 
-DebugSendAdapter::DebugSendAdapter(TeamColor::Color teamColor, bool isDebug) {
+DebugSendAdapter::DebugSendAdapter(vss::TeamType teamColor, bool isDebug) {
     this->teamColor = teamColor;
     this->isDebug = isDebug;
 
@@ -13,7 +13,7 @@ DebugSendAdapter::DebugSendAdapter(TeamColor::Color teamColor, bool isDebug) {
 }
 
 void DebugSendAdapter::createSocketDebug() {
-    if(this->teamColor == TeamColor::YELLOW)
+    if(this->teamColor == vss::TeamType::Yellow)
         interfaceDebug.createSendDebugTeam1(&this->globalDebug);
     else
         interfaceDebug.createSendDebugTeam2(&this->globalDebug);
@@ -56,7 +56,7 @@ void DebugSendAdapter::sendDebug(common::Debug debug) {
             }
         }
 
-        if (teamColor == TeamColor::YELLOW) {
+        if (teamColor == vss::TeamType::Yellow) {
             interfaceDebug.sendDebugTeam1();
         } else {
             interfaceDebug.sendDebugTeam2();

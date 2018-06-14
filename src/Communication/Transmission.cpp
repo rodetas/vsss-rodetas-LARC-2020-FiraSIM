@@ -1,5 +1,5 @@
 #include <Config.h>
-#include "Transmission.h"
+#include "Communication/Transmission.h"
 
 Transmission::Transmission() {
 

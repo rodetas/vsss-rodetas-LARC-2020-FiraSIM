@@ -8,13 +8,13 @@
 #include <interface.h>
 #include <Common.h>
 #include <Config.h>
-#include <TeamColor.h>
+#include <Domain/TeamType.h>
 
 class DebugSendAdapter {
 
 public:
 
-    DebugSendAdapter(TeamColor::Color teamColor, bool isDebug);
+    DebugSendAdapter(vss::TeamType teamColor, bool isDebug);
 
     //! initialize socket parameters
     void createSocketDebug();
@@ -26,7 +26,7 @@ private:
     Interface interfaceDebug;
     vss_debug::Global_Debug globalDebug;
 
-    TeamColor::Color teamColor;
+    vss::TeamType teamColor;
     bool isDebug;
 
 };
