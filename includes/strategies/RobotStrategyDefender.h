@@ -16,7 +16,7 @@ public:
 
     RobotStrategyDefender();
 
-    Command specificStrategy(Command) override;
+    vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
 
     vss::Pose defineTarget() override;
 

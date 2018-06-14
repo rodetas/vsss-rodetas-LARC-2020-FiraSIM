@@ -6,7 +6,7 @@
 
 RobotStrategyDefender::RobotStrategyDefender() = default;
 
-Command RobotStrategyDefender::specificStrategy(Command c) {
+vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
 
     return c;

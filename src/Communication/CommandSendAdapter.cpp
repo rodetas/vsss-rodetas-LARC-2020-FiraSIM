@@ -15,16 +15,12 @@ void CommandSendAdapter::createSocketSendCommand() {
     interfaceSend.createSocket(teamColor);
 }
 
-void CommandSendAdapter::sendCommands(vector<common::Command> commands) {
+void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands) {
 
     if(!isRealEnvironment) {
 
         vss::Command vssCommand;
-        vssCommand.id = 0;
-
-        for(unsigned int i=0 ; i<commands.size() ; i++){
-            vssCommand.commands.push_back(commandToWheelsCommand(i, commands[i]));
-        }
+        vssCommand.commands.insert(vssCommand.commands.begin(), commands.begin(), commands.end());
 
         interfaceSend.sendCommand(vssCommand);
 
@@ -34,15 +30,5 @@ void CommandSendAdapter::sendCommands(vector<common::Command> commands) {
 //        	transmission.send(id["defense"],strategies["defense"]->get_command());
 //        	transmission.send(id["attack"], strategies["attack"]->get_command());
     }
-}
-
-vss::WheelsCommand CommandSendAdapter::commandToWheelsCommand(int id, Command command){
-
-    vss::WheelsCommand wheelsCommand;
-    wheelsCommand.id = id;
-    wheelsCommand.leftVel = command.left;
-    wheelsCommand.rightVel = command.right;
-
-    return wheelsCommand;
 }
 

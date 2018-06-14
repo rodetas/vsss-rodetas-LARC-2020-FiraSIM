@@ -15,54 +15,16 @@
 #include <Domain/Point.h>
 #include <vector>
 #include <sstream>
+#include <Domain/WheelsCommand.h>
 
 using namespace std;
 
 namespace common{
 
-    struct Command{
-        float left;
-        float right;
+    struct OldCommand {
 
-        Command(){
-            left = right = 0;
-        };
-        Command(float left, float right){
-            this->left = left;
-            this->right = right;
-        };
-
-        explicit Command(Command *cmd){
-            left = cmd->left;
-            right = cmd->right;
-        };
-
-        virtual string to_string(){
-    		stringstream ss;
-    		ss << setfill('0') << setw(3) << left;
-    		ss << setfill('0') << setw(3) << right;
-    		return ss.str();
-    	}
-
-    	friend std::ostream& operator<< (std::ostream& stream, const Command& c) {
-    		stream << c.left << " " << c.right;
-    		return stream;
-        }
-
-    	virtual vector<int> to_hex(){
-    		string cmd = this->to_string();
-    		vector<int> vec;
-
-    		for(const auto _cmd : cmd){
-    			vec.push_back(int(_cmd));
-    		}
-
-    		return vec;
-    	}
-    };
-
-    struct OldCommand  : public Command {
-
+        int left;
+        int right;
         char direction;
 
         OldCommand(){
@@ -71,22 +33,20 @@ namespace common{
             direction = 'F';
         }
 
-        explicit OldCommand(Command c){
+        explicit OldCommand(vss::WheelsCommand c){
 
-            if(c.left < 0 and c.right < 0){
+            if(c.leftVel < 0 and c.rightVel < 0){
                 direction = 'B';
-            } else if(c.left < 0){
+            } else if(c.leftVel < 0){
                 direction = 'L';
-            } else if(c.right < 0){
+            } else if(c.rightVel < 0){
                 direction = 'R';
             } else {
                 direction = 'F';
             }
 
-            left = (int)(255*abs(c.left))/80;
-            right = (int)(255*abs(c.right))/80;
-
-            //std::cout << direction << " " << left << " " << right << std::endl;
+            left = (int)(255*abs(c.leftVel))/80;
+            right = (int)(255*abs(c.rightVel))/80;
         }
 
         virtual string to_string(){
@@ -106,6 +66,11 @@ namespace common{
             }
 
             return vec;
+        }
+
+        friend std::ostream& operator<< (std::ostream& stream, const OldCommand& c) {
+            stream << c.direction << " " << c.left << " " << c.right;
+            return stream;
         }
 
     };

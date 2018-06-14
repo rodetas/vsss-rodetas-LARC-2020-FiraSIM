@@ -17,7 +17,7 @@ public:
     CommandSendAdapter(vss::TeamType, bool);
 
     void createSocketSendCommand();
-    void sendCommands(vector<common::Command>);
+    void sendCommands(vector<vss::WheelsCommand>);
 
 private:
 
@@ -27,8 +27,6 @@ private:
     vss::TeamType teamColor;
 
     Transmission transmission;
-
-    vss::WheelsCommand commandToWheelsCommand(int, Command);
 
 };
 

@@ -8,7 +8,7 @@ RobotStrategyAttack::RobotStrategyAttack() {
 
 }
 
-Command RobotStrategyAttack::specificStrategy(Command c) {
+vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
     c = kickStrategy(c);
     c = cornerStrategy(c);
 
@@ -22,9 +22,9 @@ Command RobotStrategyAttack::specificStrategy(Command c) {
             robot.position.y < halfGoal1) {
 
             if (robot.position.y < state.ball.position.y) {
-                c = movimentation->turnRight(80, 80);
+                c = movimentation.turnRight(80, 80);
             } else {
-                c = movimentation->turnLeft(80, 80);
+                c = movimentation.turnLeft(80, 80);
             }
         }
     }

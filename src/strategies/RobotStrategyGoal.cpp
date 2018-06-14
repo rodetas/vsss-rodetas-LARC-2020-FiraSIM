@@ -6,7 +6,7 @@
 
 RobotStrategyGoal::RobotStrategyGoal() = default;
 
-Command RobotStrategyGoal::specificStrategy(Command c) {
+vss::WheelsCommand RobotStrategyGoal::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
 
     return c;
@@ -81,10 +81,10 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
 }
 
-Command RobotStrategyGoal::stopStrategy(Command command) {
+vss::WheelsCommand RobotStrategyGoal::stopStrategy(vss::WheelsCommand command) {
     // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
 
-    Command c = command;
+    vss::WheelsCommand c = command;
     float maxDistance = (12); // 12 cm
     float distanceTarget = (float) robot.distanceFrom(target);
 
@@ -94,16 +94,16 @@ Command RobotStrategyGoal::stopStrategy(Command command) {
 	}
  */
     if (distanceTarget < maxDistance) {
-        c.left = command.left * (distanceTarget / maxDistance);
-        c.right = command.right * (distanceTarget / maxDistance);
+        c.leftVel = command.leftVel * (distanceTarget / maxDistance);
+        c.rightVel = command.rightVel * (distanceTarget / maxDistance);
     }
 
     if (distanceTarget < (4)) {
 
         if ((robot.angle > 80 && robot.angle < 120) || (robot.angle > 260 && robot.angle < 300)) {
-            c = movimentation->stop();
+            c = movimentation.stop();
         } else {
-            c = movimentation->turnRight(10, 10);
+            c = movimentation.turnRight(10, 10);
         }
     }
 

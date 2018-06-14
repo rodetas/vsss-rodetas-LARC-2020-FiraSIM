@@ -22,9 +22,9 @@ class RobotStrategy {
 public:
     RobotStrategy();
 
-    virtual Command applyStrategy(RobotState, RodetasState, RobotStrategyBase);
+    virtual vss::WheelsCommand applyStrategy(RobotState, RodetasState, RobotStrategyBase);
 
-    virtual Command specificStrategy(Command) = 0;
+    virtual vss::WheelsCommand specificStrategy(vss::WheelsCommand) = 0;
 
     virtual vss::Pose defineTarget() = 0;
 
@@ -33,15 +33,15 @@ public:
     virtual vss::Point defineArrivalOrientation(vss::Pose) = 0;
 
     //@TODO: inserir comentarios em cada estrategia
-    virtual Command cornerStrategy(Command);
+    virtual vss::WheelsCommand cornerStrategy(vss::WheelsCommand);
 
-    virtual Command stopStrategy(Command);
+    virtual vss::WheelsCommand stopStrategy(vss::WheelsCommand);
 
-    virtual Command blockedStrategy(Command);
+    virtual vss::WheelsCommand blockedStrategy(vss::WheelsCommand);
 
-    virtual Command kickStrategy(Command);
+    virtual vss::WheelsCommand kickStrategy(vss::WheelsCommand);
 
-    Command getCommand();
+    vss::WheelsCommand getCommand();
     vss::Pose getFinalPose();
     vss::Point getStepPose();
     vss::Path getPath();
@@ -49,7 +49,7 @@ public:
 protected:
     RobotStrategyBase strategyBase;
 
-    Command command;
+    vss::WheelsCommand command;
 
     vss::Pose target;
     vss::Point stepPose;
@@ -58,7 +58,7 @@ protected:
     RobotState robot;
     RodetasState state;
 
-    Movimentation* movimentation;
+    Movimentation movimentation;
 
 };
 

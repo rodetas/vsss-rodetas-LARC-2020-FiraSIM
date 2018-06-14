@@ -13,7 +13,7 @@ public:
 
     RobotStrategyAttack();
 
-    Command specificStrategy(Command) override;
+    vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
     vss::Pose defineTarget() override;
     float applyUnivectorField(vss::Pose) override;
     vss::Point defineArrivalOrientation(vss::Pose) override;

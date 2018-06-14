@@ -4,9 +4,9 @@
 /*
  * calculates the basic movimentation to goal to target
  */
-Command Movimentation::movePlayers(RobotState robot, vss::Pose target, float fi){
+vss::WheelsCommand Movimentation::movePlayers(RobotState robot, vss::Pose target, float fi){
 
-	Command command;
+    vss::WheelsCommand command;
 
 	if ( cos(fi - Math::toRadian(robot.angle)) < -0.4) {
 		command = definePwm(robot, target, 'B', fi);
@@ -27,7 +27,7 @@ Command Movimentation::movePlayers(RobotState robot, vss::Pose target, float fi)
 /*
  * Correct robot pwm to follow the destination
  */
-Command Movimentation::definePwm(RobotState robot, vss::Pose target, char direction, float fi){
+vss::WheelsCommand Movimentation::definePwm(RobotState robot, vss::Pose target, char direction, float fi){
 	int standardPower = 50;
 	int basePower = standardPower * 1;
 	int correctionPower = standardPower * sin(fi - Math::toRadian(robot.angle)) * 0.8;
@@ -39,34 +39,34 @@ Command Movimentation::definePwm(RobotState robot, vss::Pose target, char direct
 		pwmMotor2 = pwmMotor2 * (-1);
 	}
 
-	Command verifiedPwm = checkPwm(Command(pwmMotor1, pwmMotor2));
+    vss::WheelsCommand verifiedPwm = checkPwm(vss::WheelsCommand(pwmMotor1, pwmMotor2));
 
 	return verifiedPwm;
 }
 
-Command Movimentation::checkPwm(const Command& pwm){
-    Command command(pwm);
+vss::WheelsCommand Movimentation::checkPwm(const vss::WheelsCommand& pwm){
+    vss::WheelsCommand command(pwm);
 
-    if(pwm.left  > 255) command.left  = 255;
-    if(pwm.right > 255) command.right = 255;
+    if(pwm.leftVel  > 255) command.leftVel  = 255;
+    if(pwm.rightVel > 255) command.rightVel = 255;
 
-    if(pwm.left  < -255) command.left  = -255;
-    if(pwm.right < -255) command.right = -255;
+    if(pwm.leftVel  < -255) command.leftVel  = -255;
+    if(pwm.rightVel < -255) command.rightVel = -255;
 
     return command;
 }
 
-Command Movimentation::turnLeft(int pwm1, int pwm2){
-	Command command(-pwm1, pwm2);
+vss::WheelsCommand Movimentation::turnLeft(int pwm1, int pwm2){
+    vss::WheelsCommand command(-pwm1, pwm2);
 	return command;
 }
 
-Command Movimentation::turnRight(int pwm1, int pwm2){
-	Command command(pwm1, -pwm2);
+vss::WheelsCommand Movimentation::turnRight(int pwm1, int pwm2){
+    vss::WheelsCommand command(pwm1, -pwm2);
 	return command;
 }
 
-Command Movimentation::stop(){
-	Command command(0, 0);
+vss::WheelsCommand Movimentation::stop(){
+    vss::WheelsCommand command(0, 0);
 	return command;
 }

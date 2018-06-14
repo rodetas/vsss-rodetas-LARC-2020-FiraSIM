@@ -35,7 +35,7 @@ void RodetasRobot::setStrategy(RobotStrategy* s) {
     this->strategy = s;
 }
 
-Command RodetasRobot::getCommand(){
+vss::WheelsCommand RodetasRobot::getCommand(){
     return this->command;
 }
 

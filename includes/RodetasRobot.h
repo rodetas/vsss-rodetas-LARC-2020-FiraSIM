@@ -33,7 +33,7 @@ public:
 
     int getId();
 
-    Command getCommand();
+    vss::WheelsCommand getCommand();
     RobotState getSelfState();
     RobotStrategyBase getRobotStrategyBase();
 
@@ -48,13 +48,13 @@ private:
 
     int id;
 
-    Command command;
     RodetasState state;
     RobotState selfState;
     RobotStrategy* strategy;
     RobotStrategyBase strategyBase;
     MindSet mindSet;
 
+    vss::WheelsCommand command;
     vss::Path path;
     vss::Pose target;
     vss::Point stepPoint;
