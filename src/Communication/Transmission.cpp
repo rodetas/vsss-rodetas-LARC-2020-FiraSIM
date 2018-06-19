@@ -1,5 +1,5 @@
 #include <Config.h>
-#include "Transmission.h"
+#include "Communication/Transmission.h"
 
 Transmission::Transmission() {
 
@@ -71,12 +71,10 @@ bool Transmission::openConnection(){
     return true;
 }
 
-void Transmission::send(int i, Command c){
+void Transmission::send(int i, vss::WheelsCommand c){
     string stringCommand;
 
-//    cout << c.left << " " << c.right << endl;
-
-    Command* oldCommand = new OldCommand(c);
+    OldCommand oldCommand(c);
 
     stringCommand = generateMessage(i, oldCommand);
     
@@ -87,7 +85,7 @@ void Transmission::send(int i, Command c){
 }
 
 // recebe um comando e retorna a string equivalente para ser enviada
-string Transmission::generateMessage(int robot, Command* comand){
+string Transmission::generateMessage(int robot, OldCommand comand){
 
     short int startDelimiter = 0x7E;
     short int frameType = 0x01;
@@ -97,7 +95,7 @@ string Transmission::generateMessage(int robot, Command* comand){
     short int address = robot;
     int lenght = 0xC;
 
-    vector<int> hexMessage = comand->to_hex();
+    vector<int> hexMessage = comand.to_hex();
 
     int checkSum = generateCheckSum(frameType, frameId, address, option, hexMessage);
 

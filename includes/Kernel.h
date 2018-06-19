@@ -11,9 +11,9 @@
 
 
 #include <RodetasRobot.h>
-#include <DebugSenderAdapter.h>
-#include <StateReceiverAdapter.h>
-#include <CommandSendAdapter.h>
+#include <Communication/DebugSenderAdapter.h>
+#include <Communication/StateReceiverAdapter.h>
+#include <Communication/CommandSendAdapter.h>
 #include <Config.h>
 
 using namespace std;

@@ -20,8 +20,8 @@ find_library(ZeroMQ_LIBRARY
         )
 
 include_directories(${PROTOBUF_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
-include_directories(includes includes/strategies)
-include_directories(src src/strategies)
+include_directories(includes includes/strategies includes/Communication)
+include_directories(src src/strategies src/Communication)
 include_directories(usr/local/include)
 
 file(GLOB_RECURSE SRC src/*.cpp)
@@ -49,5 +49,5 @@ if(TESTS)
     target_link_libraries(tests
             pthread
             core)
-
+            
 endif()

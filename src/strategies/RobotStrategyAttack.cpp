@@ -8,23 +8,23 @@ RobotStrategyAttack::RobotStrategyAttack() {
 
 }
 
-Command RobotStrategyAttack::specificStrategy(Command c) {
+vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
     c = kickStrategy(c);
     c = cornerStrategy(c);
 
     if (strategyBase.isParallelToGoal()) {
 
-        int halfGoal1 = Config::fieldSize.y / 2 + (Config::goalSize.y / 2);
-        int halfGoal2 = Config::fieldSize.y / 2 - (Config::goalSize.y / 2);
+        int halfGoal1 = vss::MAX_COORDINATE_Y / 2 + (Config::goalSize.y / 2);
+        int halfGoal2 = vss::MAX_COORDINATE_Y / 2 - (Config::goalSize.y / 2);
 
         if (robot.distanceFrom(state.ball.position) < 7 &&
-            robot.position.x < Config::fieldSize.x * 0.25 && robot.position.y > halfGoal2 &&
+            robot.position.x < vss::MAX_COORDINATE_X * 0.25 && robot.position.y > halfGoal2 &&
             robot.position.y < halfGoal1) {
 
             if (robot.position.y < state.ball.position.y) {
-                c = movimentation->turnRight(80, 80);
+                c = movimentation.turnRight(80, 80);
             } else {
-                c = movimentation->turnLeft(80, 80);
+                c = movimentation.turnLeft(80, 80);
             }
         }
     }
@@ -32,52 +32,45 @@ Command RobotStrategyAttack::specificStrategy(Command c) {
     return c;
 }
 
-btVector3 RobotStrategyAttack::defineTarget() {
+vss::Pose RobotStrategyAttack::defineTarget() {
 
-    btVector3 target = state.ball.position;
+    vss::Pose target;
+    target.x = state.ball.position.x;
+    target.y = state.ball.position.y;
 
-    btVector3 centerGoal = btVector3(0, Config::fieldSize.y/2);
+    vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
     double angleRobotGoal = Math::angulation(robot.position, centerGoal);
 
     if(angleRobotGoal < 45.0 && angleRobotGoal > -45.0 && (robot.cosFrom(centerGoal) < -0.8 || robot.cosFrom(centerGoal) > 0.8) &&
        (robot.cosFrom(state.ball.position) < -0.8 || robot.cosFrom(state.ball.getPosition()) > 0.8) &&
        robot.position.x > state.ball.position.x && robot.distanceFrom(state.ball.position) < (8)){
 
-        target = centerGoal;
+        target.x = centerGoal.x;
+        target.y = centerGoal.y;
+
     }
 
-//    // posiciona atras da bola para defender
-//    if(state.ball.projection.x > Config::fieldSize.x*0.3 && state.ball.projection.x > robot.position.x){
-//        if(state.ball.projection.y < Config::fieldSize.y/2){
-//            target.y = state.ball.projection.y + (8);
-//            target.x = state.ball.projection.x;
-//        } else {
-//            target.y = state.ball.projection.y - (8);
-//            target.x = state.ball.projection.x;
-//        }
-//    }
-
-    int halfGoal1 = Config::fieldSize.y/2 + Config::goalSize.y * 0.85;
-    int halfGoal2 = Config::fieldSize.y/2 - Config::goalSize.y * 0.85;
+    int halfGoal1 = vss::MAX_COORDINATE_Y/2 + Config::goalSize.y * 0.85;
+    int halfGoal2 = vss::MAX_COORDINATE_Y/2 - Config::goalSize.y * 0.85;
 
     // caso a bola esteja entrando na area manda o atacante para o meio do campo para evitar cometer penalti
-    if(((state.ball.projection.y < halfGoal1 && state.ball.projection.y > halfGoal2 && state.ball.projection.x > Config::fieldSize.x*0.80))){
-        target = btVector3(Config::fieldSize.x/2, Config::fieldSize.y/2);
+    if(((state.ball.projection.y < halfGoal1 && state.ball.projection.y > halfGoal2 && state.ball.projection.x > vss::MAX_COORDINATE_X*0.80))){
+        target = vss::Pose(vss::MAX_COORDINATE_X/2, vss::MAX_COORDINATE_Y/2, 0);
     }
 
     // verifies the limits of the destination
     if (target.y < 0) target.y = 0;
-    if (target.y > Config::fieldSize.y) target.y = Config::fieldSize.y;
+    if (target.y > vss::MAX_COORDINATE_Y) target.y = vss::MAX_COORDINATE_Y;
 
     return target;
 }
 
-float RobotStrategyAttack::applyUnivectorField(btVector3 target) {
+float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
-    btVector3 arrivalOrientation = defineArrivalOrientation(target);
+    vss::Point arrivalOrientation = defineArrivalOrientation(target);
 
     //Obstáculos roboôs
-    vector<pair<btVector3, btVector3>> obstacles;
+    vector<pair<vss::Point, vss::Point>> obstacles;
     for (auto &r: state.robots) {
         if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
             obstacles.push_back(make_pair(r.position, r.vectorSpeed));
@@ -85,7 +78,7 @@ float RobotStrategyAttack::applyUnivectorField(btVector3 target) {
     }
 
     //Obstáculos de área do gol
-    pair<btVector3, btVector3> obstacle;
+    pair<vss::Point, vss::Point> obstacle;
     obstacle.first.x = 150;
     obstacle.first.y = 38;
     obstacle.second.x = 0;
@@ -113,9 +106,9 @@ float RobotStrategyAttack::applyUnivectorField(btVector3 target) {
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
 }
 
-btVector3 RobotStrategyAttack::defineArrivalOrientation(btVector3 target) {
-    btVector3 goal(0, 75);
-    btVector3 arrivalOrientation;
+vss::Point RobotStrategyAttack::defineArrivalOrientation(vss::Pose target) {
+    vss::Point goal(0, 75);
+    vss::Point arrivalOrientation;
 
     if((target.x == state.ball.position.x) && (target.y == state.ball.position.y)){
 

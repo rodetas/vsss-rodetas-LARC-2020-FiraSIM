@@ -12,9 +12,11 @@
 #ifndef SDK_RODETAS_UNIVECTORFIELD_H
 #define SDK_RODETAS_UNIVECTORFIELD_H
 
-#include <RobotState.h>
-#include <RodetasState.h>
+#include <Domain/RobotState.h>
+#include <Domain/RodetasState.h>
 #include <Common.h>
+#include <Domain/Path.h>
+#include <Domain/Pose.h>
 
 class UnivectorField {
 public:
@@ -24,12 +26,12 @@ public:
     UnivectorField();
 
     //Defines the univector field angle with obstacles, the vector "obstacles" contains the position and the velocity of the obstacles
-    float defineFi(RobotState robot, btVector3 target, btVector3 arrivalOrientation,
-                   vector<pair<btVector3, btVector3>> obstacles);
+    float defineFi(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
+                   vector<pair<vss::Point, vss::Point>> obstacles);
 
     //Draws the path to the target with obstacles
-    Path drawPath(RobotState robot, btVector3 target, btVector3 arrivalOrientation,
-                  vector<pair<btVector3, btVector3>> obstacles);
+    vss::Path drawPath(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
+                  vector<pair<vss::Point, vss::Point>> obstacles);
 
 private:
 
@@ -44,16 +46,16 @@ private:
 
 
     //Calculates only the move angle "fi" to move to the target with a desire arrival orientation. From the first article
-    float defineMoveFi(btVector3 robot, btVector3 target, btVector3 arrivalOrientation);
+    float defineMoveFi(vss::Point robot, vss::Pose target, vss::Point arrivalOrientation);
 
     //Calculates only the repulsive angle "fi" to escape from the obstacle
-    float defineRepulsiveFi(btVector3 robot, btVector3 virtualObstacle);
+    float defineRepulsiveFi(vss::Point robot, vss::Point virtualObstacle);
 
     //Calculates the "s". S is a vector that is used for the creation of the virtual obstacle
-    btVector3 getS(btVector3 robotSpeed, btVector3 obstacleSpeed);
+    vss::Point getS(vss::Point robotSpeed, vss::Point obstacleSpeed);
 
     //Creates the virtual position of the obstacle based on its velocity
-    btVector3 getVirtualPosition(btVector3 robot, btVector3 obstacle, btVector3 s);
+    vss::Point getVirtualPosition(vss::Point robot, vss::Point obstacle, vss::Point s);
 
     //Keeps the angle in the domain [-PI, PI]
     float toDomain(float fi);

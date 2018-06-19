@@ -5,25 +5,26 @@
 #ifndef SDK_RODETAS_COMMANDSENDADAPTER_H
 #define SDK_RODETAS_COMMANDSENDADAPTER_H
 
-#include <Transmission.h>
 #include <Common.h>
+#include <Domain/TeamType.h>
+#include <Communication/Transmission.h>
+#include <Communications/CommandSender.h>
 
 class CommandSendAdapter{
 
 public:
 
-    CommandSendAdapter(string, bool);
+    CommandSendAdapter(vss::TeamType, bool);
 
     void createSocketSendCommand();
-    void sendCommands(vector<common::Command>);
+    void sendCommands(vector<vss::WheelsCommand>);
 
 private:
 
-    Interface interfaceSend;
-    vss_command::Global_Commands globalCommands;
+    vss::CommandSender interfaceSend;
 
     bool isRealEnvironment;
-    string teamColor;
+    vss::TeamType teamColor;
 
     Transmission transmission;
 

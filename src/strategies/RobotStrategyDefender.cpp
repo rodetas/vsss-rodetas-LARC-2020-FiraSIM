@@ -6,55 +6,55 @@
 
 RobotStrategyDefender::RobotStrategyDefender() = default;
 
-Command RobotStrategyDefender::specificStrategy(Command c) {
+vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
 
     return c;
 }
 
-btVector3 RobotStrategyDefender::defineTarget() {
+vss::Pose RobotStrategyDefender::defineTarget() {
 
-    btVector3 target;
-    btVector3 ballProjection = state.ball.projection;
+    vss::Pose target;
+    vss::Point ballProjection = state.ball.projection;
 
     // altera o ponto de destino dependendo do sentido da bola, evitando bater no outro robo
-    if (robot.position.x < Config::fieldSize.x * 0.4) {
-        if (robot.position.y > Config::fieldSize.y / 2) {
+    if (robot.position.x < vss::MAX_COORDINATE_X * 0.4) {
+        if (robot.position.y > vss::MAX_COORDINATE_Y / 2) {
             if (ballProjection.y < state.ball.position.y) {
-                target = btVector3(Config::fieldSize.x * 0.5, Config::fieldSize.y * 0.2);
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.5, vss::MAX_COORDINATE_Y * 0.2, 0);
             } else {
-                target = btVector3(Config::fieldSize.x * 0.5, Config::fieldSize.y * 0.8);
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.5, vss::MAX_COORDINATE_Y * 0.8, 0);
             }
         } else {
             if (ballProjection.y < state.ball.position.y) {
-                target = btVector3(Config::fieldSize.x * 0.5, Config::fieldSize.y * 0.2);
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.5, vss::MAX_COORDINATE_Y * 0.2, 0);
             } else {
-                target = btVector3(Config::fieldSize.x * 0.5, Config::fieldSize.y * 0.8);
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.5, vss::MAX_COORDINATE_Y * 0.8, 0);
             }
         }
 
     } else {
         // se a bola esta no ataque posiciona o robo no meio do campo
-        target = btVector3(Config::fieldSize.x / 2, Config::fieldSize.y / 2);
+        target = vss::Pose(vss::MAX_COORDINATE_X / 2, vss::MAX_COORDINATE_Y / 2, 0);
     }
 
     // posiciona o robo na defesa para facilitar a troca de posicao com o goleiro
-    if (ballProjection.x > Config::fieldSize.x / 2) {
-        if (ballProjection.y > Config::fieldSize.y / 2) {
-            target = btVector3(Config::fieldSize.x * 0.7, Config::fieldSize.y * 0.2);
+    if (ballProjection.x > vss::MAX_COORDINATE_X / 2) {
+        if (ballProjection.y > vss::MAX_COORDINATE_Y / 2) {
+            target = vss::Pose(vss::MAX_COORDINATE_X * 0.7, vss::MAX_COORDINATE_Y * 0.2, 0);
         } else {
-            target = btVector3(Config::fieldSize.x * 0.7, Config::fieldSize.y * 0.8);
+            target = vss::Pose(vss::MAX_COORDINATE_X * 0.7, vss::MAX_COORDINATE_Y * 0.8, 0);
         }
     }
 
     return target;
 }
 
-float RobotStrategyDefender::applyUnivectorField(btVector3 target) {
+float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
 
-    btVector3 arrivalOrientation = defineArrivalOrientation(target);
+    vss::Point arrivalOrientation = defineArrivalOrientation(target);
 
-    vector<pair<btVector3, btVector3>> obstacles;
+    vector<pair<vss::Point, vss::Point>> obstacles;
     for (auto &r: state.robots) {
         if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
             obstacles.push_back(make_pair(r.position, r.vectorSpeed));
@@ -66,9 +66,9 @@ float RobotStrategyDefender::applyUnivectorField(btVector3 target) {
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
 }
 
-btVector3 RobotStrategyDefender::defineArrivalOrientation(btVector3 target) {
-    btVector3 goal(0, 75);
-    btVector3 arrivalOrientation;
+vss::Point RobotStrategyDefender::defineArrivalOrientation(vss::Pose target) {
+    vss::Point goal(0, 75);
+    vss::Point arrivalOrientation;
 
     if((target.x == state.ball.projection.x) && (target.y == state.ball.projection.y)){
 
