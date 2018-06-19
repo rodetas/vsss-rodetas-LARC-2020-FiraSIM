@@ -6,24 +6,25 @@
 #define SDK_RODETAS_STATERECEIVERADAPTER_H
 
 #include <Common.h>
-#include <RodetasState.h>
+#include <Domain/RodetasState.h>
 #include <Communications/StateReceiver.h>
-#include <State.h>
-#include <MathHelper.h>
+#include <Domain/State.h>
+#include <Helpers/MathHelper.h>
 #include <Domain/FieldTransformationType.h>
+#include <Domain/TeamType.h>
 
 class StateReceiverAdapter {
 
 public:
 
-    StateReceiverAdapter(string, bool);
+    StateReceiverAdapter(vss::TeamType, vss::FieldTransformationType);
 
     void createSocketReceiveState();
     RodetasState receiveState();
 
 private:
-    bool changeSide;
-    string teamColor;
+    vss::FieldTransformationType changeSide;
+    vss::TeamType teamColor;
 
     vss::StateReceiver stateReceiver;
 

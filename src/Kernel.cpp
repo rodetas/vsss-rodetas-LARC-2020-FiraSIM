@@ -17,16 +17,20 @@ void Kernel::loop() {
     CommandSendAdapter sendInterface(Config::teamColor, Config::realEnvironment);
 
     vector<RodetasRobot> robots;
-    vector<Command> commands(3);
+    vector<vss::WheelsCommand> commands(3);
 
     for (unsigned int i = 0; i < 3; i++) robots.emplace_back(RodetasRobot(i, (MindSet) i));
 
     RodetasState state;
-    Debug debug;
 
-    robots[2].setStrategy(new RobotStrategyAttack());
+    vss::Debug debug;
+    debug.paths.resize(3);
+    debug.finalPoses.resize(3);
+    debug.stepPoints.resize(3);
+
+    robots[0].setStrategy(new RobotStrategyAttack());
     robots[1].setStrategy(new RobotStrategyDefender());
-    robots[0].setStrategy(new RobotStrategyGoal());
+    robots[2].setStrategy(new RobotStrategyGoal());
 
     while (true) {
 
@@ -42,10 +46,9 @@ void Kernel::loop() {
 
             commands[i] = robot.getCommand();
 
-            debug.robotsFinalPose[i] = robot.getRobotDebug().robotFinalPose;
-            debug.robotsStepPose[i] = robot.getRobotDebug().robotStepPose;
-            debug.robotsPath[i] = robot.getRobotDebug().path;
-
+            debug.finalPoses[i] = robot.getFinalPose();
+            debug.stepPoints[i] = robot.getStepPoint();
+            debug.paths[i] = robot.getPath();
         }
 
         coach.manage(robots, state, Config::playersSwap);

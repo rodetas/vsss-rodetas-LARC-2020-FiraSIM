@@ -16,10 +16,12 @@ public:
 
     RobotStrategyGoal();
 
-    Command specificStrategy(Command) override;
-    btVector3 defineTarget() override;
-    Command stopStrategy(Command) override;
+    vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
+    vss::Pose defineTarget() override;
 
+    float applyUnivectorField(vss::Pose) override;
+    vss::Point defineArrivalOrientation(vss::Pose) override;
+    vss::WheelsCommand stopStrategy(vss::WheelsCommand) override;
 
 };
 
