@@ -14,7 +14,7 @@
 #include <Domain/Pose.h>
 #include <Domain/Path.h>
 #include "Config.h"
-#include <Constants.h>
+#include <Domain/Constants.h>
 
 using namespace common;
 
