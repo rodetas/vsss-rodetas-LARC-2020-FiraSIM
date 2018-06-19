@@ -8,7 +8,8 @@ Kernel::Kernel() = default;
 
 void Kernel::loop() {
 
-    threadWindowControl = new thread(std::bind(&Kernel::windowThreadWrapper, this));
+    if(Config::controlWindow)
+        threadWindowControl = new thread(std::bind(&Kernel::windowThreadWrapper, this));
 
     RobotStrategyFactory coach;
 

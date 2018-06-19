@@ -26,6 +26,7 @@ class Config{
 public:
     static bool debug;
     static bool realEnvironment;
+    static bool controlWindow;
     static vss::FieldTransformationType changeSide;
 	static vss::TeamType teamColor;
 	static bool playersSwap;
