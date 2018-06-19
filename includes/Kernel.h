@@ -11,15 +11,12 @@
 
 
 #include <RodetasRobot.h>
-#include <DebugSenderAdapter.h>
-#include <StateReceiverAdapter.h>
-#include <CommandSendAdapter.h>
-#include <config.h>
-
-//#include <strategies/RobotStrategyBase.h>
-//#include <strategies/StrategyAttack.h>
-//#include <strategies/StrategyDefense.h>
-//#include <strategies/StrategyGoal.h>
+#include <WindowControl.h>
+#include <Communication/DebugSenderAdapter.h>
+#include <Communication/StateReceiverAdapter.h>
+#include <Communication/CommandSendAdapter.h>
+#include <Config.h>
+#include <thread>
 
 using namespace std;
 using namespace common;
@@ -31,8 +28,19 @@ public:
 
 	void loop();
 
-	void define_function_for_each_robot();
+	void updatePlayingState(bool);
+	void updateTestingState(bool);
 
+private:
+
+	thread* threadWindowControl;
+
+	bool isPlaying;
+	bool isTestingTransmission;
+
+	WindowControl windowControl;
+
+	void windowThreadWrapper();
 };
 
 #endif // _STRATEGY_H_

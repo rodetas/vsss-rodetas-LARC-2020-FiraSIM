@@ -6,8 +6,8 @@
 #define SDK_RODETAS_STATE_H
 
 #include <vector>
-#include "RobotState.h"
-#include "BallState.h"
+#include "Domain/RobotState.h"
+#include "Domain/BallState.h"
 
 class RodetasState {
 
@@ -24,19 +24,17 @@ public:
         for(int i = 0 ; i < 3 ; i++){
             ss << "Robot: (X: " << robots[i].position.x;
             ss << " \tY: " << robots[i].position.y;
-            ss << " \tZ: " << robots[i].position.z;
-            ss << " \t" << robots[i].linearSpeed << ")" << endl;
+            ss << " \tANGLE: " << robots[i].angle;
         }
         ss << endl << endl << "Robots Team 2:" << endl;
         for(int i = 3 ; i < 6 ; i++){
             ss << "Robot: (X: " << robots[i].position.x;
             ss << " \tY: " << robots[i].position.y;
-            ss << " \tZ: " << robots[i].position.z;
-            ss << " \t" << robots[i].linearSpeed << ")" << endl;
+            ss << " \tANGLE: " << robots[i].angle;
         }
 
         ss << endl << endl << "Ball:" << endl;
-        ss << ball.position.x << " " << ball.position.y << " " << ball.linearSpeed << endl;
+        ss << ball.position.x << " " << ball.position.y << endl;
 
         return ss.str();
     }

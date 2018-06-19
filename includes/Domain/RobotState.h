@@ -5,32 +5,35 @@
 #ifndef SDK_RODETAS_ROBOTSTATE_H
 #define SDK_RODETAS_ROBOTSTATE_H
 
-#include <common.h>
-#include "MathHelper.h"
+#include <Common.h>
+#include <Domain/Point.h>
+#include "Helpers/MathHelper.h"
 
 class RobotState {
 
 public:
 
-    common::btVector3 position;
-    common::btVector3 projection;
+    vss::Point position;
+    vss::Point projection;
 
     double angle;
     double angularSpeed;
     double linearSpeed;
+    vss::Point vectorSpeed;
 
     RobotState(){
-        this->position = common::btVector3(0,0,0);
+        this->position = vss::Point(0,0);
         this->angle = 0;
         this->angularSpeed = 0;
         this->linearSpeed = 0;
+        this->vectorSpeed = vss::Point();
     };
 
-    void setPosition(common::btVector3 p){
+    void setPosition(vss::Point p){
         this->position = p;
     }
 
-    void setProjection(common::btVector3 p){
+    void setProjection(vss::Point p){
         this->projection = p;
     }
 
@@ -46,16 +49,20 @@ public:
         this->linearSpeed = speed;
     }
 
+    void setVectorSpeed(vss::Point speed){
+        this->vectorSpeed = speed;
+    }
+
 //@TODO: tirar as contas daqui e jogar pro MathHelper, deixar apenas as chamadas
-    double cosFrom(common::btVector3 _p) {
+    double cosFrom(vss::Point _p) {
         return cos((Math::angulation(position,_p) - angle)/(180/M_PI));
     }
 
-    double sinFrom(common::btVector3 _p) {
+    double sinFrom(vss::Point _p) {
         return sin((Math::angulation(position,_p) - angle)/(180/M_PI));
     }
 
-    double distanceFrom(common::btVector3 _p) {
+    double distanceFrom(vss::Point _p) {
         return Math::distancePoint(position, _p);
     }
 

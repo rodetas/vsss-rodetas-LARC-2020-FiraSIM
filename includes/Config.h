@@ -9,22 +9,33 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-#include <boost.h>
+#include <boost/program_options.hpp>
+
 #include <sstream>
 #include <iostream>
 #include <string>
+#include <Domain/FieldTransformationType.h>
+#include <Domain/TeamType.h>
+#include "Common.h"
 
 using namespace std;
+namespace bpo = boost::program_options;
 
 class Config{
 
 public:
     static bool debug;
     static bool realEnvironment;
-    static bool changeSide;
-    static string teamColor;
+    static bool controlWindow;
+    static vss::FieldTransformationType changeSide;
+	static vss::TeamType teamColor;
+	static bool playersSwap;
+
+	static vss::Point fieldSize;
+	static vss::Point goalSize;
+	static vss::Point goalAreaSize;
+
     static bool argumentParse(int ,char**);
 
-   
 };
 #endif // _CONFIG_H_

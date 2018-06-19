@@ -5,8 +5,8 @@
 #ifndef SDK_RODETAS_STRATEGYBASE_H
 #define SDK_RODETAS_STRATEGYBASE_H
 
-#include <common.h>
-#include <RobotState.h>
+#include <Common.h>
+#include <Domain/RobotState.h>
 
 using namespace common;
 
@@ -17,18 +17,18 @@ public:
     RobotStrategyBase();
 
     bool isStopped();
-    bool isBlocked(RobotState, btVector3);
+    bool isBlocked();
     bool isStoppedFor(int);
-    bool isParallelToGoal(RobotState);
-    bool isBoard(RobotState);
+    bool isParallelToGoal();
+    bool isBoard();
 
-    void updateStopped(RobotState);
+    void update(RobotState, vss::Point);
 
 private:
     int stoppedFrames;
 
-    //@TODO: tirar image daqui
-    btVector3 image;
+    RobotState robot;
+    vss::Point target;
 
 };
 

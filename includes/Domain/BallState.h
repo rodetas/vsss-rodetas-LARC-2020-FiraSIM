@@ -5,30 +5,35 @@
 #ifndef SDK_RODETAS_RODETASBALL_H
 #define SDK_RODETAS_RODETASBALL_H
 
-#include <common.h>
+#include <Common.h>
 
 class BallState {
 
 public:
 
-    common::btVector3 position;
-    common::btVector3 projection;
+    vss::Point position;
+    vss::Point projection;
+    vss::Point vectorSpeed;
 
     double linearSpeed;
 
-    void setPosition(common::btVector3 p){
+    void setPosition(vss::Point p){
         this->position = p;
     }
 
-    void setProjection(common::btVector3 p){
+    void setProjection(vss::Point p){
         this->projection = p;
+    }
+
+    void setVectorSpeed(vss::Point p){
+        this->vectorSpeed = p;
     }
 
     void setLinearSpeed(double speed){
         this->linearSpeed = speed;
     }
 
-    common::btVector3 getPosition(){
+    vss::Point getPosition(){
         return this->position;
     }
 

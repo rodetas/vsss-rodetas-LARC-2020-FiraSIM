@@ -6,10 +6,12 @@
  * file, You can obtain one at http://www.gnu.org/licenses/gpl-3.0/.
  */
 
-#include "config.h"
+#include "Config.h"
 #include <Kernel.h>
 
 int main(int argc, char** argv){
+
+    Gtk::Main kit(argc, argv);
 
     if (Config::argumentParse(argc, argv)){
         Kernel Kernel;

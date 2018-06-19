@@ -1,33 +1,52 @@
-project(SDK_Rodetas)
 cmake_minimum_required(VERSION 2.6)
 
-SET(CMAKE_CXX_FLAGS "-g -Wall -Werror -std=c++11 -o2")
+OPTION(TESTS "build tests" OFF)
 
-FIND_PACKAGE(Boost 1.40 COMPONENTS program_options REQUIRED)
-INCLUDE(FindProtobuf)
+project(SDK_Rodetas)
+
+SET(CMAKE_CXX_FLAGS "-g -Wall -Werror -std=c++11 -o2 -pthread")
+
+FIND_PACKAGE(PkgConfig)
 FIND_PACKAGE(Protobuf REQUIRED)
+FIND_PACKAGE(Boost 1.40 COMPONENTS program_options REQUIRED)
+pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
 
-find_path(ZeroMQ_INCLUDE_DIR
-        NAMES zmq.hpp
-        PATHS ${PC_ZeroMQ_INCLUDE_DIRS}
-        )
+INCLUDE(FindProtobuf)
+include_directories(${PROTOBUF_INCLUDE_DIR} ${GTKMM_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+include_directories(includes includes/strategies includes/Communication)
+include_directories(src src/strategies src/Communication)
 
-find_library(ZeroMQ_LIBRARY
-        NAMES zmq
-        PATHS ${PC_ZeroMQ_LIBRARY_DIRS}
-        )
-
-include_directories(${PROTOBUF_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
-include_directories(includes includes/strategies)
 include_directories(usr/local/include)
+include_directories(usr/local/glade)
+
+link_libraries(${GTKMM_LIBRARIES})
+link_directories(/usr/lib ${GTKMM_LIBRARY_DIRS})
 
 file(GLOB_RECURSE SRC src/*.cpp)
+file(GLOB_RECURSE INCLUDE includes/*.h)
 
-set (VSS_INTERFACE libvss-interface.so)
+ADD_LIBRARY(core ${SRC} ${INCLUDE})
 
-ADD_EXECUTABLE(SDK-Rodetas ${SRC})
+SET (VSS_CORE libvss-core.so)
 
-TARGET_LINK_LIBRARIES(SDK-Rodetas ${VSS_INTERFACE} ${PROTOBUF_LIBRARY} ${PROTOBUF_LIBRARIES})
-TARGET_LINK_LIBRARIES(SDK-Rodetas LINK_PUBLIC ${Boost_LIBRARIES})
+ADD_EXECUTABLE(SDK-Rodetas src/Main.cpp)
 
-INSTALL(TARGETS SDK-Rodetas DESTINATION bin)
+TARGET_LINK_LIBRARIES(core ${VSS_CORE} ${GTKMM_LIBRARIES} ${PROTOBUF_LIBRARY} ${PROTOBUF_LIBRARIES} ${Boost_LIBRARIES})
+
+TARGET_LINK_LIBRARIES(SDK-Rodetas core)
+
+# USAGE: cmake -D TESTS=ON ..
+
+if(TESTS)
+    enable_testing()
+
+    # Tests. *-test.cpp should be added here.
+    add_executable(tests
+           test/MainTest.cpp test/RobotStrategyTest.cpp test/TransmissionTests.h )
+
+    # Link core, pthread and gtest to test.
+    target_link_libraries(tests
+            pthread
+            core)
+            
+endif()

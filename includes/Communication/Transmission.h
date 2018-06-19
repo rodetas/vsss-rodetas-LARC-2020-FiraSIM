@@ -1,13 +1,14 @@
 #ifndef TRANSMISSION_H_
 #define TRANSMISSION_H_
 
-#include <common.h>
+#include <Common.h>
 
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <cstring>
 #include <bitset>
+#include <Domain/WheelsCommand.h>
 
 using namespace std;
 using namespace common;
@@ -15,7 +16,7 @@ using namespace common;
 class Transmission {
 
 public:
-	Transmission();
+    Transmission();
 
     virtual ~Transmission();
 
@@ -35,7 +36,7 @@ public:
      * /param id: the robot address
      * /param c: the command to send
      */
-    void send(int id, Command c);
+    void send(int id, vss::WheelsCommand c);
 
     /**
      * Method to generate a string to be send
@@ -43,7 +44,7 @@ public:
      * \param c: the command to send
      * \return the prepared string
      */
-    string generateMessage(int id, Command c);
+    string generateMessage(int id, OldCommand c);
 
     /**
      * Generated the checksum correspondent; The 8-bit sum of the parameters

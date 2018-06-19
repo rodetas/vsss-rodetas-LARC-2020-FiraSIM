@@ -8,9 +8,9 @@
 namespace common {
 
     enum MindSet {
-        GoalKeeper,
-        Defender,
-        Attacker
+        GoalKeeper  = 0,
+        Defender    = 1,
+        Attacker    = 2
     };
 }
 

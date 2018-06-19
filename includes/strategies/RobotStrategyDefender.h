@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_ROBOTSTRATEGYDEFENDER_H
 #define SDK_RODETAS_ROBOTSTRATEGYDEFENDER_H
 
-#include <common.h>
+#include <Common.h>
 #include <strategies/RobotStrategy.h>
 
 using namespace common;
@@ -16,8 +16,13 @@ public:
 
     RobotStrategyDefender();
 
-    Command specificStrategy(Command) override;
-    btVector3 defineTarget() override;
+    vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
+
+    vss::Pose defineTarget() override;
+
+    float applyUnivectorField(vss::Pose) override;
+
+    vss::Point defineArrivalOrientation(vss::Pose) override;
 
 };
 

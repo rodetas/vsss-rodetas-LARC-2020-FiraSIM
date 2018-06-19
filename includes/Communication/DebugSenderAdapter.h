@@ -5,27 +5,29 @@
 #ifndef SDK_RODETAS_DEBUGSENDERADAPTER_H
 #define SDK_RODETAS_DEBUGSENDERADAPTER_H
 
-#include <interface.h>
-#include <common.h>
-#include <config.h>
+#include <Common.h>
+#include <Config.h>
+#include <Domain/TeamType.h>
+#include <Domain/Debug.h>
+#include <Communications/DebugSender.h>
 
 class DebugSendAdapter {
 
 public:
 
-    DebugSendAdapter(string teamColor, bool isDebug);
+    DebugSendAdapter(vss::TeamType teamColor, bool isDebug);
 
     //! initialize socket parameters
     void createSocketDebug();
 
     //! sends debug packet
-    void sendDebug(common::Debug debug);
+    void sendDebug(vss::Debug debug);
 
 private:
-    Interface interfaceDebug;
-    vss_debug::Global_Debug globalDebug;
 
-    string teamColor;
+    vss::DebugSender interfaceDebug;
+
+    vss::TeamType teamColor;
     bool isDebug;
 
 };
