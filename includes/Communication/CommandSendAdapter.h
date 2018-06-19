@@ -17,7 +17,7 @@ public:
     CommandSendAdapter(vss::TeamType, bool);
 
     void createSocketSendCommand();
-    void sendCommands(vector<vss::WheelsCommand>);
+    void sendCommands(vector<vss::WheelsCommand>, bool, bool);
 
 private:
 

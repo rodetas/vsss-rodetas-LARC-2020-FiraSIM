@@ -2,6 +2,7 @@
 
 bool Config::debug = false;
 bool Config::realEnvironment = false;
+bool Config::controlWindow = Config::realEnvironment;
 vss::FieldTransformationType Config::changeSide = vss::FieldTransformationType::None;
 vss::TeamType Config::teamColor = vss::TeamType::Blue;
 bool Config::playersSwap = true;
@@ -38,6 +39,7 @@ bool Config::argumentParse(int argc, char** argv) {
     changeSide = (vss::FieldTransformationType) vm.count("rotate");
     debug = (bool) vm.count("debug");
     realEnvironment = (bool) vm.count("environment");
+    controlWindow = realEnvironment;
 
     string color = vm["color"].as<string>();
     if(color == "yellow"){

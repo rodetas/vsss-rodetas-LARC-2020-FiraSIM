@@ -15,7 +15,7 @@ void CommandSendAdapter::createSocketSendCommand() {
     interfaceSend.createSocket(teamColor);
 }
 
-void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands) {
+void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool isPlaying, bool isTestingTransmission) {
 
     if(!isRealEnvironment) {
 
@@ -24,11 +24,14 @@ void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands) {
 
         interfaceSend.sendCommand(vssCommand);
 
-    } else {
-        //@TODO: invocar funcoes do transmission
+    } else if(isPlaying) {
         transmission.send(2,commands[0]);
 //        	transmission.send(id["defense"],strategies["defense"]->get_command());
 //        	transmission.send(id["attack"], strategies["attack"]->get_command());
+    } else if(isTestingTransmission){
+
+    } else {
+
     }
 }
 
