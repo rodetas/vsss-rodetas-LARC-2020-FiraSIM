@@ -2,7 +2,7 @@
 #define TRANSMISSION_H_
 
 #include <Common.h>
-
+#include <Config.h>
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>

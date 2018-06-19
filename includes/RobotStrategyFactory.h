@@ -5,15 +5,15 @@
 #ifndef SDK_RODETAS_ROBOTSTRATEGYFACTORY_H
 #define SDK_RODETAS_ROBOTSTRATEGYFACTORY_H
 
-#include "strategies/RobotStrategy.h"
+#include "Strategies/RobotStrategy.h"
 #include "Helpers/MathHelper.h"
 #include "Domain/RodetasState.h"
 #include "RodetasRobot.h"
 #include "StateInterpreter.h"
-#include <strategies/RobotStrategyBase.h>
-#include <strategies/RobotStrategyAttack.h>
-#include <strategies/RobotStrategyDefender.h>
-#include <strategies/RobotStrategyGoal.h>
+#include <Strategies/RobotStrategyBase.h>
+#include <Strategies/RobotStrategyAttack.h>
+#include <Strategies/RobotStrategyDefender.h>
+#include <Strategies/RobotStrategyGoal.h>
 
 class RobotStrategyFactory {
 

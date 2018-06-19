@@ -5,13 +5,15 @@
 #ifndef SDK_RODETAS_STATERECEIVERADAPTER_H
 #define SDK_RODETAS_STATERECEIVERADAPTER_H
 
-#include <Common.h>
-#include <Domain/RodetasState.h>
+
 #include <Communications/StateReceiver.h>
-#include <Domain/State.h>
 #include <Helpers/MathHelper.h>
+#include <Domain/RodetasState.h>
+#include <Domain/State.h>
 #include <Domain/FieldTransformationType.h>
 #include <Domain/TeamType.h>
+#include <RodetasRobot.h>
+
 
 class StateReceiverAdapter {
 

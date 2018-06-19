@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_ROBOTSTRATEGY_H
 #define SDK_RODETAS_ROBOTSTRATEGY_H
 
-#include <Common.h>
+
 #include "RobotStrategyBase.h"
 #include <Domain/RobotState.h>
 #include <Domain/RodetasState.h>

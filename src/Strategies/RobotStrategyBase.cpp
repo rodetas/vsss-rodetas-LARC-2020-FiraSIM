@@ -2,8 +2,7 @@
 // Created by manoel on 17/04/18.
 //
 
-#include <strategies/RobotStrategyBase.h>
-#include <Config.h>
+#include <Strategies/RobotStrategyBase.h>
 
 RobotStrategyBase::RobotStrategyBase() = default;
 

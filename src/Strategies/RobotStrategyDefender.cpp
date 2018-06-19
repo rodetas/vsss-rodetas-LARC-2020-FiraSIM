@@ -2,7 +2,7 @@
 // Created by manoel on 23/04/18.
 //
 
-#include <strategies/RobotStrategyDefender.h>
+#include <Strategies/RobotStrategyDefender.h>
 
 RobotStrategyDefender::RobotStrategyDefender() = default;
 

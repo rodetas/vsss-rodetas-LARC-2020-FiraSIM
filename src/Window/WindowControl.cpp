@@ -2,7 +2,7 @@
 // Created by manoel on 30/05/18.
 //
 
-#include "WindowControl.h"
+#include "Window/WindowControl.h"
 
 void WindowControl::start() {
 

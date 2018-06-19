@@ -2,7 +2,7 @@
 // Created by manoel on 23/04/18.
 //
 
-#include "strategies/RobotStrategyGoal.h"
+#include "Strategies/RobotStrategyGoal.h"
 
 RobotStrategyGoal::RobotStrategyGoal() = default;
 

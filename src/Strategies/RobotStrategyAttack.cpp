@@ -2,7 +2,7 @@
 // Created by manoel on 18/04/18.
 //
 
-#include "strategies/RobotStrategyAttack.h"
+#include "Strategies/RobotStrategyAttack.h"
 
 RobotStrategyAttack::RobotStrategyAttack() {
 

@@ -6,16 +6,13 @@
 #define SDK_RODETAS_RODETASROBOT_H
 
 #include <Domain/RodetasState.h>
-#include <Common.h>
 #include <Domain/RobotState.h>
 #include <Domain/Debug.h>
-#include <strategies/RobotStrategy.h>
+#include "Domain/Mindset.h"
+#include <Strategies/RobotStrategy.h>
+#include <Strategies/RobotStrategyAttack.h>
 #include <Helpers/MathHelper.h>
 #include <cmath>
-#include <strategies/RobotStrategyAttack.h>
-#include "Domain/Mindset.h"
-
-using namespace common;
 
 class RodetasRobot {
 

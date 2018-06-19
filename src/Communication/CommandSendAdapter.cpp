@@ -18,6 +18,7 @@ void CommandSendAdapter::createSocketSendCommand() {
 void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool isPlaying, bool isTestingTransmission) {
 
     if(!isRealEnvironment) {
+        // sends commands to simulator
 
         vss::Command vssCommand;
         vssCommand.commands.insert(vssCommand.commands.begin(), commands.begin(), commands.end());
@@ -25,10 +26,12 @@ void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool 
         interfaceSend.sendCommand(vssCommand);
 
     } else if(isPlaying) {
-        transmission.send(2,commands[0]);
-//        	transmission.send(id["defense"],strategies["defense"]->get_command());
-//        	transmission.send(id["attack"], strategies["attack"]->get_command());
+        // sends commands to xbee
+        transmission.send(2, commands[0]);
+//        transmission.send(1, commands[1]);
+//        transmission.send(2, commands[2]);
     } else if(isTestingTransmission){
+        // send commands to test robots
 
     } else {
 

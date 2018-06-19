@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_DEBUGSENDERADAPTER_H
 #define SDK_RODETAS_DEBUGSENDERADAPTER_H
 
-#include <Common.h>
+
 #include <Config.h>
 #include <Domain/TeamType.h>
 #include <Domain/Debug.h>
