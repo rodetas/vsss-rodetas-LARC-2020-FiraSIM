@@ -7,10 +7,14 @@
 
 #include <Common.h>
 #include "RobotStrategyBase.h"
-#include <RobotState.h>
-#include <RodetasState.h>
+#include <Domain/RobotState.h>
+#include <Domain/RodetasState.h>
 #include <Movimentation.h>
+#include <UnivectorField.h>
+#include <Domain/Pose.h>
+#include <Domain/Path.h>
 #include "Config.h"
+#include <Domain/Constants.h>
 
 using namespace common;
 
@@ -19,38 +23,43 @@ class RobotStrategy {
 public:
     RobotStrategy();
 
-    virtual Command applyStrategy(RobotState, RodetasState, RobotStrategyBase);
+    virtual vss::WheelsCommand applyStrategy(RobotState, RodetasState, RobotStrategyBase);
 
-    virtual Command specificStrategy(Command) = 0;
+    virtual vss::WheelsCommand specificStrategy(vss::WheelsCommand) = 0;
 
-    virtual btVector3 defineTarget() = 0;
+    virtual vss::Pose defineTarget() = 0;
+
+    virtual float applyUnivectorField(vss::Pose) = 0;
+
+    virtual vss::Point defineArrivalOrientation(vss::Pose) = 0;
 
     //@TODO: inserir comentarios em cada estrategia
-    virtual Command cornerStrategy(Command);
+    virtual vss::WheelsCommand cornerStrategy(vss::WheelsCommand);
 
-    virtual Command stopStrategy(Command);
+    virtual vss::WheelsCommand stopStrategy(vss::WheelsCommand);
 
-    virtual Command blockedStrategy(Command);
+    virtual vss::WheelsCommand blockedStrategy(vss::WheelsCommand);
 
-    virtual Command kickStrategy(Command);
+    virtual vss::WheelsCommand kickStrategy(vss::WheelsCommand);
 
-    Command getCommand();
-    btVector3 getFinalPose();
-    btVector3 getStepPose();
-    Path getPath();
+    vss::WheelsCommand getCommand();
+    vss::Pose getFinalPose();
+    vss::Point getStepPose();
+    vss::Path getPath();
 
 protected:
     RobotStrategyBase strategyBase;
 
-    Command command;
-    btVector3 target;
-    btVector3 stepPose;
-    Path path;
+    vss::WheelsCommand command;
+
+    vss::Pose target;
+    vss::Point stepPose;
+    vss::Path path;
 
     RobotState robot;
     RodetasState state;
 
-    Movimentation* movimentation;
+    Movimentation movimentation;
 
 };
 

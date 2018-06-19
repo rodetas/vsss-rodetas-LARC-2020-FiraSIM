@@ -1,4 +1,5 @@
-#include "Transmission.h"
+#include <Config.h>
+#include "Communication/Transmission.h"
 
 Transmission::Transmission() {
 
@@ -40,8 +41,8 @@ bool Transmission::openConnection(){
         }
 
         /* Set Baud Rate */
-        cfsetospeed(&options, (speed_t)B19200);
-        cfsetispeed(&options, (speed_t)B19200);
+        cfsetospeed(&options, (speed_t)B57600);
+        cfsetispeed(&options, (speed_t)B57600);
 
         /* Setting other Port Stuff */
         options.c_cflag     &=  ~PARENB;            // Make 8n1
@@ -70,13 +71,21 @@ bool Transmission::openConnection(){
     return true;
 }
 
-void Transmission::send(int i, Command c){
-    string comand = generateMessage(i, c);;
-    serialTransmit(comand);
+void Transmission::send(int i, vss::WheelsCommand c){
+    string stringCommand;
+
+    OldCommand oldCommand(c);
+
+    stringCommand = generateMessage(i, oldCommand);
+    
+//    cout << c << endl;
+//    cout << stringCommand << endl << endl;
+
+    serialTransmit(stringCommand);
 }
 
 // recebe um comando e retorna a string equivalente para ser enviada
-string Transmission::generateMessage(int robot, Command comand){
+string Transmission::generateMessage(int robot, OldCommand comand){
 
     short int startDelimiter = 0x7E;
     short int frameType = 0x01;
@@ -144,16 +153,16 @@ void Transmission::serialTransmit(string comand){
         openConection();
 
     } else {*/
-        for(uint i=0, cont=0 ; i<comand.size() ; i++){
-            stringstream parcial;
-            parcial << comand[i];
-            i++;
-            parcial << comand[i];
-            sendBytes[cont] = stoi(parcial.str().c_str(), 0, 16);
-            cont++;
-        }
+    for(uint i=0, cont=0 ; i<comand.size() ; i++){
+        stringstream parcial;
+        parcial << comand[i];
+        i++;
+        parcial << comand[i];
+        sendBytes[cont] = stoi(parcial.str().c_str(), 0, 16);
+        cont++;
+    }
 //        cout << sendBytes << endl;
-        write(usb, sendBytes, sizeof(sendBytes));
+    write(usb, sendBytes, sizeof(sendBytes));
     //}
 }
 

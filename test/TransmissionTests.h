@@ -2,7 +2,7 @@
 // Created by Samuel on 21/05/18
 //
 
-#include <Transmission.h>
+#include <Communication/Transmission.h>
 #include <Common.h>
 #include <assert.h>
 

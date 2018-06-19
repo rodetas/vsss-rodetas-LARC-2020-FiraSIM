@@ -13,9 +13,11 @@ pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
 
 INCLUDE(FindProtobuf)
 include_directories(${PROTOBUF_INCLUDE_DIR} ${GTKMM_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
-include_directories(includes includes/strategies)
-include_directories(src src/strategies)
+include_directories(includes includes/strategies includes/Communication)
+include_directories(src src/strategies src/Communication)
+
 include_directories(usr/local/include)
+include_directories(usr/local/glade)
 
 link_libraries(${GTKMM_LIBRARIES})
 link_directories(/usr/lib ${GTKMM_LIBRARY_DIRS})
@@ -25,17 +27,17 @@ file(GLOB_RECURSE INCLUDE includes/*.h)
 
 ADD_LIBRARY(core ${SRC} ${INCLUDE})
 
-SET (VSS_INTERFACE libvss-core.so)
+SET (VSS_CORE libvss-core.so)
 
 ADD_EXECUTABLE(SDK-Rodetas src/Main.cpp)
 
-TARGET_LINK_LIBRARIES(core ${VSS_INTERFACE} ${GTKMM_LIBRARIES} ${PROTOBUF_LIBRARY} ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(core ${VSS_CORE} ${GTKMM_LIBRARIES} ${PROTOBUF_LIBRARY} ${PROTOBUF_LIBRARIES} ${Boost_LIBRARIES})
+
 TARGET_LINK_LIBRARIES(SDK-Rodetas core)
 
 # USAGE: cmake -D TESTS=ON ..
 
 if(TESTS)
-
     enable_testing()
 
     # Tests. *-test.cpp should be added here.
@@ -46,5 +48,5 @@ if(TESTS)
     target_link_libraries(tests
             pthread
             core)
-
+            
 endif()

@@ -6,10 +6,16 @@
 
 void WindowControl::start() {
 
-    initializeWidgets();
-    setSignals();
 
-    //Gtk::Main::run(window);
+    initializeWidgets();
+	setSignals();
+
+    Gtk::Main::run(*window);
+}
+
+bool WindowControl::onKeyboard(GdkEventKey* event, Gtk::Window* window) {
+
+    return true;
 }
 
 void WindowControl::initializeWidgets(){
@@ -18,9 +24,14 @@ void WindowControl::initializeWidgets(){
 
     try {
 
-        builder->add_from_file("../glade/Vision.glade");
+        builder->add_from_file("../glade/control-window.glade");
 
         // inicializar os buttons aqui
+		builder->get_widget("window", window);
+
+    	builder->get_widget("buttonPlay", buttonPlay);
+		builder->get_widget("buttonTests", buttonTests);
+
 
     } catch (const Glib::FileError &ex) {
         std::cerr << "FileError: " << ex.what() << std::endl;
@@ -34,15 +45,23 @@ void WindowControl::initializeWidgets(){
 
 void WindowControl::setSignals(){
     // definir os eventos dos botoes
-
+	window->signal_key_press_event().connect(sigc::bind<Gtk::Window*>(sigc::mem_fun(this, &WindowControl::onKeyboard), window) , false);
+	buttonPlay->signal_clicked().connect(sigc::bind<Gtk::ToggleButton *>(sigc::mem_fun(this, &WindowControl::onPressButtonPlaying),buttonPlay));
+	buttonTests->signal_clicked().connect(sigc::bind<Gtk::ToggleButton *>(sigc::mem_fun(this, &WindowControl::onPressButtonTesting),buttonTests));
 }
 
-void WindowControl::onPressButtonPlaying(){
+void WindowControl::onPressButtonPlaying(Gtk::ToggleButton * buttonPlay){
     // invocar o signal para atualizar o kernel que houve uma variavel
     //signalUpdatePlaying.emit( valor )
+	//bool state;	
+	
+	//state=Gtk::ToggleButton::get_active();
+	signalUpdatePlaying.emit(buttonPlay->get_active());
+
 }
 
-void WindowControl::onPressButtonTesting(){
+void WindowControl::onPressButtonTesting(Gtk::ToggleButton * buttonTests){
     // invocar o signal para atualizar o kernel que houve uma na variavel
     //signalUpdateTesting.emit ...
+	signalUpdateTesting.emit(buttonTests->get_active());
 }

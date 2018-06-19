@@ -2,14 +2,15 @@
 
 bool Config::debug = false;
 bool Config::realEnvironment = false;
-bool Config::changeSide = false;
+bool Config::controlWindow = Config::realEnvironment;
+vss::FieldTransformationType Config::changeSide = vss::FieldTransformationType::None;
+vss::TeamType Config::teamColor = vss::TeamType::Blue;
 bool Config::playersSwap = true;
-string Config::teamColor;
 
 
-common::btVector3 Config::fieldSize = {150,130};
-common::btVector3 Config::goalSize = {10, 40};
-common::btVector3 Config::goalAreaSize = common::btVector3(fieldSize.x*0.2, fieldSize.y*0.6);
+vss::Point Config::fieldSize = {170,130};
+vss::Point Config::goalSize = {10, 40};
+vss::Point Config::goalAreaSize = vss::Point(fieldSize.x*0.1, fieldSize.y*0.6);
 
 bool Config::argumentParse(int argc, char** argv) {
     namespace bpo = boost::program_options;
@@ -34,12 +35,16 @@ bool Config::argumentParse(int argc, char** argv) {
     }
     
    
-    playersSwap = (bool) vm.count("swap");
-    changeSide = (bool) vm.count("rotate");
+    playersSwap = !(bool) vm.count("swap");
+    changeSide = (vss::FieldTransformationType) vm.count("rotate");
     debug = (bool) vm.count("debug");
     realEnvironment = (bool) vm.count("environment");
+    controlWindow = realEnvironment;
 
-    //@TODO: transformar cor de string para enum
-    teamColor = vm["color"].as<string>();
+    string color = vm["color"].as<string>();
+    if(color == "yellow"){
+        teamColor = vss::TeamType::Yellow;
+    }
+
     return true;
 }

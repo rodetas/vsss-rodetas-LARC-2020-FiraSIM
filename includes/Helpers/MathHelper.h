@@ -5,6 +5,7 @@
 #ifndef SDK_RODETAS_MATHHELPER_H
 #define SDK_RODETAS_MATHHELPER_H
 
+#include <Domain/Point.h>
 #include <Common.h>
 
 using namespace common;
@@ -13,18 +14,27 @@ class Math {
 
 public:
     //! Estimate distance between a set of points.
-    static double distancePoint(btVector3, btVector3);
+    static double distancePoint(vss::Point, vss::Point);
 
     //! Estimate angle between two straight lines.
-    static double angulation(btVector3, btVector3);
+    static double angulation(vss::Point, vss::Point);
 
     //! Estimate angle between two straight lines in radian.
-    static double radian(btVector3, btVector3);
+    static double radian(vss::Point, vss::Point);
 
     static double calculateLinearSpeed(double, double);
 
     //! Given a initial point and two velocities returns the initial point projection considering these two velocities
-    static btVector3 calculateProjection(btVector3, double, double);
+    static vss::Point calculateProjection(vss::Point, double, double);
+
+    //! Transforms an angle to radian
+    static double toRadian(double);
+
+    //! Calculates the norm of a vector
+    static double norm(vss::Point);
+
+    //! Calculates the gaussian
+    static double gaussian(double, double);
 
 };
 

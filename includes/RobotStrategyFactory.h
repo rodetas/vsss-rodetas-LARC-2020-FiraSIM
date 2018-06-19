@@ -6,8 +6,8 @@
 #define SDK_RODETAS_ROBOTSTRATEGYFACTORY_H
 
 #include "strategies/RobotStrategy.h"
-#include "MathHelper.h"
-#include "RodetasState.h"
+#include "Helpers/MathHelper.h"
+#include "Domain/RodetasState.h"
 #include "RodetasRobot.h"
 #include "StateInterpreter.h"
 #include <strategies/RobotStrategyBase.h>

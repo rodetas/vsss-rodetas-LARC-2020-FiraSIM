@@ -7,7 +7,7 @@
 
 RobotStrategyBase::RobotStrategyBase() = default;
 
-void RobotStrategyBase::update(RobotState robot, btVector3 target) {
+void RobotStrategyBase::update(RobotState robot, vss::Point target) {
     this->robot = robot;
     this->target = target;
 
@@ -20,8 +20,8 @@ bool RobotStrategyBase::isBlocked() {
 }
 
 bool RobotStrategyBase::isParallelToGoal() {
-    return (robot.cosFrom(btVector3(Config::fieldSize.x, robot.position.y)) > -0.3 &&
-            robot.cosFrom(btVector3(Config::fieldSize.x, robot.position.y)) < 0.3);
+    return (robot.cosFrom(vss::Point(Config::fieldSize.x, robot.position.y)) > -0.3 &&
+            robot.cosFrom(vss::Point(Config::fieldSize.x, robot.position.y)) < 0.3);
 }
 
 bool RobotStrategyBase::isStopped() {
