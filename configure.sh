@@ -5,16 +5,17 @@ INSTALLED=0
 INSTALL_CORE() {
 
     sudo apt-get update
-    sudo apt-get -y install git
-    echo "Installing git"
-    sleep 2
+    sudo apt-get -y install git g++ cmake libzmqpp3 libzmqpp-dev protobuf-compiler libprotobuf-dev
     git clone https://github.com/SIRLab/VSS-Core.git
     cd VSS-Core
-    echo "Configuring core"
-    sleep 2
-    sudo bash configure.sh
-    echo "configured"
-    sleep 2
+    git submodule init;
+    git submodule update;
+    bash scripts/protos.sh
+    mkdir -p build
+    cd build
+    cmake ..
+    make
+    cd ..
 }
 
 INSTALL_SAMPLE() {
