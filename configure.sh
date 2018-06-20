@@ -6,10 +6,15 @@ INSTALL_CORE() {
 
     sudo apt-get update
     sudo apt-get -y install git
-
+    echo "Installing git"
+    sleep 2
     git clone https://github.com/SIRLab/VSS-Core.git
     cd VSS-Core
+    echo "Configuring core"
+    sleep 2
     sudo bash configure.sh
+    echo "configured"
+    sleep 2
 }
 
 INSTALL_SAMPLE() {
