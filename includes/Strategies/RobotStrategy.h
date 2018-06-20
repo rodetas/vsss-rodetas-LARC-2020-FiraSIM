@@ -5,18 +5,14 @@
 #ifndef SDK_RODETAS_ROBOTSTRATEGY_H
 #define SDK_RODETAS_ROBOTSTRATEGY_H
 
-
-#include "RobotStrategyBase.h"
 #include <Domain/RobotState.h>
 #include <Domain/RodetasState.h>
-#include <Movimentation.h>
-#include <UnivectorField.h>
 #include <Domain/Pose.h>
 #include <Domain/Path.h>
-#include "Config.h"
 #include <Domain/Constants.h>
-
-using namespace common;
+#include <Strategies/RobotStrategyBase.h>
+#include <Movimentation.h>
+#include <UnivectorField.h>
 
 class RobotStrategy {
 

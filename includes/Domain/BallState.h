@@ -5,8 +5,6 @@
 #ifndef SDK_RODETAS_RODETASBALL_H
 #define SDK_RODETAS_RODETASBALL_H
 
-
-
 class BallState {
 
 public:

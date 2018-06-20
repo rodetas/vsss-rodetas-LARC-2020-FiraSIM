@@ -59,15 +59,15 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
             n = 1.6;
         }
     }
-    vector<pair<vss::Point, vss::Point>> obstacles;
+    std::vector<std::pair<vss::Point, vss::Point>> obstacles;
     for (auto &r: state.robots) {
         if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-            obstacles.push_back(make_pair(r.position, r.vectorSpeed));
+            obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
         }
     }
 
     //Obstáculos de canto de gol
-    pair<vss::Point, vss::Point> obstacle;
+    std::pair<vss::Point, vss::Point> obstacle;
     obstacle.first.x = 167;
     obstacle.first.y = 40;
     obstacle.second.x = 0;

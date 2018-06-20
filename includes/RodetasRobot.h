@@ -12,7 +12,6 @@
 #include <Strategies/RobotStrategy.h>
 #include <Strategies/RobotStrategyAttack.h>
 #include <Helpers/MathHelper.h>
-#include <cmath>
 
 class RodetasRobot {
 

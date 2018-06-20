@@ -5,11 +5,11 @@
 #ifndef SDK_RODETAS_ROBOTSTRATEGYFACTORY_H
 #define SDK_RODETAS_ROBOTSTRATEGYFACTORY_H
 
-#include "Strategies/RobotStrategy.h"
-#include "Helpers/MathHelper.h"
-#include "Domain/RodetasState.h"
-#include "RodetasRobot.h"
-#include "StateInterpreter.h"
+//#include "Strategies/RobotStrategy.h"
+//#include "Helpers/MathHelper.h"
+#include <Domain/RodetasState.h>
+#include <RodetasRobot.h>
+#include <StateInterpreter.h>
 #include <Strategies/RobotStrategyBase.h>
 #include <Strategies/RobotStrategyAttack.h>
 #include <Strategies/RobotStrategyDefender.h>
@@ -20,7 +20,7 @@ class RobotStrategyFactory {
 public:
 
     RobotStrategyFactory();
-    void manage(vector<RodetasRobot>&, RodetasState&, bool swap);
+    void manage(std::vector<RodetasRobot>&, RodetasState&, bool swap);
 
 private:
 

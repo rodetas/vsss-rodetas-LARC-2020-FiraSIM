@@ -16,7 +16,6 @@
 #include <Domain/RodetasState.h>
 #include <Domain/Path.h>
 #include <Domain/Pose.h>
-
 #include <vector>
 
 class UnivectorField {

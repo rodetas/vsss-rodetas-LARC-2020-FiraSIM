@@ -9,7 +9,7 @@ StateInterpreter::StateInterpreter() {
     timeLastChange = -1;
 };
 
-vector<MindSet> StateInterpreter::defineStrategy(vector<RodetasRobot>& robots,  RodetasState& state) {
+std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>& robots,  RodetasState& state) {
 
     RodetasRobot goalRobot = getRobotByStrategy(MindSet::GoalKeeper, robots);
     RodetasRobot defenderRobot = getRobotByStrategy(MindSet::Defender, robots);
@@ -37,7 +37,7 @@ vector<MindSet> StateInterpreter::defineStrategy(vector<RodetasRobot>& robots,  
 
 		// na defesa, o mais perto é o atacante
         if(distanceDefenderBall < distanceAttackerBall &&
-           state.ball.position.x < Config::fieldSize.x/2 &&
+           state.ball.position.x < vss::MAX_COORDINATE_X/2 &&
            !attackerRobot.getRobotStrategyBase().isBlocked() &&
            !defenderRobot.getRobotStrategyBase().isBlocked()){
 
@@ -52,7 +52,7 @@ vector<MindSet> StateInterpreter::defineStrategy(vector<RodetasRobot>& robots,  
 
 //		//trocar goleiro
 //		if(distanceGoalKeeperBall < distanceAttackerBall &&
-//           state.ball.position.x > Config::fieldSize.x/4 &&
+//           state.ball.position.x > vss::MAX_COORDINATE_X/4 &&
 //           !attackerRobot.getRobotStrategyBase().isBlocked() &&
 //           !goalRobot.getRobotStrategyBase().isBlocked()){
 //			strategiesById[attackerRobot.getId()] = MindSet::Defender;
@@ -68,7 +68,7 @@ vector<MindSet> StateInterpreter::defineStrategy(vector<RodetasRobot>& robots,  
     return strategiesById;
 }
 
-RodetasRobot StateInterpreter::getRobotByStrategy(MindSet mindSet, vector<RodetasRobot>& robots) {
+RodetasRobot StateInterpreter::getRobotByStrategy(MindSet mindSet, std::vector<RodetasRobot>& robots) {
 
     auto found = std::find_if(robots.begin(), robots.end(), [&](RodetasRobot r){
        return r.getMindSet() == mindSet;
