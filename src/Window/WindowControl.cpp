@@ -14,7 +14,10 @@ void WindowControl::start() {
 }
 
 bool WindowControl::onKeyboard(GdkEventKey* event, Gtk::Window* window) {
-
+	if (event->keyval == GDK_KEY_space)
+	{
+		buttonPlay->toggled();
+	}
     return true;
 }
 
