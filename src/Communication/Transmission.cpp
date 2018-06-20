@@ -75,7 +75,7 @@ void Transmission::send(int i, vss::WheelsCommand c){
     OldCommand oldCommand(c);
 
     stringCommand = generateMessage(i, oldCommand);
-    
+
 //    cout << c << endl;
 //    cout << stringCommand << endl << endl;
 

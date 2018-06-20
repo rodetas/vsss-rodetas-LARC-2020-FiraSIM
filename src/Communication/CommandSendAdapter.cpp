@@ -34,7 +34,9 @@ void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool 
         // send commands to test robots
 
     } else {
-
+        vss::WheelsCommand stopCommand(0,0);
+        for(int i=0 ; i<3 ; i++){
+            transmission.send(i, stopCommand);
+        }
     }
 }
-
