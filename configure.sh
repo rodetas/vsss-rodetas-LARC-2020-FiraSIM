@@ -4,7 +4,7 @@ INSTALLED=0
 
 INSTALL_CORE() {
 
-    sudo apt-get update && sudo apt-get upgrade
+    sudo apt-get update
     sudo apt-get -y install git
 
     git clone https://github.com/SIRLab/VSS-Core.git
