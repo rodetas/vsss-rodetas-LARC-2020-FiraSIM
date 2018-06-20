@@ -13,8 +13,9 @@ INSTALL_CORE() {
     bash scripts/protos.sh
     mkdir -p build
     cd build
-    cmake ..
+    cmake -DRELEASE=ON ..
     make
+    sudo make install
     cd ../..
 }
 
