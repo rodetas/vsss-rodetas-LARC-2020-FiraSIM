@@ -21,25 +21,6 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
     strategiesById[defenderRobot.getId()] = defenderRobot.getMindSet();
     strategiesById[attackerRobot.getId()] = attackerRobot.getMindSet();
 
-    //Troca defensor por atacante
-    cout<<"ballx "<<state.ball.position.x<<" y comp "<<vss::MAX_COORDINATE_Y/2+40<<endl;
-    cout<<"bally "<<state.ball.position.y<<" y comp "<<vss::MAX_COORDINATE_Y/2+40<<endl;
-    cout<<"vss::MAX_COORDINATE_X/2"<<vss::MAX_COORDINATE_X/2<<endl;
-    if(state.ball.position.x < vss::MAX_COORDINATE_X/2 &&
-       state.ball.position.y > 40 && //metade do campo + 20 cm
-       state.ball.position.y < 90 && state.ball.position.x < 25 &&
-       !attackerRobot.getRobotStrategyBase().isBlocked() &&
-       !defenderRobot.getRobotStrategyBase().isBlocked())
-       //!(attackerRobot.getSelfState().position.y > 25 && attackerRobot.getSelfState().position.y < 105 && // se nao tiver ambos dentro da area
-       //!defenderRobot.getSelfState().position.y>25 && defenderRobot.getSelfState().position.y < 105&&      //realiza troca
-       //defenderRobot.getSelfState().position.x >= vss::MAX_COORDINATE_X * 0.2))
-    {
-        cout<<"trocou......................................................................!"<<endl;
-        cout<<"trocou......................................................................!"<<endl;
-        cout<<"trocou......................................................................!"<<endl;
-        strategiesById[attackerRobot.getId()] = MindSet::Defender;
-        strategiesById[defenderRobot.getId()] = MindSet::Attacker;
-}
     if(timeLastChange == -1){
 
         if (attackerRobot.getSelfState().position.x*1.3 < state.ball.position.x &&
@@ -72,6 +53,26 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
             strategiesById[defenderRobot.getId()] = MindSet::Attacker;
         }
 
+
+            //Troca defensor por atacante
+            cout<<"ballx "<<state.ball.position.x<<" y comp "<<vss::MAX_COORDINATE_Y/2+40<<endl;
+            cout<<"bally "<<state.ball.position.y<<" y comp "<<vss::MAX_COORDINATE_Y/2+40<<endl;
+            cout<<"vss::MAX_COORDINATE_X/2"<<vss::MAX_COORDINATE_X/2<<endl;
+            if(state.ball.position.x < vss::MAX_COORDINATE_X/2 &&
+               state.ball.position.y > 40 && //metade do campo + 20 cm
+               state.ball.position.y < 90 && state.ball.position.x < 25 &&
+               !attackerRobot.getRobotStrategyBase().isBlocked() &&
+               !defenderRobot.getRobotStrategyBase().isBlocked())
+               //!(attackerRobot.getSelfState().position.y > 25 && attackerRobot.getSelfState().position.y < 105 && // se nao tiver ambos dentro da area
+               //!defenderRobot.getSelfState().position.y>25 && defenderRobot.getSelfState().position.y < 105&&      //realiza troca
+               //defenderRobot.getSelfState().position.x >= vss::MAX_COORDINATE_X * 0.2))
+            {
+                cout<<"trocou......................................................................!"<<endl;
+                cout<<"trocou......................................................................!"<<endl;
+                cout<<"trocou......................................................................!"<<endl;
+                strategiesById[attackerRobot.getId()] = MindSet::Defender;
+                strategiesById[defenderRobot.getId()] = MindSet::Attacker;
+        }
 
 //		//trocar goleiro
 //		if(distanceGoalKeeperBall < distanceAttackerBall &&
