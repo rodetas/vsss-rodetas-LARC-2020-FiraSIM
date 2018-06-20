@@ -1,6 +1,9 @@
 #include <Kernel.h>
 
-Kernel::Kernel() = default;
+Kernel::Kernel() {
+    isPlaying = true;
+    isTestingTransmission = false;
+};
 
 void Kernel::loop() {
 
@@ -49,7 +52,7 @@ void Kernel::loop() {
         }
 
         coach.manage(robots, state, Config::playersSwap);
-
+        cout << isPlaying << " " << isTestingTransmission << endl;
         sendInterface.sendCommands(commands, isPlaying, isTestingTransmission);
         debugInterface.sendDebug(debug);
     }

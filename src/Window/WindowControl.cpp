@@ -53,8 +53,8 @@ void WindowControl::setSignals(){
 void WindowControl::onPressButtonPlaying(Gtk::ToggleButton * buttonPlay){
     // invocar o signal para atualizar o kernel que houve uma variavel
     //signalUpdatePlaying.emit( valor )
-	//bool state;	
-	
+	//bool state;
+
 	//state=Gtk::ToggleButton::get_active();
 	signalUpdatePlaying.emit(buttonPlay->get_active());
 
