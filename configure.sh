@@ -24,3 +24,7 @@ CMAKE () {
     cmake ..
 }
 
+INSTALL_CORE;
+INSTALL_SAMPLE;
+CMAKE;
+
