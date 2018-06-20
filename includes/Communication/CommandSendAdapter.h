@@ -5,7 +5,6 @@
 #ifndef SDK_RODETAS_COMMANDSENDADAPTER_H
 #define SDK_RODETAS_COMMANDSENDADAPTER_H
 
-#include <Common.h>
 #include <Domain/TeamType.h>
 #include <Communication/Transmission.h>
 #include <Communications/CommandSender.h>

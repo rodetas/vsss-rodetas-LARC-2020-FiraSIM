@@ -1,8 +1,4 @@
 #include <Kernel.h>
-#include <strategies/RobotStrategyDefender.h>
-#include <strategies/RobotStrategyGoal.h>
-#include <RobotStrategyFactory.h>
-#include <Config.h>
 
 Kernel::Kernel() = default;
 

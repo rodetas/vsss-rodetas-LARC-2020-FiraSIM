@@ -5,10 +5,7 @@
 #ifndef SDK_RODETAS_ROBOSTRATEGYGOAL_H
 #define SDK_RODETAS_ROBOSTRATEGYGOAL_H
 
-#include "Common.h"
 #include "RobotStrategy.h"
-
-using namespace common;
 
 class RobotStrategyGoal : public RobotStrategy {
 

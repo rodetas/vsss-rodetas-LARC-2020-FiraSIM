@@ -1,14 +1,11 @@
 #ifndef MOVIMENTATION_H_
 #define MOVIMENTATION_H_
 
-#include <Common.h>
 #include <Domain/RobotState.h>
 #include <Domain/BallState.h>
 #include <Domain/WheelsCommand.h>
 #include <Domain/Pose.h>
 #include <functional>
-
-using namespace common;
 
 class Movimentation {
 

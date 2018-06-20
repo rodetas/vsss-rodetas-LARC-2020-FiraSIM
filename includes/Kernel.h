@@ -9,12 +9,14 @@
 #ifndef _STRATEGY_H_
 #define _STRATEGY_H_
 
-
 #include <RodetasRobot.h>
-#include <WindowControl.h>
+#include <Window/WindowControl.h>
 #include <Communication/DebugSenderAdapter.h>
 #include <Communication/StateReceiverAdapter.h>
 #include <Communication/CommandSendAdapter.h>
+#include <Strategies/RobotStrategyDefender.h>
+#include <Strategies/RobotStrategyGoal.h>
+#include <RobotStrategyFactory.h>
 #include <Config.h>
 #include <thread>
 

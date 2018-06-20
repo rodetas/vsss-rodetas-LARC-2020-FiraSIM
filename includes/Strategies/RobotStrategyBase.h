@@ -5,10 +5,9 @@
 #ifndef SDK_RODETAS_STRATEGYBASE_H
 #define SDK_RODETAS_STRATEGYBASE_H
 
-#include <Common.h>
+#include <Config.h>
+#include <Domain/Constants.h>
 #include <Domain/RobotState.h>
-
-using namespace common;
 
 class RobotStrategyBase {
 

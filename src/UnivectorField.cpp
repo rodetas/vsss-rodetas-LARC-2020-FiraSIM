@@ -9,7 +9,7 @@ UnivectorField::UnivectorField(float n, float k0, float dmin, float delta) : n(n
 UnivectorField::UnivectorField() = default;
 
 float UnivectorField::defineFi(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                               vector<pair<vss::Point, vss::Point>> obstacles) {
+                               std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
 
     float moveFi = defineMoveFi(robot.position, target, arrivalOrientation);
 
@@ -54,8 +54,8 @@ float UnivectorField::defineFi(RobotState robot, vss::Pose target, vss::Point ar
 }
 
 vss::Path UnivectorField::drawPath(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                              vector<pair<vss::Point, vss::Point>> obstacles) {
-    vector<vss::Point> points;
+                              std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
+    std::vector<vss::Point> points;
     vss::Point point = robot.position;
     RobotState r = robot;
 

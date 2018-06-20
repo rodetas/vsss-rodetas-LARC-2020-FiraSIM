@@ -5,8 +5,7 @@
 #ifndef SDK_RODETAS_STATEINTERPRETER_H
 #define SDK_RODETAS_STATEINTERPRETER_H
 
-#include "Common.h"
-#include "RodetasRobot.h"
+#include <RodetasRobot.h>
 
 class StateInterpreter {
 
@@ -14,14 +13,14 @@ public:
 
     StateInterpreter();
 
-    vector<MindSet> defineStrategy(vector<RodetasRobot>&, RodetasState&);
+    std::vector<MindSet> defineStrategy(std::vector<RodetasRobot>&, RodetasState&);
 
 private:
 
-    RodetasRobot getRobotByStrategy(MindSet, vector<RodetasRobot>&);
+    RodetasRobot getRobotByStrategy(MindSet, std::vector<RodetasRobot>&);
 
     int timeLastChange;
-    vector<MindSet> strategiesById;
+    std::vector<MindSet> strategiesById;
 
 };
 
