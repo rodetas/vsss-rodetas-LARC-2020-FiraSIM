@@ -5,7 +5,7 @@
 #ifndef SDK_RODETAS_ROBOTSTATE_H
 #define SDK_RODETAS_ROBOTSTATE_H
 
-#include <Domain/Point.h>
+#include <Domain/Point.h
 #include <Helpers/MathHelper.h>
 #include <cmath>
 
