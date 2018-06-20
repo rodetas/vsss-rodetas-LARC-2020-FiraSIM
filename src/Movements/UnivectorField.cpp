@@ -2,7 +2,7 @@
 // Created by paulo on 19/05/18.
 //
 
-#include <UnivectorField.h>
+#include <Movements/UnivectorField.h>
 
 UnivectorField::UnivectorField(float n, float k0, float dmin, float delta) : n(n), k0(k0), dmin(dmin), delta(delta) {}
 

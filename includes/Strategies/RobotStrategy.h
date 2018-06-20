@@ -11,8 +11,8 @@
 #include <Domain/Path.h>
 #include <Domain/Constants.h>
 #include <Strategies/RobotStrategyBase.h>
-#include <Movimentation.h>
-#include <UnivectorField.h>
+#include <Movements/Movimentation.h>
+#include <Movements/UnivectorField.h>
 
 class RobotStrategy {
 
