@@ -15,21 +15,17 @@ INSTALL_CORE() {
     cd build
     cmake ..
     make
-    cd ..
+    cd ../..
 }
 
 INSTALL_SAMPLE() {
-    cd ..
     sudo apt-get -y install g++ cmake protobuf-compiler libprotobuf-dev libboost-all-dev gtkmm-2.4
-}
 
-CMAKE () {
     mkdir build
     cd build
     cmake ..
+    make
 }
 
 INSTALL_CORE;
 INSTALL_SAMPLE;
-CMAKE;
-
