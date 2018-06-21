@@ -12,7 +12,7 @@ vss::WheelsCommand RobotStrategyGoal::specificStrategy(vss::WheelsCommand c) {
     return c;
 }
 
-vss::Pose RobotStrategyGoal::defineTarget() {
+vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
     vss::Pose goalTarget;
     vss::Point ballProjection = state.ball.projection;
 
@@ -44,6 +44,14 @@ vss::Pose RobotStrategyGoal::defineTarget() {
 
     }
 
+    if(robot.position.y < goalTarget.y){
+        arrivalOrientation.x = goalTarget.x - 8;
+        arrivalOrientation.y = goalTarget.y + 10;
+    }else{
+        arrivalOrientation.x = goalTarget.x - 8;
+        arrivalOrientation.y = goalTarget.y - 10;
+    }
+
     return goalTarget;
 }
 
@@ -51,14 +59,14 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     /* Se o target for a bola e se a bola estiver atrás do goleiro indo pro gol, definir angulo de chegada
      * para que o robô chega até a bola por trás evitando gol contra e a levando para fora do gol*/
 
+    //n = 0 faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
     float n = 0;
-    vss::Point arrivalOrientation = defineArrivalOrientation(target);
-
     if((target.x == state.ball.projection.x) && (target.y == state.ball.projection.y)){
-        if(target.x > robot.position.x - 3){
+        if(target.x > robot.position.x -3){
             n = 1.6;
         }
     }
+
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
     for (auto &r: state.robots) {
         if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
@@ -108,17 +116,4 @@ vss::WheelsCommand RobotStrategyGoal::stopStrategy(vss::WheelsCommand command) {
     }
 
     return c;
-}
-
-vss::Point RobotStrategyGoal::defineArrivalOrientation(vss::Pose target) {
-    vss::Point arrivalOrientation;
-
-    if(robot.position.y < target.y){
-        arrivalOrientation.x = target.x - 8;
-        arrivalOrientation.y = target.y + 10;
-    }else{
-        arrivalOrientation.x = target.x - 8;
-        arrivalOrientation.y = target.y - 10;
-    }
-    return arrivalOrientation;
 }

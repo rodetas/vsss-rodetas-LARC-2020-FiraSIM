@@ -15,11 +15,9 @@ public:
 
     vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
 
-    vss::Pose defineTarget() override;
+    vss::Pose defineTargetAndArrivalOrientation() override;
 
     float applyUnivectorField(vss::Pose) override;
-
-    vss::Point defineArrivalOrientation(vss::Pose) override;
 
 };
 
