@@ -6,9 +6,7 @@
 #define SDK_RODETAS_MATHHELPER_H
 
 #include <Domain/Point.h>
-#include <Common.h>
-
-using namespace common;
+#include <cmath>
 
 class Math {
 

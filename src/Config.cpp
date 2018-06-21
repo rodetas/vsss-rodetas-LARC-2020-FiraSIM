@@ -1,15 +1,15 @@
 #include <Config.h>
+#include <Domain/Constants.h>
 
 bool Config::debug = false;
 bool Config::realEnvironment = false;
+bool Config::controlWindow = Config::realEnvironment;
 vss::FieldTransformationType Config::changeSide = vss::FieldTransformationType::None;
 vss::TeamType Config::teamColor = vss::TeamType::Blue;
 bool Config::playersSwap = true;
 
-
-vss::Point Config::fieldSize = {170,130};
 vss::Point Config::goalSize = {10, 40};
-vss::Point Config::goalAreaSize = vss::Point(fieldSize.x*0.1, fieldSize.y*0.6);
+vss::Point Config::goalAreaSize = vss::Point(vss::MAX_COORDINATE_X*0.1, vss::MAX_COORDINATE_Y*0.6);
 
 bool Config::argumentParse(int argc, char** argv) {
     namespace bpo = boost::program_options;
@@ -29,7 +29,7 @@ bool Config::argumentParse(int argc, char** argv) {
     bpo::notify(vm);
 
     if (vm.count("help")){
-        cout << desc << endl;
+        std::cout << desc << std::endl;
         return false;
     }
     
@@ -38,8 +38,9 @@ bool Config::argumentParse(int argc, char** argv) {
     changeSide = (vss::FieldTransformationType) vm.count("rotate");
     debug = (bool) vm.count("debug");
     realEnvironment = (bool) vm.count("environment");
+    controlWindow = realEnvironment;
 
-    string color = vm["color"].as<string>();
+    std::string color = vm["color"].as<std::string>();
     if(color == "yellow"){
         teamColor = vss::TeamType::Yellow;
     }

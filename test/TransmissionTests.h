@@ -3,7 +3,7 @@
 //
 
 #include <Communication/Transmission.h>
-#include <Common.h>
+
 #include <assert.h>
 
 using namespace std;

@@ -5,13 +5,10 @@
 #ifndef SDK_RODETAS_MINDSET_H
 #define SDK_RODETAS_MINDSET_H
 
-namespace common {
-
-    enum MindSet {
-        GoalKeeper  = 0,
-        Defender    = 1,
-        Attacker    = 2
-    };
-}
+enum MindSet {
+    GoalKeeper  = 0,
+    Defender    = 1,
+    Attacker    = 2
+};
 
 #endif //SDK_RODETAS_MINDSET_H

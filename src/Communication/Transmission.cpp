@@ -1,4 +1,3 @@
-#include <Config.h>
 #include "Communication/Transmission.h"
 
 Transmission::Transmission() {
@@ -12,7 +11,6 @@ Transmission::Transmission() {
 }
 
 Transmission::~Transmission(){
-//    stopAllRobots(3);
     closeConnection();
 }
 
@@ -77,7 +75,7 @@ void Transmission::send(int i, vss::WheelsCommand c){
     OldCommand oldCommand(c);
 
     stringCommand = generateMessage(i, oldCommand);
-    
+
 //    cout << c << endl;
 //    cout << stringCommand << endl << endl;
 

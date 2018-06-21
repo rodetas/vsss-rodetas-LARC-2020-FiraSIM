@@ -1,28 +1,26 @@
-project(SDK_Rodetas)
 cmake_minimum_required(VERSION 2.6)
 
 OPTION(TESTS "build tests" OFF)
 
-SET(CMAKE_CXX_FLAGS "-g -Wall -Werror -std=c++11 -o2")
+project(SDK_Rodetas)
 
-FIND_PACKAGE(Boost 1.40 COMPONENTS program_options REQUIRED)
-INCLUDE(FindProtobuf)
+SET(CMAKE_CXX_FLAGS "-g -Wall -Werror -std=c++11 -o2 -pthread")
+
+FIND_PACKAGE(PkgConfig)
 FIND_PACKAGE(Protobuf REQUIRED)
+FIND_PACKAGE(Boost 1.40 COMPONENTS program_options REQUIRED)
+pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
 
-find_path(ZeroMQ_INCLUDE_DIR
-        NAMES zmq.hpp
-        PATHS ${PC_ZeroMQ_INCLUDE_DIRS}
-        )
+INCLUDE(FindProtobuf)
+include_directories(${PROTOBUF_INCLUDE_DIR} ${GTKMM_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+include_directories(includes includes/Strategies includes/Communication)
+include_directories(src src/Strategies src/Communication)
 
-find_library(ZeroMQ_LIBRARY
-        NAMES zmq
-        PATHS ${PC_ZeroMQ_LIBRARY_DIRS}
-        )
-
-include_directories(${PROTOBUF_INCLUDE_DIR} ${Boost_INCLUDE_DIR})
-include_directories(includes includes/strategies includes/Communication)
-include_directories(src src/strategies src/Communication)
 include_directories(usr/local/include)
+include_directories(usr/local/glade)
+
+link_libraries(${GTKMM_LIBRARIES})
+link_directories(/usr/lib ${GTKMM_LIBRARY_DIRS})
 
 file(GLOB_RECURSE SRC src/*.cpp)
 file(GLOB_RECURSE INCLUDE includes/*.h)
@@ -33,7 +31,8 @@ SET (VSS_CORE libvss-core.so)
 
 ADD_EXECUTABLE(SDK-Rodetas src/Main.cpp)
 
-TARGET_LINK_LIBRARIES(core ${VSS_CORE} ${PROTOBUF_LIBRARY} ${PROTOBUF_LIBRARIES} ${Boost_LIBRARIES})
+TARGET_LINK_LIBRARIES(core ${VSS_CORE} ${GTKMM_LIBRARIES} ${PROTOBUF_LIBRARY} ${PROTOBUF_LIBRARIES} ${Boost_LIBRARIES})
+
 TARGET_LINK_LIBRARIES(SDK-Rodetas core)
 
 # USAGE: cmake -D TESTS=ON ..

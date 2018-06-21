@@ -5,9 +5,9 @@
 #ifndef SDK_RODETAS_ROBOTSTATE_H
 #define SDK_RODETAS_ROBOTSTATE_H
 
-#include <Common.h>
 #include <Domain/Point.h>
-#include "Helpers/MathHelper.h"
+#include <Helpers/MathHelper.h>
+#include <cmath>
 
 class RobotState {
 
@@ -53,13 +53,12 @@ public:
         this->vectorSpeed = speed;
     }
 
-//@TODO: tirar as contas daqui e jogar pro MathHelper, deixar apenas as chamadas
     double cosFrom(vss::Point _p) {
-        return cos((Math::angulation(position,_p) - angle)/(180/M_PI));
+        return cos(Math::toRadian((Math::angulation(position,_p) - angle)));
     }
 
     double sinFrom(vss::Point _p) {
-        return sin((Math::angulation(position,_p) - angle)/(180/M_PI));
+        return sin(Math::toRadian(Math::angulation(position,_p) - angle));
     }
 
     double distanceFrom(vss::Point _p) {

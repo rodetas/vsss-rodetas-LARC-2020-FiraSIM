@@ -9,15 +9,11 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
-#include <iostream>
-#include <iomanip>
-#include <cmath>
 #include <Domain/Point.h>
+#include <Domain/WheelsCommand.h>
+#include <iomanip>
 #include <vector>
 #include <sstream>
-#include <Domain/WheelsCommand.h>
-
-using namespace std;
 
 namespace common{
 
@@ -49,17 +45,17 @@ namespace common{
             right = (int)(255*abs(c.rightVel))/80;
         }
 
-        virtual string to_string(){
-            stringstream ss;
+        virtual std::string to_string(){
+            std::stringstream ss;
             ss << direction;
-            ss << setfill('0') << setw(3) << left;
-            ss << setfill('0') << setw(3) << right;
+            ss << std::setfill('0') << std::setw(3) << left;
+            ss << std::setfill('0') << std::setw(3) << right;
             return ss.str();
         }
 
-        virtual vector<int> to_hex(){
-            string cmd = this->to_string();
-            vector<int> vec;
+        virtual std::vector<int> to_hex(){
+            std::string cmd = this->to_string();
+            std::vector<int> vec;
 
             for(const auto _cmd : cmd){
                 vec.push_back(int(_cmd));

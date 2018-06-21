@@ -1,13 +1,14 @@
 #include <Kernel.h>
-#include <strategies/RobotStrategyDefender.h>
-#include <strategies/RobotStrategyGoal.h>
-#include <RobotStrategyFactory.h>
-#include <Config.h>
 
-Kernel::Kernel(){
-}
+Kernel::Kernel() {
+    isPlaying = false;
+    isTestingTransmission = false;
+};
 
 void Kernel::loop() {
+
+    if(Config::controlWindow)
+        threadWindowControl = new thread(std::bind(&Kernel::windowThreadWrapper, this));
 
     RobotStrategyFactory coach;
 
@@ -52,7 +53,23 @@ void Kernel::loop() {
 
         coach.manage(robots, state, Config::playersSwap);
 
-        sendInterface.sendCommands(commands);
+        sendInterface.sendCommands(commands, isPlaying, isTestingTransmission);
         debugInterface.sendDebug(debug);
     }
+}
+
+void Kernel::windowThreadWrapper() {
+
+    windowControl.signalUpdatePlaying.connect(sigc::mem_fun(this, &Kernel::updatePlayingState));
+    windowControl.signalUpdateTesting.connect(sigc::mem_fun(this, &Kernel::updateTestingState));
+
+    windowControl.start();
+}
+
+void Kernel::updatePlayingState(bool playing) {
+    this->isPlaying = playing;
+}
+
+void Kernel::updateTestingState(bool testing) {
+    this->isTestingTransmission = testing;
 }

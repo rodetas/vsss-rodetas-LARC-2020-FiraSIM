@@ -9,12 +9,16 @@
 #ifndef _STRATEGY_H_
 #define _STRATEGY_H_
 
-
 #include <RodetasRobot.h>
+#include <Window/WindowControl.h>
 #include <Communication/DebugSenderAdapter.h>
 #include <Communication/StateReceiverAdapter.h>
 #include <Communication/CommandSendAdapter.h>
+#include <Strategies/RobotStrategyDefender.h>
+#include <Strategies/RobotStrategyGoal.h>
+#include <RobotStrategyFactory.h>
 #include <Config.h>
+#include <thread>
 
 using namespace std;
 using namespace common;
@@ -25,6 +29,20 @@ public:
     Kernel();
 
 	void loop();
+
+	void updatePlayingState(bool);
+	void updateTestingState(bool);
+
+private:
+
+	thread* threadWindowControl;
+
+	bool isPlaying;
+	bool isTestingTransmission;
+
+	WindowControl windowControl;
+
+	void windowThreadWrapper();
 };
 
 #endif // _STRATEGY_H_

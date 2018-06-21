@@ -14,9 +14,9 @@
 
 #include <Domain/RobotState.h>
 #include <Domain/RodetasState.h>
-#include <Common.h>
 #include <Domain/Path.h>
 #include <Domain/Pose.h>
+#include <vector>
 
 class UnivectorField {
 public:
@@ -27,11 +27,11 @@ public:
 
     //Defines the univector field angle with obstacles, the vector "obstacles" contains the position and the velocity of the obstacles
     float defineFi(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                   vector<pair<vss::Point, vss::Point>> obstacles);
+                   std::vector<std::pair<vss::Point, vss::Point>> obstacles);
 
     //Draws the path to the target with obstacles
     vss::Path drawPath(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                  vector<pair<vss::Point, vss::Point>> obstacles);
+                  std::vector<std::pair<vss::Point, vss::Point>> obstacles);
 
 private:
 

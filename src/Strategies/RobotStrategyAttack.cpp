@@ -2,11 +2,9 @@
 // Created by manoel on 18/04/18.
 //
 
-#include "strategies/RobotStrategyAttack.h"
+#include "Strategies/RobotStrategyAttack.h"
 
-RobotStrategyAttack::RobotStrategyAttack() {
-
-}
+RobotStrategyAttack::RobotStrategyAttack() = default;
 
 vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
     c = kickStrategy(c);
@@ -69,7 +67,7 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
     vss::Point arrivalOrientation = defineArrivalOrientation(target);
 
-    vector<pair<vss::Point, vss::Point>> obstacles;
+    std::vector<std::pair<vss::Point, vss::Point>> obstacles;
     int halfGoal1 = vss::MAX_COORDINATE_Y/2 + Config::goalSize.y * 0.85;
     int halfGoal2 = vss::MAX_COORDINATE_Y/2 - Config::goalSize.y * 0.85;
 
@@ -81,23 +79,13 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
         //Obstáculos roboôs
         for (auto &r: state.robots) {
             if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-                obstacles.push_back(make_pair(r.position, r.vectorSpeed));
+                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
             }
         }
     }
 
-//    //Obstáculos roboôs
-//    vector<pair<vss::Point, vss::Point>> obstacles;
-//    for (auto &r: state.robots) {
-//        if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-//            obstacles.push_back(make_pair(r.position, r.vectorSpeed));
-//        }
-//    }
-
-
-
     //Obstáculos de área do gol
-    pair<vss::Point, vss::Point> obstacle;
+    std::pair<vss::Point, vss::Point> obstacle;
     obstacle.first.x = 150;
     obstacle.first.y = 38;
     obstacle.second.x = 0;

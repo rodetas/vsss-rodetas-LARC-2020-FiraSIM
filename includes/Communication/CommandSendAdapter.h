@@ -5,7 +5,6 @@
 #ifndef SDK_RODETAS_COMMANDSENDADAPTER_H
 #define SDK_RODETAS_COMMANDSENDADAPTER_H
 
-#include <Common.h>
 #include <Domain/TeamType.h>
 #include <Communication/Transmission.h>
 #include <Communications/CommandSender.h>
@@ -17,7 +16,7 @@ public:
     CommandSendAdapter(vss::TeamType, bool);
 
     void createSocketSendCommand();
-    void sendCommands(vector<vss::WheelsCommand>);
+    void sendCommands(vector<vss::WheelsCommand>, bool, bool);
 
 private:
 

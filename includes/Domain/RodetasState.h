@@ -6,6 +6,7 @@
 #define SDK_RODETAS_STATE_H
 
 #include <vector>
+#include <sstream>
 #include "Domain/RobotState.h"
 #include "Domain/BallState.h"
 
@@ -18,23 +19,23 @@ public:
     BallState ball;
     std::vector<RobotState> robots;
 
-    string toString(){
-        stringstream ss;
-        ss << endl << endl << "Robots Team 1:" << endl;
+    std::string toString(){
+        std::stringstream ss;
+        ss << std::endl << std::endl << "Robots Team 1:" << std::endl;
         for(int i = 0 ; i < 3 ; i++){
             ss << "Robot: (X: " << robots[i].position.x;
             ss << " \tY: " << robots[i].position.y;
             ss << " \tANGLE: " << robots[i].angle;
         }
-        ss << endl << endl << "Robots Team 2:" << endl;
+        ss << std::endl << std::endl << "Robots Team 2:" << std::endl;
         for(int i = 3 ; i < 6 ; i++){
             ss << "Robot: (X: " << robots[i].position.x;
             ss << " \tY: " << robots[i].position.y;
             ss << " \tANGLE: " << robots[i].angle;
         }
 
-        ss << endl << endl << "Ball:" << endl;
-        ss << ball.position.x << " " << ball.position.y << endl;
+        ss << std::endl << std::endl << "Ball:" << std::endl;
+        ss << ball.position.x << " " << ball.position.y << std::endl;
 
         return ss.str();
     }

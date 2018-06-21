@@ -2,7 +2,6 @@
 // Created by manoel on 16/04/18.
 //
 
-#include <RodetasRobot.h>
 #include "Communication/StateReceiverAdapter.h"
 
 StateReceiverAdapter::StateReceiverAdapter(vss::TeamType teamColor, vss::FieldTransformationType changeSide) {

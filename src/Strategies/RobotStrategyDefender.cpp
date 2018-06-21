@@ -2,7 +2,7 @@
 // Created by manoel on 23/04/18.
 //
 
-#include <strategies/RobotStrategyDefender.h>
+#include <Strategies/RobotStrategyDefender.h>
 
 RobotStrategyDefender::RobotStrategyDefender() = default;
 
@@ -54,10 +54,10 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
 
     vss::Point arrivalOrientation = defineArrivalOrientation(target);
 
-    vector<pair<vss::Point, vss::Point>> obstacles;
+    std::vector<std::pair<vss::Point, vss::Point>> obstacles;
     for (auto &r: state.robots) {
         if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-            obstacles.push_back(make_pair(r.position, r.vectorSpeed));
+            obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
         }
     }
 

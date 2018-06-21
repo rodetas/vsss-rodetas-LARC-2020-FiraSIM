@@ -2,14 +2,14 @@
 // Created by paulo on 19/05/18.
 //
 
-#include <UnivectorField.h>
+#include <Movements/UnivectorField.h>
 
 UnivectorField::UnivectorField(float n, float k0, float dmin, float delta) : n(n), k0(k0), dmin(dmin), delta(delta) {}
 
 UnivectorField::UnivectorField() = default;
 
 float UnivectorField::defineFi(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                               vector<pair<vss::Point, vss::Point>> obstacles) {
+                               std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
 
     float moveFi = defineMoveFi(robot.position, target, arrivalOrientation);
 
@@ -54,8 +54,8 @@ float UnivectorField::defineFi(RobotState robot, vss::Pose target, vss::Point ar
 }
 
 vss::Path UnivectorField::drawPath(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                              vector<pair<vss::Point, vss::Point>> obstacles) {
-    vector<vss::Point> points;
+                              std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
+    std::vector<vss::Point> points;
     vss::Point point = robot.position;
     RobotState r = robot;
 
