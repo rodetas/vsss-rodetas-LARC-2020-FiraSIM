@@ -55,24 +55,23 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
 
 
             //Troca defensor por atacante
-            cout<<"ballx "<<state.ball.position.x<<" y comp "<<vss::MAX_COORDINATE_Y/2+40<<endl;
-            cout<<"bally "<<state.ball.position.y<<" y comp "<<vss::MAX_COORDINATE_Y/2+40<<endl;
-            cout<<"vss::MAX_COORDINATE_X/2"<<vss::MAX_COORDINATE_X/2<<endl;
             if(state.ball.position.x < vss::MAX_COORDINATE_X/2 &&
-               state.ball.position.y > 40 && //metade do campo + 20 cm
-               state.ball.position.y < 90 && state.ball.position.x < 25 &&
-               !attackerRobot.getRobotStrategyBase().isBlocked() &&
-               !defenderRobot.getRobotStrategyBase().isBlocked())
-               //!(attackerRobot.getSelfState().position.y > 25 && attackerRobot.getSelfState().position.y < 105 && // se nao tiver ambos dentro da area
-               //!defenderRobot.getSelfState().position.y>25 && defenderRobot.getSelfState().position.y < 105&&      //realiza troca
-               //defenderRobot.getSelfState().position.x >= vss::MAX_COORDINATE_X * 0.2))
-            {
+              !attackerRobot.getRobotStrategyBase().isBlocked() &&
+              !goalRobot.getRobotStrategyBase().isBlocked()&&
+              state.ball.position.y > 35 && state.ball.position.y < 105 && state.ball.position.x < 30 &&
+              ((attackerRobot.getSelfState().position.y - state.ball.position.y) > 7 ||
+              (state.ball.position.y - attackerRobot.getSelfState().position.y)) > -7 && // Distancia entre atacante e bola
+              ((defenderRobot.getSelfState().position.y <= 30 && attackerRobot.getSelfState().position.y >= 50) ||
+              (defenderRobot.getSelfState().position.y >= 80 && attackerRobot.getSelfState().position.y <= 60)))
+               {
                 cout<<"trocou......................................................................!"<<endl;
                 cout<<"trocou......................................................................!"<<endl;
                 cout<<"trocou......................................................................!"<<endl;
                 strategiesById[attackerRobot.getId()] = MindSet::Defender;
                 strategiesById[defenderRobot.getId()] = MindSet::Attacker;
-        }
+                //exit(1);
+                //return strategiesById;
+              }
 
 //		//trocar goleiro
 //		if(distanceGoalKeeperBall < distanceAttackerBall &&
