@@ -23,11 +23,9 @@ public:
 
     virtual vss::WheelsCommand specificStrategy(vss::WheelsCommand) = 0;
 
-    virtual vss::Pose defineTarget() = 0;
+    virtual vss::Pose defineTargetAndArrivalOrientation() = 0;
 
     virtual float applyUnivectorField(vss::Pose) = 0;
-
-    virtual vss::Point defineArrivalOrientation(vss::Pose) = 0;
 
     //@TODO: inserir comentarios em cada estrategia
     virtual vss::WheelsCommand cornerStrategy(vss::WheelsCommand);
@@ -49,6 +47,7 @@ protected:
     vss::WheelsCommand command;
 
     vss::Pose target;
+    vss::Point arrivalOrientation;
     vss::Point stepPose;
     vss::Path path;
 
