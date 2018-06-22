@@ -1,7 +1,7 @@
 #include <Kernel.h>
 
 Kernel::Kernel() {
-    isPlaying = true;
+    isPlaying = false;
     isTestingTransmission = false;
 };
 
@@ -52,7 +52,7 @@ void Kernel::loop() {
         }
 
         coach.manage(robots, state, Config::playersSwap);
-        cout << isPlaying << " " << isTestingTransmission << endl;
+
         sendInterface.sendCommands(commands, isPlaying, isTestingTransmission);
         debugInterface.sendDebug(debug);
     }

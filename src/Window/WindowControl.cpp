@@ -5,8 +5,6 @@
 #include "Window/WindowControl.h"
 
 void WindowControl::start() {
-
-
     initializeWidgets();
 	setSignals();
 
@@ -14,7 +12,10 @@ void WindowControl::start() {
 }
 
 bool WindowControl::onKeyboard(GdkEventKey* event, Gtk::Window* window) {
-
+	if (event->keyval == GDK_KEY_space)
+	{
+		buttonPlay->toggled();
+	}
     return true;
 }
 
@@ -51,17 +52,15 @@ void WindowControl::setSignals(){
 }
 
 void WindowControl::onPressButtonPlaying(Gtk::ToggleButton * buttonPlay){
-    // invocar o signal para atualizar o kernel que houve uma variavel
-    //signalUpdatePlaying.emit( valor )
-	//bool state;
+    if(buttonPlay->get_active()) buttonPlay->set_label("Sending");
+    else buttonPlay->set_label("Paused");
 
-	//state=Gtk::ToggleButton::get_active();
 	signalUpdatePlaying.emit(buttonPlay->get_active());
-
 }
 
 void WindowControl::onPressButtonTesting(Gtk::ToggleButton * buttonTests){
-    // invocar o signal para atualizar o kernel que houve uma na variavel
-    //signalUpdateTesting.emit ...
+    if(buttonTests->get_active()) buttonTests->set_label("Testing");
+    else buttonTests->set_label("Stopped");
+
 	signalUpdateTesting.emit(buttonTests->get_active());
 }

@@ -113,11 +113,20 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
 
 float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
-    //Obstáculos roboôs
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-    for (auto &r: state.robots) {
-        if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-            obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+    int halfGoal1 = vss::MAX_COORDINATE_Y/2 + Config::goalSize.y * 0.85;
+    int halfGoal2 = vss::MAX_COORDINATE_Y/2 - Config::goalSize.y * 0.85;
+
+    bool flag = (state.ball.projection.y < halfGoal1 && state.ball.projection.y > halfGoal2 && state.ball.projection.x > vss::MAX_COORDINATE_X*0.80);
+
+    if ((target.x == state.ball.position.x && target.y == state.ball.position.y) || flag) {
+        //Target na bola
+
+        //Obstáculos roboôs
+        for (auto &r: state.robots) {
+            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+            }
         }
     }
 
