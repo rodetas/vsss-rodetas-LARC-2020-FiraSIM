@@ -20,7 +20,6 @@ private:
 
     RodetasRobot getRobotByStrategy(MindSet, std::vector<RodetasRobot>&);
 
-    int timeLastChange;
     std::vector<MindSet> strategiesById;
 
     TimeHelper timeHelper;

@@ -6,7 +6,6 @@
 
 StateInterpreter::StateInterpreter() {
     strategiesById.resize(3);
-    timeLastChange = 2000;
 };
 
 std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>& robots,  RodetasState& state, bool freeBall) {
@@ -71,10 +70,7 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
 //			strategiesById[goalRobot.getId()] = MindSet::Attacker;
 //		}
 
-        timeLastChange = 2000;
     }
-
-    if(timeLastChange >= 0) timeLastChange--;
 
     return strategiesById;
 }
