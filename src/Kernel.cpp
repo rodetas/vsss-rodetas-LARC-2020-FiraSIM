@@ -19,9 +19,11 @@ void Kernel::loop() {
     CommandSendAdapter sendInterface(Config::teamColor, Config::realEnvironment);
 
     vector<RodetasRobot> robots;
-    vector<vss::WheelsCommand> commands(3);
+    robots.emplace_back(RodetasRobot(0, MindSet::Attacker, new RobotStrategyAttack()));
+    robots.emplace_back(RodetasRobot(1, MindSet::Defender, new RobotStrategyDefender()));
+    robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeper, new RobotStrategyGoal()));
 
-    for (unsigned int i = 0; i < 3; i++) robots.emplace_back(RodetasRobot(i, (MindSet) i));
+    vector<vss::WheelsCommand> commands(3);
 
     RodetasState state;
 
@@ -29,10 +31,6 @@ void Kernel::loop() {
     debug.paths.resize(3);
     debug.finalPoses.resize(3);
     debug.stepPoints.resize(3);
-
-    robots[0].setStrategy(new RobotStrategyAttack());
-    robots[1].setStrategy(new RobotStrategyDefender());
-    robots[2].setStrategy(new RobotStrategyGoal());
 
     while (isRunning) {
 

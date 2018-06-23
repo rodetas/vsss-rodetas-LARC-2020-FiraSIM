@@ -47,7 +47,7 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
 
 		// na defesa, o mais perto é o atacante
         if(distanceDefenderBall < distanceAttackerBall &&
-           state.ball.position.x < vss::MAX_COORDINATE_X/2 &&
+           state.ball.position.x < vss::MAX_COORDINATE_X*0.5 &&
            !attackerRobot.getRobotStrategyBase().isBlocked() &&
            !defenderRobot.getRobotStrategyBase().isBlocked()){
 

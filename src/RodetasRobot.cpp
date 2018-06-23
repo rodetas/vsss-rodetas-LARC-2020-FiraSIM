@@ -6,9 +6,10 @@
 
 RodetasRobot::RodetasRobot() = default;
 
-RodetasRobot::RodetasRobot(int id, MindSet mind) {
+RodetasRobot::RodetasRobot(int id, MindSet mind, RobotStrategy* strategy) {
     this->id = id;
     this->mindSet = mind;
+    this->strategy = strategy;
 }
 
 void RodetasRobot::calcAction(){
