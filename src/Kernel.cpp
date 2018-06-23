@@ -46,7 +46,7 @@ void Kernel::loop() {
 
             commands[i] = robot.getCommand();
 
-            debug.finalPoses[i] = robot.getFinalPose();
+            //debug.finalPoses[i] = robot.getFinalPose();
             debug.stepPoints[i] = robot.getStepPoint();
             debug.paths[i] = robot.getPath();
         }
