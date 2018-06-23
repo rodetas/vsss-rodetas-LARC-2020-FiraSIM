@@ -6,10 +6,10 @@
 
 RobotStrategyFactory::RobotStrategyFactory() = default;
 
-void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool swap) {
+void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool swap, bool isFreeBall) {
 
     if(swap){
-	    std::vector<MindSet> strategiesById = interpreter.defineStrategy(robots, state);
+	    std::vector<MindSet> strategiesById = interpreter.defineStrategy(robots, state, isFreeBall);
 
     	for(RodetasRobot& robot : robots){
         	MindSet robotMindSet = strategiesById[robot.getId()];
