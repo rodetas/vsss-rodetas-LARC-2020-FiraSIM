@@ -24,23 +24,25 @@ public:
 
    	void onPressButtonPlaying(Gtk::ToggleButton * );
     void onPressButtonTesting(Gtk::ToggleButton * );
+	void onPressButtonChange(Gtk::Button * );
+
+	void onCloseButton();
 
 	bool onKeyboard(GdkEventKey*, Gtk::Window*);
 
 	// signals to Kernel
     sigc::signal <void, bool> signalUpdatePlaying;
     sigc::signal <void, bool> signalUpdateTesting;
-
+	sigc::signal <void, bool> signalChangeFunction;
+	sigc::signal <void> signalCloseWindow;
 
 private:
-
-    bool* isPlaying;
-    bool* isTestingTransmission;
 
 	Gtk::Window* window = nullptr;
 
     Gtk::ToggleButton* buttonPlay = nullptr;
     Gtk::ToggleButton* buttonTests = nullptr;
+    Gtk::Button* buttonChange = nullptr;
 
 };
 

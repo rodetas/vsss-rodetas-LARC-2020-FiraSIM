@@ -3,6 +3,8 @@
 Kernel::Kernel() {
     isPlaying = false;
     isTestingTransmission = false;
+    isFreeBall = false;
+    isRunning = true;
 };
 
 void Kernel::loop() {
@@ -32,7 +34,7 @@ void Kernel::loop() {
     robots[1].setStrategy(new RobotStrategyDefender());
     robots[2].setStrategy(new RobotStrategyGoal());
 
-    while (true) {
+    while (isRunning) {
 
         // method which waits and receives a new state from simulator or vision
         state = receiveInterface.receiveState();
@@ -51,25 +53,41 @@ void Kernel::loop() {
             debug.paths[i] = robot.getPath();
         }
 
-        coach.manage(robots, state, Config::playersSwap);
+        coach.manage(robots, state, Config::playersSwap, isFreeBall);
 
         sendInterface.sendCommands(commands, isPlaying, isTestingTransmission);
         debugInterface.sendDebug(debug);
     }
+
+    if(Config::controlWindow)
+        threadWindowControl->detach();
 }
 
 void Kernel::windowThreadWrapper() {
 
     windowControl.signalUpdatePlaying.connect(sigc::mem_fun(this, &Kernel::updatePlayingState));
     windowControl.signalUpdateTesting.connect(sigc::mem_fun(this, &Kernel::updateTestingState));
+    windowControl.signalChangeFunction.connect(sigc::mem_fun(this, &Kernel::freeBallPositions));
+    windowControl.signalCloseWindow.connect(sigc::mem_fun(this, &Kernel::exitProgram));
 
     windowControl.start();
 }
 
+void Kernel::freeBallPositions(bool isFreeBall){
+    this->isFreeBall = isFreeBall;
+}
+
 void Kernel::updatePlayingState(bool playing) {
     this->isPlaying = playing;
+
+    if(isFreeBall && isPlaying) isFreeBall = false;
 }
 
 void Kernel::updateTestingState(bool testing) {
     this->isTestingTransmission = testing;
+}
+
+void Kernel::exitProgram(){
+    isRunning = false;
+    exit(0);
 }

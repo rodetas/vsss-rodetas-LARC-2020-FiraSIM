@@ -6,10 +6,10 @@
 
 StateInterpreter::StateInterpreter() {
     strategiesById.resize(3);
-    timeLastChange = -1;
+    timeLastChange = 2000;
 };
 
-std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>& robots,  RodetasState& state) {
+std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>& robots,  RodetasState& state, bool freeBall) {
 
     RodetasRobot goalRobot = getRobotByStrategy(MindSet::GoalKeeper, robots);
     RodetasRobot defenderRobot = getRobotByStrategy(MindSet::Defender, robots);
@@ -19,7 +19,18 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
     strategiesById[defenderRobot.getId()] = defenderRobot.getMindSet();
     strategiesById[attackerRobot.getId()] = attackerRobot.getMindSet();
 
-    if(timeLastChange == -1){
+    if(freeBall){
+        // se o defensor estiver mais perto da bola entao ele passa a ser o atacante para cobrar free ball
+        double distanceDefenderBall = Math::distancePoint(defenderRobot.getSelfState().position, state.ball.position);
+        double distanceAttackerBall = Math::distancePoint(attackerRobot.getSelfState().position, state.ball.position);
+        if(distanceDefenderBall < distanceAttackerBall){
+            strategiesById[attackerRobot.getId()] = MindSet::Defender;
+            strategiesById[defenderRobot.getId()] = MindSet::Attacker;
+        }
+
+        timeHelper.restartCounting();
+
+    } else if(timeHelper.timeOut(2000)){
 
         if (attackerRobot.getSelfState().position.x*1.3 < state.ball.position.x &&
                 !(attackerRobot.getSelfState().position.x < state.ball.position.x &&
@@ -60,7 +71,7 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
 //			strategiesById[goalRobot.getId()] = MindSet::Attacker;
 //		}
 
-        timeLastChange = 60;
+        timeLastChange = 2000;
     }
 
     if(timeLastChange >= 0) timeLastChange--;

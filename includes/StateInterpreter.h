@@ -6,6 +6,7 @@
 #define SDK_RODETAS_STATEINTERPRETER_H
 
 #include <RodetasRobot.h>
+#include <Helpers/TimeHelper.h>
 
 class StateInterpreter {
 
@@ -13,7 +14,7 @@ public:
 
     StateInterpreter();
 
-    std::vector<MindSet> defineStrategy(std::vector<RodetasRobot>&, RodetasState&);
+    std::vector<MindSet> defineStrategy(std::vector<RodetasRobot>&, RodetasState&, bool);
 
 private:
 
@@ -21,6 +22,8 @@ private:
 
     int timeLastChange;
     std::vector<MindSet> strategiesById;
+
+    TimeHelper timeHelper;
 
 };
 
