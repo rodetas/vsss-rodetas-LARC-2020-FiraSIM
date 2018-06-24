@@ -31,7 +31,7 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
 
     } else if(timeHelper.timeOut(2000)){
 
-        if (attackerRobot.getSelfState().position.x*1.3 < state.ball.position.x &&
+        if (attackerRobot.getSelfState().position.x*1.2 < state.ball.position.x &&
                 !(attackerRobot.getSelfState().position.x < state.ball.position.x &&
                 defenderRobot.getSelfState().position.x < state.ball.position.x) &&
             !attackerRobot.getRobotStrategyBase().isBlocked() &&
