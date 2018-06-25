@@ -8,6 +8,7 @@
 #include <Config.h>
 #include <Domain/Constants.h>
 #include <Domain/RobotState.h>
+#include <Helpers/TimeHelper.h>
 
 class RobotStrategyBase {
 
@@ -17,18 +18,19 @@ public:
 
     bool isStopped();
     bool isBlocked();
-    bool isStoppedFor(int);
+    bool isStoppedFor(double);
     bool isParallelToGoal();
     bool isBoard();
 
     void update(RobotState, vss::Point);
 
 private:
-    int stoppedFrames;
 
     RobotState robot;
     vss::Point target;
 
+    TimeHelper timeHelper;
+    double stoppedTime;
 };
 
 #endif //SDK_RODETAS_STRATEGYBASE_H

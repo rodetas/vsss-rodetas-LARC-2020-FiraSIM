@@ -17,7 +17,7 @@ double Math::radian(vss::Point a, vss::Point b) {
 }
 
 double Math::calculateLinearSpeed(double velX, double velY) {
-    return sqrt(pow(velX, 2) + pow(velY, 2));
+    return sqrt(pow(velX/3, 2) + pow(velY/3, 2));
 }
 
 vss::Point Math::calculateProjection(vss::Point initialPoint, double velX, double velY) {

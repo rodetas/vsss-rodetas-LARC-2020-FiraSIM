@@ -8,7 +8,8 @@ RobotStrategyFactory::RobotStrategyFactory() = default;
 
 void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool swap, bool isFreeBall) {
 
-    if(swap){
+	// apenas troca se houver 3 robos
+    if(swap && robots.size() == 3){
 	    std::vector<MindSet> strategiesById = interpreter.defineStrategy(robots, state, isFreeBall);
 
     	for(RodetasRobot& robot : robots){
@@ -16,16 +17,22 @@ void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasStat
 
         	switch(robotMindSet){
             	case MindSet::GoalKeeper:
-                	robot.setMindSet(MindSet::GoalKeeper);
-                	robot.setStrategy(new RobotStrategyGoal());
+            	    if(robot.getMindSet() != MindSet::GoalKeeper) {
+                        robot.setMindSet(MindSet::GoalKeeper);
+                        robot.setStrategy(new RobotStrategyGoal());
+                    }
                 	break;
             	case MindSet::Defender:
-                	robot.setMindSet(MindSet::Defender);
-                	robot.setStrategy(new RobotStrategyDefender());
+            	    if(robot.getMindSet() != MindSet::Defender) {
+                        robot.setMindSet(MindSet::Defender);
+                        robot.setStrategy(new RobotStrategyDefender());
+                    }
                 	break;
             	case MindSet::Attacker:
-                	robot.setMindSet(MindSet::Attacker);
-                	robot.setStrategy(new RobotStrategyAttack());
+            	    if(robot.getMindSet() != MindSet::Attacker) {
+                        robot.setMindSet(MindSet::Attacker);
+                        robot.setStrategy(new RobotStrategyAttack());
+                    }
                 	break;
         	}
     	}
