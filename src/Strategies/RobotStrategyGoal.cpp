@@ -35,8 +35,8 @@ vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
         ballProjection.x > vss::MAX_COORDINATE_X - 30) {
 
         //Testar essas duas linhas comentadas ou ativadas e ver qual leva menos gols
-        //goalTarget.x = ballProjection.x;
-        //goalTarget.y = ballProjection.y;
+        goalTarget.x = ballProjection.x;
+        goalTarget.y = ballProjection.y;
 
         if(ballPosition.x > robot.position.x){
             goalTarget.x = ballPosition.x;
@@ -71,7 +71,7 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
 
     if((target.x == state.ball.position.x) && (target.y == state.ball.position.y)){
-        if(target.x > robot.position.x){
+        if(target.x > robot.position.x + 4){
             n = 1.5;
         }
     }
