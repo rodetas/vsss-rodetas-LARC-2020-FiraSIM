@@ -10,7 +10,7 @@ void RobotStrategyBase::update(RobotState robot, vss::Point target) {
     this->robot = robot;
     this->target = target;
 
-    if (robot.linearSpeed < 6){
+    if (robot.linearSpeed < 10){
         stoppedTime = timeHelper.getElapsedTime();
         if(stoppedTime > 20000) stoppedTime = 20000;
     } else {
