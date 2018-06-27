@@ -36,13 +36,36 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
     target.y = state.ball.position.y;
 
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
+    vss::Point orientationPoint;
+    //Define orientação de chegada para os cantos do gol dependendo do lado de ataque e da proximidade do gol
+    if(state.ball.position.x < 85 && state.ball.position.x > 25){
+        if(state.ball.position.y < 45){
+            orientationPoint.x = 0;
+            orientationPoint.y = 85;
+        }else if(state.ball.position.y > 85){
+            orientationPoint.x = 0;
+            orientationPoint.y = 45 ;
+        }else{
+            orientationPoint.x = centerGoal.x;
+            orientationPoint.y = centerGoal.y;
+        }
+    }else{
+        orientationPoint.x = centerGoal.x;
+        orientationPoint.y = centerGoal.y;
+    }
+
+    if(state.ball.position.y > 50 && state.ball.position.y < 80 && state.ball.position.x < 65){
+        orientationPoint.x = 0;
+        orientationPoint.y = state.ball.projection.y;
+    }
+
     //Orientação pro gol
-    float numerator = abs(target.y - centerGoal.y);
-    float denominator = abs(target.x - centerGoal.x);
+    float numerator = abs(target.y - orientationPoint.y);
+    float denominator = abs(target.x - orientationPoint.x);
     float tg = (numerator/denominator);
     float deltaX = 10 * (1/sqrt(1 + (tg*tg)));
     float deltaY = tg * deltaX;
-    if(target.y < centerGoal.y){
+    if(target.y < orientationPoint.y){
         arrivalOrientation.x = target.x - deltaX;
         arrivalOrientation.y = target.y + deltaY;
     }else{
@@ -84,7 +107,7 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
         float tg = (numerator/denominator);
         float deltaX = 10 * (1/sqrt(1 + (tg*tg)));
         float deltaY = tg * deltaX;
-        if(target.y < centerGoal.y){
+        if(target.y < orientationPoint.y){
             arrivalOrientation.x = target.x - deltaX;
             arrivalOrientation.y = target.y + deltaY;
         }else{
@@ -119,7 +142,7 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
     bool flag = (state.ball.projection.y < halfGoal1 && state.ball.projection.y > halfGoal2 && state.ball.projection.x > vss::MAX_COORDINATE_X*0.80);
 
-    if ((target.x == state.ball.position.x && target.y == state.ball.position.y) || flag) {
+    if ((target.x == state.ball.position.x && target.y == state.ball.position.y)  || flag) {
         //Target na bola
 
         //Obstáculos roboôs
@@ -130,38 +153,40 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
         }
     }
 
+
     //Obstáculos de área do gol
     std::pair<vss::Point, vss::Point> obstacle;
-    obstacle.first.x = 150;
-    obstacle.first.y = 38;
-    obstacle.second.x = 0;
-    obstacle.second.y = 0;
-    obstacles.push_back(obstacle);
-    obstacle.first.y = 50;
-    obstacles.push_back(obstacle);
-    obstacle.first.y = 55;
-    obstacles.push_back(obstacle);
-    obstacle.first.y = 60;
-    obstacles.push_back(obstacle);
-    obstacle.first.y = 65;
-    obstacles.push_back(obstacle);
-    obstacle.first.y = 70;
-    obstacles.push_back(obstacle);
-    obstacle.first.y = 75;
-    obstacles.push_back(obstacle);
-    obstacle.first.y = 80;
-    obstacles.push_back(obstacle);
-    obstacle.first.y = 85;
-    obstacles.push_back(obstacle);
-    obstacle.first.y = 90;
-    obstacles.push_back(obstacle);
-    obstacle.first.x = 160;
-    obstacle.first.y = 92;
-    obstacles.push_back(obstacle);
-    obstacle.first.x = 160;
-    obstacle.first.y = 40;
-    obstacles.push_back(obstacle);
-
+    /*if((robot.position.x >= 148 || robot.position.y > 95) || (robot.position.x >= 148 || robot.position.y < 35)){
+        obstacle.first.x = 150;
+        obstacle.first.y = 38;
+        obstacle.second.x = 0;
+        obstacle.second.y = 0;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 50;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 55;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 60;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 65;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 70;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 75;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 80;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 85;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 90;
+        obstacles.push_back(obstacle);
+        obstacle.first.x = 160;
+        obstacle.first.y = 92;
+        obstacles.push_back(obstacle);
+        obstacle.first.x = 160;
+        obstacle.first.y = 40;
+        obstacles.push_back(obstacle);
+    }*/
     UnivectorField univectorField(2, 0.12, 4.5, 4.5);
     path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);

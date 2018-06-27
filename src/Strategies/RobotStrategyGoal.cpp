@@ -45,11 +45,11 @@ vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
     }
 
     // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
-    if (strategyBase.isStoppedFor(3000) && robot.distanceFrom(goalTarget) > 6) {
-        goalTarget.x = vss::MAX_COORDINATE_X - 10;
-        goalTarget.y = vss::MAX_COORDINATE_Y / 2;
-
-    }
+//    if (strategyBase.isStoppedFor(3000) && robot.distanceFrom(goalTarget) > 6) {
+//        goalTarget.x = vss::MAX_COORDINATE_X - 10;
+//        goalTarget.y = vss::MAX_COORDINATE_Y / 2;
+//
+//    }
 
     if(robot.position.y < goalTarget.y){
         arrivalOrientation.x = goalTarget.x - 8;
