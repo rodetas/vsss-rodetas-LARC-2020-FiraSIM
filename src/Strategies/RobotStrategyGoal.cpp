@@ -15,6 +15,7 @@ vss::WheelsCommand RobotStrategyGoal::specificStrategy(vss::WheelsCommand c) {
 vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
     vss::Pose goalTarget;
     vss::Point ballProjection = state.ball.projection;
+    vss::Point ballPosition = state.ball.position;
 
     // posição para seguir linha da bola
     goalTarget.x = vss::MAX_COORDINATE_X - 16;
@@ -33,8 +34,14 @@ vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
         ballProjection.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) &&
         ballProjection.x > vss::MAX_COORDINATE_X - 30) {
 
+        //Testar essas duas linhas comentadas ou ativadas e ver qual leva menos gols
         goalTarget.x = ballProjection.x;
         goalTarget.y = ballProjection.y;
+
+        if(ballPosition.x > robot.position.x){
+            goalTarget.x = ballPosition.x;
+            goalTarget.y = ballPosition.y;
+        }
     }
 
     // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
@@ -61,16 +68,19 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
 
     //n = 0 faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
     float n = 0;
-    if((target.x == state.ball.projection.x) && (target.y == state.ball.projection.y)){
-        if(target.x > robot.position.x -3){
-            n = 1.6;
+    std::vector<std::pair<vss::Point, vss::Point>> obstacles;
+
+    if((target.x == state.ball.position.x) && (target.y == state.ball.position.y)){
+        if(target.x > robot.position.x + 4){
+            n = 1.5;
         }
     }
 
-    std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-    for (auto &r: state.robots) {
-        if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-            obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+    if(robot.distanceFrom(target) > 10){
+        for (auto &r: state.robots) {
+            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+            }
         }
     }
 
