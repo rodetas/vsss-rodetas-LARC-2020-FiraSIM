@@ -54,6 +54,7 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
         orientationPoint.y = centerGoal.y;
     }
 
+    //Orientação pro gol na linha da bola
     if(state.ball.position.y > 50 && state.ball.position.y < 80 && state.ball.position.x < 65){
         orientationPoint.x = 0;
         orientationPoint.y = state.ball.projection.y;
@@ -137,18 +138,15 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
 float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-    int halfGoal1 = vss::MAX_COORDINATE_Y/2 + Config::goalSize.y * 0.85;
-    int halfGoal2 = vss::MAX_COORDINATE_Y/2 - Config::goalSize.y * 0.85;
 
-    bool flag = (state.ball.projection.y < halfGoal1 && state.ball.projection.y > halfGoal2 && state.ball.projection.x > vss::MAX_COORDINATE_X*0.80);
-
-    if ((target.x == state.ball.position.x && target.y == state.ball.position.y)  || flag) {
-        //Target na bola
-
-        //Obstáculos roboôs
-        for (auto &r: state.robots) {
-            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+    //Se o target for a bola ou sua projeção e o robo estiver longe, desvia de todos
+    if ((target.x == state.ball.position.x && target.y == state.ball.position.y) || (target.x == state.ball.projection.x && target.y == state.ball.position.y)) {
+        if(robot.distanceFrom(target) > 15){
+            //Obstáculos roboôs
+            for (auto &r: state.robots) {
+                if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+                    obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+                }
             }
         }
     }
