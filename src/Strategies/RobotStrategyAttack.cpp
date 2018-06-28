@@ -162,7 +162,7 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
     //Obstáculos de área do gol
     std::pair<vss::Point, vss::Point> obstacle;
-    /*if((robot.position.x >= 148 || robot.position.y > 95) || (robot.position.x >= 148 || robot.position.y < 35)){
+    //if((robot.position.x >= 148 || robot.position.y > 95) || (robot.position.x >= 148 || robot.position.y < 35)){
         obstacle.first.x = 150;
         obstacle.first.y = 38;
         obstacle.second.x = 0;
@@ -192,7 +192,7 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
         obstacle.first.x = 160;
         obstacle.first.y = 40;
         obstacles.push_back(obstacle);
-    }*/
+    //}
     UnivectorField univectorField(2, 0.12, 4.5, 4.5);
     path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);

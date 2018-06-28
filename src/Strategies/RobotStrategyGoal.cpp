@@ -70,9 +70,13 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     float n = 0;
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
 
+    std::cout<<state.ball.position.x<<" - "<<state.ball.position.y<<std::endl;
+
     if((target.x == state.ball.position.x) && (target.y == state.ball.position.y)){
-        if(target.x > robot.position.x + 4){
-            n = 1.5;
+        if(target.y > 40 && target.y < 88){
+            if(target.x > robot.position.x){
+                n = 1.5;
+            }
         }
     }
 
