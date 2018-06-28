@@ -78,16 +78,24 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
     if(target.y < 13){
         arrivalOrientation.x = target.x - 10;
         arrivalOrientation.y = target.y - 7;
+        if(target.x < 20){
+            arrivalOrientation.x = target.x - 10;
+            arrivalOrientation.y = target.y;
+        }
     }
     if(target.y > 115){
         arrivalOrientation.x = target.x - 10;
         arrivalOrientation.y = target.y + 7;
+        if(target.x < 20){
+            arrivalOrientation.x = target.x - 10;
+            arrivalOrientation.y = target.y;
+        }
     }
-    if(target.x > 140 && target.y < 48){
+    if(target.x > 150 && target.y < 48){
         arrivalOrientation.x = target.x;
         arrivalOrientation.y = target.y - 10;
     }
-    if(target.x > 140 && target.y > 86){
+    if(target.x > 150 && target.y > 86){
         arrivalOrientation.x = target.x;
         arrivalOrientation.y = target.y + 10;
     }
@@ -141,7 +149,7 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
     //Se o target for a bola ou sua projeção e o robo estiver longe, desvia de todos
     if ((target.x == state.ball.position.x && target.y == state.ball.position.y) || (target.x == state.ball.projection.x && target.y == state.ball.position.y)) {
-        if(robot.distanceFrom(target) > 15){
+        if(robot.distanceFrom(target) > 13){
             //Obstáculos roboôs
             for (auto &r: state.robots) {
                 if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
