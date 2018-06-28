@@ -12,9 +12,10 @@ vss::WheelsCommand RobotStrategyGoal::specificStrategy(vss::WheelsCommand c) {
     return c;
 }
 
-vss::Pose RobotStrategyGoal::defineTarget() {
+vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
     vss::Pose goalTarget;
     vss::Point ballProjection = state.ball.projection;
+    vss::Point ballPosition = state.ball.position;
 
     // posição para seguir linha da bola
     goalTarget.x = vss::MAX_COORDINATE_X - 16;
@@ -33,15 +34,29 @@ vss::Pose RobotStrategyGoal::defineTarget() {
         ballProjection.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) &&
         ballProjection.x > vss::MAX_COORDINATE_X - 30) {
 
+        //Testar essas duas linhas comentadas ou ativadas e ver qual leva menos gols
         goalTarget.x = ballProjection.x;
         goalTarget.y = ballProjection.y;
+
+        if(ballPosition.x > robot.position.x){
+            goalTarget.x = ballPosition.x;
+            goalTarget.y = ballPosition.y;
+        }
     }
 
     // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
-    if (strategyBase.isStoppedFor(90) && robot.distanceFrom(goalTarget) > 6) {
+    if (strategyBase.isStoppedFor(3000) && robot.distanceFrom(goalTarget) > 6) {
         goalTarget.x = vss::MAX_COORDINATE_X - 10;
         goalTarget.y = vss::MAX_COORDINATE_Y / 2;
 
+    }
+
+    if(robot.position.y < goalTarget.y){
+        arrivalOrientation.x = goalTarget.x - 8;
+        arrivalOrientation.y = goalTarget.y + 10;
+    }else{
+        arrivalOrientation.x = goalTarget.x - 8;
+        arrivalOrientation.y = goalTarget.y - 10;
     }
 
     return goalTarget;
@@ -51,18 +66,21 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     /* Se o target for a bola e se a bola estiver atrás do goleiro indo pro gol, definir angulo de chegada
      * para que o robô chega até a bola por trás evitando gol contra e a levando para fora do gol*/
 
+    //n = 0 faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
     float n = 0;
-    vss::Point arrivalOrientation = defineArrivalOrientation(target);
+    std::vector<std::pair<vss::Point, vss::Point>> obstacles;
 
-    if((target.x == state.ball.projection.x) && (target.y == state.ball.projection.y)){
-        if(target.x > robot.position.x - 3){
-            n = 1.6;
+    if((target.x == state.ball.position.x) && (target.y == state.ball.position.y)){
+        if(target.x > robot.position.x + 4){
+            n = 1.5;
         }
     }
-    std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-    for (auto &r: state.robots) {
-        if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-            obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+
+    if(robot.distanceFrom(target) > 10){
+        for (auto &r: state.robots) {
+            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+            }
         }
     }
 
@@ -108,17 +126,4 @@ vss::WheelsCommand RobotStrategyGoal::stopStrategy(vss::WheelsCommand command) {
     }
 
     return c;
-}
-
-vss::Point RobotStrategyGoal::defineArrivalOrientation(vss::Pose target) {
-    vss::Point arrivalOrientation;
-
-    if(robot.position.y < target.y){
-        arrivalOrientation.x = target.x - 8;
-        arrivalOrientation.y = target.y + 10;
-    }else{
-        arrivalOrientation.x = target.x - 8;
-        arrivalOrientation.y = target.y - 10;
-    }
-    return arrivalOrientation;
 }

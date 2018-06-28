@@ -20,7 +20,7 @@ class RobotStrategyFactory {
 public:
 
     RobotStrategyFactory();
-    void manage(std::vector<RodetasRobot>&, RodetasState&, bool swap);
+    void manage(std::vector<RodetasRobot>&, RodetasState&, bool, bool);
 
 private:
 

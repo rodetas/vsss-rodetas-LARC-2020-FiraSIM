@@ -14,7 +14,7 @@ vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c)
     return c;
 }
 
-vss::Pose RobotStrategyDefender::defineTarget() {
+vss::Pose RobotStrategyDefender::defineTargetAndArrivalOrientation(){
 
     vss::Pose target;
     vss::Point ballProjection = state.ball.projection;
@@ -113,12 +113,15 @@ vss::Pose RobotStrategyDefender::defineTarget() {
         }
     }
 
+    //Orientação pro lado do gol
+    arrivalOrientation.x = target.x - 10;
+    arrivalOrientation.y = target.y;
+
     return target;
 }
 
 float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
 
-    vss::Point arrivalOrientation = defineArrivalOrientation(target);
 
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
     for (auto &r: state.robots) {
@@ -130,55 +133,4 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
     UnivectorField univectorField(2, 0.12, 4.5, 4.5);
     path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
-}
-
-vss::Point RobotStrategyDefender::defineArrivalOrientation(vss::Pose target) {
-    vss::Point goal(0, 75);
-    vss::Point arrivalOrientation;
-
-    if((target.x == state.ball.projection.x) && (target.y == state.ball.projection.y)){
-
-        if(target.y < 13){
-            arrivalOrientation.x = target.x - 10;
-            arrivalOrientation.y = target.y - 7;
-            return arrivalOrientation;
-        }
-
-        if(target.y > 115){
-            arrivalOrientation.x = target.x - 10;
-            arrivalOrientation.y = target.y + 7;
-            return arrivalOrientation;
-        }
-
-        if(target.x > 140 && target.y < 48){
-            arrivalOrientation.x = target.x;
-            arrivalOrientation.y = target.y - 10;
-            return arrivalOrientation;
-        }
-
-        if(target.x > 140 && target.y > 86){
-            arrivalOrientation.x = target.x;
-            arrivalOrientation.y = target.y + 10;
-            return arrivalOrientation;
-        }
-
-        float numerator = abs(target.y - goal.y);
-        float denominator = abs(target.x - goal.x);
-        float tg = (numerator/denominator);
-        float deltaX = 10 * (1/sqrt(1 + (tg*tg)));
-        float deltaY = tg * deltaX;
-
-        if(target.y < goal.y){
-            arrivalOrientation.x = target.x - deltaX;
-            arrivalOrientation.y = target.y + deltaY;
-        }else{
-            arrivalOrientation.x = target.x - deltaX;
-            arrivalOrientation.y = target.y - deltaY;
-        }
-        return arrivalOrientation;
-    } else{
-        arrivalOrientation.x = target.x - 10;
-        arrivalOrientation.y = target.y;
-        return arrivalOrientation;
-    }
 }

@@ -18,7 +18,7 @@ class RodetasRobot {
 public:
 
     RodetasRobot();
-    RodetasRobot(int, MindSet);
+    RodetasRobot(int, MindSet, RobotStrategy*);
 
     void calcAction();
 

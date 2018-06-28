@@ -32,6 +32,8 @@ public:
 
 	void updatePlayingState(bool);
 	void updateTestingState(bool);
+    void freeBallPositions(bool);
+    void exitProgram();
 
 private:
 
@@ -39,6 +41,8 @@ private:
 
 	bool isPlaying;
 	bool isTestingTransmission;
+    bool isFreeBall;
+    bool isRunning;
 
 	WindowControl windowControl;
 

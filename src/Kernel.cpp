@@ -1,8 +1,10 @@
 #include <Kernel.h>
 
 Kernel::Kernel() {
-    isPlaying = true;
+    isPlaying = false;
     isTestingTransmission = false;
+    isFreeBall = false;
+    isRunning = true;
 };
 
 void Kernel::loop() {
@@ -17,9 +19,11 @@ void Kernel::loop() {
     CommandSendAdapter sendInterface(Config::teamColor, Config::realEnvironment);
 
     vector<RodetasRobot> robots;
-    vector<vss::WheelsCommand> commands(3);
+    robots.emplace_back(RodetasRobot(0, MindSet::Attacker, new RobotStrategyAttack()));
+    robots.emplace_back(RodetasRobot(1, MindSet::Defender, new RobotStrategyDefender()));
+    robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeper, new RobotStrategyGoal()));
 
-    for (unsigned int i = 0; i < 3; i++) robots.emplace_back(RodetasRobot(i, (MindSet) i));
+    vector<vss::WheelsCommand> commands(3);
 
     RodetasState state;
 
@@ -28,11 +32,7 @@ void Kernel::loop() {
     debug.finalPoses.resize(3);
     debug.stepPoints.resize(3);
 
-    robots[0].setStrategy(new RobotStrategyAttack());
-    robots[1].setStrategy(new RobotStrategyDefender());
-    robots[2].setStrategy(new RobotStrategyGoal());
-
-    while (true) {
+    while (isRunning) {
 
         // method which waits and receives a new state from simulator or vision
         state = receiveInterface.receiveState();
@@ -46,30 +46,46 @@ void Kernel::loop() {
 
             commands[i] = robot.getCommand();
 
-            debug.finalPoses[i] = robot.getFinalPose();
+            //debug.finalPoses[i] = robot.getFinalPose();
             debug.stepPoints[i] = robot.getStepPoint();
             debug.paths[i] = robot.getPath();
         }
 
-        coach.manage(robots, state, Config::playersSwap);
-        cout << isPlaying << " " << isTestingTransmission << endl;
+        coach.manage(robots, state, Config::playersSwap, isFreeBall);
+
         sendInterface.sendCommands(commands, isPlaying, isTestingTransmission);
         debugInterface.sendDebug(debug);
     }
+
+    if(Config::controlWindow)
+        threadWindowControl->detach();
 }
 
 void Kernel::windowThreadWrapper() {
 
     windowControl.signalUpdatePlaying.connect(sigc::mem_fun(this, &Kernel::updatePlayingState));
     windowControl.signalUpdateTesting.connect(sigc::mem_fun(this, &Kernel::updateTestingState));
+    windowControl.signalChangeFunction.connect(sigc::mem_fun(this, &Kernel::freeBallPositions));
+    windowControl.signalCloseWindow.connect(sigc::mem_fun(this, &Kernel::exitProgram));
 
     windowControl.start();
 }
 
+void Kernel::freeBallPositions(bool isFreeBall){
+    this->isFreeBall = isFreeBall;
+}
+
 void Kernel::updatePlayingState(bool playing) {
     this->isPlaying = playing;
+
+    if(isFreeBall && isPlaying) isFreeBall = false;
 }
 
 void Kernel::updateTestingState(bool testing) {
     this->isTestingTransmission = testing;
+}
+
+void Kernel::exitProgram(){
+    isRunning = false;
+    exit(0);
 }
