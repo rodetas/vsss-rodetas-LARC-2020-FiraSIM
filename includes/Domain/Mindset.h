@@ -10,5 +10,4 @@ enum MindSet {
     Defender    = 1,
     Attacker    = 2
 };
-
 #endif //SDK_RODETAS_MINDSET_H

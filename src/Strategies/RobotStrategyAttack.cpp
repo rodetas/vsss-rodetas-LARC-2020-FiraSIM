@@ -33,8 +33,15 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
 vss::Pose RobotStrategyAttack::defineTarget() {
 
     vss::Pose target;
-    target.x = state.ball.position.x;
-    target.y = state.ball.position.y;
+    if(robot.position.x < 38 && robot.position.y > 35 && robot.position.x < 95 )
+    {
+        target.x = state.ball.projection.x;
+        target.y = state.ball.projection.y;
+    }
+    else {
+        target.x = state.ball.position.x;
+        target.y = state.ball.position.y;
+    }
 
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
     double angleRobotGoal = Math::angulation(robot.position, centerGoal);

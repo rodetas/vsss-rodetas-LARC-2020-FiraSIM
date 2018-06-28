@@ -9,6 +9,7 @@
 #include <Domain/RodetasState.h>
 #include <Domain/Pose.h>
 #include <Domain/Path.h>
+#include <RodetasRobot.h>
 #include <Domain/Constants.h>
 #include <Strategies/RobotStrategyBase.h>
 #include <Movements/Movimentation.h>
