@@ -38,7 +38,7 @@ vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
         goalTarget.x = ballProjection.x;
         goalTarget.y = ballProjection.y;
 
-        if(ballPosition.x > robot.position.x){
+        if(ballPosition.x > robot.position.x + 4){
             goalTarget.x = ballPosition.x;
             goalTarget.y = ballPosition.y;
         }
@@ -69,9 +69,7 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     //n = 0 faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
     float n = 0;
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-
-    std::cout<<state.ball.position.x<<" - "<<state.ball.position.y<<std::endl;
-
+    
     if((target.x == state.ball.position.x) && (target.y == state.ball.position.y)){
         if(target.y > 40 && target.y < 88){
             if(target.x > robot.position.x){
@@ -80,7 +78,7 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
         }
     }
 
-    if(robot.distanceFrom(target) > 10){
+    if(robot.distanceFrom(target) > 15){
         for (auto &r: state.robots) {
             if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
                 obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
