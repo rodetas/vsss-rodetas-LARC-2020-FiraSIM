@@ -130,9 +130,9 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
 
     // caso a bola esteja entrando na area manda o atacante para o meio do campo para evitar cometer penalti
     if(((state.ball.projection.y < halfGoal1 && state.ball.projection.y > halfGoal2 && state.ball.projection.x > vss::MAX_COORDINATE_X*0.80))){
-        target = vss::Pose(vss::MAX_COORDINATE_X/2, vss::MAX_COORDINATE_Y/2, 0);
+        target = vss::Pose(vss::MAX_COORDINATE_X/2 + 25, vss::MAX_COORDINATE_Y/2, 0);
         //Orientação pro lado do gol
-        arrivalOrientation.x = target.x - 10;
+        arrivalOrientation.x = target.x;
         arrivalOrientation.y = target.y;
     }
 
@@ -149,7 +149,7 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
     //Se o target for a bola ou sua projeção e o robo estiver longe, desvia de todos
     if ((target.x == state.ball.position.x && target.y == state.ball.position.y) || (target.x == state.ball.projection.x && target.y == state.ball.position.y)) {
-        if(robot.distanceFrom(target) > 13){
+        if(robot.distanceFrom(target) > 15){
             //Obstáculos roboôs
             for (auto &r: state.robots) {
                 if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
@@ -162,11 +162,20 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
     //Obstáculos de área do gol
     std::pair<vss::Point, vss::Point> obstacle;
-    //if((robot.position.x >= 148 || robot.position.y > 95) || (robot.position.x >= 148 || robot.position.y < 35)){
-        obstacle.first.x = 150;
+
+    obstacle.second.x = 0;
+    obstacle.second.y = 0;
+
+
+    if(!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
+     robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 -5) &&
+     robot.position.x > vss::MAX_COORDINATE_X - 25)){
+
+        obstacle.first.x = 152;
+
         obstacle.first.y = 38;
-        obstacle.second.x = 0;
-        obstacle.second.y = 0;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 45;
         obstacles.push_back(obstacle);
         obstacle.first.y = 50;
         obstacles.push_back(obstacle);
@@ -184,15 +193,18 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
         obstacles.push_back(obstacle);
         obstacle.first.y = 85;
         obstacles.push_back(obstacle);
-        obstacle.first.y = 90;
+        obstacle.first.y = 93;
         obstacles.push_back(obstacle);
+
         obstacle.first.x = 160;
-        obstacle.first.y = 92;
+
+        obstacle.first.y = 96;
         obstacles.push_back(obstacle);
-        obstacle.first.x = 160;
-        obstacle.first.y = 40;
+        obstacle.first.y = 33;
         obstacles.push_back(obstacle);
-    //}
+    }
+
+
     UnivectorField univectorField(2, 0.12, 4.5, 4.5);
     path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
     return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
