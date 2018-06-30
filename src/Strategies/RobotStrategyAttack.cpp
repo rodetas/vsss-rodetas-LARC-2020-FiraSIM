@@ -31,7 +31,9 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
 
 vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
     vss::Pose target;
-    if(state.ball.position.x < 30 && robot.position.x - state.ball.position.x > 4){
+
+    //Muda o target para a projeção para tentar melhorar o cruzamento
+    /*if(state.ball.position.x < 30 && robot.position.x - state.ball.position.x > 4){
         target.x = state.ball.projection.x;
         target.y = state.ball.projection.y;
     }
@@ -42,7 +44,10 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
     else {
         target.x = state.ball.position.x;
         target.y = state.ball.position.y;
-    }
+    }*/
+
+    target.x = state.ball.position.x;
+    target.y = state.ball.position.y;
 
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
     vss::Point orientationPoint;

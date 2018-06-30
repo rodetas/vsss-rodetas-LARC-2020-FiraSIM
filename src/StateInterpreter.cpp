@@ -8,7 +8,8 @@ StateInterpreter::StateInterpreter() {
     strategiesById.resize(3);
 };
 
-std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>& robots,  RodetasState& state, bool freeBall) {
+std::vector<MindSet>
+StateInterpreter::defineStrategy(std::vector<RodetasRobot> &robots, RodetasState &state, bool freeBall) {
 
     RodetasRobot goalRobot = getRobotByStrategy(MindSet::GoalKeeper, robots);
     RodetasRobot defenderRobot = getRobotByStrategy(MindSet::Defender, robots);
@@ -19,12 +20,12 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
     strategiesById[attackerRobot.getId()] = attackerRobot.getMindSet();
 
     //Troca defensor por atacante
-    if(state.ball.position.x < vss::MAX_COORDINATE_X/2 &&
-      ((state.ball.projection.y > 35 && state.ball.projection.y < 85 && state.ball.position.x < 30) || // Bola dentro da area
-      (state.ball.position.y > 25 && state.ball.position.y < 100 )) && // Bola dentro da area
-      (attackerRobot.getSelfState().position.y > 90  || attackerRobot.getSelfState().position.y < 35) &&
-      (defenderRobot.getSelfState().position.y > 60)&& (defenderRobot.getSelfState().position.y < 70) && // se o defensor esta posicionado
-      defenderRobot.getSelfState().position.x > 32 ) // se o defensor ta fora da area
+    if (state.ball.position.x < vss::MAX_COORDINATE_X / 2 &&
+        ((state.ball.projection.y > 50 && state.ball.projection.y < 80 &&
+          state.ball.position.x < defenderRobot.getSelfState().position.x)) && // Bola dentro da area
+        (attackerRobot.getSelfState().position.y > 90 || attackerRobot.getSelfState().position.y < 35) &&
+        (defenderRobot.getSelfState().position.y > 55) &&
+        (defenderRobot.getSelfState().position.y < 75)) // se o defensor esta posicionado
     {
         strategiesById[attackerRobot.getId()] = MindSet::Defender;
         strategiesById[defenderRobot.getId()] = MindSet::Attacker;
@@ -57,8 +58,6 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
             strategiesById[attackerRobot.getId()] = MindSet::Defender;
             strategiesById[defenderRobot.getId()] = MindSet::Attacker;
         }
-
-
 
         /*
         //Troca defensor por atacante pelos lados do campo
@@ -116,9 +115,10 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
     }
     return strategiesById;
 }
-RodetasRobot StateInterpreter::getRobotByStrategy(MindSet mindSet, std::vector<RodetasRobot>& robots) {
 
-    auto found = std::find_if(robots.begin(), robots.end(), [&](RodetasRobot r){
+RodetasRobot StateInterpreter::getRobotByStrategy(MindSet mindSet, std::vector<RodetasRobot> &robots) {
+
+    auto found = std::find_if(robots.begin(), robots.end(), [&](RodetasRobot r) {
         return r.getMindSet() == mindSet;
     });
 
