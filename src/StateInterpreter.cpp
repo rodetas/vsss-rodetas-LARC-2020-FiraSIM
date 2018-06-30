@@ -3,8 +3,6 @@
 //
 
 #include "StateInterpreter.h"
-#include <iostream>
-using namespace std;
 
 StateInterpreter::StateInterpreter() {
     strategiesById.resize(3);
@@ -19,6 +17,18 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
     strategiesById[goalRobot.getId()] = goalRobot.getMindSet();
     strategiesById[defenderRobot.getId()] = defenderRobot.getMindSet();
     strategiesById[attackerRobot.getId()] = attackerRobot.getMindSet();
+
+    //Troca defensor por atacante
+    if(state.ball.position.x < vss::MAX_COORDINATE_X/2 &&
+      ((state.ball.projection.y > 35 && state.ball.projection.y < 85 && state.ball.position.x < 30) || // Bola dentro da area
+      (state.ball.position.y > 25 && state.ball.position.y < 100 )) && // Bola dentro da area
+      (attackerRobot.getSelfState().position.y > 90  || attackerRobot.getSelfState().position.y < 35) &&
+      (defenderRobot.getSelfState().position.y > 60)&& (defenderRobot.getSelfState().position.y < 70) && // se o defensor esta posicionado
+      defenderRobot.getSelfState().position.x > 32 ) // se o defensor ta fora da area
+    {
+        strategiesById[attackerRobot.getId()] = MindSet::Defender;
+        strategiesById[defenderRobot.getId()] = MindSet::Attacker;
+    }
 
     if (freeBall) {
         // se o defensor estiver mais perto da bola entao ele passa a ser o atacante para cobrar free ball
@@ -49,22 +59,22 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
         }
 
 
-        //Troca defensor por atacante
+
+        /*
+        //Troca defensor por atacante pelos lados do campo
         cout << "pos Defender: x: " << defenderRobot.getSelfState().position.x << endl << " y "
              << defenderRobot.getSelfState().position.y << endl;
         cout << "ball y" << state.ball.position.y << endl;
         if (state.ball.position.x < vss::MAX_COORDINATE_X / 2 &&
             //!attackerRobot.getRobotStrategyBase().isBlocked() &&
             //!defenderRobot.getRobotStrategyBase().isBlocked()&&
-            state.ball.position.y > 40 && state.ball.position.y < 90 && state.ball.position.x < 30 &&
-            (((attackerRobot.getSelfState().position.y - state.ball.position.y) > 7 ||
-              (state.ball.position.y - attackerRobot.getSelfState().position.y)) > -7 ||
-             // Distancia entre atacante e bola
-             ((attackerRobot.getSelfState().position.x - state.ball.position.x) > 7 ||
-              (state.ball.position.x - attackerRobot.getSelfState().position.x)) > -7) &&
+            ((state.ball.projection.y > 40 && state.ball.projection.y < 80) || (state.ball.position.y > 40 && state.ball.position.y < 80)) &&
+            state.ball.position.x < 30 &&
+            (((attackerRobot.getSelfState().position.y - state.ball.position.y) > 5 ||
+              (state.ball.position.y - attackerRobot.getSelfState().position.y)) > -5 &&
             //(defenderRobot.getSelfState().position.x - state.ball.position.x > 5)&&
-            (defenderRobot.getSelfState().position.y > 60) && (defenderRobot.getSelfState().position.y < 70) &&
-            defenderRobot.getSelfState().position.x > 35)
+             ((defenderRobot.getSelfState().position.y <= 45)||
+              (defenderRobot.getSelfState().position.y >= 85))))
             //((defenderRobot.getSelfState().position.y <= 30 && attackerRobot.getSelfState().position.y >= 50) ||
             //(defenderRobot.getSelfState().position.y >= 80 && attackerRobot.getSelfState().position.y <= 60)))
         {
@@ -76,6 +86,7 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot>&
             //exit(1);
             //return strategiesById;
         }
+        */
 
         //		//trocar goleiro
         //		if(distanceGoalKeeperBall < distanceAttackerBall &&

@@ -3,8 +3,6 @@
 //
 
 #include <Strategies/RobotStrategyDefender.h>
-#include <iostream>
-using namespace std;
 
 RobotStrategyDefender::RobotStrategyDefender() = default;
 
@@ -48,27 +46,26 @@ vss::Pose RobotStrategyDefender::defineTargetAndArrivalOrientation(){
         target= vss::Pose(vss::MAX_COORDINATE_X /2, vss::MAX_COORDINATE_Y/2, 0); //Se não tiver com a bola, posiciona defensor no meio do campo
     }
     */
-    if((ballProjection.x < vss::MAX_COORDINATE_X / 3.5))
+
+
+   //Posiciona atacante no centro do gol adversario
+    if((ballProjection.x < vss::MAX_COORDINATE_X / 3))
     {
         if (robot.position.x < vss::MAX_COORDINATE_X * 0.6) {
-            if (robot.position.x > 34) {
-                target = vss::Pose(vss::MAX_COORDINATE_X * 0.2, vss::MAX_COORDINATE_Y / 2, 0);
+            if (robot.position.x > 34 &&  (state.ball.position.x < 30 || state.ball.position.y < 20 || state.ball.position.y >110)) {
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.2, 67, 0);
             } else {
                 if (robot.position.y < vss::MAX_COORDINATE_Y / 2) {
                     if (ballProjection.y > state.ball.position.y) {
                         target = vss::Pose(vss::MAX_COORDINATE_X * 0.3, vss::MAX_COORDINATE_Y * 0.15, 0);
-                        cout << "entrando1" << endl;
                     } else {
                         target = vss::Pose(vss::MAX_COORDINATE_X * 0.3, vss::MAX_COORDINATE_Y * 0.75, 0);
-                        cout << "entrando2" << endl;
                     }
                 } else {
                     if (ballProjection.y > state.ball.position.y) {
                         target = vss::Pose(vss::MAX_COORDINATE_X * 0.3, vss::MAX_COORDINATE_Y * 0.15, 0);
-                        cout << "entrando3" << endl;
                     } else {
                         target = vss::Pose(vss::MAX_COORDINATE_X * 0.3, vss::MAX_COORDINATE_Y * 0.75, 0);
-                        cout << "entrando4" << endl;
                     }
                 }
             }
@@ -79,6 +76,37 @@ vss::Pose RobotStrategyDefender::defineTargetAndArrivalOrientation(){
         target = vss::Pose(vss::MAX_COORDINATE_X/2, vss::MAX_COORDINATE_Y /2, 0);
     }
 
+    /*
+    if (robot.position.x < vss::MAX_COORDINATE_X * 0.4) {
+
+        //if (ballProjection.x > vss::MAX_COORDINATE_X / 2) {
+        if (ballProjection.y > vss::MAX_COORDINATE_Y / 2) {
+            target = vss::Pose(vss::MAX_COORDINATE_X * 0.2, vss::MAX_COORDINATE_Y * 0.15, 0);
+        } else {
+            target = vss::Pose(vss::MAX_COORDINATE_X * 0.2, vss::MAX_COORDINATE_Y * 0.75, 0);
+        }
+    }
+     */ //posiciona robo no lado do campo no ataque
+        //}
+        /*
+        if (robot.position.y < vss::MAX_COORDINATE_Y / 2) {
+            if (ballProjection.y < state.ball.position.y) {
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.2, vss::MAX_COORDINATE_Y * 0.15, 0);
+                cout<<"entrando1"<<endl;
+            } else {
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.2, vss::MAX_COORDINATE_Y * 0.75, 0);
+                cout<<"entrando2"<<endl;
+            }
+        } else {
+            if (ballProjection.y < state.ball.position.y) {
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.2, vss::MAX_COORDINATE_Y * 0.15, 0);
+                cout<<"entrando3"<<endl;
+            } else {
+                target = vss::Pose(vss::MAX_COORDINATE_X * 0.2, vss::MAX_COORDINATE_Y * 0.75, 0);
+                cout<<"entrando4"<<endl;
+            }
+        }
+         */
 
       //Se a bola estiver no ataque, posiciona o robo perto/dentro da area inimiga
       //target = vss::Pose(vss::MAX_COORDINATE_X *0.3, vss::MAX_COORDINATE_Y / 2, 0);
