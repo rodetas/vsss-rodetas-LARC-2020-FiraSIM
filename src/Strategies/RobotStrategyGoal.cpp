@@ -30,15 +30,15 @@ vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
     }
 
     // ir na bola quando ela está dentro da area
-    if (ballProjection.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2) &&
-        ballProjection.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) &&
+    if (ballProjection.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 8) &&
+        ballProjection.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 8) &&
         ballProjection.x > vss::MAX_COORDINATE_X - 30) {
 
         //Testar essas duas linhas comentadas ou ativadas e ver qual leva menos gols
         goalTarget.x = ballProjection.x;
         goalTarget.y = ballProjection.y;
 
-        if(ballPosition.x > robot.position.x){
+        if (ballPosition.x + 2 > robot.position.x) {
             goalTarget.x = ballPosition.x;
             goalTarget.y = ballPosition.y;
         }
@@ -51,10 +51,10 @@ vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
 //
 //    }
 
-    if(robot.position.y < goalTarget.y){
+    if (robot.position.y < goalTarget.y) {
         arrivalOrientation.x = goalTarget.x - 8;
         arrivalOrientation.y = goalTarget.y + 10;
-    }else{
+    } else {
         arrivalOrientation.x = goalTarget.x - 8;
         arrivalOrientation.y = goalTarget.y - 10;
     }
@@ -70,17 +70,15 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     float n = 0;
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
 
-    std::cout<<state.ball.position.x<<" - "<<state.ball.position.y<<std::endl;
-
-    if((target.x == state.ball.position.x) && (target.y == state.ball.position.y)){
-        if(target.y > 40 && target.y < 88){
-            if(target.x > robot.position.x){
+    if ((target.x == state.ball.position.x) && (target.y == state.ball.position.y)) {
+        if (target.y > 40 && target.y < 88) {
+            if (target.x > robot.position.x) {
                 n = 1.5;
             }
         }
     }
 
-    if(robot.distanceFrom(target) > 10){
+    if (robot.distanceFrom(target) > 15) {
         for (auto &r: state.robots) {
             if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
                 obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
