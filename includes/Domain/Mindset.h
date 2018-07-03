@@ -13,6 +13,7 @@ enum MindSet {
     Attacker    = 2
 };
 
+
 std::string toString(MindSet);
 
 #endif //SDK_RODETAS_MINDSET_H

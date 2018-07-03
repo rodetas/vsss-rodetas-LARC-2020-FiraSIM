@@ -3,7 +3,6 @@
 //
 
 #include "Strategies/RobotStrategyAttack.h"
-
 RobotStrategyAttack::RobotStrategyAttack() = default;
 
 vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
@@ -32,6 +31,21 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
 
 vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
     vss::Pose target;
+
+    //Muda o target para a projeção para tentar melhorar o cruzamento
+    /*if(state.ball.position.x < 30 && robot.position.x - state.ball.position.x > 4){
+        target.x = state.ball.projection.x;
+        target.y = state.ball.projection.y;
+    }
+    else if((state.ball.position.x < 30 && robot.position.x - state.ball.position.x < 3)){
+        target.x = state.ball.position.x;
+        target.y = state.ball.position.y;
+    }
+    else {
+        target.x = state.ball.position.x;
+        target.y = state.ball.position.y;
+    }*/
+
     target.x = state.ball.position.x;
     target.y = state.ball.position.y;
 
@@ -57,7 +71,7 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
     //Orientação pro gol na linha da bola
     if(state.ball.position.y > 50 && state.ball.position.y < 80 && state.ball.position.x < 65){
         orientationPoint.x = 0;
-        orientationPoint.y = state.ball.projection.y;
+        orientationPoint.y = state.ball.position.y;
     }
 
     //Orientação pro gol

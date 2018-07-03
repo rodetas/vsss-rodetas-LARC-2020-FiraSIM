@@ -18,7 +18,7 @@ vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
     vss::Point ballPosition = state.ball.position;
 
     // posição para seguir linha da bola
-    goalTarget.x = vss::MAX_COORDINATE_X - 16;
+    goalTarget.x = vss::MAX_COORDINATE_X - 15;
     goalTarget.y = ballProjection.y;
 
     // máximo que pode ir até a lateral da área
