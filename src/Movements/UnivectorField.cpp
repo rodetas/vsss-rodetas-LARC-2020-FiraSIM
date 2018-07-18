@@ -44,9 +44,9 @@ float UnivectorField::defineFi(RobotState robot, vss::Pose target, vss::Point ar
             return repulsiveFi;
         } else {
             float g = Math::gaussian(distance - dmin, delta);
-            float subtraction = toDomain(repulsiveFi - moveFi);
-            float fi = toDomain(g * subtraction) + toDomain(moveFi);
-            return toDomain(fi);
+            float subtraction = Math::toDomain(repulsiveFi - moveFi);
+            float fi = Math::toDomain(g * subtraction) + Math::toDomain(moveFi);
+            return Math::toDomain(fi);
         }
     } else {
         return moveFi;
@@ -84,13 +84,13 @@ float UnivectorField::defineMoveFi(vss::Point robot, vss::Pose target, vss::Poin
 
     float alpha = pr - pg;
     float fi = pg - n * alpha;
-    return toDomain(fi);
+    return Math::toDomain(fi);
 }
 
 float UnivectorField::defineRepulsiveFi(vss::Point robot, vss::Point virtualObstacle) {
     //The repulsive fi is only the angle between the robot and the virtual obstacle
     float fi = Math::radian(robot, virtualObstacle);
-    return toDomain(fi);
+    return Math::toDomain(fi);
 }
 
 vss::Point UnivectorField::getS(vss::Point robotSpeed, vss::Point obstacleSpeed) {
@@ -114,14 +114,4 @@ vss::Point UnivectorField::getVirtualPosition(vss::Point robot, vss::Point obsta
         virtualPosition.y = obstacle.y + s.y * (d / snorm);
     }
     return virtualPosition;
-}
-
-float UnivectorField::toDomain(float fi) {
-    if (fi > M_PI) {
-        return (fi - 2 * M_PI);
-    } else if (fi < -M_PI) {
-        return (2 * M_PI + fi);
-    } else {
-        return fi;
-    }
 }

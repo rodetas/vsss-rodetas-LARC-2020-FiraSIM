@@ -6,67 +6,61 @@
  */
 vss::WheelsCommand Movimentation::movePlayers(RobotState robot, vss::Pose target, float fi){
 
-    vss::WheelsCommand command;
+	vss::WheelsCommand command;
 
-	if ( cos(fi - Math::toRadian(robot.angle)) < -0.4) {
-		command = definePwm(robot, target, 'B', fi);
-	} else if ( cos(fi - Math::toRadian(robot.angle)) > 0.4){
-		command = definePwm(robot, target, 'F', fi);
-	}else{
-		if (sin(fi - Math::toRadian(robot.angle)) > 0) {
-			command = turnRight(20, 20);
-		} else {
-			command = turnLeft(20, 20);
-		}
-	}
+	double vMax = 0.8;
+	double d = 0.08; // Coeficiente de ponto a frente do robô
+	double r = 0.016; // Raio da roda
+	double l = 0.075;// Distancia entre as rodas
+	double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
 
+	double xdDot = vMax * cos(fi);
+	double ydDot = vMax * sin(fi);
 
-  return command;
-}
+	double v = cos(robotAngle) * xdDot + sin(robotAngle) * ydDot;
+	double w = -(sin(robotAngle)/d) * xdDot + (cos(robotAngle)/d) * ydDot;
 
-/*
- * Correct robot pwm to follow the destination
- */
-vss::WheelsCommand Movimentation::definePwm(RobotState robot, vss::Pose target, char direction, float fi){
-	int standardPower = 50;
-	int basePower = standardPower * 1;
-	int correctionPower = standardPower * sin(fi - Math::toRadian(robot.angle)) * 0.8;
-	int pwmMotor1 = (basePower + correctionPower);
-	int pwmMotor2 = (basePower - correctionPower);
+	double wr = v/r + w*(l/r);
+	double wl = v/r - w*(l/r);
 
-	if(direction == 'B'){
-		pwmMotor1 = pwmMotor1 * (-1);
-		pwmMotor2 = pwmMotor2 * (-1);
-	}
+	std::cout<<"----"<<std::endl;
+	std::cout<<"Fi: "<<fi<<std::endl;
+	std::cout<<"Theta: "<<robotAngle<<std::endl;
+	std::cout<<"v: "<<v<<std::endl;
+	std::cout<<"w: "<<w<<std::endl;
+	std::cout<<"wr: "<<1.6*wr<<std::endl;
+	std::cout<<"wl: "<<1.6*wl<<std::endl;
+	//1.6 converte de rad/s para cm/s
+	command = checkMaximumSpeedWheel( vss::WheelsCommand(1.6*wr, 1.6*wl));
 
-    vss::WheelsCommand verifiedPwm = checkPwm(vss::WheelsCommand(pwmMotor1, pwmMotor2));
-
-	return verifiedPwm;
-}
-
-vss::WheelsCommand Movimentation::checkPwm(const vss::WheelsCommand& pwm){
-    vss::WheelsCommand command(pwm);
-
-    if(pwm.leftVel  > 255) command.leftVel  = 255;
-    if(pwm.rightVel > 255) command.rightVel = 255;
-
-    if(pwm.leftVel  < -255) command.leftVel  = -255;
-    if(pwm.rightVel < -255) command.rightVel = -255;
-
-    return command;
-}
-
-vss::WheelsCommand Movimentation::turnLeft(int pwm1, int pwm2){
-    vss::WheelsCommand command(-pwm1, pwm2);
 	return command;
 }
 
-vss::WheelsCommand Movimentation::turnRight(int pwm1, int pwm2){
-    vss::WheelsCommand command(pwm1, -pwm2);
+vss::WheelsCommand Movimentation::checkMaximumSpeedWheel(const vss::WheelsCommand& speed){
+	vss::WheelsCommand command(speed);
+
+	int maximumSpeed = 80;
+
+	if(speed.leftVel  > maximumSpeed) command.leftVel  = maximumSpeed;
+	if(speed.rightVel > maximumSpeed) command.rightVel = maximumSpeed;
+
+	if(speed.leftVel  < -maximumSpeed) command.leftVel  = -maximumSpeed;
+	if(speed.rightVel < -maximumSpeed) command.rightVel = -maximumSpeed;
+
+	return command;
+}
+
+vss::WheelsCommand Movimentation::turnLeft(int speed1, int speed2){
+	vss::WheelsCommand command(-speed1, speed2);
+	return command;
+}
+
+vss::WheelsCommand Movimentation::turnRight(int speed1, int speed2){
+	vss::WheelsCommand command(speed1, -speed2);
 	return command;
 }
 
 vss::WheelsCommand Movimentation::stop(){
-    vss::WheelsCommand command(0, 0);
+	vss::WheelsCommand command(0, 0);
 	return command;
 }

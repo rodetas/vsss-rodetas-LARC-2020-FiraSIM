@@ -34,6 +34,9 @@ public:
     //! Calculates the gaussian
     static double gaussian(double, double);
 
+    //! Keeps the angle in the domain [-PI, PI]
+    static float toDomain(float fi);
+
 };
 
 #endif //SDK_RODETAS_MATHHELPER_H

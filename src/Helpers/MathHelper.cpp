@@ -35,3 +35,13 @@ double Math::norm(vss::Point vector) {
 double Math::gaussian(double r, double delta) {
     return exp(-((r * r) / (2 * delta * delta)));
 }
+
+float Math::toDomain(float fi) {
+    if (fi > M_PI) {
+        return (fi - 2 * M_PI);
+    } else if (fi < -M_PI) {
+        return (2 * M_PI + fi);
+    } else {
+        return fi;
+    }
+}

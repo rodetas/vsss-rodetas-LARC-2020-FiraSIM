@@ -56,9 +56,6 @@ private:
 
     //Creates the virtual position of the obstacle based on its velocity
     vss::Point getVirtualPosition(vss::Point robot, vss::Point obstacle, vss::Point s);
-
-    //Keeps the angle in the domain [-PI, PI]
-    float toDomain(float fi);
 };
 
 #endif //SDK_RODETAS_UNIVECTORFIELD_H

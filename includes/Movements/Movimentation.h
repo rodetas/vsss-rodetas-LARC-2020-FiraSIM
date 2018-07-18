@@ -19,8 +19,6 @@ public:
     vss::WheelsCommand turnLeft(int, int);
     vss::WheelsCommand turnRight(int, int);
 
-    vss::WheelsCommand checkPwm(const vss::WheelsCommand&);
-	vss::WheelsCommand definePwm(RobotState, vss::Pose, char, float);
-
+    vss::WheelsCommand checkMaximumSpeedWheel(const vss::WheelsCommand&);
 };
 #endif
