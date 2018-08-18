@@ -20,5 +20,7 @@ public:
     vss::WheelsCommand turnRight(int, int);
 
     vss::WheelsCommand checkMaximumSpeedWheel(const vss::WheelsCommand&);
+
+	int lastSide = 1;
 };
 #endif
