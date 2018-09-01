@@ -6,7 +6,7 @@
 
 RobotStrategyFactory::RobotStrategyFactory() = default;
 
-void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool swap, bool isFreeBall) {
+void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool swap, bool isFreeBall, PositionStatus positionStatus) {
 
 	// apenas troca se houver 3 robos
     if(swap && robots.size() == 3){

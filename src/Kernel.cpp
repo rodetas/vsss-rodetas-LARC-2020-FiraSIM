@@ -5,6 +5,8 @@ Kernel::Kernel() {
     isTestingTransmission = false;
     isFreeBall = false;
     isRunning = true;
+
+    positionStatus = PositionStatus::None;
 };
 
 void Kernel::loop() {
@@ -51,7 +53,7 @@ void Kernel::loop() {
             debug.paths[i] = robot.getPath();
         }
 
-        coach.manage(robots, state, Config::playersSwap, isFreeBall);
+        coach.manage(robots, state, Config::playersSwap, isFreeBall, positionStatus);
 
         sendInterface.sendCommands(commands, isPlaying, isTestingTransmission);
         debugInterface.sendDebug(debug);
@@ -69,6 +71,12 @@ void Kernel::windowThreadWrapper() {
     windowControl.signalCloseWindow.connect(sigc::mem_fun(this, &Kernel::exitProgram));
 
     windowControl.start();
+}
+
+void Kernel::automaticPositioning(PositionStatus posStatus){
+    this->positionStatus = posStatus;
+
+    if(this->positionStatus != PositionStatus::None) this->positionStatus = PositionStatus::None;
 }
 
 void Kernel::freeBallPositions(bool isFreeBall){

@@ -8,6 +8,7 @@
 //#include "Strategies/RobotStrategy.h"
 //#include "Helpers/MathHelper.h"
 #include <Domain/RodetasState.h>
+#include <Domain/PositionStatus.h>
 #include <RodetasRobot.h>
 #include <StateInterpreter.h>
 #include <Strategies/RobotStrategyBase.h>
@@ -20,7 +21,7 @@ class RobotStrategyFactory {
 public:
 
     RobotStrategyFactory();
-    void manage(std::vector<RodetasRobot>&, RodetasState&, bool, bool);
+    void manage(std::vector<RodetasRobot>&, RodetasState&, bool, bool, PositionStatus);
 
 private:
 

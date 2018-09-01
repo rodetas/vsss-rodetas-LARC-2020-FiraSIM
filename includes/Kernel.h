@@ -17,6 +17,7 @@
 #include <Strategies/RobotStrategyDefender.h>
 #include <Strategies/RobotStrategyGoal.h>
 #include <RobotStrategyFactory.h>
+#include <Domain/PositionStatus.h>
 #include <Config.h>
 #include <thread>
 
@@ -30,6 +31,7 @@ public:
 
 	void loop();
 
+	void automaticPositioning(PositionStatus);
 	void updatePlayingState(bool);
 	void updateTestingState(bool);
     void freeBallPositions(bool);
@@ -38,6 +40,8 @@ public:
 private:
 
 	thread* threadWindowControl;
+
+	PositionStatus positionStatus;
 
 	bool isPlaying;
 	bool isTestingTransmission;
