@@ -37,6 +37,9 @@ public:
     //! Keeps the angle in the domain [-PI, PI]
     static float toDomain(float fi);
 
+    //! Keeps the angle in the domain [0, 2PI]
+    static float toDomain2Pi(float fi);
+
 };
 
 #endif //SDK_RODETAS_MATHHELPER_H

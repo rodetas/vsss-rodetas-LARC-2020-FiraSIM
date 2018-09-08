@@ -17,11 +17,11 @@ double Math::radian(vss::Point a, vss::Point b) {
 }
 
 double Math::calculateLinearSpeed(double velX, double velY) {
-    return sqrt(pow(velX/3, 2) + pow(velY/3, 2));
+    return sqrt(pow(velX / 3, 2) + pow(velY / 3, 2));
 }
 
 vss::Point Math::calculateProjection(vss::Point initialPoint, double velX, double velY) {
-    return vss::Point(initialPoint.x + velX/3, initialPoint.y + velY/3);
+    return vss::Point(initialPoint.x + velX / 3, initialPoint.y + velY / 3);
 }
 
 double Math::toRadian(double angle) {
@@ -44,4 +44,11 @@ float Math::toDomain(float fi) {
     } else {
         return fi;
     }
+}
+
+float Math::toDomain2Pi(float angle) {
+    angle = fmod(angle, 2 * M_PI);
+    if (angle < 0)
+        angle += 2 * M_PI;
+    return angle;
 }

@@ -218,8 +218,9 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
         obstacles.push_back(obstacle);
     }
 
+    target.angle = 2*M_PI;
 
-    UnivectorField univectorField(2, 0.12, 4.5, 4.5);
-    path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
-    return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
+    UnivectorField univectorField;
+    path = univectorField.drawPath(robot, target, obstacles);
+    return univectorField.defineFi(robot, target, obstacles);
 }

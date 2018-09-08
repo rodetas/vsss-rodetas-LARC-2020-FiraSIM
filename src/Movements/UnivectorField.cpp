@@ -4,12 +4,18 @@
 
 #include <Movements/UnivectorField.h>
 
-UnivectorField::UnivectorField(float n, float k0, float dmin, float delta) : n(n), k0(k0), dmin(dmin), delta(delta) {}
+UnivectorField::UnivectorField() {
+    n = 2;
+    orientationDistance = 10;
+    k0 = 0.12;
+    dmin = 4.5;
+    delta = 4.5;
+}
 
-UnivectorField::UnivectorField() = default;
+float
+UnivectorField::defineFi(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
 
-float UnivectorField::defineFi(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                               std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
+    vss::Point arrivalOrientation = getArrivalPoint(target);
 
     float moveFi = defineMoveFi(robot.position, target, arrivalOrientation);
 
@@ -53,19 +59,19 @@ float UnivectorField::defineFi(RobotState robot, vss::Pose target, vss::Point ar
     }
 }
 
-vss::Path UnivectorField::drawPath(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                              std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
+vss::Path
+UnivectorField::drawPath(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
     std::vector<vss::Point> points;
     vss::Point point = robot.position;
     RobotState r = robot;
 
-    float fi = defineFi(robot, target, arrivalOrientation, obstacles);
+    float fi = defineFi(robot, target, obstacles);
     for (int i = 0; i < 250; i++) {
         point.x = point.x + cos(fi);
         point.y = point.y + sin(fi);
         r.position = point;
         points.push_back(point);
-        fi = defineFi(r, target, arrivalOrientation, obstacles);
+        fi = defineFi(r, target, obstacles);
         if (Math::distancePoint(point, target) < 2)
             i = 250;
     }
@@ -114,4 +120,55 @@ vss::Point UnivectorField::getVirtualPosition(vss::Point robot, vss::Point obsta
         virtualPosition.y = obstacle.y + s.y * (d / snorm);
     }
     return virtualPosition;
+}
+
+vss::Point UnivectorField::getArrivalPoint(vss::Pose target) {
+    vss::Point arrivalOrientation;
+    float angle = target.angle;
+    angle = Math::toDomain2Pi(angle);
+    float delX;
+    float delY;
+    float angleAux;
+
+    //Only 0 - 2 * M_PI angles
+    if ((angle > 0 || angle == 0) && (angle < 2 * M_PI || angle == 2 * M_PI)) {
+
+        if (angle < M_PI / 2 || angle == M_PI / 2) {
+
+            delX = orientationDistance * cos(angle);
+            delY = orientationDistance * sin(angle);
+
+            arrivalOrientation.x = target.x - delX;
+            arrivalOrientation.y = target.y + delY;
+
+        } else if (angle < M_PI || angle == M_PI) {
+
+            angleAux = M_PI - angle;
+            delX = orientationDistance * cos(angleAux);
+            delY = orientationDistance * sin(angleAux);
+
+            arrivalOrientation.x = target.x + delX;
+            arrivalOrientation.y = target.y + delY;
+
+        } else if (angle < (3 * M_PI) / 2 || angle == (3 * M_PI) / 2) {
+
+            angleAux = (3 * M_PI) / 2 - angle;
+            delX = orientationDistance * sin(angleAux);
+            delY = orientationDistance * cos(angleAux);
+
+            arrivalOrientation.x = target.x + delX;
+            arrivalOrientation.y = target.y - delY;
+
+        } else if (angle < 2 * M_PI) {
+
+            angleAux = 2 * M_PI - angle;
+            delX = orientationDistance * cos(angleAux);
+            delY = orientationDistance * sin(angleAux);
+
+            arrivalOrientation.x = target.x - delX;
+            arrivalOrientation.y = target.y - delY;
+        }
+    }
+
+    return arrivalOrientation;
 }
