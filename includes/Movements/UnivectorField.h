@@ -23,6 +23,10 @@ public:
 
     UnivectorField();
 
+    void setUnivectorWithoutCurves();
+
+    void setUnivectorWithCurves();
+
     //Defines the univector field angle with obstacles, the vector "obstacles" contains the position and the velocity of the obstacles
     float defineFi(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles);
 

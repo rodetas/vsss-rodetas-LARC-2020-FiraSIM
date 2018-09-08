@@ -12,6 +12,14 @@ UnivectorField::UnivectorField() {
     delta = 4.5;
 }
 
+void UnivectorField::setUnivectorWithoutCurves() {
+    n = 0;
+}
+
+void UnivectorField::setUnivectorWithCurves() {
+    n = 2;
+}
+
 float
 UnivectorField::defineFi(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
 

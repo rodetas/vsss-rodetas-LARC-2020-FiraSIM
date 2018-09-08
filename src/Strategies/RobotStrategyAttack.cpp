@@ -154,6 +154,8 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
     if (target.y < 0) target.y = 0;
     if (target.y > vss::MAX_COORDINATE_Y) target.y = vss::MAX_COORDINATE_Y;
 
+    target.angle = 0;
+
     return target;
 }
 
@@ -218,7 +220,6 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
         obstacles.push_back(obstacle);
     }
 
-    target.angle = 2*M_PI;
 
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);

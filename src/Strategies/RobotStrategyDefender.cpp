@@ -141,8 +141,7 @@ vss::Pose RobotStrategyDefender::defineTargetAndArrivalOrientation() {
     }
 
     //Orientação pro lado do gol
-    arrivalOrientation.x = target.x - 10;
-    arrivalOrientation.y = target.y;
+    target.angle = 0;
 
     return target;
 }
