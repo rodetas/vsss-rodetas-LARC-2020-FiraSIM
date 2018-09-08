@@ -8,8 +8,8 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, vss::Pose target
 
 	vss::WheelsCommand command;
 
-	double vMax = 0.4;
-	double d = 0.2; // Coeficiente de ponto a frente do robô
+	double vMax = 0.8;
+	double d = 0.05; // Coeficiente de ponto a frente do robô
 	double r = 0.016; // Raio da roda
 	double l = 0.075;// Distancia entre as rodas
 	double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
@@ -32,20 +32,25 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, vss::Pose target
     wr = v/r + w*(l/r) * lastSide;
     wl = v/r - w*(l/r) * lastSide;
 
-	std::cout<<"----"<<std::endl;
-	std::cout<<"Fi: "<<fi<<std::endl;
-	std::cout<<"Theta: "<<robotAngle<<std::endl;
-	std::cout<<"X: "<<robot.position.x<<" Y: "<<robot.position.y<<std::endl;
+    //	std::cout<<"----"<<std::endl;
+    //	std::cout<<"Fi: "<<fi<<std::endl;
+    //	std::cout<<"Theta: "<<robotAngle<<std::endl;
+    //	std::cout<<"X: "<<robot.position.x<<" Y: "<<robot.position.y<<std::endl;
+    //
+    //	std::cout<<"v: "<<v<<std::endl;
+    //	std::cout<<"w: "<<w<<std::endl;
+    //	std::cout<<"wr: "<<wr<<std::endl;
+    //	std::cout<<"wl: "<<wl<<std::endl;
 
-	std::cout<<"v: "<<v<<std::endl;
-	std::cout<<"w: "<<w<<std::endl;
-	std::cout<<"wr: "<<wr<<std::endl;
-	std::cout<<"wl: "<<wl<<std::endl;
+
 	//1.6 converte de rad/s para cm/s
     wr = 1.6 * wr;
     wl = 1.6 * wl;
-	command = checkMaximumSpeedWheel( vss::WheelsCommand(wr, wl));
 
+    //Real:
+	//command = checkMaximumSpeedWheel( vss::WheelsCommand(wr, wl));
+	//Simulador:
+	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr));
 	return command;
 }
 
