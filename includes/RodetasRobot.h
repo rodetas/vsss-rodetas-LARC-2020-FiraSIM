@@ -18,7 +18,7 @@ class RodetasRobot {
 public:
 
     RodetasRobot();
-    RodetasRobot(int, MindSet, RobotStrategy*);
+    RodetasRobot(int, MindSet, Agent*);
 
     void calcAction();
 
@@ -46,7 +46,7 @@ private:
 
     RodetasState state;
     RobotState selfState;
-    RobotStrategy* strategy;
+    Agent* agent;
     RobotStrategyBase strategyBase;
     MindSet mindSet;
 

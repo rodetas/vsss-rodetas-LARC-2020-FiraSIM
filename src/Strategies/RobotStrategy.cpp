@@ -96,18 +96,3 @@ vss::WheelsCommand RobotStrategy::blockedStrategy(vss::WheelsCommand c) {
     return c;
 }
 
-vss::WheelsCommand RobotStrategy::getCommand() {
-    return this->command;
-}
-
-vss::Pose RobotStrategy::getFinalPose() {
-    return this->target;
-}
-
-vss::Point RobotStrategy::getStepPose() {
-    return this->stepPose;
-}
-
-vss::Path RobotStrategy::getPath() {
-    return this->path;
-}

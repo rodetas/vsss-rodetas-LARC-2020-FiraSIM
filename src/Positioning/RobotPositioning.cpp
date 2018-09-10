@@ -17,6 +17,8 @@ vss::WheelsCommand RobotPositioning::applyStrategy(RobotState r, RodetasState s,
     // defines robot's pwm
     command = movimentation.movePlayers(robot, target, fi);
 
+    return command;
+
 }
 
 float RobotPositioning::applyUnivectorField(vss::Pose target) {
@@ -29,7 +31,7 @@ float RobotPositioning::applyUnivectorField(vss::Pose target) {
             //Obstáculos roboôs
             for (auto &r: state.robots) {
                 if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-                    obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+                    obstacles.emplace_back(std::make_pair(r.position, r.vectorSpeed));
                 }
             }
         }

@@ -5,11 +5,10 @@
 #ifndef SDK_RODETAS_ATTACKPENALTYPOSITIONING_H
 #define SDK_RODETAS_ATTACKPENALTYPOSITIONING_H
 
-#include <Agent.h>
+#include <RobotPositioning.h>
 
-class AttackPenaltyPositioning : public Agent {
+class AttackPenaltyPositioning : public RobotPositioning {
 
-    vss::WheelsCommand applyStrategy(RobotState, RodetasState, RobotStrategyBase) override;
     vss::Pose defineTargetAndArrivalOrientation() override;
 
 };

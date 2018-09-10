@@ -6,26 +6,26 @@
 
 RodetasRobot::RodetasRobot() = default;
 
-RodetasRobot::RodetasRobot(int id, MindSet mind, RobotStrategy* strategy) {
+RodetasRobot::RodetasRobot(int id, MindSet mind, Agent* strategy) {
     this->id = id;
     this->mindSet = mind;
-    this->strategy = strategy;
+    this->agent = strategy;
 }
 
 void RodetasRobot::calcAction(){
 
     // applies robot strategy returning a pwm
-    this->command = strategy->applyStrategy(this->selfState, this->state, this->strategyBase);
+    this->command = agent->applyStrategy(this->selfState, this->state, this->strategyBase);
 
-    this->target = strategy->getFinalPose();
-    this->path = strategy->getPath();
+    this->target = agent->getFinalPose();
+    this->path = agent->getPath();
 }
 
 void RodetasRobot::updateSelfState(RobotState selfState) {
     this->selfState = selfState;
 
     // updates robot's strategy base data
-    this->strategyBase.update(selfState, strategy->getFinalPose());
+    this->strategyBase.update(selfState, agent->getFinalPose());
 }
 
 void RodetasRobot::updateState(RodetasState state){
@@ -33,7 +33,7 @@ void RodetasRobot::updateState(RodetasState state){
 }
 
 void RodetasRobot::setStrategy(RobotStrategy* s) {
-    this->strategy = s;
+    this->agent = s;
 }
 
 vss::WheelsCommand RodetasRobot::getCommand(){
