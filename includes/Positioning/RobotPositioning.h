@@ -14,8 +14,14 @@ class RobotPositioning : public Agent {
 public:
 
     vss::WheelsCommand applyStrategy(RobotState, RodetasState, RobotStrategyBase) override;
+
+    // este metodo DEVE ser implementado em toda classe filha
     vss::Pose defineTargetAndArrivalOrientation() override = 0;
+
     float applyUnivectorField(vss::Pose) override;
+
+    // este metodo DEVE ser implementado em toda classe filha
+    virtual vss::WheelsCommand specificStrategy(vss::WheelsCommand) = 0;
 
 private:
     Movimentation movimentation;

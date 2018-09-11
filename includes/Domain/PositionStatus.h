@@ -5,12 +5,16 @@
 #ifndef SDK_RODETAS_POSITIONSTATUS_H
 #define SDK_RODETAS_POSITIONSTATUS_H
 
-enum PositionStatus {
+// @TODO diferenciar penalti na defesa e penalti no ataque
+// @TODO diferenciar freeball na defesa e no ataque
+// @TODO considerar situacao de tiro de meta
+// @TODO situação de gol contra e gol a favor
 
-    None = 0,
-    Penalty = 1,
-    Freeball = 2
-            // tiro de meta
+enum class PositionStatus {
+
+    None,
+    Penalty,
+    Freeball
 
 };
 

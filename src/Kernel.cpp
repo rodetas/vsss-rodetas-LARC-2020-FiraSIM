@@ -21,8 +21,9 @@ void Kernel::loop() {
     CommandSendAdapter sendInterface(Config::teamColor, Config::realEnvironment);
 
     vector<RodetasRobot> robots;
-    robots.emplace_back(RodetasRobot(0, MindSet::Attacker, new AttackPenaltyPositioning()));
-    robots.emplace_back(RodetasRobot(1, MindSet::Defender, new RobotStrategyDefender()));
+
+    robots.emplace_back(RodetasRobot(0, MindSet::Attacker, new RobotStrategyAttack()));
+    robots.emplace_back(RodetasRobot(1, MindSet::Defender, new RobotStrategyDefenderBack()));
     robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeper, new RobotStrategyGoal()));
 
     vector<vss::WheelsCommand> commands(3);
@@ -80,7 +81,9 @@ void Kernel::automaticPositioning(PositionStatus posStatus){
 }
 
 void Kernel::freeBallPositions(bool isFreeBall){
-    this->isFreeBall = isFreeBall;
+//    this->isFreeBall = isFreeBall;
+    if(this->positionStatus != PositionStatus::None) this->positionStatus = PositionStatus::None;
+    else this->positionStatus = PositionStatus::Penalty;
 }
 
 void Kernel::updatePlayingState(bool playing) {

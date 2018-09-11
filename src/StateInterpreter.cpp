@@ -8,12 +8,11 @@ StateInterpreter::StateInterpreter() {
     strategiesById.resize(3);
 };
 
-std::vector<MindSet>
-StateInterpreter::defineStrategy(std::vector<RodetasRobot> &robots, RodetasState &state, bool freeBall) {
+std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot> &robots, RodetasState &state, bool freeBall) {
 
-    RodetasRobot goalRobot = getRobotByStrategy(MindSet::GoalKeeper, robots);
-    RodetasRobot defenderRobot = getRobotByStrategy(MindSet::Defender, robots);
-    RodetasRobot attackerRobot = getRobotByStrategy(MindSet::Attacker, robots);
+    RodetasRobot goalRobot = getRobotByStrategy(MindSet::GoalKeeperStrategy, robots);
+    RodetasRobot defenderRobot = getRobotByStrategy(MindSet::DefenderStrategy, robots);
+    RodetasRobot attackerRobot = getRobotByStrategy(MindSet::AttackerStrategy, robots);
 
     strategiesById[goalRobot.getId()] = goalRobot.getMindSet();
     strategiesById[defenderRobot.getId()] = defenderRobot.getMindSet();
@@ -27,8 +26,8 @@ StateInterpreter::defineStrategy(std::vector<RodetasRobot> &robots, RodetasState
         (defenderRobot.getSelfState().position.y > 55) &&
         (defenderRobot.getSelfState().position.y < 75)) // se o defensor esta posicionado
     {
-        strategiesById[attackerRobot.getId()] = MindSet::Defender;
-        strategiesById[defenderRobot.getId()] = MindSet::Attacker;
+        strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
+        strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
     }
 
     if (freeBall) {
@@ -36,8 +35,8 @@ StateInterpreter::defineStrategy(std::vector<RodetasRobot> &robots, RodetasState
         double distanceDefenderBall = Math::distancePoint(defenderRobot.getSelfState().position, state.ball.position);
         double distanceAttackerBall = Math::distancePoint(attackerRobot.getSelfState().position, state.ball.position);
         if (distanceDefenderBall < distanceAttackerBall) {
-            strategiesById[attackerRobot.getId()] = MindSet::Defender;
-            strategiesById[defenderRobot.getId()] = MindSet::Attacker;
+            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
+            strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
         }
 
         timeHelper.restartCounting();
@@ -50,13 +49,13 @@ StateInterpreter::defineStrategy(std::vector<RodetasRobot> &robots, RodetasState
             !attackerRobot.getRobotStrategyBase().isBlocked() &&
             !defenderRobot.getRobotStrategyBase().isBlocked()) {
 
-            strategiesById[attackerRobot.getId()] = MindSet::Defender;
-            strategiesById[defenderRobot.getId()] = MindSet::Attacker;
+            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
+            strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
         }
 
         if (attackerRobot.getRobotStrategyBase().isBlocked()) {
-            strategiesById[attackerRobot.getId()] = MindSet::Defender;
-            strategiesById[defenderRobot.getId()] = MindSet::Attacker;
+            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
+            strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
         }
 
         /*
@@ -109,8 +108,8 @@ StateInterpreter::defineStrategy(std::vector<RodetasRobot> &robots, RodetasState
             !attackerRobot.getRobotStrategyBase().isBlocked() &&
             !defenderRobot.getRobotStrategyBase().isBlocked()) {
 
-            strategiesById[attackerRobot.getId()] = MindSet::Defender;
-            strategiesById[defenderRobot.getId()] = MindSet::Attacker;
+            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
+            strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
         }
     }
     return strategiesById;

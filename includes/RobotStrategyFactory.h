@@ -11,10 +11,11 @@
 #include <Domain/PositionStatus.h>
 #include <RodetasRobot.h>
 #include <StateInterpreter.h>
-#include <Strategies/RobotStrategyBase.h>
 #include <Strategies/RobotStrategyAttack.h>
 #include <Strategies/RobotStrategyDefender.h>
+#include <Strategies/RobotStrategyDefenderBack.h>
 #include <Strategies/RobotStrategyGoal.h>
+#include <Positioning/Penalty/AttackPenaltyPositioning.h>
 
 class RobotStrategyFactory {
 
@@ -22,6 +23,8 @@ public:
 
     RobotStrategyFactory();
     void manage(std::vector<RodetasRobot>&, RodetasState&, bool, bool, PositionStatus);
+    void manageStrategies(std::vector<RodetasRobot>&, RodetasState&, bool);
+    void managePositioning(std::vector<RodetasRobot>&, RodetasState&, PositionStatus);
 
 private:
 

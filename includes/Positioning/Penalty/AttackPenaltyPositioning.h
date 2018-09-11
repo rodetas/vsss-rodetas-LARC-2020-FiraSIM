@@ -9,6 +9,7 @@
 
 class AttackPenaltyPositioning : public RobotPositioning {
 
+    vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
     vss::Pose defineTargetAndArrivalOrientation() override;
 
 };

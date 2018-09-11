@@ -32,7 +32,7 @@ void RodetasRobot::updateState(RodetasState state){
     this->state = state;
 }
 
-void RodetasRobot::setStrategy(RobotStrategy* s) {
+void RodetasRobot::setStrategy(Agent* s) {
     this->agent = s;
 }
 
@@ -54,6 +54,14 @@ MindSet RodetasRobot::getMindSet() {
 
 void RodetasRobot::setMindSet(MindSet mind){
     this->mindSet = mind;
+}
+
+PositionStatus RodetasRobot::getPositionStatus(){
+    return this->positionStatus;
+}
+
+void RodetasRobot::setPositionStatus(PositionStatus pos){
+    this->positionStatus = pos;
 }
 
 RobotStrategyBase RodetasRobot::getRobotStrategyBase() {

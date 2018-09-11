@@ -6,11 +6,11 @@
 
 std::string toString(MindSet m){
     switch(m){
-        case GoalKeeper:
+        case MindSet::GoalKeeper:
             return "GoalKeeper";
-        case Defender:
+        case MindSet::Defender:
             return "Defender";
-        case Attacker:
+        case MindSet::Attacker:
             return "Attacker";
         default:
             return "";

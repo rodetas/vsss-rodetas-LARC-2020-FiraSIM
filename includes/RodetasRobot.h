@@ -12,6 +12,7 @@
 #include <Strategies/RobotStrategy.h>
 #include <Strategies/RobotStrategyAttack.h>
 #include <Helpers/MathHelper.h>
+#include <Domain/PositionStatus.h>
 
 class RodetasRobot {
 
@@ -25,7 +26,7 @@ public:
     void updateSelfState(RobotState);
     void updateState(RodetasState);
 
-    void setStrategy(RobotStrategy*);
+    void setStrategy(Agent*);
 
     int getId();
 
@@ -35,6 +36,9 @@ public:
 
     MindSet getMindSet();
     void setMindSet(MindSet);
+
+    PositionStatus getPositionStatus();
+    void setPositionStatus(PositionStatus);
 
     vss::Path getPath();
     vss::Pose getFinalPose();
@@ -49,6 +53,7 @@ private:
     Agent* agent;
     RobotStrategyBase strategyBase;
     MindSet mindSet;
+    PositionStatus positionStatus;
 
     vss::WheelsCommand command;
     vss::Path path;

@@ -21,7 +21,8 @@ bool Config::argumentParse(int argc, char** argv) {
         ("debug,d", "(Optional) enables the debug rotine")
         ("environment,e", "(Optional) set real environment")
         ("rotate,r", "(Optional) rotate robots positions")
-		("swap,s", "(Optional) Turn off player's swap.") 
+		("swap,s", "(Optional) Turn off player's swap.")
+		("window,w", "(Optional) show control's window")
         ("color,c", bpo::value<std::string>()->default_value("blue"), "(Optional) Specify the main color of your team, may be yellow or blue.");
 	
     bpo::variables_map vm;
@@ -38,7 +39,7 @@ bool Config::argumentParse(int argc, char** argv) {
     changeSide = (vss::FieldTransformationType) vm.count("rotate");
     debug = (bool) vm.count("debug");
     realEnvironment = (bool) vm.count("environment");
-    controlWindow = realEnvironment;
+    controlWindow = realEnvironment or (bool) vm.count("window");
 
     std::string color = vm["color"].as<std::string>();
     if(color == "yellow"){

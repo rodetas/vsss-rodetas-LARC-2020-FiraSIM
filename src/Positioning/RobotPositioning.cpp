@@ -17,8 +17,10 @@ vss::WheelsCommand RobotPositioning::applyStrategy(RobotState r, RodetasState s,
     // defines robot's pwm
     command = movimentation.movePlayers(robot, target, fi);
 
-    return command;
+    // define as estrategias que serao aplicadas para o robo - esta implementado nas classes filhas
+    command = this->specificStrategy(command);
 
+    return command;
 }
 
 float RobotPositioning::applyUnivectorField(vss::Pose target) {
