@@ -16,7 +16,6 @@
 #include <Communication/CommandSendAdapter.h>
 #include <Strategies/RobotStrategyDefender.h>
 #include <Strategies/RobotStrategyGoal.h>
-#include <Strategies/RobotStrategyDefenderBack.h>
 #include <RobotStrategyFactory.h>
 #include <Config.h>
 #include <thread>
