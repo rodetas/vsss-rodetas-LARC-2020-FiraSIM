@@ -3,8 +3,6 @@
 //
 
 #include <Strategies/RobotStrategyDefender.h>
-#include <iostream>
-using namespace std;
 RobotStrategyDefender::RobotStrategyDefender() = default;
 
 vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c) {
