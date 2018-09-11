@@ -52,12 +52,11 @@ vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
 //    }
 
     if (robot.position.y < goalTarget.y) {
-        arrivalOrientation.x = goalTarget.x - 8;
-        arrivalOrientation.y = goalTarget.y + 10;
+        goalTarget.angle = M_PI/2;
     } else {
-        arrivalOrientation.x = goalTarget.x - 8;
-        arrivalOrientation.y = goalTarget.y - 10;
+        goalTarget.angle = (3 * M_PI)/2;
     }
+
 
     return goalTarget;
 }
@@ -66,14 +65,16 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     /* Se o target for a bola e se a bola estiver atrás do goleiro indo pro gol, definir angulo de chegada
      * para que o robô chega até a bola por trás evitando gol contra e a levando para fora do gol*/
 
-    //n = 0 faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
-    float n = 0;
+    UnivectorField univectorField;
+
+    univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
+    //float n = 0;
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
 
     if ((target.x == state.ball.position.x) && (target.y == state.ball.position.y)) {
         if (target.y > 40 && target.y < 88) {
             if (target.x > robot.position.x) {
-                n = 1.5;
+                univectorField.setUnivectorWithCurves();
             }
         }
     }
@@ -96,9 +97,8 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     obstacle.first.y = 88;
     obstacles.push_back(obstacle);
 
-    UnivectorField univectorField(n, 0.12, 4.5, 4.5);
-    path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
-    return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
+    path = univectorField.drawPath(robot, target, obstacles);
+    return univectorField.defineFi(robot, target, obstacles);
 }
 
 vss::WheelsCommand RobotStrategyGoal::stopStrategy(vss::WheelsCommand command) {

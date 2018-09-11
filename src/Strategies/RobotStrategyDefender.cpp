@@ -141,8 +141,7 @@ vss::Pose RobotStrategyDefender::defineTargetAndArrivalOrientation() {
     }
 
     //Orientação pro lado do gol
-    arrivalOrientation.x = target.x - 10;
-    arrivalOrientation.y = target.y;
+    target.angle = 0;
 
     return target;
 }
@@ -157,7 +156,7 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
         }
     }
 
-    UnivectorField univectorField(2, 0.12, 4.5, 4.5);
-    path = univectorField.drawPath(robot, target, arrivalOrientation, obstacles);
-    return univectorField.defineFi(robot, target, arrivalOrientation, obstacles);
+    UnivectorField univectorField;
+    path = univectorField.drawPath(robot, target, obstacles);
+    return univectorField.defineFi(robot, target, obstacles);
 }
