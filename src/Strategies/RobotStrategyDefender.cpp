@@ -10,20 +10,22 @@ vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c)
     return c;
 }
 
-vss::Pose RobotStrategyDefender::defineTargetAndArrivalOrientation() {
-
+vss::Pose RobotStrategyDefender::positionDefenderInAttack() {
     vss::Pose target;
     vss::Point ballProjection = state.ball.projection;
 
-    /*
-     Se a bola estiver no ataque, posiciona o defensor na frente do gol adversario para receber cruzamento, podendo ser na lateral direita,esquerda ou no centro, dependendo da posição da bola.
-     */
+    // verifica se a projeção da bola está no campo adversário
     if ((ballProjection.x < vss::MAX_COORDINATE_X / 3)) {
+        //verifica se o defensor está no campo de ataque
         if (robot.position.x < vss::MAX_COORDINATE_X * 0.6) {
+            /*verifica se o robô está fora da área adversária && se a bola está dentro da área inimiga */
             if (robot.position.x > 34 &&
                 (state.ball.position.x < 30 || state.ball.position.y < 20 || state.ball.position.y > 110)) {
                 target = vss::Pose(vss::MAX_COORDINATE_X * 0.2, 67, 0);
             } else {
+                /*se a bola não estiver na posição de chute, ou seja dentro da área, então posiciona o robô
+                 * no canto direito, esquerdo ou no meio, dependendo da orientação da bola
+                 * */
                 if (robot.position.y < vss::MAX_COORDINATE_Y / 2) {
                     if (ballProjection.y > state.ball.position.y) {
                         target = vss::Pose(vss::MAX_COORDINATE_X * 0.3, vss::MAX_COORDINATE_Y * 0.15, 0);
@@ -38,29 +40,32 @@ vss::Pose RobotStrategyDefender::defineTargetAndArrivalOrientation() {
                     }
                 }
             }
-
         }
     } else {
-        target = vss::Pose(vss::MAX_COORDINATE_X / 2, vss::MAX_COORDINATE_Y / 2, 0); // se a bola não estiver no ataque, manda o defensor para o meio do campo.
-    }
-    //Se a bola estiver na defesa posicionar defensor na entrada da aréa na direção da bola
-    if(ballProjection.x > vss::MAX_COORDINATE_X / 2)
-    {
-        target.x = vss::MAX_COORDINATE_X* 0.8;
-        target.y=ballProjection.y;
+        // se a bola não estiver no ataque posiciona o defensor no meio do campo.
+        target = vss::Pose(vss::MAX_COORDINATE_X / 2, vss::MAX_COORDINATE_Y / 2, 0);
     }
 
-    /*
-    // posiciona o robo na defesa para facilitar a troca de posicao com o goleiro
-    if (ballProjection.x > vss::MAX_COORDINATE_X / 2)
-    {
-        if (ballProjection.y > vss::MAX_COORDINATE_Y / 2) {
-            target = vss::Pose(vss::MAX_COORDINATE_X * 0.7, vss::MAX_COORDINATE_Y * 0.2, 0);
-        } else {
-            target = vss::Pose(vss::MAX_COORDINATE_X * 0.7, vss::MAX_COORDINATE_Y * 0.8, 0);
-        }
+    return target;
+}
+
+vss::Pose RobotStrategyDefender::defineTargetAndArrivalOrientation() {
+
+    vss::Pose target;
+    vss::Point ballProjection = state.ball.projection;
+
+    /* Posicionamento para receber cruzamento
+     * se a bola estiver no ataque, posiciona defensor perto da área adversária*/
+    target = positionDefenderInAttack();
+
+    /* Segunda linha de defesa
+     * verifica se a projeção da bola está em seu campo */
+    if(ballProjection.x > vss::MAX_COORDINATE_X / 2) {
+        // posiciona defensor na frente da aréa
+        target.x = vss::MAX_COORDINATE_X* 0.8;
+        // posiciona defensor na direção da projeção da bola
+        target.y=ballProjection.y;
     }
-    */
 
     //Orientação pro lado do gol
     arrivalOrientation.x = target.x - 10;
