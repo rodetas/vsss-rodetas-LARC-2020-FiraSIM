@@ -20,6 +20,7 @@ void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasStat
 
 void RobotStrategyFactory::manageStrategies(std::vector<RodetasRobot>& robots, RodetasState& state, bool isFreeBall){
 
+	// retorna na posicao 0 o MindSet pro Robo 0 - retorna na posicao 1 o MindSet pro Robo 1 ...
 	std::vector<MindSet> strategiesById = interpreter.defineStrategy(robots, state, isFreeBall);
 
 	for (RodetasRobot &robot : robots) {

@@ -6,12 +6,13 @@
 #define SDK_RODETAS_MINDSET_H
 
 #include <string>
+#include <vector>
 
 enum class MindSet {
     None,
     GoalKeeperStrategy,
     DefenderStrategy,
-    DefenderBackStrategy
+    DefenderBackStrategy,
     AttackerStrategy,
 
     PenaltyAttackPositioning,
@@ -19,6 +20,8 @@ enum class MindSet {
     // ...
 };
 
+
+std::vector<MindSet> getStrategiesMindSet();
 
 std::string toString(MindSet);
 

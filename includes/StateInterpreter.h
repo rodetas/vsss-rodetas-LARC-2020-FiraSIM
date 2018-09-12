@@ -16,6 +16,10 @@ public:
 
     std::vector<MindSet> defineStrategy(std::vector<RodetasRobot>&, RodetasState&, bool);
 
+    void defineStandartStrategies(std::vector<RodetasRobot>&, RodetasState&);
+    void chooseStrategies(std::vector<RodetasRobot>&, RodetasState&, bool);
+    bool doesAllRobotsHaveStrategy(std::vector<RodetasRobot>&);
+
 private:
 
     RodetasRobot getRobotByStrategy(MindSet, std::vector<RodetasRobot>&);

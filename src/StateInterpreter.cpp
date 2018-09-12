@@ -10,6 +10,19 @@ StateInterpreter::StateInterpreter() {
 
 std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot> &robots, RodetasState &state, bool freeBall) {
 
+    if(doesAllRobotsHaveStrategy(robots)){
+        // caso todos os robos tenham estrategia
+        chooseStrategies(robots, state, freeBall);
+
+    } else {
+        // caso algum robo nao tenha uma estrategia definida entao aplica as estrategias padroes de cada robo
+        defineStandartStrategies(robots, state);
+    }
+
+    return strategiesById;
+}
+
+void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, RodetasState & state, bool freeBall) {
     RodetasRobot goalRobot = getRobotByStrategy(MindSet::GoalKeeperStrategy, robots);
     RodetasRobot defenderRobot = getRobotByStrategy(MindSet::DefenderStrategy, robots);
     RodetasRobot attackerRobot = getRobotByStrategy(MindSet::AttackerStrategy, robots);
@@ -112,7 +125,51 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot> 
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
         }
     }
-    return strategiesById;
+
+}
+
+void StateInterpreter::defineStandartStrategies(std::vector<RodetasRobot> &robots, RodetasState &state){
+    // a estrategia padrao define o robo mais proximo da bola como atacante
+
+    strategiesById[robots[0].getId()] = MindSet::AttackerStrategy;
+    strategiesById[robots[1].getId()] = MindSet::DefenderStrategy;
+    strategiesById[robots[2].getId()] = MindSet::GoalKeeperStrategy;
+
+    // procura por robo mais proximo da bola
+    RodetasRobot closestToBallRobot;
+    double lowerDistance = 1000;
+    for(RodetasRobot& r : robots){
+        double distance = Math::distancePoint(r.getSelfState().position, state.ball.position);
+        if(distance < lowerDistance){
+            closestToBallRobot = r;
+            lowerDistance = distance;
+        }
+    }
+
+    MindSet aux = strategiesById[closestToBallRobot.getId()];
+    strategiesById[closestToBallRobot.getId()] = MindSet::AttackerStrategy;
+    strategiesById[0] = aux;
+
+}
+
+// retorna true caso tenha para todos os robos uma estrategia definida
+bool StateInterpreter::doesAllRobotsHaveStrategy(std::vector<RodetasRobot>& robots){
+
+    std::vector<MindSet> strategiesMindSet = getStrategiesMindSet();
+
+    // verifica para cada robo se possui uma estrategia definida
+    for(RodetasRobot robot : robots){
+        MindSet mindSet = robot.getMindSet();
+
+        auto findMindSetInVector = std::find(strategiesMindSet.begin(), strategiesMindSet.end(), mindSet);
+
+        if ( findMindSetInVector == strategiesMindSet.end()){
+            // nao encontrou no vetor
+            return false;
+        }
+    }
+
+    return true;
 }
 
 RodetasRobot StateInterpreter::getRobotByStrategy(MindSet mindSet, std::vector<RodetasRobot> &robots) {
