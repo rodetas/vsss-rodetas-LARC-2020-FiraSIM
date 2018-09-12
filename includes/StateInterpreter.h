@@ -14,11 +14,17 @@ public:
 
     StateInterpreter();
 
+    std::vector<MindSet> manageStrategyOrPositioning(std::vector<RodetasRobot> &, RodetasState &, bool, bool, PositionStatus);
     std::vector<MindSet> defineStrategy(std::vector<RodetasRobot>&, RodetasState&, bool);
 
+    std::vector<MindSet> definePositioning(std::vector<RodetasRobot>&, RodetasState&, PositionStatus);
+
     void defineStandartStrategies(std::vector<RodetasRobot>&, RodetasState&);
+    void definePenalty(std::vector<RodetasRobot>&, RodetasState&);
     void chooseStrategies(std::vector<RodetasRobot>&, RodetasState&, bool);
     bool doesAllRobotsHaveStrategy(std::vector<RodetasRobot>&);
+
+    RodetasRobot getClosestToBallRobot(std::vector<RodetasRobot>&, RodetasState&);
 
 private:
 
@@ -27,6 +33,7 @@ private:
     std::vector<MindSet> strategiesById;
 
     TimeHelper timeHelper;
+    TimeHelper timeAfterPositioning;
 
 };
 

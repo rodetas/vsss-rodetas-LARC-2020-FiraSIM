@@ -70,20 +70,18 @@ void Kernel::windowThreadWrapper() {
     windowControl.signalUpdateTesting.connect(sigc::mem_fun(this, &Kernel::updateTestingState));
     windowControl.signalChangeFunction.connect(sigc::mem_fun(this, &Kernel::freeBallPositions));
     windowControl.signalCloseWindow.connect(sigc::mem_fun(this, &Kernel::exitProgram));
+    windowControl.signalPositioning.connect(sigc::mem_fun(this, &Kernel::automaticPositioning));
 
     windowControl.start();
 }
 
 void Kernel::automaticPositioning(PositionStatus posStatus){
-    this->positionStatus = posStatus;
-
     if(this->positionStatus != PositionStatus::None) this->positionStatus = PositionStatus::None;
+    else this->positionStatus = posStatus;
 }
 
 void Kernel::freeBallPositions(bool isFreeBall){
-//    this->isFreeBall = isFreeBall;
-    if(this->positionStatus != PositionStatus::None) this->positionStatus = PositionStatus::None;
-    else this->positionStatus = PositionStatus::Penalty;
+    this->isFreeBall = isFreeBall;
 }
 
 void Kernel::updatePlayingState(bool playing) {

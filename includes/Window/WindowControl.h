@@ -6,10 +6,11 @@
 #define SDK_RODETAS_WINDOWCONTROL_H
 
 #include <gtkmm.h>
-#include<gtkmm/togglebutton.h>
+#include <gtkmm/togglebutton.h>
 #include <iostream>
 #include <sigc++/sigc++.h>
 #include <stdlib.h>
+#include <Domain/PositionStatus.h>
 
 using namespace std;
 
@@ -25,7 +26,7 @@ public:
    	void onPressButtonPlaying(Gtk::ToggleButton * );
     void onPressButtonTesting(Gtk::ToggleButton * );
 	void onPressButtonChange(Gtk::Button * );
-
+	void onPositioningRequired(PositionStatus);
 	void onCloseButton();
 
 	bool onKeyboard(GdkEventKey*, Gtk::Window*);
@@ -34,6 +35,7 @@ public:
     sigc::signal <void, bool> signalUpdatePlaying;
     sigc::signal <void, bool> signalUpdateTesting;
 	sigc::signal <void, bool> signalChangeFunction;
+	sigc::signal <void, PositionStatus> signalPositioning;
 	sigc::signal <void> signalCloseWindow;
 
 private:
@@ -43,6 +45,7 @@ private:
     Gtk::ToggleButton* buttonPlay = nullptr;
     Gtk::ToggleButton* buttonTests = nullptr;
     Gtk::Button* buttonChange = nullptr;
+    Gtk::ToggleButton* buttonPenaltyPosition = nullptr;
 
 };
 

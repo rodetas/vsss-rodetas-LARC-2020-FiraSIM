@@ -5,9 +5,12 @@
 #ifndef SDK_RODETAS_DEFENDERPENALTYPOSITIONING_H
 #define SDK_RODETAS_DEFENDERPENALTYPOSITIONING_H
 
-#include <Agent.h>
+#include <RobotPositioning.h>
 
-class DefenderPenaltyPositioning {
+class DefenderPenaltyPositioning : public RobotPositioning {
+
+    vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
+    vss::Pose defineTargetAndArrivalOrientation() override;
 
 };
 

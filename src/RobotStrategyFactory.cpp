@@ -8,13 +8,56 @@ RobotStrategyFactory::RobotStrategyFactory() = default;
 
 void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool enabledSwap, bool isFreeBall, PositionStatus positionStatus) {
 
-	if(positionStatus == PositionStatus::None){
-		// apenas troca se houverem 3 robos
-		if (enabledSwap and robots.size() == 3) {
-			manageStrategies(robots, state, isFreeBall);
+	std::vector<MindSet> mindSetById = interpreter.manageStrategyOrPositioning(robots, state, enabledSwap, isFreeBall, positionStatus );
+	constructStrategies(robots, mindSetById);
+
+}
+
+void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots, std::vector<MindSet>& mindSetById) {
+
+	for (RodetasRobot &robot : robots) {
+		MindSet robotMindSet = mindSetById[robot.getId()];
+
+		switch (robotMindSet) {
+			case MindSet::GoalKeeperStrategy:
+				if (robot.getMindSet() != MindSet::GoalKeeperStrategy) {
+					robot.setMindSet(MindSet::GoalKeeperStrategy);
+					robot.setStrategy(new RobotStrategyGoal());
+				}
+				break;
+			case MindSet::DefenderStrategy:
+				if (robot.getMindSet() != MindSet::DefenderStrategy) {
+					robot.setMindSet(MindSet::DefenderStrategy);
+					robot.setStrategy(new RobotStrategyDefender());
+				}
+				break;
+			case MindSet::AttackerStrategy:
+				if (robot.getMindSet() != MindSet::AttackerStrategy) {
+					robot.setMindSet(MindSet::AttackerStrategy);
+					robot.setStrategy(new RobotStrategyAttack());
+				}
+				break;
+
+			case MindSet::PenaltyAttackPositioning:
+				if (robot.getMindSet() != MindSet::PenaltyAttackPositioning) {
+					robot.setMindSet(MindSet::PenaltyAttackPositioning);
+					robot.setStrategy(new AttackPenaltyPositioning());
+				}
+				break;
+
+			case MindSet::PenaltyDefenderPositioning:
+				if (robot.getMindSet() != MindSet::PenaltyDefenderPositioning) {
+					robot.setMindSet(MindSet::PenaltyDefenderPositioning);
+					robot.setStrategy(new DefenderPenaltyPositioning());
+				}
+				break;
+
+			case MindSet::GoalKeeperCenterPositioning:
+				break;
+
+			default:
+				break;
 		}
-	} else {
-		managePositioning(robots, state, positionStatus);
 	}
 }
 
@@ -45,6 +88,7 @@ void RobotStrategyFactory::manageStrategies(std::vector<RodetasRobot>& robots, R
 					robot.setStrategy(new RobotStrategyAttack());
 				}
 				break;
+
 			default:
 				break;
 		}
@@ -53,26 +97,55 @@ void RobotStrategyFactory::manageStrategies(std::vector<RodetasRobot>& robots, R
 
 void RobotStrategyFactory::managePositioning(std::vector<RodetasRobot>& robots, RodetasState& state, PositionStatus positionStatus) {
 
-//	std::vector<PositionStatus> positionsById = interpreter.definePositions(robots, state, positionStatus);
-//		PositionStatus robotPositioning = positionsById[robot.getId()];
+//    if(lastPositionStatus != positionStatus) {
+        std::cout << "ENTROU" << std::endl;
+        std::vector<MindSet> positionsById = interpreter.definePositioning(robots, state, positionStatus);
 
+        for (RodetasRobot &robot : robots) {
+            MindSet robotMindSet = positionsById[robot.getId()];
 
-	if(positionStatus == PositionStatus::Penalty){
+            switch (robotMindSet) {
 
-		if(robots[0].getMindSet() != MindSet::PenaltyAttackPositioning){
-			robots[0].setMindSet(MindSet::PenaltyAttackPositioning);
-			robots[0].setStrategy(new AttackPenaltyPositioning());
-		}
+                case MindSet::PenaltyAttackPositioning:
+                    if (robot.getMindSet() != MindSet::PenaltyAttackPositioning) {
+                        robot.setMindSet(MindSet::PenaltyAttackPositioning);
+                        robot.setStrategy(new AttackPenaltyPositioning());
+                    }
+                    break;
 
-		// @TODO posicionamento de penalti para o defensor e goleiro
-//		if(robots[1].getPositionStatus() == PositionStatus::None){
-//			robots[1].setMindSet(MindSet::None);
-//			robots[1].setStrategy(new DefenderPenaltyPositioning());
-//		}
-	}
+                case MindSet::PenaltyDefenderPositioning:
+                    if (robot.getMindSet() != MindSet::PenaltyDefenderPositioning) {
+                        robot.setMindSet(MindSet::PenaltyDefenderPositioning);
+                        robot.setStrategy(new DefenderPenaltyPositioning());
+                    }
+                    break;
 
-	if(positionStatus == PositionStatus::Freeball){
-		// @TODO implementar posicionamentos para freeball
-	}
+                case MindSet::GoalKeeperCenterPositioning:
+                    break;
+
+                default:
+                    break;
+
+            }
+        }
+
+//        if (positionStatus == PositionStatus::Penalty) {
+//
+//            if (robots[0].getMindSet() != MindSet::PenaltyAttackPositioning) {
+//                robots[0].setMindSet(MindSet::PenaltyAttackPositioning);
+//                robots[0].setStrategy(new AttackPenaltyPositioning());
+//            }
+//
+//            // @TODO posicionamento de penalti para o defensor e goleiro
+//            //		if(robots[1].getPositionStatus() == PositionStatus::None){
+//            //			robots[1].setMindSet(MindSet::None);
+//            //			robots[1].setStrategy(new DefenderPenaltyPositioning());
+//            //		}
+//        }
+//
+//        if (positionStatus == PositionStatus::Freeball) {
+//            // @TODO implementar posicionamentos para freeball
+//        }
+//    }
 
 }

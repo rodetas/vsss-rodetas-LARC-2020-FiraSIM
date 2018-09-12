@@ -8,6 +8,22 @@ StateInterpreter::StateInterpreter() {
     strategiesById.resize(3);
 };
 
+std::vector<MindSet> StateInterpreter::manageStrategyOrPositioning(std::vector<RodetasRobot> &robots, RodetasState &state, bool enabledSwap, bool freeBall, PositionStatus posStatus){
+
+    if(posStatus == PositionStatus::None){
+        if(timeAfterPositioning.getElapsedTime() < 2000){
+            defineStandartStrategies(robots, state);
+        } else if(enabledSwap) {
+            defineStrategy(robots, state, freeBall);
+        }
+    } else {
+        definePositioning(robots, state, posStatus);
+        timeAfterPositioning.restartCounting();
+    }
+
+    return strategiesById;
+}
+
 std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot> &robots, RodetasState &state, bool freeBall) {
 
     if(doesAllRobotsHaveStrategy(robots)){
@@ -20,6 +36,31 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot> 
     }
 
     return strategiesById;
+}
+
+std::vector<MindSet> StateInterpreter::definePositioning(std::vector<RodetasRobot>& robots, RodetasState& state, PositionStatus posStatus){
+
+    if(posStatus == PositionStatus::Penalty){
+        definePenalty(robots, state);
+    }
+
+    return strategiesById;
+}
+
+void StateInterpreter::definePenalty(std::vector<RodetasRobot> & robots, RodetasState & state) {
+    strategiesById[robots[0].getId()] = MindSet::PenaltyAttackPositioning;
+    strategiesById[robots[1].getId()] = MindSet::PenaltyDefenderPositioning;
+    strategiesById[robots[2].getId()] = MindSet::GoalKeeperStrategy;
+
+    // procura por robo mais proximo da bola para bater o penalti
+    RodetasRobot closestToBallRobot = getClosestToBallRobot(robots, state);
+
+    if(closestToBallRobot.getId() != 0) {
+        MindSet aux = strategiesById[closestToBallRobot.getId()];
+        strategiesById[closestToBallRobot.getId()] = MindSet::PenaltyAttackPositioning;
+        strategiesById[0] = aux;
+    }
+
 }
 
 void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, RodetasState & state, bool freeBall) {
@@ -128,31 +169,24 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
 
 }
 
+// a estrategia padrao define o robo mais proximo da bola como atacante
 void StateInterpreter::defineStandartStrategies(std::vector<RodetasRobot> &robots, RodetasState &state){
-    // a estrategia padrao define o robo mais proximo da bola como atacante
 
     strategiesById[robots[0].getId()] = MindSet::AttackerStrategy;
     strategiesById[robots[1].getId()] = MindSet::DefenderStrategy;
     strategiesById[robots[2].getId()] = MindSet::GoalKeeperStrategy;
 
     // procura por robo mais proximo da bola
-    RodetasRobot closestToBallRobot;
-    double lowerDistance = 1000;
-    for(RodetasRobot& r : robots){
-        double distance = Math::distancePoint(r.getSelfState().position, state.ball.position);
-        if(distance < lowerDistance){
-            closestToBallRobot = r;
-            lowerDistance = distance;
-        }
+    RodetasRobot closestToBallRobot = getClosestToBallRobot(robots, state);
+
+    if(closestToBallRobot.getId() != 0) {
+        MindSet aux = strategiesById[closestToBallRobot.getId()];
+        strategiesById[closestToBallRobot.getId()] = MindSet::AttackerStrategy;
+        strategiesById[0] = aux;
     }
-
-    MindSet aux = strategiesById[closestToBallRobot.getId()];
-    strategiesById[closestToBallRobot.getId()] = MindSet::AttackerStrategy;
-    strategiesById[0] = aux;
-
 }
 
-// retorna true caso tenha para todos os robos uma estrategia definida
+// retorna true caso tenha para todos os robos uma estrategia de jogo definida
 bool StateInterpreter::doesAllRobotsHaveStrategy(std::vector<RodetasRobot>& robots){
 
     std::vector<MindSet> strategiesMindSet = getStrategiesMindSet();
@@ -179,4 +213,20 @@ RodetasRobot StateInterpreter::getRobotByStrategy(MindSet mindSet, std::vector<R
     });
 
     return *found;
+}
+
+RodetasRobot StateInterpreter::getClosestToBallRobot(std::vector<RodetasRobot> & robots, RodetasState & state) {
+
+    // procura por robo mais proximo da bola
+    RodetasRobot closestToBallRobot;
+    double lowerDistance = 1000;
+    for(RodetasRobot& r : robots){
+        double distance = Math::distancePoint(r.getSelfState().position, state.ball.position);
+        if(distance < lowerDistance){
+            closestToBallRobot = r;
+            lowerDistance = distance;
+        }
+    }
+
+    return closestToBallRobot;
 }

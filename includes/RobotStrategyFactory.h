@@ -16,6 +16,7 @@
 #include <Strategies/RobotStrategyDefenderBack.h>
 #include <Strategies/RobotStrategyGoal.h>
 #include <Positioning/Penalty/AttackPenaltyPositioning.h>
+#include <Positioning/Penalty/DefenderPenaltyPositioning.h>
 
 class RobotStrategyFactory {
 
@@ -23,12 +24,14 @@ public:
 
     RobotStrategyFactory();
     void manage(std::vector<RodetasRobot>&, RodetasState&, bool, bool, PositionStatus);
+    void constructStrategies(std::vector<RodetasRobot>&, std::vector<MindSet>&);
     void manageStrategies(std::vector<RodetasRobot>&, RodetasState&, bool);
     void managePositioning(std::vector<RodetasRobot>&, RodetasState&, PositionStatus);
 
 private:
 
     StateInterpreter interpreter;
+    TimeHelper timeHelper;
 
 };
 
