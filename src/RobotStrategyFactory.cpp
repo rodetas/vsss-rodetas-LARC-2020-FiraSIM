@@ -44,7 +44,6 @@ void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots
 					robot.setStrategy(new AttackPenaltyPositioning());
 				}
 				break;
-
 			case MindSet::PenaltyDefenderPositioning:
 				if (robot.getMindSet() != MindSet::PenaltyDefenderPositioning) {
 					robot.setMindSet(MindSet::PenaltyDefenderPositioning);
