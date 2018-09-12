@@ -18,7 +18,7 @@ public:
     vss::Pose defineTargetAndArrivalOrientation() override;
 
     float applyUnivectorField(vss::Pose) override;
-    
+
     vss::Pose positionDefenderInAttack();
 };
 

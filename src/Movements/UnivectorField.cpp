@@ -4,12 +4,26 @@
 
 #include <Movements/UnivectorField.h>
 
-UnivectorField::UnivectorField(float n, float k0, float dmin, float delta) : n(n), k0(k0), dmin(dmin), delta(delta) {}
+UnivectorField::UnivectorField() {
+    n = 2;
+    orientationDistance = 10;
+    k0 = 0.12;
+    dmin = 4.5;
+    delta = 4.5;
+}
 
-UnivectorField::UnivectorField() = default;
+void UnivectorField::setUnivectorWithoutCurves() {
+    n = 0;
+}
 
-float UnivectorField::defineFi(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                               std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
+void UnivectorField::setUnivectorWithCurves() {
+    n = 2;
+}
+
+float
+UnivectorField::defineFi(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
+
+    vss::Point arrivalOrientation = getArrivalPoint(target);
 
     float moveFi = defineMoveFi(robot.position, target, arrivalOrientation);
 
@@ -44,28 +58,28 @@ float UnivectorField::defineFi(RobotState robot, vss::Pose target, vss::Point ar
             return repulsiveFi;
         } else {
             float g = Math::gaussian(distance - dmin, delta);
-            float subtraction = toDomain(repulsiveFi - moveFi);
-            float fi = toDomain(g * subtraction) + toDomain(moveFi);
-            return toDomain(fi);
+            float subtraction = Math::toDomain(repulsiveFi - moveFi);
+            float fi = Math::toDomain(g * subtraction) + Math::toDomain(moveFi);
+            return Math::toDomain(fi);
         }
     } else {
         return moveFi;
     }
 }
 
-vss::Path UnivectorField::drawPath(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                              std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
+vss::Path
+UnivectorField::drawPath(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
     std::vector<vss::Point> points;
     vss::Point point = robot.position;
     RobotState r = robot;
 
-    float fi = defineFi(robot, target, arrivalOrientation, obstacles);
+    float fi = defineFi(robot, target, obstacles);
     for (int i = 0; i < 250; i++) {
         point.x = point.x + cos(fi);
         point.y = point.y + sin(fi);
         r.position = point;
         points.push_back(point);
-        fi = defineFi(r, target, arrivalOrientation, obstacles);
+        fi = defineFi(r, target, obstacles);
         if (Math::distancePoint(point, target) < 2)
             i = 250;
     }
@@ -84,13 +98,13 @@ float UnivectorField::defineMoveFi(vss::Point robot, vss::Pose target, vss::Poin
 
     float alpha = pr - pg;
     float fi = pg - n * alpha;
-    return toDomain(fi);
+    return Math::toDomain(fi);
 }
 
 float UnivectorField::defineRepulsiveFi(vss::Point robot, vss::Point virtualObstacle) {
     //The repulsive fi is only the angle between the robot and the virtual obstacle
     float fi = Math::radian(robot, virtualObstacle);
-    return toDomain(fi);
+    return Math::toDomain(fi);
 }
 
 vss::Point UnivectorField::getS(vss::Point robotSpeed, vss::Point obstacleSpeed) {
@@ -116,12 +130,53 @@ vss::Point UnivectorField::getVirtualPosition(vss::Point robot, vss::Point obsta
     return virtualPosition;
 }
 
-float UnivectorField::toDomain(float fi) {
-    if (fi > M_PI) {
-        return (fi - 2 * M_PI);
-    } else if (fi < -M_PI) {
-        return (2 * M_PI + fi);
-    } else {
-        return fi;
+vss::Point UnivectorField::getArrivalPoint(vss::Pose target) {
+    vss::Point arrivalOrientation;
+    float angle = target.angle;
+    angle = Math::toDomain2Pi(angle);
+    float delX;
+    float delY;
+    float angleAux;
+
+    //Only 0 - 2 * M_PI angles
+    if ((angle > 0 || angle == 0) && (angle < 2 * M_PI || angle == 2 * M_PI)) {
+
+        if (angle < M_PI / 2 || angle == M_PI / 2) {
+
+            delX = orientationDistance * cos(angle);
+            delY = orientationDistance * sin(angle);
+
+            arrivalOrientation.x = target.x - delX;
+            arrivalOrientation.y = target.y + delY;
+
+        } else if (angle < M_PI || angle == M_PI) {
+
+            angleAux = M_PI - angle;
+            delX = orientationDistance * cos(angleAux);
+            delY = orientationDistance * sin(angleAux);
+
+            arrivalOrientation.x = target.x + delX;
+            arrivalOrientation.y = target.y + delY;
+
+        } else if (angle < (3 * M_PI) / 2 || angle == (3 * M_PI) / 2) {
+
+            angleAux = (3 * M_PI) / 2 - angle;
+            delX = orientationDistance * sin(angleAux);
+            delY = orientationDistance * cos(angleAux);
+
+            arrivalOrientation.x = target.x + delX;
+            arrivalOrientation.y = target.y - delY;
+
+        } else if (angle < 2 * M_PI) {
+
+            angleAux = 2 * M_PI - angle;
+            delX = orientationDistance * cos(angleAux);
+            delY = orientationDistance * sin(angleAux);
+
+            arrivalOrientation.x = target.x - delX;
+            arrivalOrientation.y = target.y - delY;
+        }
     }
+
+    return arrivalOrientation;
 }
