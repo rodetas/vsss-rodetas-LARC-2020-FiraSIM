@@ -21,22 +21,24 @@
 class UnivectorField {
 public:
 
-    UnivectorField(float n, float k0, float dmin, float delta);
-
     UnivectorField();
 
+    void setUnivectorWithoutCurves();
+
+    void setUnivectorWithCurves();
+
     //Defines the univector field angle with obstacles, the vector "obstacles" contains the position and the velocity of the obstacles
-    float defineFi(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                   std::vector<std::pair<vss::Point, vss::Point>> obstacles);
+    float defineFi(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles);
 
     //Draws the path to the target with obstacles
-    vss::Path drawPath(RobotState robot, vss::Pose target, vss::Point arrivalOrientation,
-                  std::vector<std::pair<vss::Point, vss::Point>> obstacles);
+    vss::Path drawPath(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles);
 
 private:
 
     //This constant defines the robot curve
     float n;
+    //This constant defines also the robot curve. It is the distance between the target and the point that defines the arrival orientation
+    float orientationDistance;
     //This constant adjusts the creation of the virtual position of the obstacles with its velocity
     float k0;
     //Defines the radius that the robot will suffer only repulsive angle
@@ -57,8 +59,8 @@ private:
     //Creates the virtual position of the obstacle based on its velocity
     vss::Point getVirtualPosition(vss::Point robot, vss::Point obstacle, vss::Point s);
 
-    //Keeps the angle in the domain [-PI, PI]
-    float toDomain(float fi);
+    //Calculates the arrival Orientation Point from an arrival Angle (0 - 2PI) from the target
+    vss::Point getArrivalPoint(vss::Pose target);
 };
 
 #endif //SDK_RODETAS_UNIVECTORFIELD_H
