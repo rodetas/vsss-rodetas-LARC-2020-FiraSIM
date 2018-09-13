@@ -10,22 +10,20 @@
 
 enum class MindSet {
     None,
-    GoalKeeperStrategy,
-    DefenderStrategy,
-    DefenderBackStrategy,
-    AttackerStrategy,
+    GoalKeeperStrategy,     // estrategia goleiro
+    DefenderStrategy,       // estrategia defensor
+    DefenderBackStrategy,   // estrategia defensor fazendo linha de defesa
+    AttackerStrategy,       // estrategia do atacante
 
-    PenaltyHitAttackPositioning,
-    PenaltyHitDefenderPositioning,
+    PenaltyHitAttackPositioning,        // posicionamento para atacante bater penalti
+    PenaltyHitDefenderPositioning,      // posicionamento do defensor situacao de penalti a favor
 
-    PenaltyAgainstAttackPositioning,
-    PenaltyAgainstDefenderPositioning,
+    PenaltyAgainstAttackPositioning,    // posicionamento do atacante em caso de penalti contra
+    PenaltyAgainstDefenderPositioning,  // posicionamento do defensor em caso de penalti contra
 
+    GoalKeeperCenterPositioning         // posiciona o goleiro no centro do gol
 
-
-    GoalKeeperCenterPositioning
-
-    // ...
+    //@TODO definir posicionamento de diversos outros cenarios como freeball, saida de bola(contra e a favor), tiro de meta, etc
 };
 
 

@@ -8,11 +8,14 @@ RobotStrategyFactory::RobotStrategyFactory() = default;
 
 void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool enabledSwap, bool isFreeBall, PositionStatus positionStatus) {
 
+    // funcao retorna um vetor contendo no indice 0 o mindSet do Robo 0, no indice 1 mindSet do robo 1, etc
 	std::vector<MindSet> mindSetById = interpreter.manageStrategyOrPositioning(robots, state, enabledSwap, isFreeBall, positionStatus );
+
 	constructStrategies(robots, mindSetById);
 
 }
 
+// funcao que insere para cada robo o Agente que foi escolhido para ele
 void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots, std::vector<MindSet>& mindSetById) {
 
 	for (RodetasRobot &robot : robots) {
@@ -58,6 +61,7 @@ void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots
 				}
 
 			default:
+			    std::cout << "MindSet nao tratado. Tente adicionar no switch" << std::endl;
 				break;
 		}
 	}

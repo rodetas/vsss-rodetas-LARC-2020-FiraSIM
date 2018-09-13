@@ -12,10 +12,13 @@ vss::WheelsCommand RobotPositioning::applyStrategy(RobotState r, RodetasState s,
     // define qual o target do robo
     target = this->defineTargetAndArrivalOrientation();
 
+    // define o valor de fi com base no target do robo
     float fi = this->applyUnivectorField(target);
 
-    // defines robot's pwm
+    // define a velocidade do robo com base no valor do fi
     command = movimentation.movePlayers(robot, fi, RobotSpeed::SLOW);
+
+    // ADICIONAR AQUI TODAS AS CHAMADAS DE ESTRATEGIA QUE SERAO COMUNS PARA OS ROBOS; E.G PARAR NO PONTO
 
     // define as estrategias que serao aplicadas para o robo - esta implementado em todas as classes filhas
     command = this->specificStrategy(command);
@@ -40,5 +43,4 @@ float RobotPositioning::applyUnivectorField(vss::Pose target) {
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
-
 }

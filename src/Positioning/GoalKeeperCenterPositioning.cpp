@@ -9,7 +9,8 @@ vss::WheelsCommand GoalKeepCenterPositioning::specificStrategy(vss::WheelsComman
 }
 
 vss::Pose GoalKeepCenterPositioning::defineTargetAndArrivalOrientation() {
-    target = vss::Pose(150, 65, 90);
+    // o robo vai ser preciso o suficiente para parar 90 graus no meio do gol sozinho?
+    target = vss::Pose(150, 65, M_PI_2);
 
     return target;
 }

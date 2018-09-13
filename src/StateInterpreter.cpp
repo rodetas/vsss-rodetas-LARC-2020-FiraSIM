@@ -12,13 +12,14 @@ StateInterpreter::StateInterpreter() {
 std::vector<MindSet> StateInterpreter::manageStrategyOrPositioning(std::vector<RodetasRobot> &robots, RodetasState &state, bool enabledSwap, bool freeBall, PositionStatus posStatus){
 
     if(posStatus == PositionStatus::None){
+        // garante que nao ocorrerá troca nos primeiros 2 segundos apos um posicionamento
         if(timeAfterPositioning.getElapsedTime() < 2000){
             defineStandartStrategies(robots, state);
         } else if(enabledSwap) {
             defineStrategy(robots, state, freeBall);
         }
     } else {
-        // previne que fique trocando de robo em um mesmo posicionamento
+        // garante que uma vez definida as acoes de um robo esta nao sera alterada durante uma mesma requisicao de posicionamento
         if(lastPosStatus != posStatus) {
             definePositioning(robots, state, posStatus);
         }
@@ -71,12 +72,14 @@ void StateInterpreter::definePenaltyHit(std::vector<RodetasRobot> & robots, Rode
 
 // define posicoes para situacao de defesa de penalti
 void StateInterpreter::definePenaltyAgainst(std::vector<RodetasRobot> & robots, RodetasState & state) {
-
-
+    // @TODO definir posicionamento para defesa de penalti
+    // @TODO implementar classe de posicionamento para defensor e atacante - tomar como base as utilizadas para bater penalti
+    // Para definir o posicionamento do goleiro pode-se utilizar a classe ja existente GoalKeeperCenterPositioning
 
 }
 
 void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, RodetasState & state, bool freeBall) {
+    // @TODO refatorar essa troca de estrategias
     RodetasRobot goalRobot = getRobotByStrategy(MindSet::GoalKeeperStrategy, robots);
     RodetasRobot defenderRobot = getRobotByStrategy(MindSet::DefenderStrategy, robots);
     RodetasRobot attackerRobot = getRobotByStrategy(MindSet::AttackerStrategy, robots);
