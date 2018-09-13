@@ -15,9 +15,16 @@ enum class MindSet {
     DefenderBackStrategy,
     AttackerStrategy,
 
-    PenaltyAttackPositioning,
-    PenaltyDefenderPositioning,
+    PenaltyHitAttackPositioning,
+    PenaltyHitDefenderPositioning,
+
+    PenaltyAgainstAttackPositioning,
+    PenaltyAgainstDefenderPositioning,
+
+
+
     GoalKeeperCenterPositioning
+
     // ...
 };
 

@@ -20,7 +20,8 @@ public:
     std::vector<MindSet> definePositioning(std::vector<RodetasRobot>&, RodetasState&, PositionStatus);
 
     void defineStandartStrategies(std::vector<RodetasRobot>&, RodetasState&);
-    void definePenalty(std::vector<RodetasRobot>&, RodetasState&);
+    void definePenaltyHit(std::vector<RodetasRobot>&, RodetasState&);
+    void definePenaltyAgainst(std::vector<RodetasRobot>&, RodetasState&);
     void chooseStrategies(std::vector<RodetasRobot>&, RodetasState&, bool);
     bool doesAllRobotsHaveStrategy(std::vector<RodetasRobot>&);
 
@@ -34,6 +35,8 @@ private:
 
     TimeHelper timeHelper;
     TimeHelper timeAfterPositioning;
+
+    PositionStatus lastPosStatus;
 
 };
 

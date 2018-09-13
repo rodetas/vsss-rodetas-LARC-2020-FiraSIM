@@ -4,4 +4,12 @@
 
 #include <Positioning/GoalKeeperCenterPositioning.h>
 
-//GoalKeeperCenterPositioning::
+vss::WheelsCommand GoalKeepCenterPositioning::specificStrategy(vss::WheelsCommand c) {
+    return c;
+}
+
+vss::Pose GoalKeepCenterPositioning::defineTargetAndArrivalOrientation() {
+    target = vss::Pose(150, 65, 90);
+
+    return target;
+}

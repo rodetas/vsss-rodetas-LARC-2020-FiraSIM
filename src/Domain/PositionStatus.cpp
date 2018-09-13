@@ -11,7 +11,7 @@ std::string toString(PositionStatus pos){
         case PositionStatus::None:
             return "None";
 
-        case PositionStatus::Penalty:
+        case PositionStatus::PenaltyHit:
             return "Penalty";
 
         case PositionStatus::Freeball:

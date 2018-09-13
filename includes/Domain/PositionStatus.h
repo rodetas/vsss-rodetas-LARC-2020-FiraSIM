@@ -15,7 +15,8 @@
 enum class PositionStatus {
 
     None,
-    Penalty,
+    PenaltyHit,
+    PenaltyAgainst,
     Freeball
 
 };
