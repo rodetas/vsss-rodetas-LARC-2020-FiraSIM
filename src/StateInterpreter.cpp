@@ -72,10 +72,7 @@ void StateInterpreter::definePenaltyHit(std::vector<RodetasRobot> & robots, Rode
 
 // define posicoes para situacao de defesa de penalti
 void StateInterpreter::definePenaltyAgainst(std::vector<RodetasRobot> & robots, RodetasState & state) {
-    // @TODO definir posicionamento para defesa de penalti
-    // @TODO implementar classe de posicionamento para defensor e atacante - tomar como base as utilizadas para bater penalti
-    // Para definir o posicionamento do goleiro pode-se utilizar a classe ja existente GoalKeeperCenterPositioning
-
+    
     strategiesById[robots[0].getId()] = MindSet::PenaltyAgainstAttackPositioning;
     strategiesById[robots[1].getId()] = MindSet::PenaltyAgainstDefenderPositioning;
     strategiesById[robots[2].getId()] = MindSet::GoalKeeperCenterPositioning;

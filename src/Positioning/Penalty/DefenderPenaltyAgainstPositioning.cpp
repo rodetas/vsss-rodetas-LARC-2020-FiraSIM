@@ -5,6 +5,7 @@
 #include "Positioning/Penalty/DefenderPenaltyAgainstPositioning.h"
 
 vss::WheelsCommand DefenderPenaltyAgainstPositioning::specificStrategy(vss::WheelsCommand c) {
+    // define que o robo deve parar no ponto e o mantem sempre virado para o nosso gol de defesa
     c = stopStrategy(c, vss::Point(vss::MAX_COORDINATE_X, vss::MAX_COORDINATE_Y/2));
 
     return c;

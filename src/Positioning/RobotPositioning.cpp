@@ -38,6 +38,8 @@ float RobotPositioning::applyUnivectorField(vss::Pose target) {
         }
     }
 
+    obstacles.emplace_back(std::make_pair(state.ball.position, state.ball.vectorSpeed));
+
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);

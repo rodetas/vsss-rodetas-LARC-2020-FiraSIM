@@ -5,6 +5,7 @@
 #include "Positioning/Penalty/AttackPenaltyHitPositioning.h"
 
 vss::WheelsCommand AttackPenaltyHitPositioning::specificStrategy(vss::WheelsCommand c){
+    // define que robo deve parar no ponto e estar sempre virado para a bola
     c = stopStrategy(c, state.ball.position);
 
     return c;
