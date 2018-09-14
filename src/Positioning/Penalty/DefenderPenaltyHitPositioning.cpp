@@ -4,10 +4,11 @@
 
 #include "Positioning/Penalty/DefenderPenaltyHitPositioning.h"
 
-vss::WheelsCommand DefenderPenaltyHitPositioning::specificStrategy(vss::WheelsCommand command) {
+vss::WheelsCommand DefenderPenaltyHitPositioning::specificStrategy(vss::WheelsCommand c) {
+    // define que robo deve parar no ponto e estar sempre virado para a bola
+    c = stopStrategy(c, state.ball.position);
 
-    return command;
-
+    return c;
 }
 
 vss::Pose DefenderPenaltyHitPositioning::defineTargetAndArrivalOrientation() {

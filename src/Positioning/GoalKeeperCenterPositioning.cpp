@@ -5,6 +5,8 @@
 #include <Positioning/GoalKeeperCenterPositioning.h>
 
 vss::WheelsCommand GoalKeepCenterPositioning::specificStrategy(vss::WheelsCommand c) {
+    c = stopStrategy(c, vss::Point(robot.position.x, robot.position.y + 30));
+
     return c;
 }
 
