@@ -13,7 +13,9 @@
 #include <Strategies/RobotStrategyDefender.h>
 #include <Strategies/RobotStrategyGoal.h>
 #include <Positioning/Penalty/AttackPenaltyHitPositioning.h>
+#include <Positioning/Penalty/AttackPenaltyAgainstPositioning.h>
 #include <Positioning/Penalty/DefenderPenaltyHitPositioning.h>
+#include <Positioning/Penalty/DefenderPenaltyAgainstPositioning.h>
 #include <Positioning/GoalKeeperCenterPositioning.h>
 
 class RobotStrategyFactory {

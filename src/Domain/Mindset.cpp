@@ -11,13 +11,27 @@ std::vector<MindSet> getStrategiesMindSet(){
 
 std::string toString(MindSet m){
     switch(m){
+        case MindSet::None:
+            return "None";
         case MindSet::GoalKeeperStrategy:
-            return "GoalKeeper";
+            return "GoalKeeperStrategy";
         case MindSet::DefenderStrategy:
-            return "Defender";
+            return "DefenderStrategy";
+        case MindSet::DefenderBackStrategy:
+            return "DefenderBackStrategy";
         case MindSet::AttackerStrategy:
-            return "Attacker";
+            return "AttackerStrategy";
+        case MindSet::PenaltyHitAttackPositioning:
+            return "PenaltyHitAttackPositioning";
+        case MindSet::PenaltyHitDefenderPositioning:
+            return "PenaltyHitDefenderPositioning";
+        case MindSet::PenaltyAgainstAttackPositioning:
+            return "PenaltyAgainstAttackPositioning";
+        case MindSet::PenaltyAgainstDefenderPositioning:
+            return "PenaltyAgainstDefenderPositioning";
+        case MindSet::GoalKeeperCenterPositioning:
+            return "GoalKeeperCenterPositioning";
         default:
-            return "";
+            return "NotDefined";
     }
 }
