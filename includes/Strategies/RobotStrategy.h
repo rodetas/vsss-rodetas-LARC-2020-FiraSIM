@@ -13,20 +13,20 @@
 #include <Strategies/RobotStrategyBase.h>
 #include <Movements/Movimentation.h>
 #include <Movements/UnivectorField.h>
+#include <Agent.h>
 
-
-class RobotStrategy {
+class RobotStrategy : public Agent {
 
 public:
     RobotStrategy();
 
-    virtual vss::WheelsCommand applyStrategy(RobotState, RodetasState, RobotStrategyBase);
+    vss::WheelsCommand applyStrategy(RobotState, RodetasState, RobotStrategyBase) override;
+
+    vss::Pose defineTargetAndArrivalOrientation() override = 0;
+
+    float applyUnivectorField(vss::Pose) override = 0;
 
     virtual vss::WheelsCommand specificStrategy(vss::WheelsCommand) = 0;
-
-    virtual vss::Pose defineTargetAndArrivalOrientation() = 0;
-
-    virtual float applyUnivectorField(vss::Pose) = 0;
 
     //@TODO: inserir comentarios em cada estrategia
     virtual vss::WheelsCommand cornerStrategy(vss::WheelsCommand);
@@ -37,23 +37,7 @@ public:
 
     virtual vss::WheelsCommand kickStrategy(vss::WheelsCommand);
 
-    vss::WheelsCommand getCommand();
-    vss::Pose getFinalPose();
-    vss::Point getStepPose();
-    vss::Path getPath();
-
 protected:
-    RobotStrategyBase strategyBase;
-
-    vss::WheelsCommand command;
-
-    vss::Pose target;
-    vss::Point arrivalOrientation;
-    vss::Point stepPose;
-    vss::Path path;
-
-    RobotState robot;
-    RodetasState state;
 
     Movimentation movimentation;
 

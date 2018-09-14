@@ -17,7 +17,7 @@ void CommandSendAdapter::createSocketSendCommand() {
 
 void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool isPlaying, bool isTestingTransmission) {
 
-    if(!isRealEnvironment) {
+    if(not isRealEnvironment and isPlaying) {
         // sends commands to simulator
 
         vss::Command vssCommand;
@@ -29,6 +29,7 @@ void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool 
         transmission.send(2, commands[0]);
 //        transmission.send(1, commands[1]);
 //        transmission.send(2, commands[2]);
+
     } else if(isTestingTransmission){
         vss::WheelsCommand turnRightCommand(40,-40);
         for(int i=0 ; i<3 ; i++){
@@ -36,9 +37,17 @@ void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool 
         }
 
     } else {
-        vss::WheelsCommand stopCommand(0,0);
-        for(int i=0 ; i<3 ; i++){
-            transmission.send(i, stopCommand);
+        if(isRealEnvironment) {
+            vss::WheelsCommand stopCommand(0, 0);
+            for (int i = 0; i < 3; i++) {
+                transmission.send(i, stopCommand);
+            }
+        } else {
+            vss::Command vssCommand;
+            vss::WheelsCommand nullCommand;
+            vssCommand.commands.resize(3, nullCommand);
+
+            interfaceSend.sendCommand(vssCommand);
         }
     }
 }

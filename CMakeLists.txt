@@ -13,8 +13,8 @@ pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
 
 INCLUDE(FindProtobuf)
 include_directories(${PROTOBUF_INCLUDE_DIR} ${GTKMM_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
-include_directories(includes includes/Strategies includes/Communication)
-include_directories(src src/Strategies src/Communication)
+include_directories(includes includes/Strategies includes/Communication includes/Positioning)
+include_directories(src src/Strategies src/Communication src/Positioning)
 
 include_directories(usr/local/include)
 include_directories(usr/local/glade)

@@ -1,14 +1,22 @@
 #include "Movements/Movimentation.h"
 
 
+Movimentation::Movimentation() = default;
+
 /*
  * calculates the basic movimentation to goal to target
  */
-vss::WheelsCommand Movimentation::movePlayers(RobotState robot, vss::Pose target, float fi){
+vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotSpeed speed){
 
 	vss::WheelsCommand command;
 
 	double vMax = 0.8;
+
+	// @TODO verificar essas velocidades maximas
+	if(speed == RobotSpeed::SLOW) vMax = 0.2;
+	else if(speed == RobotSpeed::FAST) vMax = 1.2;
+	else if(speed == RobotSpeed::SUPERFAST) vMax = 1.5;
+
 	double d = 0.05; // Coeficiente de ponto a frente do robô
 	double r = 0.016; // Raio da roda
 	double l = 0.075;// Distancia entre as rodas

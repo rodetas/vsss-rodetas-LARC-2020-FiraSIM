@@ -6,35 +6,63 @@
 
 RobotStrategyFactory::RobotStrategyFactory() = default;
 
-void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool swap, bool isFreeBall) {
+void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool enabledSwap, bool isFreeBall, PositionStatus positionStatus) {
 
-	// apenas troca se houver 3 robos
-    if(swap && robots.size() == 3){
-	    std::vector<MindSet> strategiesById = interpreter.defineStrategy(robots, state, isFreeBall);
+    // funcao retorna um vetor contendo no indice 0 o mindSet do Robo 0, no indice 1 mindSet do robo 1, etc
+	std::vector<MindSet> mindSetById = interpreter.manageStrategyOrPositioning(robots, state, enabledSwap, isFreeBall, positionStatus );
 
-    	for(RodetasRobot& robot : robots){
-        	MindSet robotMindSet = strategiesById[robot.getId()];
+	constructStrategies(robots, mindSetById);
 
-        	switch(robotMindSet){
-            	case MindSet::GoalKeeper:
-            	    if(robot.getMindSet() != MindSet::GoalKeeper) {
-                        robot.setMindSet(MindSet::GoalKeeper);
-                        robot.setStrategy(new RobotStrategyGoal());
-                    }
-                	break;
-            	case MindSet::Defender:
-            	    if(robot.getMindSet() != MindSet::Defender) {
-                        robot.setMindSet(MindSet::Defender);
-                        robot.setStrategy(new RobotStrategyDefender());
-                    }
-                	break;
-            	case MindSet::Attacker:
-            	    if(robot.getMindSet() != MindSet::Attacker) {
-                        robot.setMindSet(MindSet::Attacker);
-                        robot.setStrategy(new RobotStrategyAttack());
-                    }
-                	break;
-        	}
-    	}
+}
+
+// funcao que insere para cada robo o Agente que foi escolhido para ele
+void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots, std::vector<MindSet>& mindSetById) {
+
+	for (RodetasRobot &robot : robots) {
+		MindSet robotMindSet = mindSetById[robot.getId()];
+
+		switch (robotMindSet) {
+			case MindSet::GoalKeeperStrategy:
+				if (robot.getMindSet() != MindSet::GoalKeeperStrategy) {
+					robot.setMindSet(MindSet::GoalKeeperStrategy);
+					robot.setStrategy(new RobotStrategyGoal());
+				}
+				break;
+			case MindSet::DefenderStrategy:
+				if (robot.getMindSet() != MindSet::DefenderStrategy) {
+					robot.setMindSet(MindSet::DefenderStrategy);
+					robot.setStrategy(new RobotStrategyDefender());
+				}
+				break;
+			case MindSet::AttackerStrategy:
+				if (robot.getMindSet() != MindSet::AttackerStrategy) {
+					robot.setMindSet(MindSet::AttackerStrategy);
+					robot.setStrategy(new RobotStrategyAttack());
+				}
+				break;
+
+			case MindSet::PenaltyHitAttackPositioning:
+				if (robot.getMindSet() != MindSet::PenaltyHitAttackPositioning) {
+					robot.setMindSet(MindSet::PenaltyHitAttackPositioning);
+					robot.setStrategy(new AttackPenaltyHitPositioning());
+				}
+				break;
+			case MindSet::PenaltyHitDefenderPositioning:
+				if (robot.getMindSet() != MindSet::PenaltyHitDefenderPositioning) {
+					robot.setMindSet(MindSet::PenaltyHitDefenderPositioning);
+					robot.setStrategy(new DefenderPenaltyHitPositioning());
+				}
+				break;
+
+			case MindSet::GoalKeeperCenterPositioning:
+				if(robot.getMindSet() != MindSet::GoalKeeperCenterPositioning) {
+				    robot.setMindSet(MindSet::GoalKeeperCenterPositioning);
+				    robot.setStrategy(new GoalKeepCenterPositioning());
+				}
+
+			default:
+			    std::cout << "MindSet nao tratado. Tente adicionar no switch" << std::endl;
+				break;
+		}
 	}
 }

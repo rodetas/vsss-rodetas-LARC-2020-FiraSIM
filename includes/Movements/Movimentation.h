@@ -5,15 +5,16 @@
 #include <Domain/BallState.h>
 #include <Domain/WheelsCommand.h>
 #include <Domain/Pose.h>
+#include <Domain/RobotSpeed.h>
 #include <functional>
 
 class Movimentation {
 
 public:
 
-	Movimentation() = default;
+	Movimentation();
 
-	vss::WheelsCommand movePlayers(RobotState, vss::Pose target, float fi);
+	vss::WheelsCommand movePlayers(RobotState, float, RobotSpeed = RobotSpeed::NORMAL);
 
     vss::WheelsCommand stop();
     vss::WheelsCommand turnLeft(int, int);
