@@ -60,7 +60,7 @@ void StateInterpreter::definePenaltyHit(std::vector<RodetasRobot> & robots, Rode
     strategiesById[robots[2].getId()] = MindSet::GoalKeeperCenterPositioning;
 
     // procura por robo mais proximo da bola para bater o penalti
-    RodetasRobot closestToBallRobot = getClosestToBallRobot(robots, state);
+    RodetasRobot closestToBallRobot = getClosestRobotTo(robots, state.ball.position);
 
     if(closestToBallRobot.getId() != 0) {
         MindSet aux = strategiesById[closestToBallRobot.getId()];
@@ -75,6 +75,19 @@ void StateInterpreter::definePenaltyAgainst(std::vector<RodetasRobot> & robots, 
     // @TODO definir posicionamento para defesa de penalti
     // @TODO implementar classe de posicionamento para defensor e atacante - tomar como base as utilizadas para bater penalti
     // Para definir o posicionamento do goleiro pode-se utilizar a classe ja existente GoalKeeperCenterPositioning
+
+    strategiesById[robots[0].getId()] = MindSet::PenaltyAgainstAttackPositioning;
+    strategiesById[robots[1].getId()] = MindSet::PenaltyAgainstDefenderPositioning;
+    strategiesById[robots[2].getId()] = MindSet::GoalKeeperCenterPositioning;
+
+    // o robo mais perto do gol sera o goleiro
+    RodetasRobot closestToGoal = getClosestRobotTo(robots, vss::Point(vss::MAX_COORDINATE_X, vss::MAX_COORDINATE_Y/2));
+
+    if(closestToGoal.getId() != 2) {
+        MindSet aux = strategiesById[closestToGoal.getId()];
+        strategiesById[closestToGoal.getId()] = MindSet::GoalKeeperCenterPositioning;
+        strategiesById[2] = aux;
+    }
 
 }
 
@@ -193,7 +206,7 @@ void StateInterpreter::defineStandartStrategies(std::vector<RodetasRobot> &robot
     strategiesById[robots[2].getId()] = MindSet::GoalKeeperStrategy;
 
     // procura por robo mais proximo da bola
-    RodetasRobot closestToBallRobot = getClosestToBallRobot(robots, state);
+    RodetasRobot closestToBallRobot = getClosestRobotTo(robots, state.ball.position);
 
     if(closestToBallRobot.getId() != 0) {
         MindSet aux = strategiesById[closestToBallRobot.getId()];
@@ -231,18 +244,19 @@ RodetasRobot StateInterpreter::getRobotByStrategy(MindSet mindSet, std::vector<R
     return *found;
 }
 
-RodetasRobot StateInterpreter::getClosestToBallRobot(std::vector<RodetasRobot> & robots, RodetasState & state) {
+// metodo que retorna o robo mais proximo do ponto enviado por parametro
+RodetasRobot StateInterpreter::getClosestRobotTo(std::vector<RodetasRobot> & robots, vss::Point point) {
 
-    // procura por robo mais proximo da bola
-    RodetasRobot closestToBallRobot;
+    // procura por robo mais proximo do ponto
+    RodetasRobot closestRobot;
     double lowerDistance = 1000;
     for(RodetasRobot& r : robots){
-        double distance = Math::distancePoint(r.getSelfState().position, state.ball.position);
+        double distance = Math::distancePoint(r.getSelfState().position, point);
         if(distance < lowerDistance){
-            closestToBallRobot = r;
+            closestRobot = r;
             lowerDistance = distance;
         }
     }
 
-    return closestToBallRobot;
+    return closestRobot;
 }

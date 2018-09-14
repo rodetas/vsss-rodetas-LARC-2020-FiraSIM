@@ -20,6 +20,8 @@ public:
 
     float applyUnivectorField(vss::Pose) override;
 
+    virtual vss::WheelsCommand stopStrategy(vss::WheelsCommand, vss::Point);
+
     // este metodo DEVE ser implementado em toda classe filha
     virtual vss::WheelsCommand specificStrategy(vss::WheelsCommand) = 0;
 
