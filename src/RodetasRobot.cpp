@@ -6,34 +6,34 @@
 
 RodetasRobot::RodetasRobot() = default;
 
-RodetasRobot::RodetasRobot(int id, MindSet mind, RobotStrategy* strategy) {
+RodetasRobot::RodetasRobot(int id, MindSet mind, Agent* strategy) {
     this->id = id;
     this->mindSet = mind;
-    this->strategy = strategy;
+    this->agent = strategy;
 }
 
 void RodetasRobot::calcAction(){
 
     // applies robot strategy returning a pwm
-    this->command = strategy->applyStrategy(this->selfState, this->state, this->strategyBase);
+    this->command = agent->applyStrategy(this->selfState, this->state, this->strategyBase);
 
-    this->target = strategy->getFinalPose();
-    this->path = strategy->getPath();
+    this->target = agent->getFinalPose();
+    this->path = agent->getPath();
 }
 
 void RodetasRobot::updateSelfState(RobotState selfState) {
     this->selfState = selfState;
 
     // updates robot's strategy base data
-    this->strategyBase.update(selfState, strategy->getFinalPose());
+    this->strategyBase.update(selfState, agent->getFinalPose());
 }
 
 void RodetasRobot::updateState(RodetasState state){
     this->state = state;
 }
 
-void RodetasRobot::setStrategy(RobotStrategy* s) {
-    this->strategy = s;
+void RodetasRobot::setStrategy(Agent* s) {
+    this->agent = s;
 }
 
 vss::WheelsCommand RodetasRobot::getCommand(){
@@ -54,6 +54,14 @@ MindSet RodetasRobot::getMindSet() {
 
 void RodetasRobot::setMindSet(MindSet mind){
     this->mindSet = mind;
+}
+
+PositionStatus RodetasRobot::getPositionStatus(){
+    return this->positionStatus;
+}
+
+void RodetasRobot::setPositionStatus(PositionStatus pos){
+    this->positionStatus = pos;
 }
 
 RobotStrategyBase RodetasRobot::getRobotStrategyBase() {

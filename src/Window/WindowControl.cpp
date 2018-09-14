@@ -35,6 +35,9 @@ void WindowControl::initializeWidgets(){
     	builder->get_widget("buttonPlay", buttonPlay);
 		builder->get_widget("buttonTests", buttonTests);
 		builder->get_widget("buttonChangeFunction", buttonChange);
+		builder->get_widget("buttonPenaltyHit", buttonPenaltyHitPosition);
+        builder->get_widget("buttonPenaltyAgainst", buttonPenaltyAgainstPosition);
+
 
     } catch (const Glib::FileError &ex) {
         std::cerr << "FileError: " << ex.what() << std::endl;
@@ -53,6 +56,12 @@ void WindowControl::setSignals(){
 	buttonPlay->signal_clicked().connect(sigc::bind<Gtk::ToggleButton *>(sigc::mem_fun(this, &WindowControl::onPressButtonPlaying),buttonPlay));
 	buttonTests->signal_clicked().connect(sigc::bind<Gtk::ToggleButton *>(sigc::mem_fun(this, &WindowControl::onPressButtonTesting),buttonTests));
 	buttonChange->signal_clicked().connect(sigc::bind<Gtk::Button *>(sigc::mem_fun(this, &WindowControl::onPressButtonChange), buttonChange));
+	buttonPenaltyHitPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::PenaltyHit));
+	buttonPenaltyAgainstPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::PenaltyAgainst));
+}
+
+void WindowControl::onPositioningRequired(PositionStatus positionRequired){
+    signalPositioning.emit(positionRequired);
 }
 
 void WindowControl::onPressButtonPlaying(Gtk::ToggleButton * buttonPlay){

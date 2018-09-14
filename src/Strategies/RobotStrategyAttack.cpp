@@ -3,6 +3,7 @@
 //
 
 #include "Strategies/RobotStrategyAttack.h"
+
 RobotStrategyAttack::RobotStrategyAttack() = default;
 
 vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {

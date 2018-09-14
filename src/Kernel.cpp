@@ -5,6 +5,8 @@ Kernel::Kernel() {
     isTestingTransmission = false;
     isFreeBall = false;
     isRunning = true;
+
+    positionStatus = PositionStatus::None;
 };
 
 void Kernel::loop() {
@@ -19,9 +21,10 @@ void Kernel::loop() {
     CommandSendAdapter sendInterface(Config::teamColor, Config::realEnvironment);
 
     vector<RodetasRobot> robots;
-    robots.emplace_back(RodetasRobot(0, MindSet::Attacker, new RobotStrategyAttack()));
-    robots.emplace_back(RodetasRobot(1, MindSet::Defender, new RobotStrategyDefender()));
-    robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeper, new RobotStrategyGoal()));
+
+    robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategyAttack()));
+    robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategyDefender()));
+    robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
 
     vector<vss::WheelsCommand> commands(3);
 
@@ -51,7 +54,7 @@ void Kernel::loop() {
             debug.paths[i] = robot.getPath();
         }
 
-        coach.manage(robots, state, Config::playersSwap, isFreeBall);
+        coach.manage(robots, state, Config::playersSwap, isFreeBall, positionStatus);
 
         sendInterface.sendCommands(commands, isPlaying, isTestingTransmission);
         debugInterface.sendDebug(debug);
@@ -67,8 +70,14 @@ void Kernel::windowThreadWrapper() {
     windowControl.signalUpdateTesting.connect(sigc::mem_fun(this, &Kernel::updateTestingState));
     windowControl.signalChangeFunction.connect(sigc::mem_fun(this, &Kernel::freeBallPositions));
     windowControl.signalCloseWindow.connect(sigc::mem_fun(this, &Kernel::exitProgram));
+    windowControl.signalPositioning.connect(sigc::mem_fun(this, &Kernel::automaticPositioning));
 
     windowControl.start();
+}
+
+void Kernel::automaticPositioning(PositionStatus posStatus){
+    if(this->positionStatus != PositionStatus::None) this->positionStatus = PositionStatus::None;
+    else this->positionStatus = posStatus;
 }
 
 void Kernel::freeBallPositions(bool isFreeBall){

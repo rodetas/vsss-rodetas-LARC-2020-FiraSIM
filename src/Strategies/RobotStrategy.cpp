@@ -17,7 +17,7 @@ vss::WheelsCommand RobotStrategy::applyStrategy(RobotState r, RodetasState s, Ro
     float fi = this->applyUnivectorField(target);
 
     // defines robot's pwm
-    command = movimentation.movePlayers(robot, target, fi);
+    command = movimentation.movePlayers(robot, fi);
 
     // defines specific strategy such as corner strategy or kick strategy - can be applied or not
     command = this->specificStrategy(command);
@@ -96,18 +96,3 @@ vss::WheelsCommand RobotStrategy::blockedStrategy(vss::WheelsCommand c) {
     return c;
 }
 
-vss::WheelsCommand RobotStrategy::getCommand() {
-    return this->command;
-}
-
-vss::Pose RobotStrategy::getFinalPose() {
-    return this->target;
-}
-
-vss::Point RobotStrategy::getStepPose() {
-    return this->stepPose;
-}
-
-vss::Path RobotStrategy::getPath() {
-    return this->path;
-}
