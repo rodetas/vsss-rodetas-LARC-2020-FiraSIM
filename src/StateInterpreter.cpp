@@ -101,15 +101,6 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
     strategiesById[defenderRobot.getId()] = defenderRobot.getMindSet();
     strategiesById[attackerRobot.getId()] = attackerRobot.getMindSet();
 
-    /*if(state.ball.projection.x > vss::MAX_COORDINATE_X/2 &&
-       defenderRobot.getSelfState().position.x > vss::MAX_COORDINATE_X/2
-       && attackerRobot.getSelfState().position.x < vss::MAX_COORDINATE_X/2)
-    {
-        cout<<"chamou estrategia normal."<<endl;
-        strategiesById[defenderRobotLeft.getId()] = MindSet::DefenderStrategy;
-        strategiesById[defenderRobotRight.getId()] = MindSet::AttackerStrategy;
-    }
-     */
     if(state.ball.projection.x > vss::MAX_COORDINATE_X/2 &&
        defenderRobot.getSelfState().position.x > vss::MAX_COORDINATE_X/2
        && attackerRobot.getSelfState().position.x > vss::MAX_COORDINATE_X/2 &&
@@ -119,22 +110,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
         strategiesById[attackerRobot.getId()]= MindSet::DefenderStrategyLeft;
         strategiesById[defenderRobot.getId()]=MindSet::DefenderStrategyRight;
     }
-    /*Desfaz linha dupla de defesa
-      Verifica se contem uma linha dupla de defesa && se a bola esta perto de um dos robos
 
-    if(state.ball.projection.x > vss::MAX_COORDINATE_X/2 &&
-       (state.ball.position.x - defenderRobotLeft.getSelfState().position.x ) <= 10){
-        cout<<"Desfez linha dupla com if 1: "<<endl;
-        strategiesById[defenderRobotLeft.getId()]=MindSet::AttackerStrategy;
-        strategiesById[defenderRobotRight.getId()]=MindSet ::DefenderStrategy;
-    }
-    else if(state.ball.projection.x > vss::MAX_COORDINATE_X/2 &&
-            (state.ball.position.x - defenderRobotRight.getSelfState().position.x) <= 10){
-        cout<<"Desfez linha dupla com if 2: "<<endl;
-        strategiesById[defenderRobotLeft.getId()]=MindSet::DefenderStrategy;
-        strategiesById[defenderRobotRight.getId()]=MindSet ::AttackerStrategy;
-    }
-    */
     //Troca defensor por atacante
     if (state.ball.position.x < vss::MAX_COORDINATE_X / 2 &&
         ((state.ball.projection.y > 50 && state.ball.projection.y < 80 &&

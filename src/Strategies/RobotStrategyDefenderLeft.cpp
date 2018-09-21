@@ -29,9 +29,8 @@ vss::Pose RobotStrategyDefenderLeft::defineTargetAndArrivalOrientation() {
         target.y = ballProjection.y;
     }
     else {
-        target.y = vss::MAX_COORDINATE_Y / 2 - 5;
+        target.y = vss::MAX_COORDINATE_Y / 2 - 7;
     }
-
     //Orientação pro lado do gol
     target.angle = 0;
 
