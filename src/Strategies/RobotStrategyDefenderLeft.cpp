@@ -17,14 +17,15 @@ vss::Pose RobotStrategyDefenderLeft::defineTargetAndArrivalOrientation() {
     vss::Pose target;
     vss::Point ballProjection = state.ball.projection;
 
-    /* Linha de defesa lado esquerdo*/
-
-    // posiciona defensor na frente da aréa
-    target.x = vss::MAX_COORDINATE_X * 0.8;
+    /* Linha de defesa lado esquerdo
+     * posiciona defensor na frente da aréa */
+    target.x = vss::MAX_COORDINATE_X * 0.75;
+    // se a bola estiver na parede, evita que o defensor fique preso na parede
+    if(ballProjection.y <= 5){
+        target.y = ballProjection.y+5;
+    }
     // posiciona defensor na direção da projeção da bola no canto esquerdo ou posiciona no meio do campo em y
-    cout<<"verifica se a bola ta na def"<<endl;
-    cout<<"BallProjY left"<<ballProjection.y<<endl;
-    if(ballProjection.y < vss::MAX_COORDINATE_Y/2) {
+    else if(ballProjection.y < vss::MAX_COORDINATE_Y/2) {
         target.y = ballProjection.y;
     }
     else {
@@ -33,7 +34,7 @@ vss::Pose RobotStrategyDefenderLeft::defineTargetAndArrivalOrientation() {
 
     //Orientação pro lado do gol
     target.angle = 0;
-    cout<<"chamou left"<<endl;
+
     return target;
 }
 

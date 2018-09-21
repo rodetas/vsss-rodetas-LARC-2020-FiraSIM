@@ -62,7 +62,7 @@ vss::Pose RobotStrategyDefender::defineTargetAndArrivalOrientation() {
      * verifica se a projeção da bola está em seu campo */
     if(ballProjection.x > vss::MAX_COORDINATE_X / 2) {
         // posiciona defensor na frente da aréa
-        target.x = vss::MAX_COORDINATE_X* 0.8;
+        target.x = vss::MAX_COORDINATE_X* 0.75;
         // posiciona defensor na direção da projeção da bola
         target.y=ballProjection.y;
     }
