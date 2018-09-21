@@ -4,11 +4,17 @@
 
 #include "Strategies/RobotStrategyAttack.h"
 
-RobotStrategyAttack::RobotStrategyAttack() = default;
+RobotStrategyAttack::RobotStrategyAttack() {
+	stopAttacker=false;
+}
 
 vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
     c = kickStrategy(c);
     c = cornerStrategy(c);
+	if( stopAttacker);
+	{
+		c=stopStrategy(c);
+	}
 
     if (strategyBase.isParallelToGoal()) {
 
@@ -29,6 +35,8 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
 
     return c;
 }
+
+
 
 vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
     vss::Pose target;
@@ -52,7 +60,33 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
 
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
     vss::Point orientationPoint;
-    //Define orientação de chegada para os cantos do gol dependendo do lado de ataque e da proximidade do gol
+   
+	//Posiciona o atacante no meio do campo para ele nao interferir na defesa
+	if (state.ball.projection.x > vss::MAX_COORDINATE_X *0.7) {
+        if (state.ball.projection.y > vss::MAX_COORDINATE_Y / 2) {
+            target = vss::Pose(vss::MAX_COORDINATE_X * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
+			stopAttacker=true;
+        } else {
+            target = vss::Pose(vss::MAX_COORDINATE_X * 0.55, vss::MAX_COORDINATE_Y * 0.2, 0);
+			stopAttacker=true;
+        }
+	}
+     else {
+		stopAttacker=false;
+		}	
+	
+	if (state.ball.position.y > vss::MAX_COORDINATE_Y*0.9){
+		if(state.ball.position.x > vss::MAX_COORDINATE_X*0.5){
+			target=vss::Pose(vss::MAX_COORDINATE_X*0.2, vss::MAX_COORDINATE_Y*0.2,0);
+		}
+	else if (state.ball.position.y < vss::MAX_COORDINATE_Y*0.1){
+			if(state.ball.position.x > vss::MAX_COORDINATE_X*0.5){
+				target=vss::Pose(vss::MAX_COORDINATE_X*0.8, vss::MAX_COORDINATE_Y*0.2,0);
+			}
+		}
+	}
+	
+	//Define orientação de chegada para os cantos do gol dependendo do lado de ataque e da proximidade do gol
     if(state.ball.position.x < 85 && state.ball.position.x > 25){
         if(state.ball.position.y < 45){
             orientationPoint.x = 0;
