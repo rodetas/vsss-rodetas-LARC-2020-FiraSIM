@@ -3,7 +3,8 @@
 //
 
 #include "StateInterpreter.h"
-
+#include <iostream>
+using namespace std;
 StateInterpreter::StateInterpreter() {
     lastPosStatus = PositionStatus::None;
     strategiesById.resize(3);
@@ -93,10 +94,22 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
     RodetasRobot goalRobot = getRobotByStrategy(MindSet::GoalKeeperStrategy, robots);
     RodetasRobot defenderRobot = getRobotByStrategy(MindSet::DefenderStrategy, robots);
     RodetasRobot attackerRobot = getRobotByStrategy(MindSet::AttackerStrategy, robots);
+    RodetasRobot defenderRobotLeft = getRobotByStrategy(MindSet::DefenderStrategyLeft,robots);
+    RodetasRobot defenderRobotRight = getRobotByStrategy(MindSet::DefenderStrategyRight,robots);
 
     strategiesById[goalRobot.getId()] = goalRobot.getMindSet();
     strategiesById[defenderRobot.getId()] = defenderRobot.getMindSet();
     strategiesById[attackerRobot.getId()] = attackerRobot.getMindSet();
+
+    if(state.ball.projection.x > vss::MAX_COORDINATE_X/2 &&
+       defenderRobot.getSelfState().position.x > vss::MAX_COORDINATE_X/2
+       && attackerRobot.getSelfState().position.x > vss::MAX_COORDINATE_X/2 &&
+            (state.ball.position.x - defenderRobotRight.getSelfState().position.x) > 10 &&
+            (state.ball.position.x - defenderRobotRight.getSelfState().position.x) > 10) {
+        cout<<"Formou linha dupla: "<<endl;
+        strategiesById[attackerRobot.getId()]= MindSet::DefenderStrategyLeft;
+        strategiesById[defenderRobot.getId()]=MindSet::DefenderStrategyRight;
+    }
 
     //Troca defensor por atacante
     if (state.ball.position.x < vss::MAX_COORDINATE_X / 2 &&
