@@ -31,6 +31,10 @@ vss::Pose RobotStrategyDefenderLeft::defineTargetAndArrivalOrientation() {
     else {
         target.y = vss::MAX_COORDINATE_Y / 2 - 7;
     }
+    if((state.ball.position.x - robot.position.x) <= 5 && (state.ball.position.y - robot.position.y) <= 5)
+    {
+        cout<<"Vira attaker xD"<<endl;
+    }
     //Orientação pro lado do gol
     target.angle = 0;
 
@@ -45,6 +49,7 @@ float RobotStrategyDefenderLeft::applyUnivectorField(vss::Pose target){
         }
     }
     UnivectorField univectorField;
+    univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
 }
