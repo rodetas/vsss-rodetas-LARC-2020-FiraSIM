@@ -110,7 +110,13 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
         strategiesById[attackerRobot.getId()]= MindSet::DefenderStrategyLeft;
         strategiesById[defenderRobot.getId()]=MindSet::DefenderStrategyRight;
     }
-
+    if(state.ball.projection.x > vss::MAX_COORDINATE_X/2 &&
+       defenderRobotLeft.getSelfState().position.x > vss::MAX_COORDINATE_X/2 &&
+       (defenderRobotLeft.getSelfState().position.x - state.ball.position.x) <= 10 && defenderRobotLeft.getSelfState().position.x >= vss::MAX_COORDINATE_X * 0.75+5) {
+        cout<<"Vira attaker xD"<<endl;
+        strategiesById[defenderRobotLeft.getId()]= MindSet::AttackerStrategy;
+        //strategiesById[defenderRobot.getId()]=MindSet::DefenderStrategyRight;
+    }
     //Troca defensor por atacante
     if (state.ball.position.x < vss::MAX_COORDINATE_X / 2 &&
         ((state.ball.projection.y > 50 && state.ball.projection.y < 80 &&
