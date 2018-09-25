@@ -31,8 +31,9 @@ vss::Pose RobotStrategyDefenderLeft::defineTargetAndArrivalOrientation() {
     else {
         target.y = vss::MAX_COORDINATE_Y / 2 - 7;
     }
-    if((state.ball.position.x - robot.position.x) <= 5 && (state.ball.position.y - robot.position.y) <= 5)
-    {
+    cout<<"ballPos"<<state.ball.position.x<<endl;
+    cout<<"robotPos"<<robot.position.x<<endl;
+    if((robot.position.x - state.ball.position.x) <= 10 && (robot.position.y - state.ball.position.y) <= 10) {
         cout<<"Vira attaker xD"<<endl;
     }
     //Orientação pro lado do gol
