@@ -1,7 +1,7 @@
 #include <Kernel.h>
 
 Kernel::Kernel() {
-    isPlaying = false;
+    isPlaying = true;
     isTestingTransmission = false;
     isFreeBall = false;
     isRunning = true;
