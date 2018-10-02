@@ -9,6 +9,9 @@ RobotStrategyDefenderLeft::RobotStrategyDefenderLeft() = default;
 
 vss::WheelsCommand RobotStrategyDefenderLeft::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
+    if(robot.distanceFrom(state.ball.position) < (12)){
+        c = movimentation.turnLeft(80, 80);
+    }
     return c;
 }
 
@@ -16,23 +19,34 @@ vss::Pose RobotStrategyDefenderLeft::defineTargetAndArrivalOrientation() {
 
     vss::Pose target;
     vss::Point ballProjection = state.ball.projection;
-
-    /* Linha de defesa lado esquerdo
-     * posiciona defensor na frente da aréa */
     target.x = vss::MAX_COORDINATE_X * 0.75;
-    // se a bola estiver na parede, evita que o defensor fique preso na parede
-    if(ballProjection.y <= 5){
-        target.y = ballProjection.y+5;
-    }
-    // posiciona defensor na direção da projeção da bola no canto esquerdo ou posiciona no meio do campo em y
-    else if(ballProjection.y < vss::MAX_COORDINATE_Y/2) {
-        target.y = ballProjection.y;
+    //Se a bola passar pela linha de defesa, posiciona robo no canto do gol em x
+    cout<<"posx"<<robot.position.x<<endl;
+    cout<<"posy"<<robot.position.y<<endl;
+    if(state.ball.position.x > vss::MAX_COORDINATE_X * 0.75){
+        target.x = 150;
+        target.y = 22;
+        vss::Point(150, 22);
     }
     else {
-        target.y = vss::MAX_COORDINATE_Y / 2 - 7;
+        // Linha de defesa lado esquerdo
+        // posiciona defensor na frente da aréa
+        target.x = vss::MAX_COORDINATE_X * 0.75;
+        // se a bola estiver na parede, evita que o defensor fique preso na parede
+        if (ballProjection.y <= 5) {
+            target.y = ballProjection.y + 5;
+        }
+            // posiciona defensor na direção da projeção da bola no canto esquerdo ou posiciona no meio do campo em y
+        else if (ballProjection.y < vss::MAX_COORDINATE_Y / 2) {
+            target.y = ballProjection.y;
+        } else {
+            target.y = vss::MAX_COORDINATE_Y / 2 - 7;
+        }
     }
-    cout<<"ballPos"<<state.ball.position.x<<endl;
-    cout<<"robotPos"<<robot.position.x<<endl;
+
+    cout<<"ballPosX"<<state.ball.position.x<<endl;
+    cout<<"ballPosY"<<state.ball.position.y<<endl;
+    //cout<<"robotPos"<<robot.position.x<<endl;
     //Orientação pro lado do gol
     target.angle = 0;
 

@@ -3,10 +3,21 @@
 //
 
 #include <Strategies/RobotStrategyDefender.h>
+#include <iostream>
+using  namespace std;
 RobotStrategyDefender::RobotStrategyDefender() = default;
 
 vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
+    //Se o robo estiver perto da bola, gira em torno do proprio eixo de acordo com o lado do campo
+    if(robot.distanceFrom(state.ball.position) < (12)){
+        if(state.ball.position.y > vss::MAX_COORDINATE_Y / 2) {
+            c = movimentation.turnRight(80, 80);
+        }
+        else{
+            c = movimentation.turnLeft(80, 80);
+        }
+    }
     return c;
 }
 
@@ -58,18 +69,34 @@ vss::Pose RobotStrategyDefender::defineTargetAndArrivalOrientation() {
      * se a bola estiver no ataque, posiciona defensor perto da área adversária*/
     target = positionDefenderInAttack();
 
+    //Se a bola passar da linha de defesa, posiciona o robô no canto da area para auxiliar o goleiro
+    if(state.ball.position.x > vss::MAX_COORDINATE_X * 0.75){
+
+        if(state.ball.position.y > vss::MAX_COORDINATE_Y / 2) {
+            target.x = 150;
+            target.y = 105;
+            vss::Point(150, 105);
+        }
+        else{
+            target.x = 150;
+            target.y = 22;
+            vss::Point(150, 22);
+        }
+
+    }
+    else {
     /* Segunda linha de defesa
      * verifica se a projeção da bola está em seu campo */
-    if(ballProjection.x > vss::MAX_COORDINATE_X / 2) {
-        // posiciona defensor na frente da aréa
-        target.x = vss::MAX_COORDINATE_X* 0.75;
-        // posiciona defensor na direção da projeção da bola
-        target.y=ballProjection.y;
+        if(ballProjection.x > vss::MAX_COORDINATE_X / 2) {
+            // posiciona defensor na frente da aréa
+            target.x = vss::MAX_COORDINATE_X* 0.75;
+            // posiciona defensor na direção da projeção da bola
+            target.y=ballProjection.y;
+        }
     }
 
     //Orientação pro lado do gol
     target.angle = 0;
-
     return target;
 }
 
@@ -81,6 +108,7 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target){
         }
     }
     UnivectorField univectorField;
+    univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
 }
