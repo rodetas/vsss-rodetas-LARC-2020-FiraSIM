@@ -3,8 +3,7 @@
 //
 
 #include <Strategies/RobotStrategyDefender.h>
-#include <iostream>
-using  namespace std;
+
 RobotStrategyDefender::RobotStrategyDefender() = default;
 
 vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c) {
@@ -108,7 +107,13 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target){
         }
     }
     UnivectorField univectorField;
-    univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
+    // Se a bola estiver na defesa, faz o robo andar reto && se a bola estiver no ataque permite curvas
+    if(state.ball.position.x > vss::MAX_COORDINATE_X/2) {
+        univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
+    }
+    else{
+        univectorField.setUnivectorWithCurves();
+    }
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
 }

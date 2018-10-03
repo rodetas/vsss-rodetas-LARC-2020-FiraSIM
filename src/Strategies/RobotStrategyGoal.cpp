@@ -23,10 +23,10 @@ vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
 
     // máximo que pode ir até a lateral da área
     if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) {
-        goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2;
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2-7;
 
     } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2) {
-        goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2;
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2+10;
     }
 
     // ir na bola quando ela está dentro da area

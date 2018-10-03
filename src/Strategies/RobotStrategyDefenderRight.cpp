@@ -2,8 +2,6 @@
 // Created by leonardo on 19/09/18.
 //
 
-#include <iostream>
-using namespace std;
 #include <Strategies/RobotStrategyDefenderRight.h>
 RobotStrategyDefenderRight::RobotStrategyDefenderRight() = default;
 

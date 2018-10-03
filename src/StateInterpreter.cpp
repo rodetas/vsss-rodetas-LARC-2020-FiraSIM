@@ -3,8 +3,7 @@
 //
 
 #include "StateInterpreter.h"
-#include <iostream>
-using namespace std;
+
 StateInterpreter::StateInterpreter() {
     lastPosStatus = PositionStatus::None;
     strategiesById.resize(3);
@@ -107,7 +106,6 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
        && attackerRobot.getSelfState().position.x > vss::MAX_COORDINATE_X/2 &&
             (state.ball.position.x - defenderRobotRight.getSelfState().position.x) > 10 &&
             (state.ball.position.x - defenderRobotRight.getSelfState().position.x) > 10) {
-        cout<<"Formou linha dupla: "<<endl;
         strategiesById[attackerRobot.getId()]= MindSet::DefenderStrategyLeft;
         strategiesById[defenderRobot.getId()]=MindSet::DefenderStrategyRight;
     }

@@ -2,8 +2,6 @@
 // Created by leonardo on 19/09/18.
 //
 
-#include <iostream>
-using namespace std;
 #include <Strategies/RobotStrategyDefenderLeft.h>
 RobotStrategyDefenderLeft::RobotStrategyDefenderLeft() = default;
 
@@ -21,8 +19,6 @@ vss::Pose RobotStrategyDefenderLeft::defineTargetAndArrivalOrientation() {
     vss::Point ballProjection = state.ball.projection;
     target.x = vss::MAX_COORDINATE_X * 0.75;
     //Se a bola passar pela linha de defesa, posiciona robo no canto do gol em x
-    cout<<"posx"<<robot.position.x<<endl;
-    cout<<"posy"<<robot.position.y<<endl;
     if(state.ball.position.x > vss::MAX_COORDINATE_X * 0.75){
         target.x = 150;
         target.y = 22;
@@ -44,9 +40,6 @@ vss::Pose RobotStrategyDefenderLeft::defineTargetAndArrivalOrientation() {
         }
     }
 
-    cout<<"ballPosX"<<state.ball.position.x<<endl;
-    cout<<"ballPosY"<<state.ball.position.y<<endl;
-    //cout<<"robotPos"<<robot.position.x<<endl;
     //Orientação pro lado do gol
     target.angle = 0;
 
