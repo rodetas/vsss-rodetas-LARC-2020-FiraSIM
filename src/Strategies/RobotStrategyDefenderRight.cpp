@@ -20,10 +20,10 @@ vss::Pose RobotStrategyDefenderRight::defineTargetAndArrivalOrientation() {
     vss::Pose target;
     vss::Point ballProjection = state.ball.projection;
 
+    //Se a bola passar pela linha de defesa, posiciona robo no canto do gol em x
     if(state.ball.position.x > vss::MAX_COORDINATE_X * 0.75){
         target.x = vss::MAX_COORDINATE_X - 15;
         target.y = vss::MAX_COORDINATE_Y - 25;
-        vss::Point(150, 105);
     }
     else {
         //Linha de defesa lado Direito

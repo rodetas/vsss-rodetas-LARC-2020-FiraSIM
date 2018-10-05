@@ -17,7 +17,7 @@ vss::Pose RobotStrategyDefenderLeft::defineTargetAndArrivalOrientation() {
 
     vss::Pose target;
     vss::Point ballProjection = state.ball.projection;
-    target.x = vss::MAX_COORDINATE_X * 0.75;
+
     //Se a bola passar pela linha de defesa, posiciona robo no canto do gol em x
     if(state.ball.position.x > vss::MAX_COORDINATE_X * 0.75){
         target.x = vss::MAX_COORDINATE_X - 15;
