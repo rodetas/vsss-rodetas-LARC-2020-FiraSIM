@@ -39,7 +39,7 @@ void Kernel::loop() {
 
         // method which waits and receives a new state from simulator or vision
         state = receiveInterface.receiveState();
-    std::cout << "AAA" << std::endl;
+
         for (unsigned int i = 0; i < robots.size(); i++) {
             RodetasRobot &robot = robots[i];
 
