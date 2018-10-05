@@ -17,8 +17,7 @@ vss::Pose RobotStrategyCenterAttack::defineTargetAndArrivalOrientation(){
 
     target.x = vss::MAX_COORDINATE_X*0.4;
     target.y = vss::MAX_COORDINATE_Y*0.5;
-    
-    std::cout<<"posição x: "<<target.x<<" posição y: "<<target.y<<"\n";
+
     if(state.ball.position.x < vss::MAX_COORDINATE_X*0.25) 
     {
         if(state.ball.position.y < vss::MAX_COORDINATE_Y*0.5)
