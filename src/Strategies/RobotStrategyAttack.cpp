@@ -75,7 +75,7 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
 		stopAttacker=false;
 		}	
 	
-	if (state.ball.position.y > vss::MAX_COORDINATE_Y*0.9){
+	/*if (state.ball.position.y > vss::MAX_COORDINATE_Y*0.9){
 		if(state.ball.position.x > vss::MAX_COORDINATE_X*0.5){
 			target=vss::Pose(vss::MAX_COORDINATE_X*0.2, vss::MAX_COORDINATE_Y*0.2,0);
 		}
@@ -84,7 +84,7 @@ vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
 				target=vss::Pose(vss::MAX_COORDINATE_X*0.8, vss::MAX_COORDINATE_Y*0.2,0);
 			}
 		}
-	}
+	}*/
 	
 	//Define orientação de chegada para os cantos do gol dependendo do lado de ataque e da proximidade do gol
     if(state.ball.position.x < 85 && state.ball.position.x > 25){
@@ -249,7 +249,7 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
         obstacle.first.x = 160;
 
-        obstacle.first.y = 96;
+        obstacle.first.y = 96;  
         obstacles.push_back(obstacle);
         obstacle.first.y = 33;
         obstacles.push_back(obstacle);

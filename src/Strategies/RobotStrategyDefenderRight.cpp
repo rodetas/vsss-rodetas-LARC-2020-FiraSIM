@@ -20,18 +20,20 @@ vss::Pose RobotStrategyDefenderRight::defineTargetAndArrivalOrientation() {
     /* Linha de defesa lado esquerdo*/
 
     // posiciona defensor na frente da area
-    target.x = vss::MAX_COORDINATE_X * 0.75;
+    target.x = vss::MAX_COORDINATE_X * 0.73;
     // se a bola estiver na parede, evita que o defensor fique preso na parede
-    if(ballProjection.y >= (vss::MAX_COORDINATE_Y-5)){
+    
+    target.y= ballProjection.y;
+    /*if(ballProjection.y >= (vss::MAX_COORDINATE_Y-5)){
         target.y = ballProjection.y-6;
     }
-    // posiciona defensor na direção da projeção da bola no canto direito ou posiciona no meio do campo em y
+     posiciona defensor na direção da projeção da bola no canto direito ou posiciona no meio do campo em y
     else if(ballProjection.y > vss::MAX_COORDINATE_Y/2) {
         target.y = ballProjection.y;
     }
     else {
         target.y = vss::MAX_COORDINATE_Y / 2 + 7;
-    }
+    }*/
 
     //Orientação pro lado do gol
     target.angle = 0;

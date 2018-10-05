@@ -25,11 +25,11 @@ link_directories(/usr/lib ${GTKMM_LIBRARY_DIRS})
 file(GLOB_RECURSE SRC src/*.cpp)
 file(GLOB_RECURSE INCLUDE includes/*.h)
 
-ADD_LIBRARY(core ${SRC} ${INCLUDE} includes/Strategies/RobotStrategyDefenderLeft.h includes/Strategies/RobotStrategyDefenderRight.h src/Strategies/RobotStrategyDefenderLeft.cpp  src/Strategies/RobotStrategyDefenderRight.cpp)
+ADD_LIBRARY(core ${SRC} ${INCLUDE} includes/Strategies/RobotStrategyDefenderLeft.h includes/Strategies/RobotStrategyDefenderRight.h includes/Strategies/RobotStrategySideAttack.h src/Strategies/RobotStrategySideAttack.cpp src/Strategies/RobotStrategyDefenderLeft.cpp  src/Strategies/RobotStrategyDefenderRight.cpp includes/Strategies/RobotStrategyCenterAttack.h src/Strategies/RobotStrategyCenterAttack.cpp includes/Strategies/RobotStrategyForwardAttack.h src/Strategies/RobotStrategyForwardAttack.cpp includes/Strategies/RobotStrategyAttackDefense.h src/Strategies/RobotStrategyAttackDefense.cpp)
 
 SET (VSS_CORE libvss-core.so)
 
-ADD_EXECUTABLE(SDK-Rodetas src/Main.cpp src/Strategies/RobotStrategyDefenderLeft.cpp includes/Strategies/RobotStrategyDefenderLeft.h)
+ADD_EXECUTABLE(SDK-Rodetas src/Main.cpp src/Strategies/RobotStrategyDefenderLeft.cpp includes/Strategies/RobotStrategyDefenderLeft.h includes/Strategies/RobotStrategySideAttack.h src/Strategies/RobotStrategySideAttack.cpp includes/Strategies/RobotStrategyCenterAttack.h src/Strategies/RobotStrategyCenterAttack.cpp includes/Strategies/RobotStrategyForwardAttack.h src/Strategies/RobotStrategyForwardAttack.cpp includes/Strategies/RobotStrategyAttackDefense.h src/Strategies/RobotStrategyAttackDefense.cpp)
 
 TARGET_LINK_LIBRARIES(core ${VSS_CORE} ${GTKMM_LIBRARIES} ${PROTOBUF_LIBRARY} ${PROTOBUF_LIBRARIES} ${Boost_LIBRARIES})
 

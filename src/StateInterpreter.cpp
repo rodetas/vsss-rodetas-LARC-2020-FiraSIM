@@ -96,6 +96,10 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
     RodetasRobot attackerRobot = getRobotByStrategy(MindSet::AttackerStrategy, robots);
     RodetasRobot defenderRobotLeft = getRobotByStrategy(MindSet::DefenderStrategyLeft,robots);
     RodetasRobot defenderRobotRight = getRobotByStrategy(MindSet::DefenderStrategyRight,robots);
+    RodetasRobot sideAttacker = getRobotByStrategy(MindSet::SideAttackerStrategy,robots);
+    RodetasRobot forwardAttacker = getRobotByStrategy(MindSet::ForwardAttackerStrategy,robots);
+    RodetasRobot centerAttacker = getRobotByStrategy(MindSet::CenterAttackerStrategy,robots);
+    RodetasRobot AttackDefense = getRobotByStrategy(MindSet::AttackDefenseStrategy,robots);
 
     strategiesById[goalRobot.getId()] = goalRobot.getMindSet();
     strategiesById[defenderRobot.getId()] = defenderRobot.getMindSet();
@@ -107,7 +111,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             (state.ball.position.x - defenderRobotRight.getSelfState().position.x) > 10 &&
             (state.ball.position.x - defenderRobotRight.getSelfState().position.x) > 10) {
         cout<<"Formou linha dupla: "<<endl;
-        strategiesById[attackerRobot.getId()]= MindSet::DefenderStrategyLeft;
+        //strategiesById[attackerRobot.getId()]= MindSet::DefenderStrategyLeft;
         strategiesById[defenderRobot.getId()]=MindSet::DefenderStrategyRight;
     }
 
@@ -199,10 +203,10 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
         if (distanceDefenderBall < distanceAttackerBall &&
             state.ball.position.x < vss::MAX_COORDINATE_X * 0.5 &&
             !attackerRobot.getRobotStrategyBase().isBlocked() &&
-            !defenderRobot.getRobotStrategyBase().isBlocked()) {
+            !defenderRobotRight.getRobotStrategyBase().isBlocked()) {
 
-            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
-            strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
+            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategyRight;
+            strategiesById[defenderRobotRight.getId()] = MindSet::AttackerStrategy;
         }
     }
 
