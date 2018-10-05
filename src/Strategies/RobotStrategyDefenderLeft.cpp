@@ -7,7 +7,7 @@ RobotStrategyDefenderLeft::RobotStrategyDefenderLeft() = default;
 
 vss::WheelsCommand RobotStrategyDefenderLeft::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
-    if(robot.distanceFrom(state.ball.position) < (12)){
+    if(robot.distanceFrom(state.ball.position) < (8.5)){
         c = movimentation.turnLeft(80, 80);
     }
     return c;
@@ -20,8 +20,8 @@ vss::Pose RobotStrategyDefenderLeft::defineTargetAndArrivalOrientation() {
     target.x = vss::MAX_COORDINATE_X * 0.75;
     //Se a bola passar pela linha de defesa, posiciona robo no canto do gol em x
     if(state.ball.position.x > vss::MAX_COORDINATE_X * 0.75){
-        target.x = 150;
-        target.y = 22;
+        target.x = vss::MAX_COORDINATE_X - 15;
+        target.y = vss::MIN_COORDINATE_Y + 25;
     } else {
         // Linha de defesa lado esquerdo
         // posiciona defensor na frente da aréa
@@ -55,4 +55,33 @@ float RobotStrategyDefenderLeft::applyUnivectorField(vss::Pose target){
     univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
+}
+
+vss::WheelsCommand RobotStrategyDefenderLeft::stopStrategy(vss::WheelsCommand command) {
+    // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
+
+    vss::WheelsCommand c = command;
+    float maxDistance = (12); // 12 cm
+    float distanceTarget = (float) robot.distanceFrom(target);
+
+/*	REVER VELOCIDADE
+	if(robot.getVelocity() > image_size.x * (0.05)){
+		maxDistance = 24; // 24 cm
+	}
+ */
+    if (distanceTarget < maxDistance) {
+        c.leftVel = command.leftVel * (distanceTarget / maxDistance);
+        c.rightVel = command.rightVel * (distanceTarget / maxDistance);
+    }
+
+    if (distanceTarget < (4)) {
+
+        if ((robot.angle > 80 && robot.angle < 120) || (robot.angle > 260 && robot.angle < 300)) {
+            c = movimentation.stop();
+        } else {
+            c = movimentation.turnRight(10, 10);
+        }
+    }
+
+    return c;
 }

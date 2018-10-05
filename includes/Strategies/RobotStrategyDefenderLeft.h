@@ -19,6 +19,8 @@ public:
 
     float applyUnivectorField(vss::Pose) override;
 
+    vss::WheelsCommand stopStrategy(vss::WheelsCommand) override;
+
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGYDEFENDERLEFT_H

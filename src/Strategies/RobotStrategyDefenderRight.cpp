@@ -9,7 +9,7 @@ vss::WheelsCommand RobotStrategyDefenderRight::specificStrategy(vss::WheelsComma
     c = stopStrategy(c);
 
     //Se o robo estiver perto da bola, gira em torno do proprio eixo
-    if(robot.distanceFrom(state.ball.position) < (12)){
+    if(robot.distanceFrom(state.ball.position) < (8.5)){
         c = movimentation.turnRight(80, 80);
     }
     return c;
@@ -21,8 +21,8 @@ vss::Pose RobotStrategyDefenderRight::defineTargetAndArrivalOrientation() {
     vss::Point ballProjection = state.ball.projection;
 
     if(state.ball.position.x > vss::MAX_COORDINATE_X * 0.75){
-        target.x = 150;
-        target.y = 105;
+        target.x = vss::MAX_COORDINATE_X - 15;
+        target.y = vss::MAX_COORDINATE_Y - 25;
         vss::Point(150, 105);
     }
     else {
@@ -58,4 +58,33 @@ float RobotStrategyDefenderRight::applyUnivectorField(vss::Pose target){
     univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
+}
+
+vss::WheelsCommand RobotStrategyDefenderRight::stopStrategy(vss::WheelsCommand command) {
+    // Para o robo quando atinge o target, alem disso, rotaciona de forma que esteja sempre virado para a bola
+
+    vss::WheelsCommand c = command;
+    float maxDistance = (12); // 12 cm
+    float distanceTarget = (float) robot.distanceFrom(target);
+
+/*	REVER VELOCIDADE
+	if(robot.getVelocity() > image_size.x * (0.05)){
+		maxDistance = 24; // 24 cm
+	}
+ */
+    if (distanceTarget < maxDistance) {
+        c.leftVel = command.leftVel * (distanceTarget / maxDistance);
+        c.rightVel = command.rightVel * (distanceTarget / maxDistance);
+    }
+
+    if (distanceTarget < (4)) {
+
+        if ((robot.angle > 80 && robot.angle < 120) || (robot.angle > 260 && robot.angle < 300)) {
+            c = movimentation.stop();
+        } else {
+            c = movimentation.turnRight(10, 10);
+        }
+    }
+
+    return c;
 }
