@@ -2,8 +2,6 @@
 // Created by manoel on 24/04/18.
 //
 
-#include <Strategies/RobotStrategyDefenderRight.h>
-#include <Strategies/RobotStrategyDefenderLeft.h>
 #include "RobotStrategyFactory.h"
 
 RobotStrategyFactory::RobotStrategyFactory() = default;
