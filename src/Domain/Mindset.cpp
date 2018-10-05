@@ -6,7 +6,7 @@
 
 // retorna um vector com os MindSet que representam uma estrategia
 std::vector<MindSet> getStrategiesMindSet(){
-    return {MindSet::GoalKeeperStrategy, MindSet::DefenderStrategy, MindSet::DefenderBackStrategy, MindSet::AttackerStrategy, MindSet::DefenderStrategyLeft, MindSet::DefenderStrategyRight};
+    return {MindSet::GoalKeeperStrategy, MindSet::DefenderStrategy, MindSet::DefenderBackStrategy, MindSet::AttackerStrategy, MindSet::DefenderStrategyLeft, MindSet::DefenderStrategyRight, MindSet::CenterAttackerStrategy, MindSet::ForwardAttackerStrategy, MindSet::SideAttackerStrategy};
 }
 
 std::string toString(MindSet m){
@@ -35,6 +35,14 @@ std::string toString(MindSet m){
             return "DefenderStrategyLeft";
         case MindSet ::DefenderStrategyRight:
             return "DefenderStrategyRight";
+        case MindSet::SideAttackerStrategy:
+            return "SideAttackerStrategy";
+        case MindSet::CenterAttackerStrategy:
+            return "CenterAttackerStrategy";
+        case MindSet::ForwardAttackerStrategy:
+            return "ForwardAttackerStrategy";
+        case MindSet::AttackDefenseStrategy:
+            return "AttackDefenseStrategy";
         default:
             return "NotDefined";
     }

@@ -11,6 +11,9 @@
 #include "Domain/Mindset.h"
 #include <Strategies/RobotStrategy.h>
 #include <Strategies/RobotStrategyAttack.h>
+#include <Strategies/RobotStrategySideAttack.h>
+#include <Strategies/RobotStrategyCenterAttack.h>
+#include <Strategies/RobotStrategyForwardAttack.h>
 #include <Helpers/MathHelper.h>
 #include <Domain/PositionStatus.h>
 
