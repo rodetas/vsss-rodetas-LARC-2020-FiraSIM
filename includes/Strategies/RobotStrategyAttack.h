@@ -12,11 +12,12 @@ class RobotStrategyAttack : public RobotStrategy {
 public:
 
     RobotStrategyAttack();
-
     vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
     vss::Pose defineTargetAndArrivalOrientation() override;
     float applyUnivectorField(vss::Pose) override;
 
+private:
+	bool stopAttacker;
 
 };
 
