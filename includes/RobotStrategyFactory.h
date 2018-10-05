@@ -12,6 +12,8 @@
 #include <Strategies/RobotStrategyAttack.h>
 #include <Strategies/RobotStrategyDefender.h>
 #include <Strategies/RobotStrategyGoal.h>
+#include <Strategies/RobotStrategyDefenderRight.h>
+#include <Strategies/RobotStrategyDefenderLeft.h>
 #include <Positioning/Penalty/AttackPenaltyHitPositioning.h>
 #include <Positioning/Penalty/AttackPenaltyAgainstPositioning.h>
 #include <Positioning/Penalty/DefenderPenaltyHitPositioning.h>

@@ -12,6 +12,8 @@ enum class MindSet {
     None,
     GoalKeeperStrategy,     // estrategia goleiro
     DefenderStrategy,       // estrategia defensor
+    DefenderStrategyLeft,  // estrategia defensor da esquerda
+    DefenderStrategyRight, // estrategia defensor da direita
     DefenderBackStrategy,   // estrategia defensor fazendo linha de defesa
     AttackerStrategy,       // estrategia do atacante
 

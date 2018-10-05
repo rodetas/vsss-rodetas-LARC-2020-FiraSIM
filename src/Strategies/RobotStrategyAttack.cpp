@@ -176,7 +176,6 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
         }
     }
 
-
     //Obstáculos de área do gol
     std::pair<vss::Point, vss::Point> obstacle;
 

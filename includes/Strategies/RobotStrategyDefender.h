@@ -19,6 +19,7 @@ public:
 
     float applyUnivectorField(vss::Pose) override;
 
+    vss::Pose positionDefenderInAttack();
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGYDEFENDER_H

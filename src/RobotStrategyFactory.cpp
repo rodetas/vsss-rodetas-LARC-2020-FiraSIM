@@ -73,7 +73,18 @@ void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots
 				    robot.setStrategy(new GoalKeepCenterPositioning());
 				}
 				break;
-
+		    case MindSet::DefenderStrategyLeft:
+				if (robot.getMindSet() != MindSet::DefenderStrategyLeft) {
+					robot.setMindSet(MindSet::DefenderStrategyLeft);
+					robot.setStrategy(new RobotStrategyDefenderLeft());
+				}
+		        break;
+            case MindSet::DefenderStrategyRight:
+				if (robot.getMindSet() != MindSet::DefenderStrategyRight) {
+					robot.setMindSet(MindSet::DefenderStrategyRight);
+					robot.setStrategy(new RobotStrategyDefenderRight());
+				}
+                break;
 			default:
 			    std::cout << "MindSet \"" << toString(robotMindSet) << "\" nao tratado. Tente adicionar no switch" << std::endl;
 				break;
