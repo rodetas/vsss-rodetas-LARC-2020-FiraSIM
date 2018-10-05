@@ -58,6 +58,8 @@ void WindowControl::setSignals(){
 	buttonChange->signal_clicked().connect(sigc::bind<Gtk::Button *>(sigc::mem_fun(this, &WindowControl::onPressButtonChange), buttonChange));
 	buttonPenaltyHitPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::PenaltyHit));
 	buttonPenaltyAgainstPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::PenaltyAgainst));
+
+	onPressButtonPlaying(buttonPlay);
 }
 
 void WindowControl::onPositioningRequired(PositionStatus positionRequired){
