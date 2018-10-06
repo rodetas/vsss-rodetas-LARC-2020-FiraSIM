@@ -10,11 +10,10 @@ vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c)
     c = stopStrategy(c);
 
     //Se o robo estiver perto da bola, gira em torno do proprio eixo de acordo com o lado do campo
-    if(robot.distanceFrom(state.ball.position) < (9)){
-        if(state.ball.position.y > vss::MAX_COORDINATE_Y / 2) {
+    if (robot.distanceFrom(state.ball.position) < (9)) {
+        if (state.ball.position.y > vss::MAX_COORDINATE_Y / 2) {
             c = movimentation.turnRight(80, 80);
-        }
-        else{
+        } else {
             c = movimentation.turnLeft(80, 80);
         }
     }
@@ -27,7 +26,7 @@ vss::Pose RobotStrategyDefender::defineTarget() {
     vss::Point ballProjection = state.ball.projection;
 
     //Se a bola passar da linha de defesa, posiciona o robô no canto da area para auxiliar o goleiro
-    if(state.ball.position.y > vss::MAX_COORDINATE_Y / 2){
+    if (state.ball.position.y > vss::MAX_COORDINATE_Y / 2) {
         if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.75) {
             target.x = vss::MAX_COORDINATE_X - 15;
             target.y = vss::MAX_COORDINATE_Y - 22;
@@ -38,11 +37,11 @@ vss::Pose RobotStrategyDefender::defineTarget() {
             // se a bola estiver na parede, evita que o defensor fique preso na parede
             if (ballProjection.y >= (vss::MAX_COORDINATE_Y - 5)) {
                 target.y = ballProjection.y - 4;
-            }else{
+            } else {
                 target.y = ballProjection.y;
             }
         }
-    }else{
+    } else {
         if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.75) {
             target.x = vss::MAX_COORDINATE_X - 15;
             target.y = vss::MIN_COORDINATE_Y + 22;
@@ -53,7 +52,7 @@ vss::Pose RobotStrategyDefender::defineTarget() {
             // se a bola estiver na parede, evita que o defensor fique preso na parede
             if (ballProjection.y <= 5) {
                 target.y = ballProjection.y + 4;
-            }else{
+            } else {
                 target.y = ballProjection.y;
             }
         }
@@ -63,10 +62,10 @@ vss::Pose RobotStrategyDefender::defineTarget() {
     return target;
 }
 
-float RobotStrategyDefender::applyUnivectorField(vss::Pose target){
-    std::vector<std::pair<vss::Point, vss::Point>> obstacles;
+float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
+    std::vector <std::pair<vss::Point, vss::Point>> obstacles;
 
-    if(robot.distanceFrom(target) > 15){
+    if (robot.distanceFrom(target) > 15) {
         //Obstáculos roboôs
         for (auto &r: state.robots) {
             if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
@@ -76,15 +75,15 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target){
     }
 
     //Obstáculos de área do gol
-    std::pair<vss::Point, vss::Point> obstacle;
+    std::pair <vss::Point, vss::Point> obstacle;
 
     obstacle.second.x = 0;
     obstacle.second.y = 0;
 
 
-    if(!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
-         robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 -5) &&
-         robot.position.x > vss::MAX_COORDINATE_X - 25)){
+    if (!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
+          robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 5) &&
+          robot.position.x > vss::MAX_COORDINATE_X - 25)) {
 
         obstacle.first.x = 152;
 

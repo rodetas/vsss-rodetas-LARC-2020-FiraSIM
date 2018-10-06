@@ -43,7 +43,7 @@ vss::Pose RobotStrategyDefenderLeft::defineTarget() {
 
 float RobotStrategyDefenderLeft::applyUnivectorField(vss::Pose target) {
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-    if(robot.distanceFrom(target) > 15){
+    if (robot.distanceFrom(target) > 15) {
         //Obstáculos roboôs
         for (auto &r: state.robots) {
             if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {

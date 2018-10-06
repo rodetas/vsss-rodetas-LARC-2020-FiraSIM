@@ -45,7 +45,7 @@ vss::Pose RobotStrategyDefenderRight::defineTarget() {
 
 float RobotStrategyDefenderRight::applyUnivectorField(vss::Pose target) {
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-    if(robot.distanceFrom(target) > 15){
+    if (robot.distanceFrom(target) > 15) {
         //Obstáculos roboôs
         for (auto &r: state.robots) {
             if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
@@ -61,9 +61,9 @@ float RobotStrategyDefenderRight::applyUnivectorField(vss::Pose target) {
     obstacle.second.y = 0;
 
 
-    if(!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
-         robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 -5) &&
-         robot.position.x > vss::MAX_COORDINATE_X - 25)){
+    if (!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
+          robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 5) &&
+          robot.position.x > vss::MAX_COORDINATE_X - 25)) {
 
         obstacle.first.x = 152;
 
