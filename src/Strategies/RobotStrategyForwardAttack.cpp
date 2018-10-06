@@ -11,7 +11,7 @@ vss::WheelsCommand RobotStrategyForwardAttack::specificStrategy(vss::WheelsComma
     return c;
 }
 
-vss::Pose RobotStrategyForwardAttack::defineTargetAndArrivalOrientation(){
+vss::Pose RobotStrategyForwardAttack::defineTarget(){
     vss::Pose target;
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
     target.x = centerGoal.x;

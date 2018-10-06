@@ -22,7 +22,7 @@ public:
 
     vss::WheelsCommand applyStrategy(RobotState, RodetasState, RobotStrategyBase) override;
 
-    vss::Pose defineTargetAndArrivalOrientation() override = 0;
+    vss::Pose defineTarget() override = 0;
 
     float applyUnivectorField(vss::Pose) override = 0;
 

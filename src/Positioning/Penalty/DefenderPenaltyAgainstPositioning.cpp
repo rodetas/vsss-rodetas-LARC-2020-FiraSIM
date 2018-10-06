@@ -11,7 +11,7 @@ vss::WheelsCommand DefenderPenaltyAgainstPositioning::specificStrategy(vss::Whee
     return c;
 }
 
-vss::Pose DefenderPenaltyAgainstPositioning::defineTargetAndArrivalOrientation() {
+vss::Pose DefenderPenaltyAgainstPositioning::defineTarget() {
     vss::Pose target(vss::MAX_COORDINATE_X/2-10, vss::MAX_COORDINATE_Y*0.7, 0);
 
     return target;

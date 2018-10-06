@@ -16,7 +16,7 @@ class Agent {
 public:
 
     virtual vss::WheelsCommand applyStrategy(RobotState, RodetasState, RobotStrategyBase) = 0;
-    virtual vss::Pose defineTargetAndArrivalOrientation() = 0;
+    virtual vss::Pose defineTarget() = 0;
     virtual float applyUnivectorField(vss::Pose) = 0;
 
     virtual vss::WheelsCommand getCommand(){

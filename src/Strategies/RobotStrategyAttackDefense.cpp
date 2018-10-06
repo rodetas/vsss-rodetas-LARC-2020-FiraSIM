@@ -11,7 +11,7 @@ vss::WheelsCommand RobotStrategyAttackDefense::specificStrategy(vss::WheelsComma
     return c;
 }
 
-vss::Pose RobotStrategyAttackDefense::defineTargetAndArrivalOrientation(){
+vss::Pose RobotStrategyAttackDefense::defineTarget(){
     vss::Pose target;
     target.x = vss::MAX_COORDINATE_X*0.5;
     target.y = vss::MAX_COORDINATE_Y*0.5;

@@ -11,7 +11,7 @@ vss::WheelsCommand RobotStrategySideAttack::specificStrategy(vss::WheelsCommand 
     return c;
 }
 
-vss::Pose RobotStrategySideAttack::defineTargetAndArrivalOrientation(){
+vss::Pose RobotStrategySideAttack::defineTarget(){
     vss::Pose target;
 
     target.x = state.ball.position.x;

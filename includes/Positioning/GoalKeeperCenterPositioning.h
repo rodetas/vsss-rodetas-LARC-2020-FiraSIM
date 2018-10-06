@@ -10,7 +10,7 @@
 class GoalKeepCenterPositioning : public RobotPositioning {
 
     vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
-    vss::Pose defineTargetAndArrivalOrientation() override;
+    vss::Pose defineTarget() override;
 
 };
 

@@ -10,7 +10,7 @@ vss::WheelsCommand RobotPositioning::applyStrategy(RobotState r, RodetasState s,
     this->strategyBase = base;
 
     // define qual o target do robo
-    target = this->defineTargetAndArrivalOrientation();
+    target = this->defineTarget();
 
     // define o valor de fi com base no target do robo
     float fi = this->applyUnivectorField(target);

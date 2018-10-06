@@ -12,7 +12,7 @@ vss::WheelsCommand RobotStrategyGoal::specificStrategy(vss::WheelsCommand c) {
     return c;
 }
 
-vss::Pose RobotStrategyGoal::defineTargetAndArrivalOrientation() {
+vss::Pose RobotStrategyGoal::defineTarget() {
     vss::Pose goalTarget;
     vss::Point ballProjection = state.ball.projection;
     vss::Point ballPosition = state.ball.position;

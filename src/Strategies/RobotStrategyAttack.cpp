@@ -38,7 +38,7 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
 
 
 
-vss::Pose RobotStrategyAttack::defineTargetAndArrivalOrientation(){
+vss::Pose RobotStrategyAttack::defineTarget(){
     vss::Pose target;
 
     //Muda o target para a projeção para tentar melhorar o cruzamento

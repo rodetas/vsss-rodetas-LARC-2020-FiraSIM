@@ -10,13 +10,13 @@ vss::WheelsCommand RobotStrategyDefenderRight::specificStrategy(vss::WheelsComma
     c = stopStrategy(c);
 
     //Se o robo estiver perto da bola, gira em torno do proprio eixo
-    if (robot.distanceFrom(state.ball.position) < (8.5)) {
+    if (robot.distanceFrom(state.ball.position) < (9)) {
         c = movimentation.turnRight(80, 80);
     }
     return c;
 }
 
-vss::Pose RobotStrategyDefenderRight::defineTargetAndArrivalOrientation() {
+vss::Pose RobotStrategyDefenderRight::defineTarget() {
 
     vss::Pose target;
     vss::Point ballProjection = state.ball.projection;
@@ -24,14 +24,14 @@ vss::Pose RobotStrategyDefenderRight::defineTargetAndArrivalOrientation() {
     //Se a bola passar pela linha de defesa, posiciona robo no canto do gol em x
     if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.75) {
         target.x = vss::MAX_COORDINATE_X - 15;
-        target.y = vss::MAX_COORDINATE_Y - 25;
+        target.y = vss::MAX_COORDINATE_Y - 22;
     } else {
         //Linha de defesa lado Direito
         // posiciona defensor na frente da area
         target.x = vss::MAX_COORDINATE_X * 0.75;
         // se a bola estiver na parede, evita que o defensor fique preso na parede
         if (ballProjection.y >= (vss::MAX_COORDINATE_Y - 5)) {
-            target.y = ballProjection.y - 6;
+            target.y = ballProjection.y - 4;
         }// posiciona defensor na direção da projeção da bola no canto direito ou posiciona no meio do campo em y
         else if (ballProjection.y > vss::MAX_COORDINATE_Y / 2) {
             target.y = ballProjection.y;
@@ -40,19 +40,64 @@ vss::Pose RobotStrategyDefenderRight::defineTargetAndArrivalOrientation() {
         }
     }
 
-    //Orientação pro lado do gol
-    target.angle = 0;
-
     return target;
 }
 
 float RobotStrategyDefenderRight::applyUnivectorField(vss::Pose target) {
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-    for (auto &r: state.robots) {
-        if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-            obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+    if(robot.distanceFrom(target) > 15){
+        //Obstáculos roboôs
+        for (auto &r: state.robots) {
+            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+            }
         }
     }
+
+    //Obstáculos de área do gol
+    std::pair<vss::Point, vss::Point> obstacle;
+
+    obstacle.second.x = 0;
+    obstacle.second.y = 0;
+
+
+    if(!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
+         robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 -5) &&
+         robot.position.x > vss::MAX_COORDINATE_X - 25)){
+
+        obstacle.first.x = 152;
+
+        obstacle.first.y = 38;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 45;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 50;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 55;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 60;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 65;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 70;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 75;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 80;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 85;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 93;
+        obstacles.push_back(obstacle);
+
+        obstacle.first.x = 160;
+
+        obstacle.first.y = 96;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 33;
+        obstacles.push_back(obstacle);
+    }
+
     UnivectorField univectorField;
     univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
     path = univectorField.drawPath(robot, target, obstacles);
