@@ -10,7 +10,7 @@ vss::WheelsCommand AttackPenaltyAgainstPositioning::specificStrategy(vss::Wheels
     return c;
 }
 
-vss::Pose AttackPenaltyAgainstPositioning::defineTargetAndArrivalOrientation(){
+vss::Pose AttackPenaltyAgainstPositioning::defineTarget(){
     vss::Pose target(vss::MAX_COORDINATE_X/2-10, vss::MAX_COORDINATE_Y*0.3, 0);
 
     return target;

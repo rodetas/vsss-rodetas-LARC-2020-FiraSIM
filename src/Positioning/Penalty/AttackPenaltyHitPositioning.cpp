@@ -11,7 +11,7 @@ vss::WheelsCommand AttackPenaltyHitPositioning::specificStrategy(vss::WheelsComm
     return c;
 }
 
-vss::Pose AttackPenaltyHitPositioning::defineTargetAndArrivalOrientation() {
+vss::Pose AttackPenaltyHitPositioning::defineTarget() {
     // @TODO calibrar melhor essa pose de forma que seja uma distancia aceitavel para a bola
 
     target = vss::Pose(35,65,0);

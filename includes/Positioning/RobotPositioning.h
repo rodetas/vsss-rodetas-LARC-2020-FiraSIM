@@ -16,7 +16,7 @@ public:
     vss::WheelsCommand applyStrategy(RobotState, RodetasState, RobotStrategyBase) override;
 
     // este metodo DEVE ser implementado em toda classe filha
-    vss::Pose defineTargetAndArrivalOrientation() override = 0;
+    vss::Pose defineTarget() override = 0;
 
     float applyUnivectorField(vss::Pose) override;
 

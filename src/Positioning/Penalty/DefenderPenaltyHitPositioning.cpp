@@ -11,7 +11,7 @@ vss::WheelsCommand DefenderPenaltyHitPositioning::specificStrategy(vss::WheelsCo
     return c;
 }
 
-vss::Pose DefenderPenaltyHitPositioning::defineTargetAndArrivalOrientation() {
+vss::Pose DefenderPenaltyHitPositioning::defineTarget() {
 
     target = vss::Pose(100,65,0);
 

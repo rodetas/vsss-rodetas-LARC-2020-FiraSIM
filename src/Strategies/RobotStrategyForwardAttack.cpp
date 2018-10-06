@@ -3,6 +3,7 @@
 //
 #include <Strategies/RobotStrategyForwardAttack.h>
 #include <iostream>
+
 RobotStrategyForwardAttack::RobotStrategyForwardAttack() = default;
 
 vss::WheelsCommand RobotStrategyForwardAttack::specificStrategy(vss::WheelsCommand c) {
@@ -11,24 +12,26 @@ vss::WheelsCommand RobotStrategyForwardAttack::specificStrategy(vss::WheelsComma
     return c;
 }
 
-vss::Pose RobotStrategyForwardAttack::defineTargetAndArrivalOrientation(){
+vss::Pose RobotStrategyForwardAttack::defineTarget() {
     vss::Pose target;
-    vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
+    vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
     target.x = centerGoal.x;
     target.y = centerGoal.y;
-    
 
 
     return target;
-  
+
 }
 
 
-float RobotStrategyForwardAttack::applyUnivectorField(vss::Pose target){
+float RobotStrategyForwardAttack::applyUnivectorField(vss::Pose target) {
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-    for (auto &r: state.robots) {
-        if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)){
-            obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+    if (robot.distanceFrom(target) > 15) {
+        //Obstáculos roboôs
+        for (auto &r: state.robots) {
+            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+            }
         }
     }
     UnivectorField univectorField;

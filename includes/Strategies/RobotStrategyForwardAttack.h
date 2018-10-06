@@ -13,7 +13,7 @@ class RobotStrategyForwardAttack : public RobotStrategy {
 public:
      RobotStrategyForwardAttack();
     vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
-    vss::Pose defineTargetAndArrivalOrientation() override;
+    vss::Pose defineTarget() override;
     float applyUnivectorField(vss::Pose) override;
 };
 

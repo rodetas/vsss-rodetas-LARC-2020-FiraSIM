@@ -15,11 +15,11 @@ public:
 
     vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
 
-    vss::Pose defineTargetAndArrivalOrientation() override;
+    vss::Pose defineTarget() override;
 
     float applyUnivectorField(vss::Pose) override;
 
-    vss::Pose positionDefenderInAttack();
+    vss::WheelsCommand stopStrategy(vss::WheelsCommand) override;
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGYDEFENDER_H
