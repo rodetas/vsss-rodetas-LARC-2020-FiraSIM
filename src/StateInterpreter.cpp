@@ -99,9 +99,10 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
     strategiesById[attackerRobot.getId()] = attackerRobot.getMindSet();
 
     //Troca defensor por atacante
-    if (state.ball.position.x < vss::MAX_COORDINATE_X / 2 &&
-        ((state.ball.projection.y > 50 && state.ball.projection.y < 80 &&
-          state.ball.position.x < defenderRobot.getSelfState().position.x)) && // Bola dentro da area
+    if (not attackerRobot.isNull() and not defenderRobot.isNull() and
+        state.ball.position.x < vss::MAX_COORDINATE_X / 2 &&
+        (state.ball.projection.y > 50 && state.ball.projection.y < 80 &&
+          state.ball.position.x < defenderRobot.getSelfState().position.x) && // Bola dentro da area
         (attackerRobot.getSelfState().position.y > 90 || attackerRobot.getSelfState().position.y < 35) &&
         (defenderRobot.getSelfState().position.y > 55) &&
         (defenderRobot.getSelfState().position.y < 75)) // se o defensor esta posicionado
@@ -111,33 +112,28 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
     }
 
     if (freeBall) {
-        // se o defensor estiver mais perto da bola entao ele passa a ser o atacante para cobrar free ball
-        double distanceDefenderBall = Math::distancePoint(defenderRobot.getSelfState().position, state.ball.position);
-        double distanceAttackerBall = Math::distancePoint(attackerRobot.getSelfState().position, state.ball.position);
-        if (distanceDefenderBall < distanceAttackerBall) {
-            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
-            strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
-        }
-
+        defineStandartStrategies(robots, state);
         timeHelper.restartCounting();
 
     } else if (timeHelper.timeOut(2000)) {
 
-        if (attackerRobot.getSelfState().position.x * 1.2 < state.ball.position.x &&
-            !(attackerRobot.getSelfState().position.x < state.ball.position.x &&
-              defenderRobot.getSelfState().position.x < state.ball.position.x) &&
-            !attackerRobot.getRobotStrategyBase().isBlocked() &&
-            !defenderRobot.getRobotStrategyBase().isBlocked()) {
+        if(not attackerRobot.isNull() and not defenderRobot.isNull()) {
 
-            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
-            strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
+            if (attackerRobot.getSelfState().position.x * 1.2 < state.ball.position.x &&
+                !(attackerRobot.getSelfState().position.x < state.ball.position.x &&
+                  defenderRobot.getSelfState().position.x < state.ball.position.x) &&
+                !attackerRobot.getRobotStrategyBase().isBlocked() &&
+                !defenderRobot.getRobotStrategyBase().isBlocked()) {
+
+                strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
+                strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
+            }
+
+            if (attackerRobot.getRobotStrategyBase().isBlocked()) {
+                strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
+                strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
+            }
         }
-
-        if (attackerRobot.getRobotStrategyBase().isBlocked()) {
-            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
-            strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
-        }
-
     }
 }
 
@@ -184,6 +180,10 @@ RodetasRobot StateInterpreter::getRobotByStrategy(MindSet mindSet, std::vector<R
         return r.getMindSet() == mindSet;
     });
 
+    if (found == robots.end()){
+        return RodetasRobot();
+    }
+
     return *found;
 }
 
@@ -202,4 +202,16 @@ RodetasRobot StateInterpreter::getClosestRobotTo(std::vector<RodetasRobot> & rob
     }
 
     return closestRobot;
+}
+
+// retorna um vetor com os robos ordenado por distancia
+std::vector<RodetasRobot> StateInterpreter::getClosestRobots(std::vector<RodetasRobot>& robots, vss::Point point){
+
+    std::vector<RodetasRobot> aux = robots;
+
+    std::sort(aux.begin(), aux.end(), [&](RodetasRobot& a, RodetasRobot& b){
+       return Math::distancePoint(a.getSelfState().position, point) < Math::distancePoint(b.getSelfState().position, point);
+    });
+
+    return aux;
 }

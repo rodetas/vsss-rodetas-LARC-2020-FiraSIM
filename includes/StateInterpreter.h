@@ -26,6 +26,7 @@ public:
     bool doesAllRobotsHaveStrategy(std::vector<RodetasRobot>&);
 
     RodetasRobot getClosestRobotTo(std::vector<RodetasRobot>&, vss::Point);
+    std::vector<RodetasRobot> getClosestRobots(std::vector<RodetasRobot>&, vss::Point);
 
 private:
 
