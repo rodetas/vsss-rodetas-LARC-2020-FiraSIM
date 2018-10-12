@@ -5,7 +5,7 @@ Transmission::Transmission() {
     transmittingStatus = false;
     openStatus = false;
 
-    port = "/dev/ttyUSB0";
+    port = "/dev/ttyUSB" + Config::xbeePort;
 
     openConnection();
 }
