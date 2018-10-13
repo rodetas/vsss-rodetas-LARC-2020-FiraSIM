@@ -47,6 +47,8 @@ private:
     Gtk::Button* buttonChange = nullptr;
     Gtk::ToggleButton* buttonPenaltyHitPosition = nullptr;
     Gtk::ToggleButton* buttonPenaltyAgainstPosition = nullptr;
+    Gtk::ToggleButton* buttonMiddleAttackPosition = nullptr;
+    Gtk::ToggleButton* buttonMiddleDefensePosition = nullptr;
 
 
 };

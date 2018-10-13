@@ -27,6 +27,12 @@ enum class MindSet {
     PenaltyAgainstAttackPositioning,    // posicionamento do atacante em caso de penalti contra
     PenaltyAgainstDefenderPositioning,  // posicionamento do defensor em caso de penalti contra
 
+    AttackMiddleAttackPositioning,      // posicionamento do atacante na saída no meio a favor
+    DefenderMiddleAttackPositioning,    // posicionamento do defensor na saída no meio a favor
+
+    AttackMiddleDefensePositioning,     // posicionamento do atacante na saída no meio contra
+    DefenderMiddleDefensePositioning,   // posicionamento do defensor na saída no meio contra
+
     GoalKeeperCenterPositioning         // posiciona o goleiro no centro do gol
 
     //@TODO definir posicionamento de diversos outros cenarios como freeball, saida de bola(contra e a favor), tiro de meta, etc
