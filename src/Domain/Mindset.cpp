@@ -29,6 +29,14 @@ std::string toString(MindSet m){
             return "PenaltyAgainstAttackPositioning";
         case MindSet::PenaltyAgainstDefenderPositioning:
             return "PenaltyAgainstDefenderPositioning";
+        case MindSet::AttackMiddleDefensePositioning:
+            return "AttackMiddleDefensePositioning";
+        case MindSet::DefenderMiddleDefensePositioning:
+            return "DefenderMiddleDefensePositioning";
+        case MindSet::AttackMiddleAttackPositioning:
+            return "AttackMiddleAttackPositioning";
+        case MindSet::DefenderMiddleAttackPositioning:
+            return "DefenderMiddleAttackPositioning";
         case MindSet::GoalKeeperCenterPositioning:
             return "GoalKeeperCenterPositioning";
         case MindSet ::DefenderStrategyLeft:

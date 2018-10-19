@@ -67,6 +67,34 @@ void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots
 				}
 				break;
 
+			case MindSet::DefenderMiddleDefensePositioning:
+				if (robot.getMindSet() != MindSet::DefenderMiddleDefensePositioning) {
+					robot.setMindSet(MindSet::DefenderMiddleDefensePositioning);
+					robot.setStrategy(new DefenderMiddleDefensePositioning());
+				}
+				break;
+			
+			case MindSet::AttackMiddleDefensePositioning:
+				if (robot.getMindSet() != MindSet::AttackMiddleDefensePositioning) {
+					robot.setMindSet(MindSet::AttackMiddleDefensePositioning);
+					robot.setStrategy(new AttackMiddleDefensePositioning());
+				}
+				break;
+			
+			case MindSet::DefenderMiddleAttackPositioning:
+				if (robot.getMindSet() != MindSet::DefenderMiddleAttackPositioning) {
+					robot.setMindSet(MindSet::DefenderMiddleAttackPositioning);
+					robot.setStrategy(new DefenderMiddleAttackPositioning());
+				}
+				break;
+
+			case MindSet::AttackMiddleAttackPositioning:
+				if (robot.getMindSet() != MindSet::AttackMiddleAttackPositioning) {
+					robot.setMindSet(MindSet::AttackMiddleAttackPositioning);
+					robot.setStrategy(new AttackMiddleAttackPositioning());
+				}
+				break;
+
 			case MindSet::GoalKeeperCenterPositioning:
 				if(robot.getMindSet() != MindSet::GoalKeeperCenterPositioning) {
 				    robot.setMindSet(MindSet::GoalKeeperCenterPositioning);

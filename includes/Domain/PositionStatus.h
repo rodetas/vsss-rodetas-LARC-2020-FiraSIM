@@ -17,7 +17,9 @@ enum class PositionStatus {
     None,
     PenaltyHit,
     PenaltyAgainst,
-    Freeball
+    Freeball,
+    MiddleDefense,
+    MiddleAttack
 
 };
 
