@@ -23,6 +23,10 @@
 #include <Positioning/Penalty/DefenderPenaltyHitPositioning.h>
 #include <Positioning/Penalty/DefenderPenaltyAgainstPositioning.h>
 #include <Positioning/GoalKeeperCenterPositioning.h>
+#include <Positioning/Middle/DefenderMiddleDefensePositioning.h>
+#include <Positioning/Middle/DefenderMiddleAttackPositioning.h>
+#include <Positioning/Middle/AttackMiddleDefensePositioning.h>
+#include <Positioning/Middle/AttackMiddleAttackPositioning.h>
 
 class RobotStrategyFactory {
 

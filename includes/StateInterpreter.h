@@ -22,6 +22,8 @@ public:
     void defineStandartStrategies(std::vector<RodetasRobot>&, RodetasState&);
     void definePenaltyHit(std::vector<RodetasRobot>&, RodetasState&);
     void definePenaltyAgainst(std::vector<RodetasRobot>&, RodetasState&);
+    void defineMiddleAttack(std::vector<RodetasRobot>&, RodetasState&);
+    void defineMiddleDefense(std::vector<RodetasRobot>&, RodetasState&);
     void chooseStrategies(std::vector<RodetasRobot>&, RodetasState&, bool);
     bool doesAllRobotsHaveStrategy(std::vector<RodetasRobot>&);
 

@@ -46,6 +46,12 @@ std::vector<MindSet> StateInterpreter::definePositioning(std::vector<RodetasRobo
     } else if(posStatus == PositionStatus::PenaltyAgainst){
         definePenaltyAgainst(robots, state);
 
+    } else if(posStatus == PositionStatus::MiddleDefense){
+        defineMiddleDefense(robots, state);
+
+    } else if(posStatus == PositionStatus::MiddleAttack){
+        defineMiddleAttack(robots, state);
+
     } else if (posStatus == PositionStatus::Freeball){
         // @TODO
     }
@@ -84,6 +90,30 @@ void StateInterpreter::definePenaltyAgainst(std::vector<RodetasRobot> & robots, 
         MindSet aux = strategiesById[closestToGoal.getId()];
         strategiesById[closestToGoal.getId()] = MindSet::GoalKeeperCenterPositioning;
         strategiesById[2] = aux;
+    }
+
+}
+
+void StateInterpreter::defineMiddleDefense(std::vector<RodetasRobot> & robots, RodetasState & state) {
+    strategiesById[robots[0].getId()] = MindSet::AttackMiddleDefensePositioning;
+    strategiesById[robots[1].getId()] = MindSet::DefenderMiddleDefensePositioning;
+    strategiesById[robots[2].getId()] = MindSet::GoalKeeperCenterPositioning;
+
+}
+
+void StateInterpreter::defineMiddleAttack(std::vector<RodetasRobot> & robots, RodetasState & state) {
+    strategiesById[robots[0].getId()] = MindSet::AttackMiddleAttackPositioning;
+    strategiesById[robots[1].getId()] = MindSet::DefenderMiddleAttackPositioning;
+    strategiesById[robots[2].getId()] = MindSet::GoalKeeperCenterPositioning;
+
+    // procura por robo mais proximo da bola para ser o atacante
+    RodetasRobot closestToBallRobot = getClosestRobotTo(robots, state.ball.position);
+    
+    if(closestToBallRobot.getId() != 0){
+        MindSet aux = strategiesById[closestToBallRobot.getId()];
+        strategiesById[closestToBallRobot.getId()] = MindSet::AttackMiddleDefensePositioning;
+        strategiesById[robots[0].getId()] = aux;
+
     }
 
 }

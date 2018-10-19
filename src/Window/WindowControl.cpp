@@ -37,6 +37,8 @@ void WindowControl::initializeWidgets(){
 		builder->get_widget("buttonChangeFunction", buttonChange);
 		builder->get_widget("buttonPenaltyHit", buttonPenaltyHitPosition);
         builder->get_widget("buttonPenaltyAgainst", buttonPenaltyAgainstPosition);
+        builder->get_widget("buttonMiddleDefense", buttonMiddleDefensePosition);
+        builder->get_widget("buttonMiddleAttack", buttonMiddleAttackPosition);
 
 
     } catch (const Glib::FileError &ex) {
@@ -58,6 +60,8 @@ void WindowControl::setSignals(){
 	buttonChange->signal_clicked().connect(sigc::bind<Gtk::Button *>(sigc::mem_fun(this, &WindowControl::onPressButtonChange), buttonChange));
 	buttonPenaltyHitPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::PenaltyHit));
 	buttonPenaltyAgainstPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::PenaltyAgainst));
+    buttonMiddleDefensePosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::MiddleDefense));
+    buttonMiddleAttackPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::MiddleAttack));
 
 	onPressButtonPlaying(buttonPlay);
 }
