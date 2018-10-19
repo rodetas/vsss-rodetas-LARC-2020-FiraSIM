@@ -239,7 +239,7 @@ std::vector<RodetasRobot> StateInterpreter::getClosestRobots(std::vector<Rodetas
 
     std::vector<RodetasRobot> aux = robots;
 
-    std::sort(aux.begin(), aux.end(), [&](RodetasRobot& a, RodetasRobot& b){
+    std::sort(aux.begin(), aux.end(), [&](const RodetasRobot& a, const RodetasRobot& b){
        return Math::distancePoint(a.getSelfState().position, point) < Math::distancePoint(b.getSelfState().position, point);
     });
 
