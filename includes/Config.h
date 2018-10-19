@@ -19,6 +19,7 @@ public:
     static vss::FieldTransformationType changeSide;
 	static vss::TeamType teamColor;
 	static bool playersSwap;
+	static std::string xbeePort;
 
 	static vss::Point goalSize;
 	static vss::Point goalAreaSize;
