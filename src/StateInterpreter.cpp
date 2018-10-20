@@ -111,7 +111,7 @@ void StateInterpreter::defineMiddleAttack(std::vector<RodetasRobot> & robots, Ro
     
     if(closestToBallRobot.getId() != 0){
         MindSet aux = strategiesById[closestToBallRobot.getId()];
-        strategiesById[closestToBallRobot.getId()] = MindSet::AttackMiddleDefensePositioning;
+        strategiesById[closestToBallRobot.getId()] = MindSet::AttackMiddleAttackPositioning;
         strategiesById[robots[0].getId()] = aux;
 
     }
