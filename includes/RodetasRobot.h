@@ -47,6 +47,8 @@ public:
     vss::Pose getFinalPose();
     vss::Point getStepPoint();
 
+    bool isNull();
+
 private:
 
     int id;

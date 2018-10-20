@@ -4,7 +4,10 @@
 
 #include <RodetasRobot.h>
 
-RodetasRobot::RodetasRobot() = default;
+RodetasRobot::RodetasRobot() {
+    this->id = -1;
+    this->mindSet = MindSet::None;
+};
 
 RodetasRobot::RodetasRobot(int id, MindSet mind, Agent* strategy) {
     this->id = id;
@@ -78,4 +81,8 @@ vss::Pose RodetasRobot::getFinalPose(){
 
 vss::Point RodetasRobot::getStepPoint(){
     return stepPoint;
+}
+
+bool RodetasRobot::isNull(){
+    return (mindSet == MindSet::None and id == -1);
 }
