@@ -113,6 +113,12 @@ void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots
 					robot.setStrategy(new RobotStrategyDefenderRight());
 				}
                 break;
+		    case MindSet::None:
+		        if (robot.getMindSet() != MindSet::None){
+		            robot.setMindSet(MindSet::None);
+		            robot.setStrategy(new NoneStrategy());
+		        }
+				break;
 			default:
 			    std::cout << "MindSet \"" << toString(robotMindSet) << "\" nao tratado. Tente adicionar no switch" << std::endl;
 				break;
