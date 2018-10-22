@@ -18,7 +18,6 @@
 #include <Strategies/RobotStrategyCenterAttack.h>
 #include <Strategies/RobotStrategyForwardAttack.h>
 #include <Strategies/RobotStrategyAttackDefense.h>
-#include <Strategies/NoneStrategy.h>
 #include <Positioning/Penalty/AttackPenaltyHitPositioning.h>
 #include <Positioning/Penalty/AttackPenaltyAgainstPositioning.h>
 #include <Positioning/Penalty/DefenderPenaltyHitPositioning.h>
@@ -28,6 +27,10 @@
 #include <Positioning/Middle/DefenderMiddleAttackPositioning.h>
 #include <Positioning/Middle/AttackMiddleDefensePositioning.h>
 #include <Positioning/Middle/AttackMiddleAttackPositioning.h>
+#include <Positioning/Left/AttackFreeballLeftAttackPositioning.h>
+#include <Positioning/Left/AttackFreeballLeftDefensePositioning.h>
+#include <Positioning/Right/AttackFreeballRightAttackPositioning.h>
+#include <Positioning/Right/AttackFreeballRightDefensePositioning.h>
 
 class RobotStrategyFactory {
 
