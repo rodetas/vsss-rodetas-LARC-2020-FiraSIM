@@ -2,7 +2,7 @@
 // Created by leonardo on 19/10/18.
 //
 
-#include "Positioning/Left/AttackFreeballLeftAttackPositionin2.h"
+#include "Positioning/Left/AttackFreeballLeftAttackPositioning.h"
 
 vss::WheelsCommand AttackFreeballLeftAttackPositioning::specificStrategy(vss::WheelsCommand c) {
     // define que robo deve parar no ponto e estar sempre virado para a bola

@@ -27,7 +27,7 @@
 #include <Positioning/Middle/DefenderMiddleAttackPositioning.h>
 #include <Positioning/Middle/AttackMiddleDefensePositioning.h>
 #include <Positioning/Middle/AttackMiddleAttackPositioning.h>
-#include <Positioning/Left/AttackFreeballLeftAttackPositionin2.h>
+#include <Positioning/Left/AttackFreeballLeftAttackPositioning.h>
 #include <Positioning/Left/AttackFreeballLeftDefensePositioning.h>
 #include <Positioning/Right/AttackFreeballRightAttackPositioning.h>
 #include <Positioning/Right/AttackFreeballRightDefensePositioning.h>
