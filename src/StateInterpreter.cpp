@@ -17,6 +17,8 @@ std::vector<MindSet> StateInterpreter::manageStrategyOrPositioning(std::vector<R
             defineStandartStrategies(robots, state);
         } else if(enabledSwap) {
             defineStrategy(robots, state, freeBall);
+        } else if(not enabledSwap) {
+            defineStandartStrategies(robots, state, true);
         }
     } else {
         // garante que uma vez definida as acoes de um robo esta nao sera alterada durante uma mesma requisicao de posicionamento
@@ -168,19 +170,22 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
 }
 
 // a estrategia padrao define o robo mais proximo da bola como atacante
-void StateInterpreter::defineStandartStrategies(std::vector<RodetasRobot> &robots, RodetasState &state){
+// parametro fixed define se vai ser levada em consideracao a distancia pra bola ou nao
+void StateInterpreter::defineStandartStrategies(std::vector<RodetasRobot> &robots, RodetasState &state, bool fixed){
 
     strategiesById[robots[0].getId()] = MindSet::AttackerStrategy;
     strategiesById[robots[1].getId()] = MindSet::DefenderStrategy;
     strategiesById[robots[2].getId()] = MindSet::GoalKeeperStrategy;
 
-    // procura por robo mais proximo da bola
-    RodetasRobot closestToBallRobot = getClosestRobotTo(robots, state.ball.position);
+    if(not fixed) {
+        // procura por robo mais proximo da bola
+        RodetasRobot closestToBallRobot = getClosestRobotTo(robots, state.ball.position);
 
-    if(closestToBallRobot.getId() != 0) {
-        MindSet aux = strategiesById[closestToBallRobot.getId()];
-        strategiesById[closestToBallRobot.getId()] = MindSet::AttackerStrategy;
-        strategiesById[0] = aux;
+        if (closestToBallRobot.getId() != 0) {
+            MindSet aux = strategiesById[closestToBallRobot.getId()];
+            strategiesById[closestToBallRobot.getId()] = MindSet::AttackerStrategy;
+            strategiesById[0] = aux;
+        }
     }
 }
 

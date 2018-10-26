@@ -19,7 +19,7 @@ public:
 
     std::vector<MindSet> definePositioning(std::vector<RodetasRobot>&, RodetasState&, PositionStatus);
 
-    void defineStandartStrategies(std::vector<RodetasRobot>&, RodetasState&);
+    void defineStandartStrategies(std::vector<RodetasRobot>&, RodetasState&, bool fixed=false);
     void definePenaltyHit(std::vector<RodetasRobot>&, RodetasState&);
     void definePenaltyAgainst(std::vector<RodetasRobot>&, RodetasState&);
     void defineMiddleAttack(std::vector<RodetasRobot>&, RodetasState&);
