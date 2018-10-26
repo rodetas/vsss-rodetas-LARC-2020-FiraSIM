@@ -67,7 +67,6 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     UnivectorField univectorField;
 
     univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
-    //float n = 0;
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
 
     if ((target.x == state.ball.position.x) && (target.y == state.ball.position.y)) {
