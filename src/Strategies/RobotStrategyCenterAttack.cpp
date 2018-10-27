@@ -14,7 +14,7 @@ vss::WheelsCommand RobotStrategyCenterAttack::specificStrategy(vss::WheelsComman
 
 vss::Pose RobotStrategyCenterAttack::defineTarget() {
     vss::Pose target;
-    //vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
+    vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
 
     target.x = vss::MAX_COORDINATE_X * 0.4;
     target.y = vss::MAX_COORDINATE_Y * 0.5;
@@ -23,9 +23,11 @@ vss::Pose RobotStrategyCenterAttack::defineTarget() {
         if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.5) {
             target.x = vss::MAX_COORDINATE_X * 0.25;
             target.y = vss::MAX_COORDINATE_Y * 0.70;
+            target.angle = 0;
         } else {
             target.x = vss::MAX_COORDINATE_X * 0.25;
             target.y = vss::MAX_COORDINATE_Y * 0.30;
+            target.angle = 0;
         }
     }
     if (state.ball.position.x < vss::MAX_COORDINATE_X * 0.25) {
@@ -34,21 +36,21 @@ vss::Pose RobotStrategyCenterAttack::defineTarget() {
             target.x = state.ball.projection.x;
             target.y = (state.ball.projection.y + 2);
 
-            /*target.x = 0;
-            target.y = centerGoal.y;*/
+            vss::Point targetPoint(target.x, target.y);
+            target.angle = Math::arrivalAngle(targetPoint, centerGoal);
+
+
         } else if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 &&
                    state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
                    state.ball.projection.y < state.ball.position.y) {
             target.x = state.ball.projection.x;
             target.y = (state.ball.projection.y - 2);
 
-            /*target.x = 0;
-            target.y = centerGoal.y;
-             */
+            vss::Point targetPoint(target.x, target.y);
+            target.angle = Math::arrivalAngle(targetPoint, centerGoal);
         }
     }
-    //vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
-    //vss::Point orientationPoint;
+
 
     return target;
 
