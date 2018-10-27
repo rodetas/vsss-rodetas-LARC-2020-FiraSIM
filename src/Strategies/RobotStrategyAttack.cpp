@@ -47,24 +47,13 @@ vss::Pose RobotStrategyAttack::defineTarget() {
 
     target.angle = Math::arrivalAngle(targetPoint, centerGoal);
 
+    //Angulos para quando robô estiver na parede
     if(target.y < vss::MAX_COORDINATE_Y * 0.1){
-
         target.angle = 0;
-
-        if(target.x < vss::MAX_COORDINATE_X * 0.12){
-            target.angle = (3*M_PI)/2;
-        }
     }
-
     if(target.y > vss::MAX_COORDINATE_Y * 0.88){
-
         target.angle = 0;
-
-        if(target.x < vss::MAX_COORDINATE_X * 0.12){
-            target.angle = (3*M_PI)/2;
-        }
     }
-
     if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y < vss::MAX_COORDINATE_Y * 0.37)) {
         target.angle = (3*M_PI)/2;
     }
