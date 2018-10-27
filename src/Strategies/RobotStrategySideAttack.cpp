@@ -18,45 +18,53 @@ vss::Pose RobotStrategySideAttack::defineTarget() {
     target.x = state.ball.position.x;
     target.y = state.ball.position.y;
 
-    if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.4) {
-        if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.5 && state.ball.position.y > 10) {
-            target.angle = Math::toRadian(320);
-        } else if (state.ball.position.y > vss::MAX_COORDINATE_Y * 0.5 && state.ball.position.y < 120) {
-            target.angle = Math::toRadian(40);
-        } else {
-            target.angle = 0;
-        }
-    }
-    if (state.ball.position.x < vss::MAX_COORDINATE_X * 0.1) {
-        if (state.ball.position.y > vss::MAX_COORDINATE_Y * 0.03) {
-            if (state.ball.projection.y > state.ball.position.y) {
-                target.angle = Math::toRadian(65);
-            } else {
-                target.angle = Math::toRadian(295);
-            }
-
-        }
-
-    }
     //std::cout<<"posição x: "<<target.x<<" posição y: "<<target.y<<"\n";
     if (state.ball.position.x < vss::MAX_COORDINATE_X * 0.25) {
         if (state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
             state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 && state.ball.projection.y > state.ball.position.y) {
             target.x = vss::MAX_COORDINATE_X * 0.2;
             target.y = vss::MAX_COORDINATE_Y * 0.2;
+            target.angle = 0;
         } else if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 &&
                    state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
                    state.ball.projection.y < state.ball.position.y) {
             target.x = vss::MAX_COORDINATE_X * 0.2;
             target.y = vss::MAX_COORDINATE_Y * 0.8;
+            target.angle = 0;
         }
     }
 
-    //vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
-    //vss::Point orientationPoint;
+    if((target.x == state.ball.position.x && target.y == state.ball.position.y) ||
+    (target.x == state.ball.position.x && target.y == state.ball.projection.y)){
+
+        if(target.x < vss::MAX_COORDINATE_X * 0.2){
+            if(target.y < vss::MAX_COORDINATE_Y * 0.5){
+                target.angle = M_PI_2;
+            }else{
+                target.angle = (3*M_PI)/2;
+            }
+        }else if(target.x > vss::MAX_COORDINATE_X * 0.8){
+            if(target.y < vss::MAX_COORDINATE_Y * 0.5){
+                target.angle = (3*M_PI)/2;
+            }else{
+                target.angle = M_PI_2;
+            }
+        }else if (target.y < vss::MAX_COORDINATE_Y * 0.5) {
+            target.angle = (3 * M_PI)/2 + M_PI/4;
+        }else if (target.y > vss::MAX_COORDINATE_Y * 0.5) {
+            target.angle = M_PI/2 - M_PI/4;;
+        }
+
+        if((target.x < vss::MAX_COORDINATE_X * 0.88)){
+            if(target.y < vss::MAX_COORDINATE_Y * 0.1){
+                target.angle = 0;
+            }else if(target.y > vss::MAX_COORDINATE_Y * 0.88){
+                target.angle = 0;
+            }
+        }
+    }
 
     return target;
-
 }
 
 
