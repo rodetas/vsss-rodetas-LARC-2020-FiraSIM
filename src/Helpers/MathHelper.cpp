@@ -53,12 +53,11 @@ float Math::toDomain2Pi(float angle) {
     return angle;
 }
 
-//parametros: ponto inicial, ponto finall
-float arrivalAngle(vss::Point target, vss::Point Orientation){
- if(target.y > Orientation.y){
-        return Math::radian(target, Orientation); 
+float Math::arrivalAngle(vss::Point target, vss::Point orientation){
+    if(target.y <= orientation.y){
+        return atan2(orientation.y - target.y, target.x - orientation.x);
     }
     else{
-        return Math::radian(Orientation, target);
+        return - atan2(target.y - orientation.y, target.x - orientation.x);
     }
 }

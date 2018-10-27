@@ -17,12 +17,7 @@ vss::Pose RobotStrategyForwardAttack::defineTarget() {
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
     target.x = centerGoal.x;
     target.y = centerGoal.y;
-    if (state.ball.position.y > vss::MAX_COORDINATE_Y/2){
-        target.angle = -Math::arrivalAngle(state.ball.position, centerGoal);
-    }
-    else{
-        target.angle = Math::arrivalAngle(state.ball.position, centerGoal);
-    }
+
     return target;
 }
 
