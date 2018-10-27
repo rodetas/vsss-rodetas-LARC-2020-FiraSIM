@@ -8,8 +8,11 @@ RobotStrategyDefenderLeft::RobotStrategyDefenderLeft() = default;
 
 vss::WheelsCommand RobotStrategyDefenderLeft::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
-    if (robot.distanceFrom(state.ball.position) < (9)) {
+
+    if (robot.distanceFrom(state.ball.position) < (9) and robot.position.y > state.ball.position.y) {
         c = movimentation.turnLeft(80, 80);
+    } else if (robot.distanceFrom(state.ball.position) < (9) and robot.position.y < state.ball.position.y) {
+        c = movimentation.turnRight(80, 80);
     }
     return c;
 }

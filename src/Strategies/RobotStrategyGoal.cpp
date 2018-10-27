@@ -34,9 +34,9 @@ vss::Pose RobotStrategyGoal::defineTarget() {
         ballProjection.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 8) &&
         ballProjection.x > vss::MAX_COORDINATE_X - 30) {
 
-        //Testar essas duas linhas comentadas ou ativadas e ver qual leva menos gols
-        goalTarget.x = ballProjection.x;
-        goalTarget.y = ballProjection.y;
+        //Testar esse target como sendo ballProjection ou ballPosition
+        goalTarget.x = ballPosition.x;
+        goalTarget.y = ballPosition.y;
 
         if (ballPosition.x + 2 > robot.position.x) {
             goalTarget.x = ballPosition.x;
