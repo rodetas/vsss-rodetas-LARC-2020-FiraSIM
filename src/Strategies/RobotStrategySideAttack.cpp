@@ -34,31 +34,31 @@ vss::Pose RobotStrategySideAttack::defineTarget() {
         }
     }
 
-    if((target.x == state.ball.position.x && target.y == state.ball.position.y) ||
-    (target.x == state.ball.position.x && target.y == state.ball.projection.y)){
+    if ((target.x == state.ball.position.x && target.y == state.ball.position.y) ||
+        (target.x == state.ball.position.x && target.y == state.ball.projection.y)) {
 
-        if(target.x < vss::MAX_COORDINATE_X * 0.2){
-            if(target.y < vss::MAX_COORDINATE_Y * 0.5){
+        if (target.x < vss::MAX_COORDINATE_X * 0.2) {
+            if (target.y < vss::MAX_COORDINATE_Y * 0.5) {
                 target.angle = M_PI_2;
-            }else{
-                target.angle = (3*M_PI)/2;
+            } else {
+                target.angle = (3 * M_PI) / 2;
             }
-        }else if(target.x > vss::MAX_COORDINATE_X * 0.8){
-            if(target.y < vss::MAX_COORDINATE_Y * 0.5){
-                target.angle = (3*M_PI)/2;
-            }else{
+        } else if (target.x > vss::MAX_COORDINATE_X * 0.8) {
+            if (target.y < vss::MAX_COORDINATE_Y * 0.5) {
+                target.angle = (3 * M_PI) / 2;
+            } else {
                 target.angle = M_PI_2;
             }
-        }else if (target.y < vss::MAX_COORDINATE_Y * 0.5) {
-            target.angle = (3 * M_PI)/2 + M_PI/4;
-        }else if (target.y > vss::MAX_COORDINATE_Y * 0.5) {
-            target.angle = M_PI/2 - M_PI/4;;
+        } else if (target.y < vss::MAX_COORDINATE_Y * 0.5) {
+            target.angle = (3 * M_PI) / 2 + M_PI / 4;
+        } else if (target.y > vss::MAX_COORDINATE_Y * 0.5) {
+            target.angle = M_PI / 2 - M_PI / 4;;
         }
 
-        if((target.x < vss::MAX_COORDINATE_X * 0.88)){
-            if(target.y < vss::MAX_COORDINATE_Y * 0.1){
+        if ((target.x < vss::MAX_COORDINATE_X * 0.88)) {
+            if (target.y < vss::MAX_COORDINATE_Y * 0.1) {
                 target.angle = 0;
-            }else if(target.y > vss::MAX_COORDINATE_Y * 0.88){
+            } else if (target.y > vss::MAX_COORDINATE_Y * 0.88) {
                 target.angle = 0;
             }
         }
