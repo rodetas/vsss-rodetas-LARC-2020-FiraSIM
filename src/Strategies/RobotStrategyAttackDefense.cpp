@@ -4,29 +4,60 @@
 #include <Strategies/RobotStrategyAttackDefense.h>
 #include <iostream>
 
-RobotStrategyAttackDefense::RobotStrategyAttackDefense() = default;
+RobotStrategyAttackDefense::RobotStrategyAttackDefense(){
+    stopAttackerDefense = false;
+}
 
 vss::WheelsCommand RobotStrategyAttackDefense::specificStrategy(vss::WheelsCommand c) {
     c = cornerStrategy(c);
-    c = stopStrategy(c);
+
+    if (stopAttackerDefense) {
+        c = stopStrategy(c);
+    }
+
     return c;
 }
 
 vss::Pose RobotStrategyAttackDefense::defineTarget() {
     vss::Pose target;
-    target.x = vss::MAX_COORDINATE_X * 0.5;
-    target.y = vss::MAX_COORDINATE_Y * 0.5;
-    if (state.ball.projection.x > vss::MAX_COORDINATE_X * 0.7) {
+    vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
+
+    //Posiciona o atacante defensor no meio do campo para ele nao interferir no ataque
+    if (state.ball.projection.x < vss::MAX_COORDINATE_X * 0.6) {
         if (state.ball.projection.y > vss::MAX_COORDINATE_Y / 2) {
             target = vss::Pose(vss::MAX_COORDINATE_X * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
-
+            stopAttackerDefense = true;
         } else {
             target = vss::Pose(vss::MAX_COORDINATE_X * 0.55, vss::MAX_COORDINATE_Y * 0.2, 0);
+            stopAttackerDefense = true;
         }
+    } else {
+        stopAttackerDefense = false;
+
+        target.x = state.ball.position.x;
+        target.y = state.ball.position.y;
+
+        vss::Point targetPoint(target.x, target.y);
+
+        target.angle = Math::arrivalAngle(targetPoint, centerGoal);
+
+        //Angulos para quando robô estiver na parede
+        if (target.y < vss::MAX_COORDINATE_Y * 0.1) {
+            target.angle = 0;
+        }
+        if (target.y > vss::MAX_COORDINATE_Y * 0.88) {
+            target.angle = 0;
+        }
+        if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y < vss::MAX_COORDINATE_Y * 0.37)) {
+            target.angle = (3 * M_PI) / 2;
+        }
+        if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y > vss::MAX_COORDINATE_Y * 0.66)) {
+            target.angle = M_PI_2;
+        }
+
     }
 
     return target;
-
 }
 
 
@@ -40,6 +71,50 @@ float RobotStrategyAttackDefense::applyUnivectorField(vss::Pose target) {
             }
         }
     }
+
+    //Obstáculos de área do gol
+    std::pair<vss::Point, vss::Point> obstacle;
+
+    obstacle.second.x = 0;
+    obstacle.second.y = 0;
+
+    if (!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
+          robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 5) &&
+          robot.position.x > vss::MAX_COORDINATE_X - 25)) {
+
+        obstacle.first.x = 152;
+
+        obstacle.first.y = 38;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 45;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 50;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 55;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 60;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 65;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 70;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 75;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 80;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 85;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 93;
+        obstacles.push_back(obstacle);
+
+        obstacle.first.x = 160;
+
+        obstacle.first.y = 96;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 33;
+        obstacles.push_back(obstacle);
+    }
+
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
