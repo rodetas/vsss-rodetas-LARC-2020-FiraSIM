@@ -26,8 +26,9 @@ vss::Pose RobotStrategyDefenderRight::defineTarget() {
 
     // Se a bola passar pela linha de defesa, posiciona robo no canto do gol em x
     if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.75) {
-//        target.x = vss::MAX_COORDINATE_X - 15;
-//        target.y = vss::MAX_COORDINATE_Y - 22;
+        target.x = vss::MAX_COORDINATE_X - 15;
+        target.y = vss::MAX_COORDINATE_Y - 22;
+
         if(state.ball.position.y > vss::MAX_COORDINATE_Y/2) {
             target.x = state.ball.position.x + 5;
             target.y = state.ball.position.y;
@@ -48,14 +49,24 @@ vss::Pose RobotStrategyDefenderRight::defineTarget() {
         // posiciona defensor na frente da area
         target.x = vss::MAX_COORDINATE_X * 0.75;
 
-        // se a bola estiver na parede, evita que o defensor fique preso na parede
         if (ballProjection.y >= (vss::MAX_COORDINATE_Y - 5)) {
+            // se a bola estiver na parede, evita que o defensor fique preso na parede
             target.y = ballProjection.y - 4;
+
         } else if (ballProjection.y > vss::MAX_COORDINATE_Y / 2) {
-            // posiciona defensor na direção da projeção da bola no canto direito ou posiciona no meio do campo em y
+            // posiciona defensor na direção da projeção da bola no canto direito
             target.y = ballProjection.y;
+
         } else {
+            // posiciona no meio do campo em y
             target.y = vss::MAX_COORDINATE_Y / 2 + 7;
+        }
+
+        if(Math::distancePoint(state.ball.position, robot.position) < 20
+        and robot.position.x > vss::MAX_COORDINATE_X * 0.60
+        and robot.position.x > state.ball.position.x){
+            target.x = state.ball.position.x;
+            target.y = state.ball.position.y;
         }
     }
 

@@ -113,6 +113,12 @@ void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots
 					robot.setStrategy(new RobotStrategyDefenderRight());
 				}
                 break;
+            case MindSet::AttackDefenseStrategy:
+                if (robot.getMindSet() != MindSet::AttackDefenseStrategy) {
+                    robot.setMindSet(MindSet::AttackDefenseStrategy);
+                    robot.setStrategy(new RobotStrategyAttackDefense());
+                }
+                break;
 		    case MindSet::None:
 		        if (robot.getMindSet() != MindSet::None){
 		            robot.setMindSet(MindSet::None);
