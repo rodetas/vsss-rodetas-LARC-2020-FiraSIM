@@ -5,8 +5,8 @@
 #include <Movements/UnivectorField.h>
 
 UnivectorField::UnivectorField() {
-    n = 2;
-    orientationDistance = 10;
+    n = 1;
+    orientationDistance = 5;
     k0 = 0.12;
     dmin = 4.5;
     delta = 4.5;

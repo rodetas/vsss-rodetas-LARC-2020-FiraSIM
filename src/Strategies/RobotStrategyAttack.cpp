@@ -10,7 +10,7 @@ RobotStrategyAttack::RobotStrategyAttack() {
 
 vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
     c = kickStrategy(c);
-    c = cornerStrategy(c);
+//    c = cornerStrategy(c);
 
     if (stopAttacker) {
         c = stopStrategy(c);
