@@ -16,6 +16,7 @@
 #include <Domain/RodetasState.h>
 #include <Domain/Path.h>
 #include <Domain/Pose.h>
+#include <Domain/Constants.h>
 #include <vector>
 
 class UnivectorField {
@@ -32,6 +33,9 @@ public:
 
     //Draws the path to the target with obstacles
     vss::Path drawPath(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles);
+
+    //Is true if the path contains a point off the field
+    bool offTheField;
 
 private:
 

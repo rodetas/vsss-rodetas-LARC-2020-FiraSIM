@@ -78,7 +78,15 @@ float RobotStrategySideAttack::applyUnivectorField(vss::Pose target) {
             }
         }
     }
+
     UnivectorField univectorField;
+    path = univectorField.drawPath(robot, target, obstacles);
+
+    if(univectorField.offTheField){
+        univectorField.setUnivectorWithoutCurves();
+        obstacles.clear();
+    }
+
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
 }
