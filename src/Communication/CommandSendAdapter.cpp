@@ -26,12 +26,12 @@ void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool 
         interfaceSend.sendCommand(vssCommand);
 
     } else if(isPlaying) {
-        transmission.send(2, commands[0]);
+        transmission.send(0, commands[0]);
 //        transmission.send(1, commands[1]);
 //        transmission.send(2, commands[2]);
 
     } else if(isTestingTransmission){
-        vss::WheelsCommand turnRightCommand(40,-40);
+        vss::WheelsCommand turnRightCommand(70,-70);
         for(int i=0 ; i<3 ; i++){
             transmission.send(i, turnRightCommand);
         }
