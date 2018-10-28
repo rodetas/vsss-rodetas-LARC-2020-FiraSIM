@@ -20,7 +20,7 @@ void Kernel::loop() {
     DebugSendAdapter debugInterface(Config::teamColor, Config::debug);
     CommandSendAdapter sendInterface(Config::teamColor, Config::realEnvironment);
 
-    vector<RodetasRobot> robots;
+    vector<RodetasRobot> robots;gi
 
     robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategyAttack()));
     robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategyDefender()));

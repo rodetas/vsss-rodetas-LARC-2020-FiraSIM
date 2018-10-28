@@ -75,21 +75,23 @@ vss::Pose RobotStrategyAttack::defineTarget() {
 float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-
-    //Se o target for a bola ou sua projeção e o robo estiver longe, desvia de todos
-    if ((target.x == state.ball.position.x && target.y == state.ball.position.y) ||
-        (target.x == state.ball.projection.x && target.y == state.ball.position.y)) {
-        if (robot.distanceFrom(target) > 15) {
-            //Obstáculos roboôs
-            for (auto &r: state.robots) {
-                if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-                    obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
-                }
+    if (robot.distanceFrom(target) > 15) {
+        //Obstáculos roboôs
+        for (auto &r: state.robots) {
+            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
             }
         }
     }
 
     UnivectorField univectorField;
+    path = univectorField.drawPath(robot, target, obstacles);
+
+    if(univectorField.offTheField){
+        univectorField.setUnivectorWithoutCurves();
+        obstacles.clear();
+    }
+
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
 }

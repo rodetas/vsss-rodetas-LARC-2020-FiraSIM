@@ -10,6 +10,8 @@ UnivectorField::UnivectorField() {
     k0 = 0.12;
     dmin = 4.5;
     delta = 4.5;
+
+    offTheField = false;
 }
 
 void UnivectorField::setUnivectorWithoutCurves() {
@@ -73,6 +75,8 @@ UnivectorField::drawPath(RobotState robot, vss::Pose target, std::vector<std::pa
     vss::Point point = robot.position;
     RobotState r = robot;
 
+    offTheField = false;
+
     float fi = defineFi(robot, target, obstacles);
     for (int i = 0; i < 250; i++) {
         point.x = point.x + cos(fi);
@@ -82,6 +86,9 @@ UnivectorField::drawPath(RobotState robot, vss::Pose target, std::vector<std::pa
         fi = defineFi(r, target, obstacles);
         if (Math::distancePoint(point, target) < 2)
             i = 250;
+
+        if(point.x < vss::MIN_COORDINATE_X || point.x > vss::MAX_COORDINATE_X || point.y < vss::MIN_COORDINATE_Y || point.y > vss::MAX_COORDINATE_Y)
+            offTheField = true;
     }
 
     vss::Path path;
