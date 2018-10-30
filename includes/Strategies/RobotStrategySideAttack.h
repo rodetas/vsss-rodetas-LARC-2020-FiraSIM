@@ -15,6 +15,9 @@ public:
     vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
     vss::Pose defineTarget() override;
     float applyUnivectorField(vss::Pose) override;
+
+private:
+    bool stopSideAttacker;
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGYSIDEATTACK_H

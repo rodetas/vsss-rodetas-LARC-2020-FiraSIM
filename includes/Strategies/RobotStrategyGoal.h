@@ -19,6 +19,10 @@ public:
     float applyUnivectorField(vss::Pose) override;
     vss::WheelsCommand stopStrategy(vss::WheelsCommand) override;
 
+private:
+    bool stopGoalKeeper;
+
+
 };
 
 #endif //SDK_RODETAS_ROBOSTRATEGYGOAL_H
