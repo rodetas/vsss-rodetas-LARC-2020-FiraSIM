@@ -51,6 +51,8 @@ std::string toString(MindSet m){
             return "ForwardAttackerStrategy";
         case MindSet::AttackDefenseStrategy:
             return "AttackDefenseStrategy";
+        case MindSet::SingleAttackerStrategy:
+            return "SingleAttackerStrategy";
         default:
             return "NotDefined";
     }
