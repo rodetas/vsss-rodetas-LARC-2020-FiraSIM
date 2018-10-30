@@ -5,6 +5,10 @@
 #include <Movements/UnivectorField.h>
 
 UnivectorField::UnivectorField() {
+    //Simulado:
+    //n = 3;
+    //orientationDistance = 8;
+    //Real:
     n = 1;
     orientationDistance = 5;
     k0 = 0.12;
