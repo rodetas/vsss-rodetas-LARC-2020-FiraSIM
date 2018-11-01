@@ -10,7 +10,9 @@ vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c)
     c = stopStrategy(c);
 
     // Se o robo estiver no canto e perto da bola, gira em torno do proprio eixo de acordo com o lado do campo
-    if(robot.distanceFrom(state.ball.position) < 8 and strategyBase.isBoard()) {
+    std::cout << robot.distanceFrom(state.ball.position) << std::endl;
+    
+    if(robot.distanceFrom(state.ball.position) < 8 and abs(robot.vectorSpeed.y) > abs(robot.vectorSpeed.x*2)) {
         if (robot.position.y > state.ball.position.y) {
             c = movimentation.turnLeft(80, 80);
         } else {
@@ -60,7 +62,7 @@ vss::Pose RobotStrategyDefender::defineTarget() {
         }
     }
     
-    std::cout << state.ball.vectorSpeed << std::endl;
+    std::cout << robot.vectorSpeed << std::endl;
 
     // ataca a bola caso ela chegue perto
     if (robot.distanceFrom(state.ball.position) < 20 // bola esta proxima do robo
