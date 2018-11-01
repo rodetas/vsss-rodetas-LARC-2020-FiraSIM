@@ -165,6 +165,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
 //            strategiesById[defenderRobot.getId()] = MindSet::DefenderStrategyRight;
 //        }
 
+        // troca atacante e defensor quando houver situacao de cruzamento
         if (state.ball.position.x < vss::MAX_COORDINATE_X / 2 and // bola esta no ataque
         (state.ball.projection.y > 50 && state.ball.projection.y < 80 && state.ball.position.x < defenderRobot.getSelfState().position.x) and // bola esta passando de frente pro gol
         (attackerRobot.getSelfState().position.y > 90 || attackerRobot.getSelfState().position.y < 35) and // robo atacante nao esta de frente pro gol

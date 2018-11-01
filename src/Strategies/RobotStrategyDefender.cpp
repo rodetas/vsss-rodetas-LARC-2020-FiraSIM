@@ -10,7 +10,7 @@ vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c)
     c = stopStrategy(c);
 
     // Se o robo estiver no canto e perto da bola, gira em torno do proprio eixo de acordo com o lado do campo
-    if(robot.distanceFrom(state.ball.position) < 9 and strategyBase.isBoard()) {
+    if(robot.distanceFrom(state.ball.position) < 8 and strategyBase.isBoard()) {
         if (robot.position.y > state.ball.position.y) {
             c = movimentation.turnLeft(80, 80);
         } else {
@@ -26,9 +26,10 @@ vss::Pose RobotStrategyDefender::defineTarget() {
     vss::Pose target;
     vss::Point ballProjection = state.ball.projection;
 
-    // se passou da linha de defesa
-    if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.75 and state.ball.position.x > robot.position.x) {
+    // se a bola passou da linha de defesa e do zagueiro
+    if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.75 and state.ball.position.x-2 > robot.position.x) {
 
+        // coloca o robo pra tras da bola
         target.x = state.ball.projection.x + 10;
         target.y = state.ball.position.y;
 
@@ -47,7 +48,7 @@ vss::Pose RobotStrategyDefender::defineTarget() {
 //        }
 
     } else {
-        // se a bola nao passou da linha de defesa
+        // se a bola nao passou da linha de defesa e o zagueiro esta atras dela
         target.x = vss::MAX_COORDINATE_X * 0.75;
         target.y = ballProjection.y;
 
