@@ -26,7 +26,7 @@ void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool 
         interfaceSend.sendCommand(vssCommand);
 
     } else if(isPlaying) {
-        transmission.send(2, commands[0]);
+        transmission.send(0, commands[0]);
 //        transmission.send(1, commands[1]);
 //        transmission.send(2, commands[2]);
 
