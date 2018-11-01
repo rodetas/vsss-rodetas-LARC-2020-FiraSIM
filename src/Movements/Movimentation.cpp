@@ -10,7 +10,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 
 	vss::WheelsCommand command;
 
-	double vMax = 1.4;
+	double vMax = 0.6;
 /*
 	// @TODO verificar essas velocidades maximas
 	if(speed == RobotSpeed::SLOW) vMax = 0.2;
@@ -33,15 +33,23 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
     } else if(cos(fi - Math::toRadian(robot.angle)) < -0.4){
         lastSide = 1;
     }
-
+ 
     double wr = v/r + w*(l/r) * lastSide;
     double wl = v/r - w*(l/r) * lastSide;
 
-	if (robot.linearSpeed < 10) {
-		wr = wr * 0.4;
-		wl = wl * 0.4;
-	}
+	// conversão rad/s para cm/s
+	wr =  wr * r * 100;
+	wl =  wl * r * 100;
+/*
+	std::cout << wr << "\t" << wl << "\t" << linearSpeed << robot.linearSpeed << std::endl;
 
+	double linearSpeed = (wr + wl) / 2;
+
+	double k = 1 - (0.5 * abs(linearSpeed - robot.linearSpeed) / 60);
+
+	wr *= k;
+	wl *= k;
+*/
     //	std::cout<<"----"<<std::endl;
     //	std::cout<<"Fi: "<<fi<<std::endl;
     //	std::cout<<"Theta: "<<robotAngle<<std::endl;
@@ -60,7 +68,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 vss::WheelsCommand Movimentation::checkMaximumSpeedWheel(const vss::WheelsCommand& speed){
 	vss::WheelsCommand command(speed);
 
-	int maximumSpeed = 80;
+	int maximumSpeed = 60;
 
 	if(speed.leftVel  > maximumSpeed) command.leftVel  = maximumSpeed;
 	if(speed.rightVel > maximumSpeed) command.rightVel = maximumSpeed;
