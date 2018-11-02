@@ -9,10 +9,8 @@ RobotStrategyDefender::RobotStrategyDefender() = default;
 vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
 
-    // Se o robo estiver no canto e perto da bola, gira em torno do proprio eixo de acordo com o lado do campo
-    std::cout << robot.distanceFrom(state.ball.position) << std::endl;
-    
-    if(robot.distanceFrom(state.ball.position) < 8 and abs(robot.vectorSpeed.y) > abs(robot.vectorSpeed.x*2)) {
+    // Se o robo estiver perto da bola e o robo estiver andando na direcao do eixo y, gira em torno do proprio eixo de acordo com o lado do campo
+    if(robot.distanceFrom(state.ball.position) < 7 and abs(robot.vectorSpeed.y) > abs(robot.vectorSpeed.x*2)) {
         if (robot.position.y > state.ball.position.y) {
             c = movimentation.turnLeft(80, 80);
         } else {
@@ -29,7 +27,7 @@ vss::Pose RobotStrategyDefender::defineTarget() {
     vss::Point ballProjection = state.ball.projection;
 
     // se a bola passou da linha de defesa e do zagueiro
-    if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.75 and state.ball.position.x-2 > robot.position.x) {
+    if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.70 and state.ball.position.x-5 > robot.position.x) {
 
         // coloca o robo pra tras da bola
         target.x = state.ball.projection.x + 10;
@@ -50,8 +48,8 @@ vss::Pose RobotStrategyDefender::defineTarget() {
 //        }
 
     } else {
-        // se a bola nao passou da linha de defesa e o zagueiro esta atras dela
-        target.x = vss::MAX_COORDINATE_X * 0.75;
+        // se a bola nao passou da linha de defesa e o zagueiro esta atras dela, acompanha a bola no eixo y
+        target.x = vss::MAX_COORDINATE_X * 0.70;
         target.y = ballProjection.y;
 
         // se a bola estiver na parede, evita que o defensor fique preso na parede
@@ -62,12 +60,9 @@ vss::Pose RobotStrategyDefender::defineTarget() {
         }
     }
     
-    std::cout << robot.vectorSpeed << std::endl;
-
     // ataca a bola caso ela chegue perto
     if (robot.distanceFrom(state.ball.position) < 20 // bola esta proxima do robo
-        and robot.position.x > vss::MAX_COORDINATE_X * 0.60 // robo so pode atacar ate 60% do campo
-        and robot.position.x > state.ball.position.x+5){ // bola esta na frente dele
+        and robot.position.x > vss::MAX_COORDINATE_X * 0.60) {// robo so pode atacar ate 60% do campo
 
         if(state.ball.vectorSpeed.x <= 0) {
             // bola esta indo para o ataque
@@ -79,6 +74,11 @@ vss::Pose RobotStrategyDefender::defineTarget() {
             target.x = state.ball.position.x;
             target.y = state.ball.position.y;
             target.angle = Math::arrivalAngle(target, vss::Point(0, vss::MAX_COORDINATE_Y / 2));
+
+            if(abs(state.ball.vectorSpeed.x) > abs(state.ball.vectorSpeed.y * 1.2)){
+                target.x = state.ball.projection.x;
+                target.y = state.ball.projection.y;
+            }
         }
     }
 
