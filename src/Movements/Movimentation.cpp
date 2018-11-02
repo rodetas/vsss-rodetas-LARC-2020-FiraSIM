@@ -40,16 +40,16 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 	// conversão rad/s para cm/s
 	wr =  wr * r * 100;
 	wl =  wl * r * 100;
-/*
-	std::cout << wr << "\t" << wl << "\t" << linearSpeed << robot.linearSpeed << std::endl;
 
-	double linearSpeed = (wr + wl) / 2;
-
-	double k = 1 - (0.5 * abs(linearSpeed - robot.linearSpeed) / 60);
+    double linearSpeed = std::abs((wr + wl) / 2);
+	double k = 1 - (0.8 * std::abs(linearSpeed - robot.linearSpeed) / 60);
+	//std::cout<<"k:"<<k<<std::endl;
 
 	wr *= k;
 	wl *= k;
-*/
+
+    //std::cout <<"WR: "<< wr << " WL:" << wl << " Vel Control: " << linearSpeed << " Vel med: "<< robot.linearSpeed << std::endl;
+
     //	std::cout<<"----"<<std::endl;
     //	std::cout<<"Fi: "<<fi<<std::endl;
     //	std::cout<<"Theta: "<<robotAngle<<std::endl;

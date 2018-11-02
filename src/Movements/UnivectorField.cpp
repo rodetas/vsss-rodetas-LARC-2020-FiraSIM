@@ -5,7 +5,7 @@
 #include <Movements/UnivectorField.h>
 
 UnivectorField::UnivectorField() {
-    n = 1;
+    n = 3;
     orientationDistance = 5;
     k0 = 0.12;
     dmin = 4.5;
