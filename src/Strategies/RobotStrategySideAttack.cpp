@@ -4,11 +4,17 @@
 #include <Strategies/RobotStrategySideAttack.h>
 #include <iostream>
 
-RobotStrategySideAttack::RobotStrategySideAttack() = default;
+RobotStrategySideAttack::RobotStrategySideAttack(){
+    stopSideAttacker = false;
+}
 
 vss::WheelsCommand RobotStrategySideAttack::specificStrategy(vss::WheelsCommand c) {
     c = cornerStrategy(c);
-    c = stopStrategy(c);
+
+    if (stopSideAttacker) {
+        c = stopStrategy(c);
+    }
+
     return c;
 }
 
@@ -18,6 +24,8 @@ vss::Pose RobotStrategySideAttack::defineTarget() {
     target.x = state.ball.position.x;
     target.y = state.ball.position.y;
 
+    stopSideAttacker = false;
+
     //std::cout<<"posição x: "<<target.x<<" posição y: "<<target.y<<"\n";
     if (state.ball.position.x < vss::MAX_COORDINATE_X * 0.25) {
         if (state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
@@ -25,12 +33,16 @@ vss::Pose RobotStrategySideAttack::defineTarget() {
             target.x = vss::MAX_COORDINATE_X * 0.2;
             target.y = vss::MAX_COORDINATE_Y * 0.2;
             target.angle = 0;
+
+            stopSideAttacker = true;
         } else if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 &&
                    state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
                    state.ball.projection.y < state.ball.position.y) {
             target.x = vss::MAX_COORDINATE_X * 0.2;
             target.y = vss::MAX_COORDINATE_Y * 0.8;
             target.angle = 0;
+
+            stopSideAttacker = true;
         }
     }
 
