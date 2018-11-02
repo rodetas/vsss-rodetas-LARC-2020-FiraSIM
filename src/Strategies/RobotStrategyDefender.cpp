@@ -12,9 +12,9 @@ vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c)
     // Se o robo estiver no canto e perto da bola, gira em torno do proprio eixo de acordo com o lado do campo
     if(robot.distanceFrom(state.ball.position) < 9 and strategyBase.isBoard()) {
         if (robot.position.y > state.ball.position.y) {
-            c = movimentation.turnLeft(80, 80);
+            c = movimentation.turnLeft(60, 60);
         } else {
-            c = movimentation.turnRight(80, 80);
+            c = movimentation.turnRight(60, 60);
         }
     }
 

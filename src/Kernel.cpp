@@ -47,16 +47,12 @@ void Kernel::loop() {
             robot.updateState(state);
             robot.calcAction();
 
-            std::cout << toString(robot.getMindSet()) << std::endl;
-
             commands[i] = robot.getCommand();
 
             //debug.finalPoses[i] = robot.getFinalPose();
             debug.stepPoints[i] = robot.getStepPoint();
             debug.paths[i] = robot.getPath();
         }
-
-        std::cout << std::endl;
 
         coach.manage(robots, state, Config::playersSwap, isFreeBall, positionStatus);
 

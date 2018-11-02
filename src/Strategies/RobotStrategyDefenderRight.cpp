@@ -11,9 +11,9 @@ vss::WheelsCommand RobotStrategyDefenderRight::specificStrategy(vss::WheelsComma
 
     //Se o robo estiver perto da bola, gira em torno do proprio eixo
     if (robot.distanceFrom(state.ball.position) < (9) and robot.position.y < state.ball.position.y) {
-        c = movimentation.turnRight(80, 80);
+        c = movimentation.turnRight(60, 60);
     } else if (robot.distanceFrom(state.ball.position) < (9) and robot.position.y > state.ball.position.y) {
-        c = movimentation.turnLeft(80, 80);
+        c = movimentation.turnLeft(60, 60);
     }
 
     return c;
