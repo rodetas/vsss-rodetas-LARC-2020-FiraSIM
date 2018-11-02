@@ -173,7 +173,6 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
-            std::cout << "first" << std::endl;
         }
 
         // define troca quando a bola esta distante para tras do atacante
@@ -186,14 +185,12 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
-            std::cout << "second" << std::endl;
         }
 
         if (attackerRobot.getRobotStrategyBase().isBlocked()) {
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
-            std::cout << "third" << std::endl;
         }
 
         if(defenderRobot.getSelfState().position.x < vss::MAX_COORDINATE_X*0.65 and
@@ -202,7 +199,6 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
-            std::cout << "fourth" << std::endl;
         }
     }
 
