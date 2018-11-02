@@ -6,6 +6,7 @@
 #include <Domain/WheelsCommand.h>
 #include <Domain/Pose.h>
 #include <Domain/RobotSpeed.h>
+#include <Config.h>
 #include <functional>
 
 class Movimentation {

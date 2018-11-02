@@ -41,7 +41,15 @@ public:
     static float toDomain2Pi(float fi);
 
     //! Calculates the arrival angle
-    static float arrivalAngle(vss::Point, vss::Point);
+    template <typename T, typename U>
+    static float arrivalAngle(T target, U orientation){
+        if(target.y <= orientation.y){
+            return atan2(orientation.y - target.y, target.x - orientation.x);
+        }
+        else{
+            return - atan2(target.y - orientation.y, target.x - orientation.x);
+        }
+    }
 
 };
 

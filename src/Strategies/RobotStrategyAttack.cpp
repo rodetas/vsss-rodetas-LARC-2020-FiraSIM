@@ -10,7 +10,7 @@ RobotStrategyAttack::RobotStrategyAttack() {
 
 vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
     c = kickStrategy(c);
-//    c = cornerStrategy(c);
+    c = cornerStrategy(c);
 
     if (stopAttacker) {
         c = stopStrategy(c);
@@ -26,9 +26,9 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
             robot.position.y < halfGoal1) {
 
             if (robot.position.y < state.ball.position.y) {
-                c = movimentation.turnRight(80, 80);
+                c = movimentation.turnRight(60, 60);
             } else {
-                c = movimentation.turnLeft(80, 80);
+                c = movimentation.turnLeft(60, 60);
             }
         }
     }
@@ -42,7 +42,7 @@ vss::Pose RobotStrategyAttack::defineTarget() {
 
     //Posiciona o atacante no meio do campo para ele nao interferir na defesa
     if (state.ball.projection.x > vss::MAX_COORDINATE_X * 0.6) {
-        if (state.ball.projection.y > vss::MAX_COORDINATE_Y / 2) {
+        if (state.ball.projection.y < vss::MAX_COORDINATE_Y / 2) {
             target = vss::Pose(vss::MAX_COORDINATE_X * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
             stopAttacker = true;
         } else {
@@ -55,9 +55,7 @@ vss::Pose RobotStrategyAttack::defineTarget() {
         target.x = state.ball.position.x;
         target.y = state.ball.position.y;
 
-        vss::Point targetPoint(target.x, target.y);
-
-        target.angle = Math::arrivalAngle(targetPoint, centerGoal);
+        target.angle = Math::arrivalAngle(target, centerGoal);
 
         //Angulos para quando robô estiver na parede
         if (target.y < vss::MAX_COORDINATE_Y * 0.1) {

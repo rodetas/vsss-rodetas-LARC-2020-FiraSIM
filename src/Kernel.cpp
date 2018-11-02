@@ -47,7 +47,6 @@ void Kernel::loop() {
             robot.updateState(state);
             robot.calcAction();
 
-            std::cout<<toString(robot.getMindSet())<<std::endl;
             commands[i] = robot.getCommand();
 
             //debug.finalPoses[i] = robot.getFinalPose();

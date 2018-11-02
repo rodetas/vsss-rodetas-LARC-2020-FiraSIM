@@ -52,12 +52,3 @@ float Math::toDomain2Pi(float angle) {
         angle += 2 * M_PI;
     return angle;
 }
-
-float Math::arrivalAngle(vss::Point target, vss::Point orientation){
-    if(target.y <= orientation.y){
-        return atan2(orientation.y - target.y, target.x - orientation.x);
-    }
-    else{
-        return - atan2(target.y - orientation.y, target.x - orientation.x);
-    }
-}

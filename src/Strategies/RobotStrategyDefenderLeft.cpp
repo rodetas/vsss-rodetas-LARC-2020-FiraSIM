@@ -8,8 +8,13 @@ RobotStrategyDefenderLeft::RobotStrategyDefenderLeft() = default;
 
 vss::WheelsCommand RobotStrategyDefenderLeft::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
-    if (robot.distanceFrom(state.ball.position) < (9)) {
-        c = movimentation.turnLeft(80, 80);
+
+    if(robot.distanceFrom(state.ball.position) < 9) {
+        if (robot.position.y > state.ball.position.y) {
+            c = movimentation.turnLeft(60, 60);
+        } else {
+            c = movimentation.turnRight(60, 60);
+        }
     }
     return c;
 }
@@ -23,6 +28,7 @@ vss::Pose RobotStrategyDefenderLeft::defineTarget() {
     if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.75) {
         target.x = vss::MAX_COORDINATE_X - 15;
         target.y = vss::MIN_COORDINATE_Y + 22;
+
     } else {
         // Linha de defesa lado esquerdo
         // posiciona defensor na frente da aréa
@@ -30,12 +36,20 @@ vss::Pose RobotStrategyDefenderLeft::defineTarget() {
         // se a bola estiver na parede, evita que o defensor fique preso na parede
         if (ballProjection.y <= 5) {
             target.y = ballProjection.y + 4;
-        }// posiciona defensor na direção da projeção da bola no canto esquerdo ou posiciona no meio do campo em y
-        else if (ballProjection.y < vss::MAX_COORDINATE_Y / 2) {
+        } else if (ballProjection.y < vss::MAX_COORDINATE_Y / 2) {
+            // posiciona defensor na direção da projeção da bola no canto esquerdo ou posiciona no meio do campo em y
             target.y = ballProjection.y;
         } else {
             target.y = vss::MAX_COORDINATE_Y / 2 - 7;
         }
+
+        if(Math::distancePoint(state.ball.position, robot.position) < 20
+           and robot.position.x > vss::MAX_COORDINATE_X * 0.60
+           and robot.position.x > state.ball.position.x){
+            target.x = state.ball.position.x;
+            target.y = state.ball.position.y;
+        }
+
     }
 
     return target;

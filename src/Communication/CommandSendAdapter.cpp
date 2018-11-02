@@ -31,7 +31,7 @@ void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool 
 //        transmission.send(2, commands[2]);
 
     } else if(isTestingTransmission){
-        vss::WheelsCommand turnRightCommand(70,-70);
+        vss::WheelsCommand turnRightCommand(60,-60);
         for(int i=0 ; i<3 ; i++){
             transmission.send(i, turnRightCommand);
         }

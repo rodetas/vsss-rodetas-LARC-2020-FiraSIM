@@ -40,7 +40,7 @@ private:
 
     std::vector<MindSet> strategiesById;
 
-    TimeHelper timeHelper;
+    TimeHelper timeLastChange;
     TimeHelper timeAfterPositioning;
 
     PositionStatus lastPosStatus;
