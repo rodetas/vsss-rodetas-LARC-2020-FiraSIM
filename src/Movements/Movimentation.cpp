@@ -46,7 +46,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 	wl =  wl * r * 100;
 
     double linearSpeed = std::abs((wr + wl) / 2);
-	double k = 1 - (0.8 * std::abs(linearSpeed - robot.linearSpeed) / 60);
+	double k = 1 - (0.7 * std::abs(linearSpeed - robot.linearSpeed) / 60);
 	//std::cout<<"k:"<<k<<std::endl;
 
 	wr *= k;

@@ -23,8 +23,8 @@ void Kernel::loop() {
     vector<RodetasRobot> robots;
 
     robots.emplace_back(RodetasRobot(0, MindSet::DefenderStrategy, new RobotStrategyDefender()));
-    robots.emplace_back(RodetasRobot(1, MindSet::AttackerStrategy, new RobotStrategyAttack()));
-    robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
+    robots.emplace_back(RodetasRobot(1, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
+    robots.emplace_back(RodetasRobot(2, MindSet::AttackerStrategy, new RobotStrategyAttack()));
 
     vector<vss::WheelsCommand> commands(3);
 
@@ -56,7 +56,7 @@ void Kernel::loop() {
 
         coach.manage(robots, state, Config::playersSwap, isFreeBall, positionStatus);
 
-        sendInterface.sendCommands(commands, isPlaying, isTestingTransmission);
+        sendInterface.sendCommands(robots, isPlaying, isTestingTransmission);
         debugInterface.sendDebug(debug);
     }
 
