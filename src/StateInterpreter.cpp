@@ -13,7 +13,7 @@ std::vector<MindSet> StateInterpreter::manageStrategyOrPositioning(std::vector<R
 
     if(posStatus == PositionStatus::None){
         // garante que nao ocorrerá troca nos primeiros 2 segundos apos um posicionamento
-        if(timeAfterPositioning.getElapsedTime() < 2000){
+        if(timeAfterPositioning.getElapsedTime() < 2000 and enabledSwap){
             defineStandartStrategies(robots, state);
         } else if(enabledSwap) {
             defineStrategy(robots, state, freeBall);
@@ -213,6 +213,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
 //            strategiesById[defenderRobot.getId()] = MindSet::DefenderStrategyRight;
 //        }
 
+        // troca atacante e defensor quando houver situacao de cruzamento
         if (state.ball.position.x < vss::MAX_COORDINATE_X / 2 and // bola esta no ataque
         (state.ball.projection.y > 50 && state.ball.projection.y < 80 && state.ball.position.x < defenderRobot.getSelfState().position.x) and // bola esta passando de frente pro gol
         (attackerRobot.getSelfState().position.y > 90 || attackerRobot.getSelfState().position.y < 35) and // robo atacante nao esta de frente pro gol
@@ -220,7 +221,6 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
-            std::cout << "first" << std::endl;
         }
 
         // define troca quando a bola esta distante para tras do atacante
@@ -233,14 +233,12 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
-            std::cout << "second" << std::endl;
         }
 
         if (attackerRobot.getRobotStrategyBase().isBlocked()) {
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
-            std::cout << "third" << std::endl;
         }
 
         if(defenderRobot.getSelfState().position.x < vss::MAX_COORDINATE_X*0.65 and
@@ -249,7 +247,6 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
-            std::cout << "fourth" << std::endl;
         }
     }
 
