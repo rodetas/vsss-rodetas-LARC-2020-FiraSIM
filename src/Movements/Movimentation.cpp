@@ -9,21 +9,18 @@ Movimentation::Movimentation() = default;
 vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotSpeed speed){
 
 	vss::WheelsCommand command;
-	//Simulado:
-	//double vMax = 1;
 
 	double vMax = 0.6;
-/*
-	// @TODO verificar essas velocidades maximas
-	if(speed == RobotSpeed::SLOW) vMax = 0.2;
-	else if(speed == RobotSpeed::FAST) vMax = 1.2;
-	else if(speed == RobotSpeed::SUPERFAST) vMax = 1.5;
-*/
-	//Simulado:
-	//double d = 0.1; // Coeficiente de ponto a frente do robô
 
-	//Real:
-	double d = 0.3; // Coeficiente de ponto a frente do robô
+	if(speed == RobotSpeed::SLOW) vMax = 0.2;
+	else if(speed == RobotSpeed::FAST) vMax = 0.3;
+	else if(speed == RobotSpeed::SUPERFAST) vMax = 0.8;
+
+	double d = 0.1; // Coeficiente de ponto a frente do robô para ambiente SIMULADO
+	if(Config::realEnvironment){
+		// Coeficiente para ambiente REAL
+		d = 0.3;
+	}
 
 	double r = 0.016; // Raio da roda
 	double l = 0.075;// Distancia entre as rodas
