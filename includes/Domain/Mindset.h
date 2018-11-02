@@ -20,6 +20,7 @@ enum class MindSet {
     CenterAttackerStrategy,  //estrategia do atacante central
     ForwardAttackerStrategy, //estrategia do atacante que vai reto
     AttackDefenseStrategy,   //estrategia do atacante na defesa
+    SingleAttackerStrategy, //estrategia do atacante sozinho no campo
 
     PenaltyHitAttackPositioning,        // posicionamento para atacante bater penalti
     PenaltyHitDefenderPositioning,      // posicionamento do defensor situacao de penalti a favor

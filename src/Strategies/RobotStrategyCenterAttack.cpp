@@ -4,28 +4,36 @@
 #include <Strategies/RobotStrategyCenterAttack.h>
 #include <iostream>
 
-RobotStrategyCenterAttack::RobotStrategyCenterAttack() = default;
+RobotStrategyCenterAttack::RobotStrategyCenterAttack(){
+    stopCenterAttacker = true;
+}
 
 vss::WheelsCommand RobotStrategyCenterAttack::specificStrategy(vss::WheelsCommand c) {
     c = cornerStrategy(c);
-    c = stopStrategy(c);
+    if (stopCenterAttacker) {
+        c = stopStrategy(c);
+    }
     return c;
 }
 
 vss::Pose RobotStrategyCenterAttack::defineTarget() {
     vss::Pose target;
-    //vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
+    vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
 
     target.x = vss::MAX_COORDINATE_X * 0.4;
     target.y = vss::MAX_COORDINATE_Y * 0.5;
+
+    stopCenterAttacker = true;
 
     if (state.ball.position.x < vss::MAX_COORDINATE_X * 0.25) {
         if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.5) {
             target.x = vss::MAX_COORDINATE_X * 0.25;
             target.y = vss::MAX_COORDINATE_Y * 0.70;
+            target.angle = 0;
         } else {
             target.x = vss::MAX_COORDINATE_X * 0.25;
             target.y = vss::MAX_COORDINATE_Y * 0.30;
+            target.angle = 0;
         }
     }
     if (state.ball.position.x < vss::MAX_COORDINATE_X * 0.25) {
@@ -34,21 +42,24 @@ vss::Pose RobotStrategyCenterAttack::defineTarget() {
             target.x = state.ball.projection.x;
             target.y = (state.ball.projection.y + 2);
 
-            /*target.x = 0;
-            target.y = centerGoal.y;*/
+            vss::Point targetPoint(target.x, target.y);
+            target.angle = Math::arrivalAngle(targetPoint, centerGoal);
+
+            stopCenterAttacker = false;
+
         } else if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 &&
                    state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
                    state.ball.projection.y < state.ball.position.y) {
             target.x = state.ball.projection.x;
             target.y = (state.ball.projection.y - 2);
 
-            /*target.x = 0;
-            target.y = centerGoal.y;
-             */
+            vss::Point targetPoint(target.x, target.y);
+            target.angle = Math::arrivalAngle(targetPoint, centerGoal);
+
+            stopCenterAttacker = false;
         }
     }
-    //vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y/2);
-    //vss::Point orientationPoint;
+
 
     return target;
 
@@ -66,6 +77,13 @@ float RobotStrategyCenterAttack::applyUnivectorField(vss::Pose target) {
         }
     }
     UnivectorField univectorField;
+
+    path = univectorField.drawPath(robot, target, obstacles);
+    if(univectorField.offTheField){
+        univectorField.setUnivectorWithoutCurves();
+        obstacles.clear();
+    }
+
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
 }

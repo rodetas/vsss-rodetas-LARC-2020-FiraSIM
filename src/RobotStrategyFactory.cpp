@@ -73,13 +73,14 @@ void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots
 					robot.setStrategy(new DefenderMiddleDefensePositioning());
 				}
 				break;
-
+			
 			case MindSet::AttackMiddleDefensePositioning:
 				if (robot.getMindSet() != MindSet::AttackMiddleDefensePositioning) {
 					robot.setMindSet(MindSet::AttackMiddleDefensePositioning);
 					robot.setStrategy(new AttackMiddleDefensePositioning());
 				}
 				break;
+			
 			case MindSet::DefenderMiddleAttackPositioning:
 				if (robot.getMindSet() != MindSet::DefenderMiddleAttackPositioning) {
 					robot.setMindSet(MindSet::DefenderMiddleAttackPositioning);
@@ -93,47 +94,66 @@ void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots
 					robot.setStrategy(new AttackMiddleAttackPositioning());
 				}
 				break;
+
 			case MindSet::AttackFreeballLeftAttackPositioning:
 				if (robot.getMindSet() != MindSet::AttackFreeballLeftAttackPositioning) {
 					robot.setMindSet(MindSet::AttackFreeballLeftAttackPositioning);
 					robot.setStrategy(new AttackFreeballLeftAttackPositioning());
 				}
 				break;
+
 			case MindSet::AttackFreeballLeftDefensePositioning:
 				if (robot.getMindSet() != MindSet::AttackFreeballLeftDefensePositioning) {
 					robot.setMindSet(MindSet::AttackFreeballLeftDefensePositioning);
 					robot.setStrategy(new AttackFreeballLeftDefensePositioning());
 				}
 				break;
+
 			case MindSet::AttackFreeballRightAttackPositioning:
 				if (robot.getMindSet() != MindSet::AttackFreeballRightAttackPositioning) {
 					robot.setMindSet(MindSet::AttackFreeballRightAttackPositioning);
 					robot.setStrategy(new AttackFreeballRightAttackPositioning());
 				}
 				break;
+
 			case MindSet::AttackFreeballRightDefensePositioning:
 				if (robot.getMindSet() != MindSet::AttackFreeballRightDefensePositioning) {
 					robot.setMindSet(MindSet::AttackFreeballRightDefensePositioning);
 					robot.setStrategy(new AttackFreeballRightDefensePositioning());
 				}
 				break;
+
 			case MindSet::GoalKeeperCenterPositioning:
 				if(robot.getMindSet() != MindSet::GoalKeeperCenterPositioning) {
 					robot.setMindSet(MindSet::GoalKeeperCenterPositioning);
 					robot.setStrategy(new GoalKeepCenterPositioning());
 				}
 				break;
+
 			case MindSet::DefenderStrategyLeft:
 				if (robot.getMindSet() != MindSet::DefenderStrategyLeft) {
 					robot.setMindSet(MindSet::DefenderStrategyLeft);
 					robot.setStrategy(new RobotStrategyDefenderLeft());
 				}
 				break;
+
 			case MindSet::DefenderStrategyRight:
 				if (robot.getMindSet() != MindSet::DefenderStrategyRight) {
 					robot.setMindSet(MindSet::DefenderStrategyRight);
 					robot.setStrategy(new RobotStrategyDefenderRight());
 				}
+                break;
+			case MindSet::SingleAttackerStrategy:
+				if (robot.getMindSet() != MindSet::SingleAttackerStrategy) {
+					robot.setMindSet(MindSet::SingleAttackerStrategy);
+					robot.setStrategy(new RobotStrategySingleAttack());
+				}
+				break;
+		    case MindSet::None:
+		        if (robot.getMindSet() != MindSet::None){
+		            robot.setMindSet(MindSet::None);
+		            robot.setStrategy(new NoneStrategy());
+		        }
 				break;
 			default:
 				std::cout << "MindSet \"" << toString(robotMindSet) << "\" nao tratado. Tente adicionar no switch" << std::endl;

@@ -9,15 +9,23 @@ Movimentation::Movimentation() = default;
 vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotSpeed speed){
 
 	vss::WheelsCommand command;
+	//Simulado:
+	//double vMax = 1;
 
-	double vMax = 0.6;
-
+	//Real:
+	double vMax = 1.4;
+/*
 	// @TODO verificar essas velocidades maximas
 	if(speed == RobotSpeed::SLOW) vMax = 0.2;
 	else if(speed == RobotSpeed::FAST) vMax = 1.2;
 	else if(speed == RobotSpeed::SUPERFAST) vMax = 1.5;
+*/
+	//Simulado:
+	//double d = 0.1; // Coeficiente de ponto a frente do robô
 
-	double d = 0.1; // Coeficiente de ponto a frente do robô
+	//Real:
+	double d = 0.3; // Coeficiente de ponto a frente do robô
+
 	double r = 0.016; // Raio da roda
 	double l = 0.075;// Distancia entre as rodas
 	double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
@@ -28,17 +36,19 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 	double v = cos(robotAngle) * xdDot + sin(robotAngle) * ydDot;
 	double w = -(sin(robotAngle)/d) * xdDot + (cos(robotAngle)/d) * ydDot;
 
-	double wr;
-	double wl;
-
     if ( cos(fi - Math::toRadian(robot.angle)) > 0.4){
         lastSide = -1;
     } else if(cos(fi - Math::toRadian(robot.angle)) < -0.4){
         lastSide = 1;
     }
 
-    wr = v/r + w*(l/r) * lastSide;
-    wl = v/r - w*(l/r) * lastSide;
+    double wr = v/r + w*(l/r) * lastSide;
+    double wl = v/r - w*(l/r) * lastSide;
+
+	if (robot.linearSpeed < 10) {
+		wr = wr * 0.4;
+		wl = wl * 0.4;
+	}
 
     //	std::cout<<"----"<<std::endl;
     //	std::cout<<"Fi: "<<fi<<std::endl;
@@ -50,15 +60,8 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
     //	std::cout<<"wr: "<<wr<<std::endl;
     //	std::cout<<"wl: "<<wl<<std::endl;
 
-
-	//1.6 converte de rad/s para cm/s
-    wr = 1.6 * wr;
-    wl = 1.6 * wl;
-
-    //Real:
-	//command = checkMaximumSpeedWheel( vss::WheelsCommand(wr, wl));
-	//Simulador:
 	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr));
+
 	return command;
 }
 

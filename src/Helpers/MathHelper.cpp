@@ -17,7 +17,7 @@ double Math::radian(vss::Point a, vss::Point b) {
 }
 
 double Math::calculateLinearSpeed(double velX, double velY) {
-    return sqrt(pow(velX / 3, 2) + pow(velY / 3, 2));
+    return sqrt(pow(velX, 2) + pow(velY, 2));
 }
 
 vss::Point Math::calculateProjection(vss::Point initialPoint, double velX, double velY) {
@@ -53,12 +53,11 @@ float Math::toDomain2Pi(float angle) {
     return angle;
 }
 
-//parametros: ponto inicial, ponto finall
-float arrivalAngle(vss::Point target, vss::Point Orientation){
- if(target.y > Orientation.y){
-        return Math::radian(target, Orientation); 
+float Math::arrivalAngle(vss::Point target, vss::Point orientation){
+    if(target.y <= orientation.y){
+        return atan2(orientation.y - target.y, target.x - orientation.x);
     }
     else{
-        return Math::radian(Orientation, target);
+        return - atan2(target.y - orientation.y, target.x - orientation.x);
     }
 }

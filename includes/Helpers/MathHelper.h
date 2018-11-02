@@ -40,7 +40,8 @@ public:
     //! Keeps the angle in the domain [0, 2PI]
     static float toDomain2Pi(float fi);
 
-    static float arrivalAngle(vss::Point target, vss::Point Orientation);
+    //! Calculates the arrival angle
+    static float arrivalAngle(vss::Point, vss::Point);
 
 };
 

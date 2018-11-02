@@ -18,6 +18,8 @@
 #include <Strategies/RobotStrategyCenterAttack.h>
 #include <Strategies/RobotStrategyForwardAttack.h>
 #include <Strategies/RobotStrategyAttackDefense.h>
+#include <Strategies/RobotStrategySingleAttack.h>
+#include <Strategies/NoneStrategy.h>
 #include <Positioning/Penalty/AttackPenaltyHitPositioning.h>
 #include <Positioning/Penalty/AttackPenaltyAgainstPositioning.h>
 #include <Positioning/Penalty/DefenderPenaltyHitPositioning.h>
