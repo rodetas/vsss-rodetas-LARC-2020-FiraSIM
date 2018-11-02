@@ -24,6 +24,10 @@ public:
     void definePenaltyAgainst(std::vector<RodetasRobot>&, RodetasState&);
     void defineMiddleAttack(std::vector<RodetasRobot>&, RodetasState&);
     void defineMiddleDefense(std::vector<RodetasRobot>&, RodetasState&);
+    void defineFreeballLeftAttack(std::vector<RodetasRobot>&, RodetasState&);
+    void defineFreeballLeftDefense(std::vector<RodetasRobot>&, RodetasState&);
+    void defineFreeballRightAttack(std::vector<RodetasRobot>&, RodetasState&);
+    void defineFreeballRightDefense(std::vector<RodetasRobot>&, RodetasState&);
     void chooseStrategies(std::vector<RodetasRobot>&, RodetasState&, bool);
     bool doesAllRobotsHaveStrategy(std::vector<RodetasRobot>&);
 

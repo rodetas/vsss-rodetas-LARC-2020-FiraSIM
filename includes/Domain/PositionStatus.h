@@ -19,8 +19,11 @@ enum class PositionStatus {
     PenaltyAgainst,
     Freeball,
     MiddleDefense,
-    MiddleAttack
-
+    MiddleAttack,
+    FreeballLeftAttack,
+    FreeballLeftDefense,
+    FreeballRightAttack,
+    FreeballRightDefense
 };
 
 std::string toString(PositionStatus);

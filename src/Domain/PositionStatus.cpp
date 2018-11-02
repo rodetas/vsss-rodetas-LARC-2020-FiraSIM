@@ -26,6 +26,18 @@ std::string toString(PositionStatus pos){
         case PositionStatus::MiddleAttack:
             return "Saida de bola a favor";
 
+        case PositionStatus::FreeballLeftAttack:
+            return "Freeball ataque esquerdo";
+
+        case PositionStatus::FreeballRightAttack:
+            return "Freeball ataque direito";
+
+        case PositionStatus::FreeballLeftDefense:
+            return "Freeball defesa esquerda";
+
+        case PositionStatus::FreeballRightDefense:
+            return "Freeball defesa direita";
+
         default:
             return "";
 
