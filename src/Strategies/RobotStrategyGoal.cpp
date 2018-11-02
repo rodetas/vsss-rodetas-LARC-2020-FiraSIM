@@ -4,11 +4,14 @@
 
 #include "Strategies/RobotStrategyGoal.h"
 
-RobotStrategyGoal::RobotStrategyGoal() = default;
+RobotStrategyGoal::RobotStrategyGoal(){
+    stopGoalKeeper = true;
+}
 
 vss::WheelsCommand RobotStrategyGoal::specificStrategy(vss::WheelsCommand c) {
-    c = stopStrategy(c);
-
+    if(stopGoalKeeper){
+        c = stopStrategy(c);
+    }
     return c;
 }
 
@@ -16,6 +19,8 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     vss::Pose goalTarget;
     vss::Point ballProjection = state.ball.projection;
     vss::Point ballPosition = state.ball.position;
+
+    stopGoalKeeper = true;
 
     // posição para seguir linha da bola
     goalTarget.x = vss::MAX_COORDINATE_X - 15;
@@ -43,6 +48,8 @@ vss::Pose RobotStrategyGoal::defineTarget() {
             goalTarget.x = ballPosition.x;
             goalTarget.y = ballPosition.y;
         }
+
+        stopGoalKeeper = false;
     }
 
     // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
@@ -95,6 +102,12 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     obstacles.push_back(obstacle);
     obstacle.first.y = 88;
     obstacles.push_back(obstacle);
+
+    path = univectorField.drawPath(robot, target, obstacles);
+    if(univectorField.offTheField){
+        univectorField.setUnivectorWithoutCurves();
+        obstacles.clear();
+    }
 
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);

@@ -21,6 +21,7 @@
 #include <Strategies/RobotStrategyCenterAttack.h>
 #include <Strategies/RobotStrategyForwardAttack.h>
 #include <Strategies/RobotStrategyAttackDefense.h>
+#include <Strategies/RobotStrategySingleAttack.h>
 #include <Positioning/Penalty/AttackPenaltyHitPositioning.h>
 #include <RobotStrategyFactory.h>
 #include <Domain/PositionStatus.h>
