@@ -11,6 +11,10 @@ StateInterpreter::StateInterpreter() {
 
 std::vector<MindSet> StateInterpreter::manageStrategyOrPositioning(std::vector<RodetasRobot> &robots, RodetasState &state, bool enabledSwap, bool freeBall, PositionStatus posStatus){
 
+    for(unsigned int i=0 ; i<robots.size() ; i++){
+        strategiesById[i] = robots[i].getMindSet();
+    }
+
     if(posStatus == PositionStatus::None){
         // garante que nao ocorrerá troca nos primeiros 2 segundos apos um posicionamento
         if(timeAfterPositioning.getElapsedTime() < 2000 and enabledSwap){
@@ -21,6 +25,7 @@ std::vector<MindSet> StateInterpreter::manageStrategyOrPositioning(std::vector<R
     } else {
         // garante que uma vez definida as acoes de um robo esta nao sera alterada durante uma mesma requisicao de posicionamento
         if(lastPosStatus != posStatus) {
+            std::cout << "NETROU" << std::endl;
             definePositioning(robots, state, posStatus);
         }
 

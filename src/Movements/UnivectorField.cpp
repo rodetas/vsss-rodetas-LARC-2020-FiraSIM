@@ -10,8 +10,8 @@ UnivectorField::UnivectorField() {
     //orientationDistance = 8;
     //Real:
 
-    n = 3;
-    orientationDistance = 5;
+    n = 2;
+    orientationDistance = 8;
     k0 = 0.12;
     dmin = 4.5;
     delta = 4.5;

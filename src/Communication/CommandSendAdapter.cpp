@@ -27,8 +27,8 @@ void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool 
 
     } else if(isPlaying) {
         transmission.send(0, commands[0]);
-//        transmission.send(1, commands[1]);
-//        transmission.send(2, commands[2]);
+        transmission.send(1, commands[1]);
+        transmission.send(2, commands[2]);
 
     } else if(isTestingTransmission){
         vss::WheelsCommand turnRightCommand(60,-60);
