@@ -12,6 +12,7 @@ vss::WheelsCommand RobotStrategyGoal::specificStrategy(vss::WheelsCommand c) {
     if(stopGoalKeeper){
         c = stopStrategy(c);
     }
+
     return c;
 }
 
@@ -27,11 +28,11 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     goalTarget.y = ballProjection.y;
 
     // máximo que pode ir até a lateral da área
-    if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) {
-        goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2;
+    if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 3) {
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 3;
 
-    } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2) {
-        goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2;
+    } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 3) {
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 3;
     }
 
     // ir na bola quando ela está dentro da area

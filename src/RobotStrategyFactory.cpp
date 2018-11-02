@@ -10,15 +10,7 @@ void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasStat
 
 	// funcao retorna um vetor contendo no indice 0 o mindSet do Robo 0, no indice 1 mindSet do robo 1, etc
 	std::vector<MindSet> mindSetById = interpreter.manageStrategyOrPositioning(robots, state, enabledSwap, isFreeBall, positionStatus );
-
-	std::cout << "MINDSET" << std::endl;
-	for(auto i : mindSetById){
-		std::cout << toString(i) << std::endl;
-	}
-	std::cout << std::endl;
-
 	constructStrategies(robots, mindSetById);
-
 }
 
 // funcao que insere para cada robo o Agente que foi escolhido para ele

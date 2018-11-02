@@ -15,7 +15,12 @@ void CommandSendAdapter::createSocketSendCommand() {
     interfaceSend.createSocket(teamColor);
 }
 
-void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool isPlaying, bool isTestingTransmission) {
+void CommandSendAdapter::sendCommands(std::vector<RodetasRobot> robots, bool isPlaying, bool isTestingTransmission) {
+
+    std::vector<vss::WheelsCommand> commands;
+    for (auto robot : robots) {
+        commands.push_back(robot.getCommand());
+    }
 
     if(not isRealEnvironment and isPlaying) {
         // sends commands to simulator
@@ -26,9 +31,9 @@ void CommandSendAdapter::sendCommands(vector<vss::WheelsCommand> commands, bool 
         interfaceSend.sendCommand(vssCommand);
 
     } else if(isPlaying) {
-        transmission.send(0, commands[0]);
-        transmission.send(1, commands[1]);
-        transmission.send(2, commands[2]);
+        for(auto robot : robots){
+            transmission.send(robot.getId(), robot.getCommand());
+        }
 
     } else if(isTestingTransmission){
         vss::WheelsCommand turnRightCommand(60,-60);
