@@ -59,7 +59,7 @@ vss::WheelsCommand RobotPositioning::stopStrategy(vss::WheelsCommand c, vss::Poi
 
     if (distanceTarget < 4) {
 
-        if (robot.cosFrom(point) < -0.8 || robot.cosFrom(point) > 0.8) {
+        if (robot.cosFrom(point) < -0.9 || robot.cosFrom(point) > 0.9) {
             c = movimentation.stop();
 
         } else {

@@ -37,6 +37,6 @@ bool RobotStrategyBase::isStoppedFor(double time){
 }
 
 bool RobotStrategyBase::isBoard() {
-    return (robot.position.y > vss::MAX_COORDINATE_Y * (0.90) || robot.position.y < vss::MAX_COORDINATE_Y * (0.10) ||
-            robot.position.x > vss::MAX_COORDINATE_X * (0.90) || robot.position.x < vss::MAX_COORDINATE_X * (0.10) );
+    return (robot.position.y > vss::MAX_COORDINATE_Y * (0.93) || robot.position.y < vss::MAX_COORDINATE_Y * (0.06) ||
+            robot.position.x > vss::MAX_COORDINATE_X * (0.88) || robot.position.x < vss::MAX_COORDINATE_X * (0.12) );
 }
