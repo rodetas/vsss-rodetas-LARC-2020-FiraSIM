@@ -8,6 +8,7 @@
 #include <RobotPositioning.h>
 
 class AttackFreeballLeftDefensePositioning : public RobotPositioning {
+    
 
     vss::WheelsCommand specificStrategy(vss::WheelsCommand) override;
     vss::Pose defineTarget() override;

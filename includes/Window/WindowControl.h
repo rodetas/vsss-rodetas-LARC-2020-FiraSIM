@@ -49,8 +49,10 @@ private:
     Gtk::ToggleButton* buttonPenaltyAgainstPosition = nullptr;
     Gtk::ToggleButton* buttonMiddleAttackPosition = nullptr;
     Gtk::ToggleButton* buttonMiddleDefensePosition = nullptr;
-
-
+    Gtk::ToggleButton* buttonFreeBallLeftAttackPosition = nullptr;
+    Gtk::ToggleButton* buttonFreeBallLeftDefensePosition = nullptr;
+    Gtk::ToggleButton* buttonFreeBallRightAttackPosition = nullptr;
+    Gtk::ToggleButton* buttonFreeBallRightDefensePosition = nullptr;
 };
 
 #endif //SDK_RODETAS_WINDOWCONTROL_H

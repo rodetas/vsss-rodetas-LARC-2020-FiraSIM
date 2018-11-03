@@ -8,6 +8,7 @@
 #include <Strategies/RobotStrategy.h>
 #include <iostream>
 
+
 class RobotStrategyForwardAttack : public RobotStrategy {
 
 public:
