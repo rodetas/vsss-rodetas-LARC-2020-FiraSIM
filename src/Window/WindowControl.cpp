@@ -39,7 +39,10 @@ void WindowControl::initializeWidgets(){
         builder->get_widget("buttonPenaltyAgainst", buttonPenaltyAgainstPosition);
         builder->get_widget("buttonMiddleDefense", buttonMiddleDefensePosition);
         builder->get_widget("buttonMiddleAttack", buttonMiddleAttackPosition);
-
+        builder->get_widget("ButtonFreeBallLeftAttack", buttonFreeBallLeftAttackPosition);
+        builder->get_widget("ButtonFreeBallLeftDefense", buttonFreeBallLeftDefensePosition);
+        builder->get_widget("ButtonFreeBallRightAttack", buttonFreeBallRightAttackPosition);
+        builder->get_widget("ButtonFreeBallRightDefense", buttonFreeBallRightDefensePosition);
 
     } catch (const Glib::FileError &ex) {
         std::cerr << "FileError: " << ex.what() << std::endl;
@@ -62,8 +65,11 @@ void WindowControl::setSignals(){
 	buttonPenaltyAgainstPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::PenaltyAgainst));
     buttonMiddleDefensePosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::MiddleDefense));
     buttonMiddleAttackPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::MiddleAttack));
-
-	onPressButtonPlaying(buttonPlay);
+    buttonFreeBallLeftAttackPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::FreeballLeftAttack));
+    buttonFreeBallLeftDefensePosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::FreeballLeftDefense));
+    buttonFreeBallRightAttackPosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::FreeballRightAttack));
+    buttonFreeBallRightDefensePosition->signal_clicked().connect(sigc::bind<PositionStatus>(sigc::mem_fun(this, &WindowControl::onPositioningRequired), PositionStatus::FreeballRightDefense));
+    onPressButtonPlaying(buttonPlay);
 }
 
 void WindowControl::onPositioningRequired(PositionStatus positionRequired){

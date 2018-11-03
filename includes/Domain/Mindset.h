@@ -42,6 +42,8 @@ enum class MindSet {
 
     AttackFreeballRightDefensePositioning,      //posicionamento do atacante no ataque direito contra
 
+    DefenseFreeballPositioning,
+    
     GoalKeeperCenterPositioning,         // posiciona o goleiro no centro do gol
 
 

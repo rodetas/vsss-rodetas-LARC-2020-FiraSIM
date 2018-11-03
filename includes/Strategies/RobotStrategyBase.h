@@ -9,6 +9,7 @@
 #include <Domain/Constants.h>
 #include <Domain/RobotState.h>
 #include <Helpers/TimeHelper.h>
+#include <Helpers/Math.h>
 
 class RobotStrategyBase {
 

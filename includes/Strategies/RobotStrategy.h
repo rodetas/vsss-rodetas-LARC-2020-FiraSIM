@@ -10,6 +10,7 @@
 #include <Domain/Pose.h>
 #include <Domain/Path.h>
 #include <Domain/Constants.h>
+#include <Helpers/Math.h>
 #include <Strategies/RobotStrategyBase.h>
 #include <Movements/Movimentation.h>
 #include <Movements/UnivectorField.h>
