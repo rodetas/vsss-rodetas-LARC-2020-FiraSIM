@@ -23,7 +23,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 	if(mindSet == MindSet::DefenderStrategyRight || mindSet == MindSet::DefenderStrategyLeft || mindSet == MindSet::DefenderStrategy){
 		step = 0.5;
 	}
-	
+
 	double d = 0.1; // Coeficiente de ponto a frente do robô para ambiente SIMULADO
 	if(Config::realEnvironment){
 		// Coeficiente para ambiente REAL
