@@ -5,6 +5,7 @@
 #include <iostream>
 
 RobotStrategyCenterAttack::RobotStrategyCenterAttack(){
+    mindSet = MindSet ::CenterAttackerStrategy;
     stopCenterAttacker = true;
 }
 

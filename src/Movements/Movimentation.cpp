@@ -6,7 +6,7 @@ Movimentation::Movimentation() = default;
 /*
  * calculates the basic movimentation to goal to target
  */
-vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotSpeed speed){
+vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotSpeed speed, MindSet mindSet){
 
 	vss::WheelsCommand command;
 
@@ -16,6 +16,14 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 	else if(speed == RobotSpeed::FAST) vMax = 0.3;
 	else if(speed == RobotSpeed::SUPERFAST) vMax = 0.8;
 
+	double step = 0.7; //Degrau para aceleração progressiva, quanto menor mais rápida a resposta
+	if(mindSet == MindSet::GoalKeeperStrategy){
+		step = 0.3;
+	}
+	if(mindSet == MindSet::DefenderStrategyRight || mindSet == MindSet::DefenderStrategyLeft || mindSet == MindSet::DefenderStrategy){
+		step = 0.5;
+	}
+	
 	double d = 0.1; // Coeficiente de ponto a frente do robô para ambiente SIMULADO
 	if(Config::realEnvironment){
 		// Coeficiente para ambiente REAL
@@ -46,7 +54,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 	wl =  wl * r * 100;
 
     double linearSpeed = std::abs((wr + wl) / 2);
-	double k = 1 - (0.7 * std::abs(linearSpeed - robot.linearSpeed) / 60);
+	double k = 1 - (step * std::abs(linearSpeed - robot.linearSpeed) / 60);
 	//std::cout<<"k:"<<k<<std::endl;
 
 	wr *= k;

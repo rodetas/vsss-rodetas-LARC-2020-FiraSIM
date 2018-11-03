@@ -4,7 +4,9 @@
 
 #include "Strategies/RobotStrategySingleAttack.h"
 
-RobotStrategySingleAttack::RobotStrategySingleAttack() = default;
+RobotStrategySingleAttack::RobotStrategySingleAttack(){
+    mindSet = MindSet ::SingleAttackerStrategy;
+}
 
 vss::WheelsCommand RobotStrategySingleAttack::specificStrategy(vss::WheelsCommand c) {
     c = kickStrategy(c);

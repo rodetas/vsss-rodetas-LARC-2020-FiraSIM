@@ -17,7 +17,7 @@ vss::WheelsCommand RobotStrategy::applyStrategy(RobotState r, RodetasState s, Ro
     float fi = this->applyUnivectorField(target);
 
     // defines robot's pwm
-    command = movimentation.movePlayers(robot, fi);
+    command = movimentation.movePlayers(robot, fi, RobotSpeed ::NORMAL, this->mindSet);
 
     // defines specific strategy such as corner strategy or kick strategy - can be applied or not
     command = this->specificStrategy(command);

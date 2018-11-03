@@ -4,7 +4,9 @@
 #include <Strategies/RobotStrategyForwardAttack.h>
 #include <iostream>
 
-RobotStrategyForwardAttack::RobotStrategyForwardAttack() = default;
+RobotStrategyForwardAttack::RobotStrategyForwardAttack(){
+    mindSet = MindSet::ForwardAttackerStrategy;
+}
 
 vss::WheelsCommand RobotStrategyForwardAttack::specificStrategy(vss::WheelsCommand c) {
     c = cornerStrategy(c);

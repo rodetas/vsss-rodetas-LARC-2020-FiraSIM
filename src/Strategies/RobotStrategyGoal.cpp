@@ -5,6 +5,8 @@
 #include "Strategies/RobotStrategyGoal.h"
 
 RobotStrategyGoal::RobotStrategyGoal(){
+    mindSet = MindSet::GoalKeeperStrategy;
+
     stopGoalKeeper = true;
 }
 

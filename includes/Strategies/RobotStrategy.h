@@ -10,6 +10,7 @@
 #include <Domain/Pose.h>
 #include <Domain/Path.h>
 #include <Domain/Constants.h>
+#include <Domain/Mindset.h>
 #include <Strategies/RobotStrategyBase.h>
 #include <Movements/Movimentation.h>
 #include <Movements/UnivectorField.h>
@@ -36,6 +37,8 @@ public:
     virtual vss::WheelsCommand blockedStrategy(vss::WheelsCommand);
 
     virtual vss::WheelsCommand kickStrategy(vss::WheelsCommand);
+
+    MindSet mindSet;
 
 protected:
 

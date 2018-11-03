@@ -5,6 +5,8 @@
 #include <iostream>
 
 RobotStrategySideAttack::RobotStrategySideAttack(){
+    mindSet = MindSet ::SideAttackerStrategy;
+
     stopSideAttacker = false;
 }
 

@@ -6,6 +6,7 @@
 #include <Domain/WheelsCommand.h>
 #include <Domain/Pose.h>
 #include <Domain/RobotSpeed.h>
+#include <Domain/Mindset.h>
 #include <Config.h>
 #include <functional>
 
@@ -15,7 +16,7 @@ public:
 
 	Movimentation();
 
-	vss::WheelsCommand movePlayers(RobotState, float, RobotSpeed = RobotSpeed::NORMAL);
+	vss::WheelsCommand movePlayers(RobotState, float, RobotSpeed = RobotSpeed::NORMAL, MindSet = MindSet::None);
 
     vss::WheelsCommand stop();
     vss::WheelsCommand turnLeft(int, int);

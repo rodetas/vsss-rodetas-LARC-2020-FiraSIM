@@ -5,6 +5,7 @@
 #include "Strategies/RobotStrategyAttack.h"
 
 RobotStrategyAttack::RobotStrategyAttack() {
+    mindSet = MindSet ::AttackerStrategy;
     stopAttacker = false;
 }
 

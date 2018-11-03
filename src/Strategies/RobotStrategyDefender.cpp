@@ -4,7 +4,9 @@
 
 #include <Strategies/RobotStrategyDefender.h>
 
-RobotStrategyDefender::RobotStrategyDefender() = default;
+RobotStrategyDefender::RobotStrategyDefender(){
+    mindSet = MindSet ::DefenderStrategy;
+}
 
 vss::WheelsCommand RobotStrategyDefender::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
