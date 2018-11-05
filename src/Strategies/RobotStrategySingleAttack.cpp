@@ -10,7 +10,7 @@ RobotStrategySingleAttack::RobotStrategySingleAttack(){
 
 vss::WheelsCommand RobotStrategySingleAttack::specificStrategy(vss::WheelsCommand c) {
     c = kickStrategy(c);
-//    c = cornerStrategy(c);
+    c = cornerStrategy(c);
 
     if (strategyBase.isParallelToGoal()) {
 
@@ -74,6 +74,12 @@ float RobotStrategySingleAttack::applyUnivectorField(vss::Pose target) {
 
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
+
+    if (robot.distanceFrom(target) < 10 and state.ball.vectorSpeed.x < 0) {
+        univectorField.setUnivectorWithoutCurves();
+    }else{
+        univectorField.setUnivectorWithCurves();
+    }
 
     if (univectorField.offTheField) {
         univectorField.setUnivectorWithoutCurves();

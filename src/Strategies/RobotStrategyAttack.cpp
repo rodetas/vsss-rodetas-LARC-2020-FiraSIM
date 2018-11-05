@@ -67,6 +67,10 @@ vss::Pose RobotStrategyAttack::defineTarget() {
         }
 
     }
+//
+//    target.x = state.ball.projection.x;
+//    target.y = state.ball.projection.y;
+//    target.angle = 0;
 
     return target;
 }
@@ -85,6 +89,12 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
+
+    if (robot.distanceFrom(target) < 10 and state.ball.vectorSpeed.x < 0) {
+        univectorField.setUnivectorWithoutCurves();
+    } else {
+        univectorField.setUnivectorWithCurves();
+    }
 
     if(univectorField.offTheField){
         univectorField.setUnivectorWithoutCurves();

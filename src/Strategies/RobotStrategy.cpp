@@ -32,11 +32,10 @@ vss::WheelsCommand RobotStrategy::cornerStrategy(vss::WheelsCommand c) {
         // girar caso robo esteja preso de frente pra parede
         if (robot.cosFrom(state.ball.position) > -0.9 && robot.cosFrom(state.ball.position) < 0.9) {
             if (robot.sinFrom(state.ball.position) > 0) {
-                c = movimentation.turnRight(50, 30);
+                c = movimentation.turnRight(60, 60);
             } else {
-                c = movimentation.turnLeft(50, 50);
+                c = movimentation.turnLeft(60, 60);
             }
-//            cout << "preso pra parede" << endl;
         }
 
         // girar caso robo prenda a bola na parede - 8 cm
@@ -46,7 +45,6 @@ vss::WheelsCommand RobotStrategy::cornerStrategy(vss::WheelsCommand c) {
             } else {
                 c = movimentation.turnRight(60, 60);
             }
-//            cout << "preso com bola" << endl;
         }
     }
 

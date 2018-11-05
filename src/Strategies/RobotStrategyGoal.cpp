@@ -2,6 +2,7 @@
 // Created by manoel on 23/04/18.
 //
 
+#include <Domain/Constants.h>
 #include "Strategies/RobotStrategyGoal.h"
 
 RobotStrategyGoal::RobotStrategyGoal(){
@@ -26,15 +27,24 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     stopGoalKeeper = true;
 
     // posição para seguir linha da bola
-    goalTarget.x = vss::MAX_COORDINATE_X - 15;
+    goalTarget.x = vss::MAX_COORDINATE_X - 20;
     goalTarget.y = ballProjection.y;
 
     // máximo que pode ir até a lateral da área
-    if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 3) {
-        goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 3;
+    if(state.ball.position.x > vss::MAX_COORDINATE_X*0.8){
+        if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 3) {
+            goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 3;
 
-    } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 3) {
-        goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 3;
+        } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 3) {
+            goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 3;
+        }
+    } else {
+        if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 4) {
+            goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 4;
+
+        } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 4) {
+            goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 4;
+        }
     }
 
     // ir na bola quando ela está dentro da area
@@ -55,13 +65,6 @@ vss::Pose RobotStrategyGoal::defineTarget() {
         stopGoalKeeper = false;
     }
 
-    // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
-//    if (strategyBase.isStoppedFor(3000) && robot.distanceFrom(goalTarget) > 6) {
-//        goalTarget.x = vss::MAX_COORDINATE_X - 10;
-//        goalTarget.y = vss::MAX_COORDINATE_Y / 2;
-//
-//    }
-
     if (robot.position.y < goalTarget.y) {
         goalTarget.angle = M_PI/2 - M_PI/6;
     } else {
@@ -81,35 +84,11 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
 
     if ((target.x == state.ball.position.x) && (target.y == state.ball.position.y)) {
-        if (target.y > 40 && target.y < 88) {
+        if (target.y > vss::MAX_COORDINATE_Y / 2 - Config::goalSize.y/2 && target.y < vss::MAX_COORDINATE_Y/2 + Config::goalSize.y/2) {
             if (target.x > robot.position.x) {
                 univectorField.setUnivectorWithCurves();
             }
         }
-    }
-
-    if (robot.distanceFrom(target) > 30) {
-        for (auto &r: state.robots) {
-            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
-            }
-        }
-    }
-
-    //Obstáculos de canto de gol
-    std::pair<vss::Point, vss::Point> obstacle;
-    obstacle.first.x = 167;
-    obstacle.first.y = 40;
-    obstacle.second.x = 0;
-    obstacle.second.y = 0;
-    obstacles.push_back(obstacle);
-    obstacle.first.y = 88;
-    obstacles.push_back(obstacle);
-
-    path = univectorField.drawPath(robot, target, obstacles);
-    if(univectorField.offTheField){
-        univectorField.setUnivectorWithoutCurves();
-        obstacles.clear();
     }
 
     path = univectorField.drawPath(robot, target, obstacles);
@@ -123,11 +102,6 @@ vss::WheelsCommand RobotStrategyGoal::stopStrategy(vss::WheelsCommand command) {
     float maxDistance = (12); // 12 cm
     float distanceTarget = (float) robot.distanceFrom(target);
 
-/*	REVER VELOCIDADE
-	if(robot.getVelocity() > image_size.x * (0.05)){
-		maxDistance = 24; // 24 cm
-	}
- */
     if (distanceTarget < maxDistance) {
         c.leftVel = command.leftVel * (distanceTarget / maxDistance);
         c.rightVel = command.rightVel * (distanceTarget / maxDistance);
@@ -135,10 +109,14 @@ vss::WheelsCommand RobotStrategyGoal::stopStrategy(vss::WheelsCommand command) {
 
     if (distanceTarget < (4)) {
 
-        if ((robot.angle > 80 && robot.angle < 120) || (robot.angle > 260 && robot.angle < 300)) {
+        if ((robot.angle > 70 && robot.angle < 110) || (robot.angle > 250 && robot.angle < 290)) {
             c = movimentation.stop();
         } else {
-            c = movimentation.turnRight(10, 10);
+            if ((robot.angle > 0 and robot.angle < 90) or (robot.angle > 180 and robot.angle < 270)){
+                c = movimentation.turnRight(25, 25);
+            } else {
+                c = movimentation.turnLeft(25, 25);
+            }
         }
     }
 

@@ -10,24 +10,26 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 
 	vss::WheelsCommand command;
 
-	double vMax = 0.6;
+	double vMax = 1;
 
-	if(speed == RobotSpeed::SLOW) vMax = 0.2;
-	else if(speed == RobotSpeed::FAST) vMax = 0.3;
-	else if(speed == RobotSpeed::SUPERFAST) vMax = 0.8;
+	if(speed == RobotSpeed::SLOW) vMax = 0.4;
+	else if(speed == RobotSpeed::FAST) vMax = 0.6;
+	else if(speed == RobotSpeed::SUPERFAST) vMax = 1.2;
 
-	double step = 0.7; //Degrau para aceleração progressiva, quanto menor mais rápida a resposta
+	double step = 0.5; //Degrau para aceleração progressiva, quanto menor mais rápida a resposta
 	if(mindSet == MindSet::GoalKeeperStrategy){
-		step = 0.3;
+		step = 0.5;
 	}
 	if(mindSet == MindSet::DefenderStrategyRight || mindSet == MindSet::DefenderStrategyLeft || mindSet == MindSet::DefenderStrategy){
-		step = 0.5;
+		step = 0.6;
 	}
 
 	double d = 0.1; // Coeficiente de ponto a frente do robô para ambiente SIMULADO
 	if(Config::realEnvironment){
 		// Coeficiente para ambiente REAL
 		d = 0.3;
+
+		if(mindSet == MindSet::DefenderStrategy) d = 0.5;
 	}
 
 	double r = 0.016; // Raio da roda
@@ -40,12 +42,12 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 	double v = cos(robotAngle) * xdDot + sin(robotAngle) * ydDot;
 	double w = -(sin(robotAngle)/d) * xdDot + (cos(robotAngle)/d) * ydDot;
 
-    if ( cos(fi - Math::toRadian(robot.angle)) > 0.4){
+    if ( cos(fi - Math::toRadian(robot.angle)) > 0.3){
         lastSide = -1;
-    } else if(cos(fi - Math::toRadian(robot.angle)) < -0.4){
+    } else if(cos(fi - Math::toRadian(robot.angle)) < -0.3){
         lastSide = 1;
     }
- 
+
     double wr = v/r + w*(l/r) * lastSide;
     double wl = v/r - w*(l/r) * lastSide;
 
@@ -54,8 +56,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 	wl =  wl * r * 100;
 
     double linearSpeed = std::abs((wr + wl) / 2);
-	double k = 1 - (step * std::abs(linearSpeed - robot.linearSpeed) / 60);
-	//std::cout<<"k:"<<k<<std::endl;
+	double k = 1 - (step * std::abs(linearSpeed - robot.linearSpeed) / 100);
 
 	wr *= k;
 	wl *= k;
@@ -80,7 +81,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 vss::WheelsCommand Movimentation::checkMaximumSpeedWheel(const vss::WheelsCommand& speed){
 	vss::WheelsCommand command(speed);
 
-	int maximumSpeed = 60;
+	int maximumSpeed = 100;
 
 	if(speed.leftVel  > maximumSpeed) command.leftVel  = maximumSpeed;
 	if(speed.rightVel > maximumSpeed) command.rightVel = maximumSpeed;
