@@ -247,6 +247,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
 
         if(defenderRobot.getSelfState().position.x < vss::MAX_COORDINATE_X*0.65 and
         defenderRobot.getSelfState().distanceFrom(state.ball.position) < 20 and
+        defenderRobot.getSelfState().position.x > state.ball.position.x and
         defenderRobot.getSelfState().linearSpeed > 10) {
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
