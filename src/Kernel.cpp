@@ -47,11 +47,6 @@ void Kernel::loop() {
             robot.updateState(state);
             robot.calcAction();
 
-            if(i == 0){
-//                std::cout<<robot.getRobotStrategyBase().isStopped()<<std::endl;
-                    std::cout << robot.getSelfState().linearSpeed << std::endl;
-            }
-
             commands[i] = robot.getCommand();
 
             //debug.finalPoses[i] = robot.getFinalPose();

@@ -20,6 +20,10 @@ public:
     float applyUnivectorField(vss::Pose) override;
 
     vss::WheelsCommand stopStrategy(vss::WheelsCommand) override;
+
+private:
+
+    bool stopInPoint;
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGYDEFENDER_H
