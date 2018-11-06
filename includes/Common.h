@@ -37,12 +37,14 @@ namespace common{
                 direction = 'L';
             } else if(c.rightVel < 0){
                 direction = 'R';
+            } else if(c.rightVel == 0 && c.leftVel == 0){
+                direction = 'S';
             } else {
                 direction = 'F';
             }
 
-            left = (int)(255*abs(c.leftVel))/100;
-            right = (int)(255*abs(c.rightVel))/100;
+            left  = (int)(255 * abs(c.leftVel)) / 100;
+            right = (int)(255 * abs(c.rightVel)) / 100;
         }
 
         virtual std::string to_string(){

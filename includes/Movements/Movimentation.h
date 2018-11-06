@@ -16,13 +16,13 @@ public:
 
 	Movimentation();
 
-	vss::WheelsCommand movePlayers(RobotState, float, RobotSpeed = RobotSpeed::NORMAL, MindSet = MindSet::None);
+	vss::WheelsCommand movePlayers(RobotState, float, vss::Point,RobotSpeed = RobotSpeed::NORMAL, MindSet = MindSet::None);
 
     vss::WheelsCommand stop();
     vss::WheelsCommand turnLeft(int, int);
     vss::WheelsCommand turnRight(int, int);
 
-    vss::WheelsCommand checkMaximumSpeedWheel(const vss::WheelsCommand&);
+    vss::WheelsCommand checkMaximumSpeedWheel(const vss::WheelsCommand& , int);
 
 	int lastSide = 1;
 };

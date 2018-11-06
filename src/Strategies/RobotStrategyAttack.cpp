@@ -78,7 +78,7 @@ vss::Pose RobotStrategyAttack::defineTarget() {
 float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
 
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-    if (robot.distanceFrom(target) > 15) {
+    if (robot.distanceFrom(target) > 30) {
         //Obstáculos roboôs
         for (auto &r: state.robots) {
             if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
@@ -90,7 +90,7 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
 
-    if (robot.distanceFrom(target) < 10 and state.ball.vectorSpeed.x < 0) {
+    if (robot.distanceFrom(target) < 15 and state.ball.vectorSpeed.x < 0) {
         univectorField.setUnivectorWithoutCurves();
     } else {
         univectorField.setUnivectorWithCurves();

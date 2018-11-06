@@ -63,21 +63,21 @@ vss::Pose RobotStrategySingleAttack::defineTarget() {
 float RobotStrategySingleAttack::applyUnivectorField(vss::Pose target) {
 
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-    if (robot.distanceFrom(target) > 15) {
-        //Obstáculos roboôs
-        for (auto &r: state.robots) {
-            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
-            }
-        }
-    }
+//    if (robot.distanceFrom(target) > 15) {
+//        //Obstáculos roboôs
+//        for (auto &r: state.robots) {
+//            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+//                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+//            }
+//        }
+//    }
 
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
 
-    if (robot.distanceFrom(target) < 10 and state.ball.vectorSpeed.x < 0) {
+    if (robot.distanceFrom(target) < 15 and state.ball.vectorSpeed.x < 0) {
         univectorField.setUnivectorWithoutCurves();
-    }else{
+    } else {
         univectorField.setUnivectorWithCurves();
     }
 

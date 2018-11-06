@@ -6,47 +6,66 @@ Movimentation::Movimentation() = default;
 /*
  * calculates the basic movimentation to goal to target
  */
-vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotSpeed speed, MindSet mindSet){
+vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, vss::Point target, RobotSpeed speed, MindSet mindSet){
 
 	vss::WheelsCommand command;
 
-	double vMax = 1;
+	double realSpeedMax = 80;
+	double controllerSpeedMax = 0.8;
 
-	if(speed == RobotSpeed::SLOW) vMax = 0.4;
-	else if(speed == RobotSpeed::FAST) vMax = 0.6;
-	else if(speed == RobotSpeed::SUPERFAST) vMax = 1.2;
+	if(speed == RobotSpeed::SLOW) controllerSpeedMax = 0.4;
+	if(speed == RobotSpeed::FAST) controllerSpeedMax = 0.6;
+	if(speed == RobotSpeed::SUPERFAST) controllerSpeedMax = 1.2;
 
-	double step = 0.5; //Degrau para aceleração progressiva, quanto menor mais rápida a resposta
-	if(mindSet == MindSet::GoalKeeperStrategy){
-		step = 0.5;
-	}
-	if(mindSet == MindSet::DefenderStrategyRight || mindSet == MindSet::DefenderStrategyLeft || mindSet == MindSet::DefenderStrategy){
+    double step;
+    if(mindSet == MindSet::AttackerStrategy || mindSet == MindSet::SingleAttackerStrategy){
+        step = 0.6;
+
+    } else if(mindSet == MindSet::GoalKeeperStrategy){
 		step = 0.6;
-	}
 
-	double d = 0.1; // Coeficiente de ponto a frente do robô para ambiente SIMULADO
+    } else if(mindSet == MindSet::DefenderStrategyRight || mindSet == MindSet::DefenderStrategyLeft || mindSet == MindSet::DefenderStrategy){
+		step = 0.6;
+
+    } else {
+        step = 0.5;
+    }
+
+	double d;
 	if(Config::realEnvironment){
-		// Coeficiente para ambiente REAL
-		d = 0.3;
-
+		d = 0.4;
 		if(mindSet == MindSet::DefenderStrategy) d = 0.5;
+
+	} else {
+        d = 0.1;
 	}
 
-	double r = 0.016; // Raio da roda
-	double l = 0.075;// Distancia entre as rodas
+    double r = 0.016; // Raio da roda
+	double l = 0.075; // Distancia entre as rodas
 	double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
 
-	double xdDot = vMax * cos(fi);
-	double ydDot = vMax * sin(fi);
+	double xdDot = controllerSpeedMax * cos(fi);
+	double ydDot = controllerSpeedMax * sin(fi);
 
 	double v = cos(robotAngle) * xdDot + sin(robotAngle) * ydDot;
 	double w = -(sin(robotAngle)/d) * xdDot + (cos(robotAngle)/d) * ydDot;
 
-    if ( cos(fi - Math::toRadian(robot.angle)) > 0.3){
+
+    if ( cos(fi - Math::toRadian(robot.angle)) > 0.5){
+        if (lastSide == 1) {
+            v = 0;
+            w = 0;
+        }
         lastSide = -1;
-    } else if(cos(fi - Math::toRadian(robot.angle)) < -0.3){
+
+    } else if(cos(fi - Math::toRadian(robot.angle)) < -0.5){
+        if (lastSide == -1) {
+            v = 0;
+            w = 0;
+        }
         lastSide = 1;
     }
+
 
     double wr = v/r + w*(l/r) * lastSide;
     double wl = v/r - w*(l/r) * lastSide;
@@ -55,33 +74,21 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 	wr =  wr * r * 100;
 	wl =  wl * r * 100;
 
-    double linearSpeed = std::abs((wr + wl) / 2);
-	double k = 1 - (step * std::abs(linearSpeed - robot.linearSpeed) / 100);
+	double linearSpeed = std::abs((wr + wl) / 2);
 
-	wr *= k;
-	wl *= k;
+    if (robot.linearSpeed < 40) {
+        double k = 1 - (step * std::abs(linearSpeed - robot.linearSpeed) / realSpeedMax);
+        wr *= k;
+        wl *= k;
+    }
 
-    //std::cout <<"WR: "<< wr << " WL:" << wl << " Vel Control: " << linearSpeed << " Vel med: "<< robot.linearSpeed << std::endl;
-
-    //	std::cout<<"----"<<std::endl;
-    //	std::cout<<"Fi: "<<fi<<std::endl;
-    //	std::cout<<"Theta: "<<robotAngle<<std::endl;
-    //	std::cout<<"X: "<<robot.position.x<<" Y: "<<robot.position.y<<std::endl;
-    //
-    //	std::cout<<"v: "<<v<<std::endl;
-    //	std::cout<<"w: "<<w<<std::endl;
-    //	std::cout<<"wr: "<<wr<<std::endl;
-    //	std::cout<<"wl: "<<wl<<std::endl;
-
-	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr));
+	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr), realSpeedMax);
 
 	return command;
 }
 
-vss::WheelsCommand Movimentation::checkMaximumSpeedWheel(const vss::WheelsCommand& speed){
+vss::WheelsCommand Movimentation::checkMaximumSpeedWheel(const vss::WheelsCommand& speed, int maximumSpeed){
 	vss::WheelsCommand command(speed);
-
-	int maximumSpeed = 100;
 
 	if(speed.leftVel  > maximumSpeed) command.leftVel  = maximumSpeed;
 	if(speed.rightVel > maximumSpeed) command.rightVel = maximumSpeed;

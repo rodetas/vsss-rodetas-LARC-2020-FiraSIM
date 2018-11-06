@@ -16,7 +16,7 @@ vss::WheelsCommand RobotPositioning::applyStrategy(RobotState r, RodetasState s,
     float fi = this->applyUnivectorField(target);
 
     // define a velocidade do robo com base no valor do fi
-    command = movimentation.movePlayers(robot, fi, RobotSpeed::SLOW);
+    command = movimentation.movePlayers(robot, fi, target, RobotSpeed::SLOW);
 
     // define as estrategias que serao aplicadas para o robo - esta implementado em todas as classes filhas
     command = this->specificStrategy(command);

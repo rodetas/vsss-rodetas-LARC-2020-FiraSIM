@@ -29,7 +29,7 @@ bool RobotStrategyBase::isParallelToGoal() {
 }
 
 bool RobotStrategyBase::isStopped() {
-    return stoppedTime > 500;
+    return stoppedTime > 300;
 }
 
 bool RobotStrategyBase::isStoppedFor(double time){

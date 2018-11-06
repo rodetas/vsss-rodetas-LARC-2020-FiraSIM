@@ -45,6 +45,8 @@ protected:
 
     Movimentation movimentation;
 
+    float fi;
+
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGY_H

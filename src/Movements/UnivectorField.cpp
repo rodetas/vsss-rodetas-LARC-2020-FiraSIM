@@ -10,11 +10,11 @@ UnivectorField::UnivectorField() {
     //orientationDistance = 8;
     //Real:
 
-    n = 3;
-    orientationDistance = 10;
+    n = 2;
+    orientationDistance = 15;
     k0 = 0.12;
-    dmin = 4.5;
-    delta = 4.5;
+    dmin = 5.5;
+    delta = 7;
 
     offTheField = false;
 }
@@ -24,8 +24,8 @@ void UnivectorField::setUnivectorWithoutCurves() {
 }
 
 void UnivectorField::setUnivectorWithCurves() {
-    n = 3;
-    orientationDistance = 10;
+    n = 2;
+    orientationDistance = 15;
 }
 
 float
@@ -93,7 +93,7 @@ UnivectorField::drawPath(RobotState robot, vss::Pose target, std::vector<std::pa
         if (Math::distancePoint(point, target) < 2)
             i = 250;
 
-        if(point.x < vss::MIN_COORDINATE_X + 10 || point.x > vss::MAX_COORDINATE_X - 10 || point.y < vss::MIN_COORDINATE_Y || point.y > vss::MAX_COORDINATE_Y)
+        if(point.x < vss::MIN_COORDINATE_X + 15 || point.x > vss::MAX_COORDINATE_X - 15 || point.y < vss::MIN_COORDINATE_Y || point.y > vss::MAX_COORDINATE_Y)
             offTheField = true;
     }
 

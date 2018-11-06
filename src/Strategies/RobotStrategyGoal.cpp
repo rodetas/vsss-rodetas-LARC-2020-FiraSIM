@@ -12,6 +12,7 @@ RobotStrategyGoal::RobotStrategyGoal(){
 }
 
 vss::WheelsCommand RobotStrategyGoal::specificStrategy(vss::WheelsCommand c) {
+    c = cornerStrategy(c);
     if(stopGoalKeeper){
         c = stopStrategy(c);
     }
