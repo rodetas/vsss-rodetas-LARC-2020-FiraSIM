@@ -3,6 +3,7 @@
 //
 
 #include <Movements/UnivectorField.h>
+#include <Config.h>
 
 UnivectorField::UnivectorField() {
     //Simulado:
@@ -17,6 +18,7 @@ UnivectorField::UnivectorField() {
     delta = 7;
 
     offTheField = false;
+    insideGoalArea = false;
 }
 
 void UnivectorField::setUnivectorWithoutCurves() {
@@ -27,6 +29,16 @@ void UnivectorField::setUnivectorWithCurves() {
     n = 2;
     orientationDistance = 15;
 }
+
+void UnivectorField::setN(float n) {
+    this->n = n;
+}
+
+void UnivectorField::setOrientationPointDistance(float distance) {
+    orientationDistance = distance;
+}
+
+
 
 float
 UnivectorField::defineFi(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles) {
@@ -82,6 +94,7 @@ UnivectorField::drawPath(RobotState robot, vss::Pose target, std::vector<std::pa
     RobotState r = robot;
 
     offTheField = false;
+    insideGoalArea = false;
 
     float fi = defineFi(robot, target, obstacles);
     for (int i = 0; i < 250; i++) {
@@ -95,6 +108,11 @@ UnivectorField::drawPath(RobotState robot, vss::Pose target, std::vector<std::pa
 
         if(point.x < vss::MIN_COORDINATE_X + 15 || point.x > vss::MAX_COORDINATE_X - 15 || point.y < vss::MIN_COORDINATE_Y || point.y > vss::MAX_COORDINATE_Y)
             offTheField = true;
+
+        if(point.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 8) &&
+        point.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 8) &&
+        point.x > vss::MAX_COORDINATE_X - 30)
+            insideGoalArea = true;
     }
 
     vss::Path path;

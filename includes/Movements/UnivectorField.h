@@ -28,6 +28,10 @@ public:
 
     void setUnivectorWithCurves();
 
+    void setN(float);
+
+    void setOrientationPointDistance(float);
+
     //Defines the univector field angle with obstacles, the vector "obstacles" contains the position and the velocity of the obstacles
     float defineFi(RobotState robot, vss::Pose target, std::vector<std::pair<vss::Point, vss::Point>> obstacles);
 
@@ -36,6 +40,8 @@ public:
 
     //Is true if the path contains a point off the field
     bool offTheField;
+
+    bool insideGoalArea;
 
 private:
 

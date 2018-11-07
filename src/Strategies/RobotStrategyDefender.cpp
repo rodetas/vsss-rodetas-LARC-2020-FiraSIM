@@ -89,21 +89,6 @@ vss::Pose RobotStrategyDefender::defineTarget() {
         }
     }
 
-    // nao permite que o zagueiro entre na area
-    if (target.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 8) &&
-        target.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 8) &&
-        target.x > vss::MAX_COORDINATE_X - 30) {
-
-        stopInPoint = true;
-
-        target.x = vss::MAX_COORDINATE_X*0.8;
-        if (target.y > vss::MAX_COORDINATE_Y/2) {
-            target.y = 25;
-        } else {
-            target.y = 110;
-        }
-    }
-
     return target;
 }
 
@@ -164,20 +149,43 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
 //    }
 
     UnivectorField univectorField;
+    univectorField.setN(2);
+    univectorField.setOrientationPointDistance(5);
+
     if (state.ball.position.x > robot.position.x and state.ball.position.x > vss::MAX_COORDINATE_X*0.7) {
         // define com curvas caso a bola esteja na area de defesa
-        univectorField.setUnivectorWithCurves();
+        //Seta curva passando parâmetro
+        univectorField.setN(2);
+        univectorField.setOrientationPointDistance(5);
     } else {
         // define sem curvas caso a bola esteja na frente do robo e a bola esteja na area de ataque
         univectorField.setUnivectorWithoutCurves();
     }
 
-//    path = univectorField.drawPath(robot, target, obstacles);
-//    if(univectorField.offTheField){
-//        univectorField.setUnivectorWithoutCurves();
-//        obstacles.clear();
-//    }
+    path = univectorField.drawPath(robot, target, obstacles);
+    // nao permite que o zagueiro entre na area
+    if (univectorField.insideGoalArea) {
+        stopInPoint = true;
 
+        univectorField.setUnivectorWithoutCurves();
+
+        target.x = vss::MAX_COORDINATE_X*0.8;
+        if (target.y < vss::MAX_COORDINATE_Y/2) {
+            target.y = 25;
+        } else {
+            target.y = 110;
+        }
+    }
+
+
+    path = univectorField.drawPath(robot, target, obstacles);
+    if(univectorField.offTheField){
+        univectorField.setUnivectorWithoutCurves();
+        obstacles.clear();
+    }
+
+
+    this->target = target;
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
 }
