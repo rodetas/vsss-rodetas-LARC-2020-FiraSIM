@@ -30,20 +30,23 @@ vss::Pose RobotStrategyDefender::defineTarget() {
 
     vss::Pose target;
     vss::Point ballProjection = state.ball.projection;
+    vss::Point centerGoal(0, vss::MAX_COORDINATE_Y/2);
 
     stopInPoint = false;
 
     // se a bola passou da linha de defesa e do zagueiro
     if (state.ball.position.x > vss::MAX_COORDINATE_X * 0.70) {
 
-        // coloca o robo pra tras da bola
-        target.x = state.ball.projection.x;
-        target.y = state.ball.projection.y;
+        target.x = state.ball.position.x;
+        target.y = state.ball.position.y;
+
         target.angle = 0;
 
-        if(target.x > vss::MAX_COORDINATE_X - 20){
-            // se esta fora do campo
-            target.x = state.ball.position.x;
+        if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y < vss::MAX_COORDINATE_Y * 0.37)) {
+            target.angle = (3 * M_PI) / 2;
+        }
+        if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y > vss::MAX_COORDINATE_Y * 0.66)) {
+            target.angle = M_PI_2;
         }
 
     } else {
@@ -64,31 +67,25 @@ vss::Pose RobotStrategyDefender::defineTarget() {
     // ataca a bola caso ela chegue perto
     if (robot.position.x > vss::MAX_COORDINATE_X * 0.60) { // robo so pode atacar ate 60% do campo
 
-        double distDefenseLine = vss::MAX_COORDINATE_X*0.7 - state.ball.position.x;
-        if (distDefenseLine > 0 and distDefenseLine < 20) {
-            stopInPoint = false;
-            target.x = state.ball.projection.x;
-            target.y = state.ball.projection.y;
-            target.angle = Math::arrivalAngle(target, vss::Point(0, vss::MAX_COORDINATE_Y / 2));
+            if (robot.distanceFrom(state.ball.position) < 20 and robot.position.x > state.ball.position.x) { // bola esta proxima do robo
+                stopInPoint = false;
 
-        } else if (robot.distanceFrom(state.ball.position) < 20) { // bola esta proxima do robo
-            stopInPoint = false;
-            if (state.ball.vectorSpeed.x <= 0) {
-                // bola esta indo para o ataque
-                target.x = state.ball.projection.x;
-                target.y = state.ball.projection.y;
-                target.angle = Math::arrivalAngle(target, vss::Point(0, vss::MAX_COORDINATE_Y / 2));
-            } else {
-                // bola esta indo para defesa
-                target.x = state.ball.position.x;
-                target.y = state.ball.position.y;
-                target.angle = Math::arrivalAngle(target, vss::Point(0, vss::MAX_COORDINATE_Y / 2));
-
-                if (abs(state.ball.vectorSpeed.x) > abs(state.ball.vectorSpeed.y * 1.2)) {
+                if (state.ball.vectorSpeed.x <= 0) {
+                    // bola esta indo para o ataque
                     target.x = state.ball.projection.x;
                     target.y = state.ball.projection.y;
+                    target.angle = Math::arrivalAngle(target, centerGoal);
+                } else {
+                    // bola esta indo para defesa
+                    target.x = state.ball.position.x;
+                    target.y = state.ball.position.y;
+                    target.angle = Math::arrivalAngle(target, centerGoal);
+
+                    if (abs(state.ball.vectorSpeed.x) > abs(state.ball.vectorSpeed.y * 1.2)) {
+                        target.x = state.ball.projection.x;
+                        target.y = state.ball.projection.y;
+                    }
                 }
-            }
         }
     }
 
@@ -103,7 +100,7 @@ vss::Pose RobotStrategyDefender::defineTarget() {
         if (target.y > vss::MAX_COORDINATE_Y/2) {
             target.y = 25;
         } else {
-            target.y = 100;
+            target.y = 110;
         }
     }
 
@@ -167,7 +164,7 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
 //    }
 
     UnivectorField univectorField;
-    if (state.ball.position.x-5 > robot.position.x and state.ball.position.x > vss::MAX_COORDINATE_X*0.7) {
+    if (state.ball.position.x > robot.position.x and state.ball.position.x > vss::MAX_COORDINATE_X*0.7) {
         // define com curvas caso a bola esteja na area de defesa
         univectorField.setUnivectorWithCurves();
     } else {
@@ -175,11 +172,11 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
         univectorField.setUnivectorWithoutCurves();
     }
 
-    path = univectorField.drawPath(robot, target, obstacles);
-    if(univectorField.offTheField){
-        univectorField.setUnivectorWithoutCurves();
-        obstacles.clear();
-    }
+//    path = univectorField.drawPath(robot, target, obstacles);
+//    if(univectorField.offTheField){
+//        univectorField.setUnivectorWithoutCurves();
+//        obstacles.clear();
+//    }
 
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
