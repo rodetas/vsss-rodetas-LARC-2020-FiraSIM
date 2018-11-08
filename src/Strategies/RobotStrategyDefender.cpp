@@ -171,9 +171,9 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
 
         target.x = vss::MAX_COORDINATE_X*0.8;
         if (target.y < vss::MAX_COORDINATE_Y/2) {
-            target.y = 25;
+            target.y = 20;
         } else {
-            target.y = 110;
+            target.y = 115;
         }
     }
 

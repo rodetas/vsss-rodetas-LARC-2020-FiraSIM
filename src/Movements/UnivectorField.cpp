@@ -109,8 +109,8 @@ UnivectorField::drawPath(RobotState robot, vss::Pose target, std::vector<std::pa
         if(point.x < vss::MIN_COORDINATE_X + 15 || point.x > vss::MAX_COORDINATE_X - 15 || point.y < vss::MIN_COORDINATE_Y || point.y > vss::MAX_COORDINATE_Y)
             offTheField = true;
 
-        if(point.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 8) &&
-        point.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 8) &&
+        if(point.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2) &&
+        point.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 ) &&
         point.x > vss::MAX_COORDINATE_X - 30)
             insideGoalArea = true;
     }
