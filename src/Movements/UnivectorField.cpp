@@ -14,8 +14,8 @@ UnivectorField::UnivectorField() {
     n = 1;
     orientationDistance = 5;
     k0 = 0.12;
-    dmin = 5;
-    delta = 6;
+    dmin = 4.5;
+    delta = 4.5;
 
     offTheField = false;
     insideGoalArea = false;

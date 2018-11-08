@@ -28,12 +28,12 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, vss::P
 		step = 0.6;
 
     } else {
-        step = 0.5;
+        step = 0.6;
     }
 
 	double d;
 	if(Config::realEnvironment){
-		d = 0.35;
+		d = 0.4;
 		if(mindSet == MindSet::DefenderStrategy) d = 0.5;
 
 	} else {

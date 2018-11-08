@@ -88,15 +88,15 @@ vss::Pose RobotStrategyDefender::defineTarget() {
 
 float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
     std::vector <std::pair<vss::Point, vss::Point>> obstacles;
-
-    if (robot.distanceFrom(target) > 10) {
-        //Obstáculos roboôs
-        for (auto &r: state.robots) {
-            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
-            }
-        }
-    }
+//
+//    if (robot.distanceFrom(target) > 10) {
+//        //Obstáculos roboôs
+//        for (auto &r: state.robots) {
+//            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+//                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+//            }
+//        }
+//    }
 
     UnivectorField univectorField;
     univectorField.setN(2);
