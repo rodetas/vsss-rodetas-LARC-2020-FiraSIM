@@ -18,7 +18,9 @@ public:
 
 private:
 	bool stopAttacker;
-
+	TimeHelper timeLastChangeUnivectorCurve;
+	TimeHelper timeLastChangeUnivectorNoCurve;
+	UnivectorField univectorField;
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGYATTACK_H
