@@ -33,7 +33,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, vss::P
 
 	double d;
 	if(Config::realEnvironment){
-		d = 0.4;
+		d = 0.35;
 		if(mindSet == MindSet::DefenderStrategy) d = 0.5;
 
 	} else {
@@ -48,31 +48,20 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, vss::P
 	double ydDot = controllerSpeedMax * sin(fi);
 
 	double v = cos(robotAngle) * xdDot + sin(robotAngle) * ydDot;
-	double w = -(sin(robotAngle)/d) * xdDot + (cos(robotAngle)/d) * ydDot;
+	double w = -(sin(robotAngle) / d) * xdDot + (cos(robotAngle) / d) * ydDot;
 
-
-    if ( cos(fi - Math::toRadian(robot.angle)) > 0.5){
-        if (lastSide == 1) {
-            v = 0;
-            w = 0;
-        }
-        lastSide = -1;
-
-    } else if(cos(fi - Math::toRadian(robot.angle)) < -0.5){
-        if (lastSide == -1) {
-            v = 0;
-            w = 0;
-        }
-        lastSide = 1;
-    }
-
-
-    double wr = v/r + w*(l/r) * lastSide;
-    double wl = v/r - w*(l/r) * lastSide;
+	double wr = v / r + w * (l / r);
+	double wl = v / r - w * (l / r);
 
 	// conversão rad/s para cm/s
-	wr =  wr * r * 100;
-	wl =  wl * r * 100;
+	wr = wr * r * 100;
+	wl = wl * r * 100;
+
+	if (wr > 0 && wl > 0) {
+		double aux = wr;
+		wr = wl;
+		wl = aux;
+	}
 
 	double linearSpeed = std::abs((wr + wl) / 2);
 

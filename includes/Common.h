@@ -43,8 +43,8 @@ namespace common{
                 direction = 'F';
             }
 
-            left  = (int)(255 * abs(c.leftVel)) / 100;
-            right = (int)(255 * abs(c.rightVel)) / 100;
+            left  = (int)(999 * abs(c.leftVel)) / 100;
+            right = (int)(999 * abs(c.rightVel)) / 100;
         }
 
         virtual std::string to_string(){

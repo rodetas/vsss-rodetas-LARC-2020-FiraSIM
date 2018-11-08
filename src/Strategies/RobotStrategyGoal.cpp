@@ -49,8 +49,8 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     }
 
     // ir na bola quando ela está dentro da area
-    if (ballPosition.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 8) &&
-        ballPosition.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 8) &&
+    if (ballPosition.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 ) &&
+        ballPosition.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) &&
         ballPosition.x > vss::MAX_COORDINATE_X - 30) {
 
         // Testar esse target como sendo ballProjection ou ballPosition

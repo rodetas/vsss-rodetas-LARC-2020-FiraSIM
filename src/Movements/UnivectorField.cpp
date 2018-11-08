@@ -11,11 +11,11 @@ UnivectorField::UnivectorField() {
     //orientationDistance = 8;
     //Real:
 
-    n = 2;
-    orientationDistance = 15;
+    n = 1;
+    orientationDistance = 5;
     k0 = 0.12;
-    dmin = 5.5;
-    delta = 7;
+    dmin = 5;
+    delta = 6;
 
     offTheField = false;
     insideGoalArea = false;
@@ -26,8 +26,8 @@ void UnivectorField::setUnivectorWithoutCurves() {
 }
 
 void UnivectorField::setUnivectorWithCurves() {
-    n = 2;
-    orientationDistance = 15;
+    n = 1;
+    orientationDistance = 5;
 }
 
 void UnivectorField::setN(float n) {

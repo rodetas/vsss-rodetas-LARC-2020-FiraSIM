@@ -36,8 +36,8 @@ vss::Pose RobotStrategySingleAttack::defineTarget() {
     vss::Pose target;
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
 
-    target.x = state.ball.position.x;
-    target.y = state.ball.position.y;
+    target.x = state.ball.position.x + state.ball.vectorSpeed.x / 6;
+    target.y = state.ball.position.y + state.ball.vectorSpeed.y / 6;
 
     vss::Point targetPoint(target.x, target.y);
 
@@ -63,22 +63,23 @@ vss::Pose RobotStrategySingleAttack::defineTarget() {
 float RobotStrategySingleAttack::applyUnivectorField(vss::Pose target) {
 
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;
-//    if (robot.distanceFrom(target) > 15) {
-//        //Obstáculos roboôs
-//        for (auto &r: state.robots) {
-//            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
-//                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
-//            }
-//        }
-//    }
+    if (robot.distanceFrom(target) > 10) {
+        //Obstáculos roboôs
+        for (auto &r: state.robots) {
+            if ((r.position.x != robot.position.x) && (r.position.y != robot.position.y)) {
+                obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
+            }
+        }
+    }
 
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
 
-    if (robot.distanceFrom(target) < 15 and state.ball.vectorSpeed.x < 0) {
+    if (robot.position.x > state.ball.position.x) {
         univectorField.setUnivectorWithoutCurves();
     } else {
-        univectorField.setUnivectorWithCurves();
+        univectorField.setN(2);
+        univectorField.setOrientationPointDistance(10);
     }
 
     if (univectorField.offTheField) {

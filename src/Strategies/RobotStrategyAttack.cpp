@@ -90,10 +90,14 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
 
-    if (robot.distanceFrom(target) < 15 and state.ball.vectorSpeed.x < 0) {
+    univectorField.setN(2);
+    univectorField.setOrientationPointDistance(10);
+
+    if (robot.position.x > state.ball.position.x) {
         univectorField.setUnivectorWithoutCurves();
     } else {
-        univectorField.setUnivectorWithCurves();
+        univectorField.setN(2);
+        univectorField.setOrientationPointDistance(10);
     }
 
     if(univectorField.offTheField){
