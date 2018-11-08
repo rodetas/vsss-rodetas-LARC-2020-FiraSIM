@@ -11,7 +11,12 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, vss::P
 	vss::WheelsCommand command;
 
 	double realSpeedMax = 80;
-	double controllerSpeedMax = 0.8;
+    double controllerSpeedMax = 0.8;
+
+    if(mindSet == MindSet::GoalKeeperStrategy) {
+        realSpeedMax = 80;
+        controllerSpeedMax = 0.8;
+    }
 
 	if(speed == RobotSpeed::SLOW) controllerSpeedMax = 0.4;
 	if(speed == RobotSpeed::FAST) controllerSpeedMax = 0.6;
@@ -19,7 +24,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, vss::P
 
     double step;
     if(mindSet == MindSet::AttackerStrategy || mindSet == MindSet::SingleAttackerStrategy){
-        step = 0.6;
+        step = 0.5;
 
     } else if(mindSet == MindSet::GoalKeeperStrategy){
 		step = 0.6;
@@ -28,13 +33,12 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, vss::P
 		step = 0.6;
 
     } else {
-        step = 0.6;
+        step = 0.5;
     }
 
 	double d;
 	if(Config::realEnvironment){
 		d = 0.4;
-		if(mindSet == MindSet::DefenderStrategy) d = 0.5;
 
 	} else {
         d = 0.1;

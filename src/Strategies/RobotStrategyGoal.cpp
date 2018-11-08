@@ -28,7 +28,7 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     stopGoalKeeper = true;
 
     // posição para seguir linha da bola
-    goalTarget.x = vss::MAX_COORDINATE_X - 20;
+    goalTarget.x = vss::MAX_COORDINATE_X - 15;
     goalTarget.y = ballProjection.y;
 
     // máximo que pode ir até a lateral da área
