@@ -17,13 +17,27 @@ vss::WheelsCommand RobotStrategyGoal::specificStrategy(vss::WheelsCommand c) {
         c = stopStrategy(c);
     }
 
+    vss::Point ballPosition = state.ball.position;
+
+
+    if (ballPosition.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 ) &&
+        ballPosition.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) &&
+        ballPosition.x > vss::MAX_COORDINATE_X - 30 and robot.distanceFrom(state.ball.position) < 10) {
+
+        if (robot.position.y > vss::MAX_COORDINATE_Y/2) {
+            c = movimentation.turnRight(80,80);
+        } else {
+            c = movimentation.turnLeft(80,80);
+        }
+    }
+
     return c;
 }
 
 vss::Pose RobotStrategyGoal::defineTarget() {
     vss::Pose goalTarget;
     vss::Point ballProjection = state.ball.projection;
-    vss::Point ballPosition = state.ball.position;
+//    vss::Point ballPosition = state.ball.position;
 
     stopGoalKeeper = true;
 
@@ -49,22 +63,22 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     }
 
     // ir na bola quando ela está dentro da area
-    if (ballPosition.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 ) &&
-        ballPosition.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) &&
-        ballPosition.x > vss::MAX_COORDINATE_X - 30) {
-
-        // Testar esse target como sendo ballProjection ou ballPosition
-        goalTarget.x = ballPosition.x;
-        goalTarget.y = ballPosition.y;
-
-        if (state.ball.vectorSpeed.x > 0) {
-            // bola indo em direcao ao gol
-            goalTarget.x = ballPosition.x;
-            goalTarget.y = ballPosition.y;
-        }
-
-        stopGoalKeeper = false;
-    }
+//    if (ballPosition.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 ) &&
+//        ballPosition.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) &&
+//        ballPosition.x > vss::MAX_COORDINATE_X - 30 and robot.distanceFrom(state.ball.position) < 10) {
+//
+//        // Testar esse target como sendo ballProjection ou ballPosition
+//        goalTarget.x = ballPosition.x;
+//        goalTarget.y = ballPosition.y;
+//
+//        if (state.ball.vectorSpeed.x > 0) {
+//            // bola indo em direcao ao gol
+//            goalTarget.x = ballPosition.x;
+//            goalTarget.y = ballPosition.y;
+//        }
+//
+//        stopGoalKeeper = false;
+//    }
 
     if (robot.position.y < goalTarget.y) {
         goalTarget.angle = M_PI/2 - M_PI/6;
@@ -91,6 +105,14 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
             }
         }
     }
+
+//    if (target.x == state.ball.position.x and target.y == state.ball.position.y){
+//        if (target.y > 40 and target.y < 88){
+//            if (target.x > robot.position.x){
+//                univectorField.setUnivectorWithoutCurves();
+//            }
+//        }
+//    }
 
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
