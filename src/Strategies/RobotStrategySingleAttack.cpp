@@ -9,9 +9,9 @@ RobotStrategySingleAttack::RobotStrategySingleAttack(){
 }
 
 vss::WheelsCommand RobotStrategySingleAttack::specificStrategy(vss::WheelsCommand c) {
-    c = kickStrategy(c);
-    c = cornerStrategy(c);
-
+    //c = kickStrategy(c);
+    //c = cornerStrategy(c);
+/*
     if (strategyBase.isParallelToGoal()) {
 
         int halfGoal1 = vss::MAX_COORDINATE_Y / 2 + (Config::goalSize.y / 2);
@@ -28,17 +28,17 @@ vss::WheelsCommand RobotStrategySingleAttack::specificStrategy(vss::WheelsComman
             }
         }
     }
-
+*/
     return c;
 }
 
 vss::Pose RobotStrategySingleAttack::defineTarget() {
     vss::Pose target;
-    vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
+   // vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
 
-    target.x = state.ball.position.x + state.ball.vectorSpeed.x / 6;
-    target.y = state.ball.position.y + state.ball.vectorSpeed.y / 6;
-
+    target.x = state.ball.position.x;
+    target.y = state.ball.position.y;
+/*
     vss::Point targetPoint(target.x, target.y);
 
     target.angle = Math::arrivalAngle(targetPoint, centerGoal);
@@ -56,7 +56,7 @@ vss::Pose RobotStrategySingleAttack::defineTarget() {
     if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y > vss::MAX_COORDINATE_Y * 0.5)) {
         target.angle = M_PI_2;
     }
-
+*/
     return target;
 }
 
@@ -75,12 +75,12 @@ float RobotStrategySingleAttack::applyUnivectorField(vss::Pose target) {
     UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
 
-    if (robot.position.x > state.ball.position.x) {
+    if (robot.distanceFrom(target) < 15 and state.ball.vectorSpeed.x < 0 ) {
         univectorField.setUnivectorWithoutCurves();
     } else {
-        univectorField.setN(2);
-        univectorField.setOrientationPointDistance(10);
+        univectorField.setUnivectorWithCurves();
     }
+
 
     if (univectorField.offTheField) {
         univectorField.setUnivectorWithoutCurves();

@@ -6,13 +6,8 @@
 #include <Config.h>
 
 UnivectorField::UnivectorField() {
-    //Simulado:
-    //n = 3;
-    //orientationDistance = 8;
-    //Real:
-
-    n = 1;
-    orientationDistance = 5;
+    n = 2;
+    orientationDistance = 15;
     k0 = 0.12;
     dmin = 4.5;
     delta = 4.5;
@@ -26,8 +21,8 @@ void UnivectorField::setUnivectorWithoutCurves() {
 }
 
 void UnivectorField::setUnivectorWithCurves() {
-    n = 1;
-    orientationDistance = 5;
+    n = 2;
+    orientationDistance = 15;
 }
 
 void UnivectorField::setN(float n) {

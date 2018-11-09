@@ -11,40 +11,59 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
 	vss::WheelsCommand command;
 
 	double realSpeedMax = 100;
+	double vMax = 1;
+
     double r = 0.016; // Raio da roda
     double l = 0.075; // Distancia entre as rodas
 
-    double kw = 0.1;
+    double kw = 3;
     double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
-    double errorAngle = robotAngle - fi;
+    double errorAngle = Math::toDomain(robotAngle - fi);
 
     double d_fi_x = (fi - lastFi) / (robot.position.x - lastPosition.x);
     double d_fi_y = (fi - lastFi) / (robot.position.y - lastPosition.y);
 
-    double v = 1;
-    double w;
+    if (isnan(d_fi_x)) {
+        d_fi_x = 0;
+    }
 
+    if (isnan(d_fi_y)) {
+        d_fi_y = 0;
+    }
+
+    double value = 100;
+    if ( d_fi_x > value ) {
+        d_fi_x = value;
+    }
+
+    if ( d_fi_x < -value ) {
+        d_fi_x = -value;
+    }
+
+    if ( d_fi_y > value ) {
+        d_fi_y = value;
+    }
+
+    if ( d_fi_y < -value ) {
+        d_fi_y = -value;
+    }
+
+    double v = vMax;
+	if (robot.distanceFrom(target) > 30) {
+
+	} else {
+		v = (1 - 0.75 * abs(sin(errorAngle))) * vMax;
+	}
+
+    double w;
     if (errorAngle < 0) {
 		w = (d_fi_x * cos(robotAngle) + d_fi_y * sin(robotAngle)) * v - kw * (-1) * sqrt(abs(errorAngle));
 	} else {
 		w = (d_fi_x * cos(robotAngle) + d_fi_y * sin(robotAngle)) * v - kw * sqrt(abs(errorAngle));
 	}
 
-	double wr = v / r + w * (l / r);
-	double wl = v / r - w * (l / r);
-
-	// conversão rad/s para cm/s
-	wr = wr * r * 100;
-	wl = wl * r * 100;
-
-
-//	double linearSpeed = std::abs((wr + wl) / 2);
-//
-//    if (robot.linearSpeed < 40) {
-//        double k = 1 - (step * std::abs(linearSpeed - robot.linearSpeed) / realSpeedMax);
-//        wr *= k;
-//        wl *= k;
-//    }
+	double wr = v / r - w * (l / r);
+	double wl = v / r + w * (l / r);
 
 	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr), realSpeedMax);
 
