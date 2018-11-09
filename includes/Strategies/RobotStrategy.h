@@ -46,6 +46,7 @@ protected:
     Movimentation movimentation;
 
     float fi;
+    float last_fi;
 
 };
 

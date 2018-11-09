@@ -7,6 +7,9 @@
 RobotStrategy::RobotStrategy() = default;
 
 vss::WheelsCommand RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategyBase base) {
+
+    vss::Point lastPosition = robot.position;
+
     this->robot = r;
     this->state = s;
     this->strategyBase = base;
@@ -14,10 +17,11 @@ vss::WheelsCommand RobotStrategy::applyStrategy(RobotState r, RodetasState s, Ro
     // defines robot's target,
     target = this->defineTarget();
 
+    float lastFi = fi;
     fi = this->applyUnivectorField(target);
 
     // defines robot's pwm
-    command = movimentation.movePlayers(robot, fi, target, RobotSpeed ::NORMAL, this->mindSet);
+    command = movimentation.movePlayers(robot, fi, lastFi, lastPosition, target, RobotSpeed ::NORMAL, this->mindSet);
 
     // defines specific strategy such as corner strategy or kick strategy - can be applied or not
     command = this->specificStrategy(command);

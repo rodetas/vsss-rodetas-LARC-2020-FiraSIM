@@ -6,53 +6,29 @@ Movimentation::Movimentation() = default;
 /*
  * calculates the basic movimentation to goal to target
  */
-vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, vss::Point target, RobotSpeed speed, MindSet mindSet){
+vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float lastFi, vss::Point lastPosition, vss::Point target, RobotSpeed speed, MindSet mindSet){
 
 	vss::WheelsCommand command;
 
-	double realSpeedMax = 80;
-    double controllerSpeedMax = 0.8;
-
-    if(mindSet == MindSet::GoalKeeperStrategy) {
-        realSpeedMax = 80;
-        controllerSpeedMax = 0.8;
-    }
-
-	if(speed == RobotSpeed::SLOW) controllerSpeedMax = 0.4;
-	if(speed == RobotSpeed::FAST) controllerSpeedMax = 0.6;
-	if(speed == RobotSpeed::SUPERFAST) controllerSpeedMax = 1.2;
-
-    double step;
-    if(mindSet == MindSet::AttackerStrategy || mindSet == MindSet::SingleAttackerStrategy){
-        step = 0.5;
-
-    } else if(mindSet == MindSet::GoalKeeperStrategy){
-		step = 0.6;
-
-    } else if(mindSet == MindSet::DefenderStrategyRight || mindSet == MindSet::DefenderStrategyLeft || mindSet == MindSet::DefenderStrategy){
-		step = 0.6;
-
-    } else {
-        step = 0.5;
-    }
-
-	double d;
-	if(Config::realEnvironment){
-		d = 0.4;
-
-	} else {
-        d = 0.1;
-	}
-
+	double realSpeedMax = 100;
     double r = 0.016; // Raio da roda
-	double l = 0.075; // Distancia entre as rodas
-	double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
+    double l = 0.075; // Distancia entre as rodas
 
-	double xdDot = controllerSpeedMax * cos(fi);
-	double ydDot = controllerSpeedMax * sin(fi);
+    double kw = 0.1;
+    double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
+    double errorAngle = robotAngle - fi;
 
-	double v = cos(robotAngle) * xdDot + sin(robotAngle) * ydDot;
-	double w = -(sin(robotAngle) / d) * xdDot + (cos(robotAngle) / d) * ydDot;
+    double d_fi_x = (fi - lastFi) / (robot.position.x - lastPosition.x);
+    double d_fi_y = (fi - lastFi) / (robot.position.y - lastPosition.y);
+
+    double v = 1;
+    double w;
+
+    if (errorAngle < 0) {
+		w = (d_fi_x * cos(robotAngle) + d_fi_y * sin(robotAngle)) * v - kw * (-1) * sqrt(abs(errorAngle));
+	} else {
+		w = (d_fi_x * cos(robotAngle) + d_fi_y * sin(robotAngle)) * v - kw * sqrt(abs(errorAngle));
+	}
 
 	double wr = v / r + w * (l / r);
 	double wl = v / r - w * (l / r);
@@ -61,19 +37,14 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, vss::P
 	wr = wr * r * 100;
 	wl = wl * r * 100;
 
-	if (wr > 0 && wl > 0) {
-		double aux = wr;
-		wr = wl;
-		wl = aux;
-	}
 
-	double linearSpeed = std::abs((wr + wl) / 2);
-
-    if (robot.linearSpeed < 40) {
-        double k = 1 - (step * std::abs(linearSpeed - robot.linearSpeed) / realSpeedMax);
-        wr *= k;
-        wl *= k;
-    }
+//	double linearSpeed = std::abs((wr + wl) / 2);
+//
+//    if (robot.linearSpeed < 40) {
+//        double k = 1 - (step * std::abs(linearSpeed - robot.linearSpeed) / realSpeedMax);
+//        wr *= k;
+//        wl *= k;
+//    }
 
 	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr), realSpeedMax);
 
