@@ -18,7 +18,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
     double r = 0.016; // Raio da roda
     double l = 0.075; // Distancia entre as rodas
 
-    double kw = 3;
+    //double kw = 3;
     double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
     double errorAngle = Math::toDomain(robotAngle - fi);
 
@@ -26,47 +26,79 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
     nextPosition.x = robot.position.x + cos(robotAngle)*robot.linearSpeed*sampleTime;
     nextPosition.y = robot.position.y + sin(robotAngle)*robot.linearSpeed*sampleTime;
 
-    double d_fi_x = (fi - lastFi) / (nextPosition.x - robot.position.x);
-    double d_fi_y = (fi - lastFi) / (nextPosition.y - robot.position.y);
+    double d_fiy_x = (sin(fi) - sin(lastFi)) / (nextPosition.x - robot.position.x);
+    double d_fix_y = (cos(fi) - cos(lastFi)) / (nextPosition.y - robot.position.y);
 
-    if (isnan(d_fi_x)) {
-        d_fi_x = 0;
+    double d_fiy_y = (sin(fi) - sin(lastFi)) / (nextPosition.y - robot.position.y);
+    double d_fix_x = (cos(fi) - cos(lastFi)) / (nextPosition.x - robot.position.x);
+
+    if (isnan(d_fiy_x)) {
+        d_fiy_x = 0;
     }
 
-    if (isnan(d_fi_y)) {
-        d_fi_y = 0;
+    if (isnan(d_fix_y)) {
+        d_fix_y = 0;
+    }
+
+    if (isnan(d_fiy_y)) {
+        d_fiy_y = 0;
+    }
+
+    if (isnan(d_fix_x)) {
+        d_fix_x = 0;
     }
 
     double value = 100;
-    if ( d_fi_x > value ) {
-        d_fi_x = value;
+    if ( d_fiy_x > value ) {
+        d_fiy_x = value;
     }
 
-    if ( d_fi_x < -value ) {
-        d_fi_x = -value;
+    if ( d_fiy_x < -value ) {
+        d_fiy_x = -value;
     }
 
-    if ( d_fi_y > value ) {
-        d_fi_y = value;
+
+    if ( d_fix_y > value ) {
+        d_fix_y = value;
     }
 
-    if ( d_fi_y < -value ) {
-        d_fi_y = -value;
+    if ( d_fix_y < -value ) {
+        d_fix_y = -value;
     }
 
-    double v = vMax;
-	if (robot.distanceFrom(target) > 30) {
+    if ( d_fiy_y > value ) {
+        d_fiy_y = value;
+    }
 
-	} else {
-		v = (1 - 0.75 * abs(sin(errorAngle))) * vMax;
-	}
+    if ( d_fiy_y < -value ) {
+        d_fiy_y = -value;
+    }
 
-    double w;
-    if (errorAngle < 0) {
-		w = (d_fi_x * cos(robotAngle) + d_fi_y * sin(robotAngle)) * v - kw * (-1) * sqrt(abs(errorAngle));
-	} else {
-		w = (d_fi_x * cos(robotAngle) + d_fi_y * sin(robotAngle)) * v - kw * sqrt(abs(errorAngle));
-	}
+
+    if ( d_fix_x > value ) {
+        d_fix_x = value;
+    }
+
+    if ( d_fix_x < -value ) {
+        d_fix_x = -value;
+    }
+
+    double v = -vMax;
+
+    double kp = 15;
+    double w = v*cos(errorAngle)*(d_fiy_x - d_fix_y) - v*sin(errorAngle)*(d_fix_x + d_fiy_y) + kp*sin(errorAngle);
+//	if (robot.distanceFrom(target) > 30) {
+//
+//	} else {
+//		v = (1 - 0.75 * abs(sin(errorAngle))) * vMax;
+//	}
+//
+//    double w;
+//    if (errorAngle < 0) {
+//		w = (d_fi_x * cos(robotAngle) + d_fi_y * sin(robotAngle)) * v - kw * (-1) * sqrt(abs(errorAngle));
+//	} else {
+//		w = (d_fi_x * cos(robotAngle) + d_fi_y * sin(robotAngle)) * v - kw * sqrt(abs(errorAngle));
+//	}
 
 	double wr = v / r - w * (l / r);
 	double wl = v / r + w * (l / r);
