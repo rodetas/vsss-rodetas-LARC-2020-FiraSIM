@@ -11,6 +11,7 @@ blocks:
       jobs:
       - name: Compile
         commands:
+          - pwd
           - ./build-test.sh
 
   - name: "Unit tests"
