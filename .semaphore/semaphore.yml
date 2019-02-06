@@ -12,9 +12,9 @@ blocks:
       - name: Build
         commands_file: build_test.sh
       prologue:
-        - commands:
-            - checkout
-            - ls -lR
+        commands:
+          - checkout
+          - ls -lR
 
   - name: "Smoke tests"
     task:
