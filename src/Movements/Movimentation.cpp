@@ -8,7 +8,9 @@ Movimentation::Movimentation() = default;
  */
 vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float lastFi, vss::Point lastPosition, vss::Point target, RobotSpeed speed, MindSet mindSet){
 
-	vss::WheelsCommand command;
+	double sampleTime = 0.01666;
+
+    vss::WheelsCommand command;
 
 	double realSpeedMax = 100;
 	double vMax = 1;
@@ -20,8 +22,12 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
     double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
     double errorAngle = Math::toDomain(robotAngle - fi);
 
-    double d_fi_x = (fi - lastFi) / (robot.position.x - lastPosition.x);
-    double d_fi_y = (fi - lastFi) / (robot.position.y - lastPosition.y);
+    vss::Point nextPosition;
+    nextPosition.x = robot.position.x + cos(robotAngle)*robot.linearSpeed*sampleTime;
+    nextPosition.y = robot.position.y + sin(robotAngle)*robot.linearSpeed*sampleTime;
+
+    double d_fi_x = (fi - lastFi) / (nextPosition.x - robot.position.x);
+    double d_fi_y = (fi - lastFi) / (nextPosition.y - robot.position.y);
 
     if (isnan(d_fi_x)) {
         d_fi_x = 0;
