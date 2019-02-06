@@ -18,9 +18,8 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
     double r = 0.016; // Raio da roda
     double l = 0.075; // Distancia entre as rodas
 
-    //double kw = 3;
     double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
-    double errorAngle = Math::toDomain(robotAngle - fi);
+    double errorAngle = Math::toDomain(fi - robotAngle);
 
     vss::Point nextPosition;
     nextPosition.x = robot.position.x + cos(robotAngle)*robot.linearSpeed*sampleTime;
@@ -31,6 +30,8 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
 
     double d_fiy_y = (sin(fi) - sin(lastFi)) / (nextPosition.y - robot.position.y);
     double d_fix_x = (cos(fi) - cos(lastFi)) / (nextPosition.x - robot.position.x);
+
+    //std::cout<<" dfiy_x: "<< d_fiy_x<<" dfix_y: "<<d_fix_y<<" dfiy_y: "<< d_fiy_y<<" dfix_x: "<<d_fix_x<<std::endl;
 
     if (isnan(d_fiy_x)) {
         d_fiy_x = 0;
@@ -48,7 +49,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
         d_fix_x = 0;
     }
 
-    double value = 100;
+    double value = 400;
     if ( d_fiy_x > value ) {
         d_fiy_x = value;
     }
@@ -83,25 +84,29 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
         d_fix_x = -value;
     }
 
-    double v = -vMax;
+    if ( cos(fi - Math::toRadian(robot.angle)) > 0.3){
+        lastSide = 1;
+    } else if(cos(fi - Math::toRadian(robot.angle)) < -0.3){
+        lastSide = -1;
+    }
 
-    double kp = 15;
-    double w = v*cos(errorAngle)*(d_fiy_x - d_fix_y) - v*sin(errorAngle)*(d_fix_x + d_fiy_y) + kp*sin(errorAngle);
-//	if (robot.distanceFrom(target) > 30) {
-//
-//	} else {
-//		v = (1 - 0.75 * abs(sin(errorAngle))) * vMax;
-//	}
-//
-//    double w;
-//    if (errorAngle < 0) {
-//		w = (d_fi_x * cos(robotAngle) + d_fi_y * sin(robotAngle)) * v - kw * (-1) * sqrt(abs(errorAngle));
-//	} else {
-//		w = (d_fi_x * cos(robotAngle) + d_fi_y * sin(robotAngle)) * v - kw * sqrt(abs(errorAngle));
-//	}
+    double v = lastSide*vMax;
 
+    double kp = 13;
+    double d_thetaf = v*cos(errorAngle)*(d_fiy_x - d_fix_y) - v*sin(errorAngle)*(d_fix_x + d_fiy_y);
+    double w = kp*sin(errorAngle) + d_thetaf;
+    std::cout<<"d_thetaf: "<<d_thetaf<<" Kp*sin: "<<kp*sin(errorAngle)<<std::endl;
+    //std::cout<<"w: "<<w<<std::endl;
 	double wr = v / r - w * (l / r);
 	double wl = v / r + w * (l / r);
+
+    if (v < 0) {
+        double aux = wr;
+        wr = wl;
+        wl = aux;
+    }
+
+	//std::cout<<"wr: "<< wr << " wl: "<<wl<<std::endl;
 
 	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr), realSpeedMax);
 
