@@ -28,5 +28,7 @@ INSTALL_SAMPLE() {
     make
 }
 
+pwd
+ls
 INSTALL_CORE;
 INSTALL_SAMPLE;
