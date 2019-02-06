@@ -10,7 +10,9 @@ blocks:
     task:
       jobs:
       - name: Compile
-        commands_file: build_test.sh
+        commands:
+          - ls
+          - pwd
 
   - name: "Unit tests"
     task:
