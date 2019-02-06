@@ -20,7 +20,7 @@ INSTALL_CORE() {
 }
 
 INSTALL_SAMPLE() {
-    sudo apt-get -y install g++ cmake protobuf-compiler libprotobuf-dev libboost-all-dev gtkmm-2.4
+    sudo apt-get -y install g++ cmake protobuf-compiler libprotobuf-dev libboost-all-dev libgtkmm-3.0-dev
 
     mkdir build
     cd build

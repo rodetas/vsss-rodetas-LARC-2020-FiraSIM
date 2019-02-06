@@ -9,7 +9,7 @@ SET(CMAKE_CXX_FLAGS "-g -Wall -Werror -std=c++11 -o2 -pthread")
 FIND_PACKAGE(PkgConfig)
 FIND_PACKAGE(Protobuf REQUIRED)
 FIND_PACKAGE(Boost 1.40 COMPONENTS program_options REQUIRED)
-pkg_check_modules(GTKMM REQUIRED gtkmm-2.4)
+pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
 
 INCLUDE(FindProtobuf)
 include_directories(${PROTOBUF_INCLUDE_DIR} ${GTKMM_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
