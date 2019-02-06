@@ -12,7 +12,8 @@ blocks:
       - name: Compile
         commands:
           - pwd
-          - ./build-test.sh
+          - ls
+      - commands_file: build_test.sh
 
   - name: "Unit tests"
     task:
