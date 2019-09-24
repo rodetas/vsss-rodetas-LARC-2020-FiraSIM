@@ -36,8 +36,9 @@ vss::Pose RobotStrategySingleAttack::defineTarget() {
     vss::Pose target;
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
 
-    target.x = state.ball.position.x;
-    target.y = state.ball.position.y;
+
+    target.x = 120;
+    target.y = 65;
 
     vss::Point targetPoint(target.x, target.y);
 
@@ -56,7 +57,6 @@ vss::Pose RobotStrategySingleAttack::defineTarget() {
     if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y > vss::MAX_COORDINATE_Y * 0.5)) {
         target.angle = M_PI_2;
     }
-
     return target;
 }
 
