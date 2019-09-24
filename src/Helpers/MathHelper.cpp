@@ -34,6 +34,7 @@ double Math::norm(vss::Point vector) {
 
 double Math::gaussian(double r, double delta) {
     return exp(-((r * r) / (2 * delta * delta)));
+    //return exp(-(r)/delta);
 }
 
 float Math::toDomain(float fi) {

@@ -55,6 +55,11 @@ vss::Pose RobotStrategySingleAttack::defineTarget() {
         target.angle = M_PI_2;
     }
 
+    target.x = 140;
+    target.y = 115;
+
+    target.angle = 0;
+
     return target;
 }
 
@@ -78,6 +83,14 @@ float RobotStrategySingleAttack::applyUnivectorField(vss::Pose target) {
         obstacles.clear();
     }
 
+    univectorField.setUnivectorWithoutCurves();
     path = univectorField.drawPath(robot, target, obstacles);
+
+//    std::cout << "INICIO PATH" << std::endl;
+//    for (auto i : path.points) {
+//        std::cout << i << std::endl;
+//    }
+//    std::cout << "FIM PATH" << std::endl << std::endl << std::endl;
+
     return univectorField.defineFi(robot, target, obstacles);
 }

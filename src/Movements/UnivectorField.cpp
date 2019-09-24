@@ -10,10 +10,10 @@ UnivectorField::UnivectorField() {
     //orientationDistance = 8;
     //Real:
 
-    n = 2;
-    orientationDistance = 8;
-    k0 = 0.12;
-    dmin = 4.5;
+    n = 3;
+    orientationDistance = 10;
+    k0 = 0.4;
+    dmin = 7;
     delta = 4.5;
 
     offTheField = false;
@@ -24,7 +24,7 @@ void UnivectorField::setUnivectorWithoutCurves() {
 }
 
 void UnivectorField::setUnivectorWithCurves() {
-    n = 2;
+    n = 3;
 }
 
 float

@@ -10,17 +10,17 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 
 	vss::WheelsCommand command;
 
-	double vMax = 0.6;
+	double vMax = 0.2;
 
-	if(speed == RobotSpeed::SLOW) vMax = 0.2;
-	else if(speed == RobotSpeed::FAST) vMax = 0.3;
-	else if(speed == RobotSpeed::SUPERFAST) vMax = 0.8;
+	//if(speed == RobotSpeed::SLOW) vMax = 0.2;
+	//else if(speed == RobotSpeed::FAST) vMax = 0.3;
+	//else if(speed == RobotSpeed::SUPERFAST) vMax = 0.8;
 
 	double d = 0.1; // Coeficiente de ponto a frente do robô para ambiente SIMULADO
-	if(Config::realEnvironment){
+	/*if(Config::realEnvironment){
 		// Coeficiente para ambiente REAL
-		d = 0.3;
-	}
+		d = 0.2;
+	}*/
 
 	double r = 0.016; // Raio da roda
 	double l = 0.075;// Distancia entre as rodas
@@ -37,7 +37,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
     } else if(cos(fi - Math::toRadian(robot.angle)) < -0.4){
         lastSide = 1;
     }
- 
+
     double wr = v/r + w*(l/r) * lastSide;
     double wl = v/r - w*(l/r) * lastSide;
 
@@ -45,24 +45,14 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 	wr =  wr * r * 100;
 	wl =  wl * r * 100;
 
-    double linearSpeed = std::abs((wr + wl) / 2);
-	double k = 1 - (0.7 * std::abs(linearSpeed - robot.linearSpeed) / 60);
+    //double linearSpeed = std::abs((wr + wl) / 2);
+	//double k = 1 - (0.7 * std::abs(linearSpeed - robot.linearSpeed) / 60);
 	//std::cout<<"k:"<<k<<std::endl;
 
-	wr *= k;
-	wl *= k;
+	//wr *= k;
+	//wl *= k;
+	//std::cout<<"Fi: "<<Math::toDomain(fi)<<" Vcontrol: "<<v<<" Wcontrol: "<<w<<" Wr: "<<wr<< "Wl: "<<wl<<" --- X: "<<robot.position.x<<" Y: "<<robot.position.y<<" Theta: "<<robotAngle<<" Vrobot: "<<robot.linearSpeed<<" Wrobot: "<<Math::toDomain(robot.angularSpeed)<<" Eangle:"<<Math::toDomain(fi - robotAngle)<<std::endl;
 
-    //std::cout <<"WR: "<< wr << " WL:" << wl << " Vel Control: " << linearSpeed << " Vel med: "<< robot.linearSpeed << std::endl;
-
-    //	std::cout<<"----"<<std::endl;
-    //	std::cout<<"Fi: "<<fi<<std::endl;
-    //	std::cout<<"Theta: "<<robotAngle<<std::endl;
-    //	std::cout<<"X: "<<robot.position.x<<" Y: "<<robot.position.y<<std::endl;
-    //
-    //	std::cout<<"v: "<<v<<std::endl;
-    //	std::cout<<"w: "<<w<<std::endl;
-    //	std::cout<<"wr: "<<wr<<std::endl;
-    //	std::cout<<"wl: "<<wl<<std::endl;
 
 	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr));
 
