@@ -93,11 +93,9 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
     double v = lastSide*vMax;
 
     double kp = 5;
-    double d_thetaf = v*cos(errorAngle)*(d_fiy_x - d_fix_y) - v*sin(errorAngle)*(d_fix_x + d_fiy_y);
+    //double d_thetaf = v*cos(errorAngle)*(d_fiy_x - d_fix_y) - v*sin(errorAngle)*(d_fix_x + d_fiy_y);
     double w = kp*sin(errorAngle); //+ d_thetaf;0
 
-    std::cout<<"d_thetaf: "<<d_thetaf<<" Kp*sin: "<<kp*sin(errorAngle)<<std::endl;
-    std::cout<<"w: "<<w<<std::endl;
 
 	double wr = v / r - w * (l / r);
 	double wl = v / r + w * (l / r);
@@ -108,7 +106,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
         wl = aux;
     }
 
-	std::cout<<"wr: "<< wr << " wl: "<<wl<<std::endl;
+    std::cout<<"Fi: "<<Math::toDomain(fi)<<" Vcontrol: "<<v<<" Wcontrol: "<<w<<" Wr: "<<wr<< "Wl: "<<wl<<" --- X: "<<robot.position.x<<" Y: "<<robot.position.y<<" Theta: "<<robotAngle<<" Vrobot: "<<robot.linearSpeed<<" Wrobot: "<<Math::toDomain(robot.angularSpeed)<<" Eangle:"<<Math::toDomain(fi - robotAngle)<<std::endl;
 
 	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr), realSpeedMax);
 
