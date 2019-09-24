@@ -1,4 +1,5 @@
 #include "Movements/Movimentation.h"
+#include <math.h>
 
 
 Movimentation::Movimentation() = default;
@@ -11,23 +12,23 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
 	vss::WheelsCommand command;
 
 	double realSpeedMax = 100;
-	double vMax = 1;
+	double vMax = 0.5;
 
     double r = 0.016; // Raio da roda
     double l = 0.075; // Distancia entre as rodas
 
-    double kw = 3;
+    double kw = 5;
     double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
     double errorAngle = Math::toDomain(robotAngle - fi);
 
     double d_fi_x = (fi - lastFi) / (robot.position.x - lastPosition.x);
     double d_fi_y = (fi - lastFi) / (robot.position.y - lastPosition.y);
 
-    if (isnan(d_fi_x)) {
+    if (std::isnan(d_fi_x)) {
         d_fi_x = 0;
     }
 
-    if (isnan(d_fi_y)) {
+    if (std::isnan(d_fi_y)) {
         d_fi_y = 0;
     }
 
@@ -64,6 +65,8 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
 
 	double wr = v / r - w * (l / r);
 	double wl = v / r + w * (l / r);
+
+	std::cout<<"Fi: "<<Math::toDomain(fi)<<" Vcontrol: "<<v<<" Wcontrol: "<<w<<" Wr: "<<wr<< "Wl: "<<wl<<" --- X: "<<robot.position.x<<" Y: "<<robot.position.y<<" Theta: "<<robotAngle<<" Vrobot: "<<robot.linearSpeed<<" Wrobot: "<<Math::toDomain(robot.angularSpeed)<<" Eangle:"<<Math::toDomain(fi - robotAngle)<<std::endl;
 
 	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr), realSpeedMax);
 
