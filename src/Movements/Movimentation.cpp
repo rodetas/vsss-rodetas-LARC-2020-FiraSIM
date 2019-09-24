@@ -13,7 +13,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
     vss::WheelsCommand command;
 
 	double realSpeedMax = 100;
-	double vMax = 1;
+	double vMax = 0.6;
 
     double r = 0.016; // Raio da roda
     double l = 0.075; // Distancia entre as rodas
@@ -49,7 +49,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
         d_fix_x = 0;
     }
 
-    double value = 400;
+    double value = 200;
     if ( d_fiy_x > value ) {
         d_fiy_x = value;
     }
@@ -92,10 +92,11 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
 
     double v = lastSide*vMax;
 
-    double kp = 5;
-    //double d_thetaf = v*cos(errorAngle)*(d_fiy_x - d_fix_y) - v*sin(errorAngle)*(d_fix_x + d_fiy_y);
-    double w = kp*sin(errorAngle); //+ d_thetaf;0
+    double kp = 3;
+    double d_thetaf = v*cos(errorAngle)*(d_fiy_x - d_fix_y) - v*sin(errorAngle)*(d_fix_x + d_fiy_y);
 
+    double w = kp*sin(errorAngle) + d_thetaf;
+    std::cout<<"dt: "<<d_thetaf<< "Kpsin: "<<kp*sin(errorAngle)<< "w: "<< w <<std::endl;
 
 	double wr = v / r - w * (l / r);
 	double wl = v / r + w * (l / r);

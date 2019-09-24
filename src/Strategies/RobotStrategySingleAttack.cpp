@@ -10,7 +10,7 @@ RobotStrategySingleAttack::RobotStrategySingleAttack(){
 
 vss::WheelsCommand RobotStrategySingleAttack::specificStrategy(vss::WheelsCommand c) {
     //c = kickStrategy(c);
-    //c = cornerStrategy(c);
+    c = cornerStrategy(c);
 /*
     if (strategyBase.isParallelToGoal()) {
 
@@ -34,11 +34,11 @@ vss::WheelsCommand RobotStrategySingleAttack::specificStrategy(vss::WheelsComman
 
 vss::Pose RobotStrategySingleAttack::defineTarget() {
     vss::Pose target;
-   // vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
+    vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
 
     target.x = state.ball.position.x;
     target.y = state.ball.position.y;
-/*
+
     vss::Point targetPoint(target.x, target.y);
 
     target.angle = Math::arrivalAngle(targetPoint, centerGoal);
@@ -56,7 +56,7 @@ vss::Pose RobotStrategySingleAttack::defineTarget() {
     if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y > vss::MAX_COORDINATE_Y * 0.5)) {
         target.angle = M_PI_2;
     }
-*/
+
     return target;
 }
 
