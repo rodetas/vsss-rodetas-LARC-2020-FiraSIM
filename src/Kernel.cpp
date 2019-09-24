@@ -22,8 +22,8 @@ void Kernel::loop() {
 
     vector<RodetasRobot> robots;
 
-//    robots.emplace_back(RodetasRobot(0, MindSet::SingleAttackerStrategy, new RobotStrategySingleAttack()));
     robots.emplace_back(RodetasRobot(0, MindSet::SingleAttackerStrategy, new RobotStrategySingleAttack()));
+    robots.emplace_back(RodetasRobot(1, MindSet::SingleAttackerStrategy, new RobotStrategySingleAttack()));
    // robots.emplace_back(RodetasRobot(1, MindSet::SingleAttackerStrategy, new RobotStrategySingleAttack()));
    // robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
 

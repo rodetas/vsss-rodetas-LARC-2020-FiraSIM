@@ -31,21 +31,21 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
     double d_fiy_y = (sin(fi) - sin(lastFi)) / (nextPosition.y - robot.position.y);
     double d_fix_x = (cos(fi) - cos(lastFi)) / (nextPosition.x - robot.position.x);
 
-    //std::cout<<" dfiy_x: "<< d_fiy_x<<" dfix_y: "<<d_fix_y<<" dfiy_y: "<< d_fiy_y<<" dfix_x: "<<d_fix_x<<std::endl;
+    std::cout<<" dfiy_x: "<< d_fiy_x<<" dfix_y: "<<d_fix_y<<" dfiy_y: "<< d_fiy_y<<" dfix_x: "<<d_fix_x<<std::endl;
 
-    if (isnan(d_fiy_x)) {
+    if (std::isnan(d_fiy_x)) {
         d_fiy_x = 0;
     }
 
-    if (isnan(d_fix_y)) {
+    if (std::isnan(d_fix_y)) {
         d_fix_y = 0;
     }
 
-    if (isnan(d_fiy_y)) {
+    if (std::isnan(d_fiy_y)) {
         d_fiy_y = 0;
     }
 
-    if (isnan(d_fix_x)) {
+    if (std::isnan(d_fix_x)) {
         d_fix_x = 0;
     }
 
@@ -92,11 +92,13 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
 
     double v = lastSide*vMax;
 
-    double kp = 13;
+    double kp = 5;
     double d_thetaf = v*cos(errorAngle)*(d_fiy_x - d_fix_y) - v*sin(errorAngle)*(d_fix_x + d_fiy_y);
-    double w = kp*sin(errorAngle) + d_thetaf;
+    double w = kp*sin(errorAngle); //+ d_thetaf;0
+
     std::cout<<"d_thetaf: "<<d_thetaf<<" Kp*sin: "<<kp*sin(errorAngle)<<std::endl;
-    //std::cout<<"w: "<<w<<std::endl;
+    std::cout<<"w: "<<w<<std::endl;
+
 	double wr = v / r - w * (l / r);
 	double wl = v / r + w * (l / r);
 
@@ -106,7 +108,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float 
         wl = aux;
     }
 
-	//std::cout<<"wr: "<< wr << " wl: "<<wl<<std::endl;
+	std::cout<<"wr: "<< wr << " wl: "<<wl<<std::endl;
 
 	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr), realSpeedMax);
 
