@@ -27,6 +27,16 @@
 #include <Domain/PositionStatus.h>
 #include <Config.h>
 #include <thread>
+#include <Kernel.h>
+#include <QtCore>
+#include <QtNetwork>
+#include "../net/robocup_ssl_client.h"
+#include "../net/grSim_client.h"
+#include "../net/pb/command.pb.h"
+#include "../net/pb/common.pb.h"
+#include "../net/pb/packet.pb.h"
+#include "../net/pb/replacement.pb.h"
+
 
 using namespace std;
 using namespace common;
