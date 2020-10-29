@@ -22,7 +22,7 @@ void Kernel::loop() {
     }
     RobotStrategyFactory coach;
     RoboCupSSLClient visionClient("224.5.23.2", 10020);
-    //GrSim_Client commandClient("127.0.0.1", 20011);
+    GrSim_Client commandClient("127.0.0.1", 20011);
     fira_message::sim_to_ref::Environment packet;
 
     visionClient.open(false);
@@ -48,13 +48,13 @@ while(true){
                     printf("-Robot(B) (%2d/%2d): ",i+1, robots_blue_n);
                     visionClient.printRobotInfo(robot);
 
-                    /*if(!my_robots_are_yellow){
+                    if(!my_robots_are_yellow){
                         if(robot.x() <= 0){
                             commandClient.sendCommand(10, 10, my_robots_are_yellow, i);
                         }else{
                             commandClient.sendCommand(-10, -10, my_robots_are_yellow, i);
                         }
-                    }*/
+                    }
                 }
 
                 //Yellow robot info:
@@ -63,13 +63,13 @@ while(true){
                     printf("-Robot(Y) (%2d/%2d): ",i+1, robots_yellow_n);
                     visionClient.printRobotInfo(robot);
 
-                    /*if(my_robots_are_yellow){
+                    if(my_robots_are_yellow){
                         if(robot.x() <= 0){
                             commandClient.sendCommand(10, 10, my_robots_are_yellow, i);
                         }else{
                             commandClient.sendCommand(-10, -10, my_robots_are_yellow, i);
                         }
-                    }*/
+                    }
                 }
 
             }
