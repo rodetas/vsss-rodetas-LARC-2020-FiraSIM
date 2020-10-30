@@ -12,6 +12,12 @@
 #include <Domain/FieldTransformationType.h>
 #include <Domain/TeamType.h>
 #include <RodetasRobot.h>
+#include "../net/pb/command.pb.h"
+#include "../net/pb/common.pb.h"
+#include "../net/pb/packet.pb.h"
+#include "../net/pb/replacement.pb.h"
+
+
 
 class StateReceiverAdapter {
 
@@ -20,7 +26,7 @@ public:
     StateReceiverAdapter(vss::TeamType, vss::FieldTransformationType);
 
     void createSocketReceiveState();
-    RodetasState receiveState();
+    RodetasState receiveState(fira_message::sim_to_ref::Environment);
 
 private:
     vss::FieldTransformationType changeSide;

@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QUdpSocket>
 #include <QString>
-
 #include "pb/command.pb.h"
 #include "pb/common.pb.h"
 #include "pb/packet.pb.h"

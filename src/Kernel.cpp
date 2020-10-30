@@ -10,6 +10,7 @@ Kernel::Kernel() {
 };
 
 void Kernel::loop() {
+    
     bool my_robots_are_yellow = false;
     if(Config::controlWindow)
         threadWindowControl = new thread(std::bind(&Kernel::windowThreadWrapper, this));
@@ -22,13 +23,13 @@ void Kernel::loop() {
     }
     RobotStrategyFactory coach;
     RoboCupSSLClient visionClient("224.5.23.2", 10020);
-    GrSim_Client commandClient("127.0.0.1", 20011);
+    
     fira_message::sim_to_ref::Environment packet;
-
     visionClient.open(false);
-while(true){
-    if (visionClient.receive(packet)) {
-            printf("-----Received Wrapper Packet---------------------------------------------\n");
+    
+    //GrSim_Client commandClient("127.0.0.1", 20011);
+    /*if (visionClient.receive(packet)) {
+            //printf("-----Received Wrapper Packet---------------------------------------------\n");
             //see if the packet contains a robot detection frame:
             if (packet.has_frame()) {
                 fira_message::Frame detection = packet.frame();
@@ -40,13 +41,13 @@ while(true){
                 //Ball info:
 
                 fira_message::Ball ball = detection.ball();
-                printf("-Ball:  POS=<%9.2f,%9.2f> \n",ball.x(),ball.y());
+                //printf("-Ball:  POS=<%9.2f,%9.2f> \n",ball.x(),ball.y());
 
                 //Blue robot info:
                 for (int i = 0; i < robots_blue_n; i++) {
                     fira_message::Robot robot = detection.robots_blue(i);
-                    printf("-Robot(B) (%2d/%2d): ",i+1, robots_blue_n);
-                    visionClient.printRobotInfo(robot);
+                    //printf("-Robot(B) (%2d/%2d): ",i+1, robots_blue_n);
+                    //visionClient.printRobotInfo(robot);
 
                     if(!my_robots_are_yellow){
                         if(robot.x() <= 0){
@@ -60,8 +61,8 @@ while(true){
                 //Yellow robot info:
                 for (int i = 0; i < robots_yellow_n; i++) {
                     fira_message::Robot robot = detection.robots_yellow(i);
-                    printf("-Robot(Y) (%2d/%2d): ",i+1, robots_yellow_n);
-                    visionClient.printRobotInfo(robot);
+                    //printf("-Robot(Y) (%2d/%2d): ",i+1, robots_yellow_n);
+                    //visionClient.printRobotInfo(robot);
 
                     if(my_robots_are_yellow){
                         if(robot.x() <= 0){
@@ -86,14 +87,15 @@ while(true){
                 printf("  -goal_depth=%f (mm)\n",field.goal_depth());
             }
         }
-    }
-    }
-/*
+    
+    }*/
+
     StateReceiverAdapter receiveInterface(Config::teamColor, Config::changeSide);
     DebugSendAdapter debugInterface(Config::teamColor, Config::debug);
     CommandSendAdapter sendInterface(Config::teamColor, Config::realEnvironment);
 
     vector<RodetasRobot> robots;
+    
 
     robots.emplace_back(RodetasRobot(0, MindSet::SingleAttackerStrategy, new RobotStrategySingleAttack()));
     robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategyDefender()));
@@ -103,15 +105,22 @@ while(true){
 
     RodetasState state;
 
-    vss::Debug debug;
-    debug.paths.resize(3);
-    debug.finalPoses.resize(3);
-    debug.stepPoints.resize(3);
+    //vss::Debug debug;
+    //debug.paths.resize(3);
+    //debug.finalPoses.resize(3);
+    //debug.stepPoints.resize(3);
 
     while (isRunning) {
 
         // method which waits and receives a new state from simulator or vision
-        state = receiveInterface.receiveState();
+         if (visionClient.receive(packet)) {
+            //printf("-----Received Wrapper Packet---------------------------------------------\n");
+            //see if the packet contains a robot detection frame:
+            if (packet.has_frame()) {
+                state = receiveInterface.receiveState(packet);
+                            }
+    }
+        //state = receiveInterface.receiveState();
 
         for (unsigned int i = 0; i < robots.size(); i++) {
             RodetasRobot &robot = robots[i];
@@ -124,21 +133,21 @@ while(true){
             commands[i] = robot.getCommand();
 
             //debug.finalPoses[i] = robot.getFinalPose();
-            debug.stepPoints[i] = robot.getStepPoint();
-            debug.paths[i] = robot.getPath();
+            //debug.stepPoints[i] = robot.getStepPoint();
+            //debug.paths[i] = robot.getPath();
         }
 
         std::cout<<std::endl;
 
         coach.manage(robots, state, Config::playersSwap, isFreeBall, positionStatus);
 
-        sendInterface.sendCommands(robots, isPlaying, isTestingTransmission);
-        debugInterface.sendDebug(debug);
-    }*/
+        //sendInterface.sendCommands(robots, isPlaying, isTestingTransmission);
+        //debugInterface.sendDebug(debug);
+    }
 
     /*if(Config::controlWindow)
-        threadWindowControl->detach();
-}*/
+        threadWindowControl->detach();*/
+}
 
 void Kernel::windowThreadWrapper() {
 
