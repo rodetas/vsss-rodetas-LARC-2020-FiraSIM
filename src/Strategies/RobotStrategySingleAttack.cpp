@@ -16,7 +16,7 @@ vss::WheelsCommand RobotStrategySingleAttack::specificStrategy(vss::WheelsComman
         int halfGoal2 = vss::MAX_COORDINATE_Y / 2 - (Config::goalSize.y / 2);
 
         if (robot.distanceFrom(state.ball.position) < 7 &&
-            robot.position.x < vss::MAX_COORDINATE_X * 0.25 && robot.position.y > halfGoal2 &&
+            robot.position.x < (vss::MAX_COORDINATE_X - 20) * 0.25 && robot.position.y > halfGoal2 &&
             robot.position.y < halfGoal1) {
 
             if (robot.position.y < state.ball.position.y) {
@@ -48,10 +48,10 @@ vss::Pose RobotStrategySingleAttack::defineTarget() {
     if (target.y > vss::MAX_COORDINATE_Y * 0.88) {
         target.angle = 0;
     }
-    if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y < vss::MAX_COORDINATE_Y * 0.5)) {
+    if ((target.x > (vss::MAX_COORDINATE_X - 20) * 0.88) && (target.y < vss::MAX_COORDINATE_Y * 0.5)) {
         target.angle = (3 * M_PI) / 2;
     }
-    if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y > vss::MAX_COORDINATE_Y * 0.5)) {
+    if ((target.x > (vss::MAX_COORDINATE_X - 20) * 0.88) && (target.y > vss::MAX_COORDINATE_Y * 0.5)) {
         target.angle = M_PI_2;
     }
 

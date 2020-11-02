@@ -11,7 +11,7 @@ vss::WheelsCommand DefenderMiddleAttackPositioning::specificStrategy(vss::Wheels
 }
 
 vss::Pose DefenderMiddleAttackPositioning::defineTarget(){
-    vss::Pose target(vss::MAX_COORDINATE_X*0.75, vss::MAX_COORDINATE_Y*0.4, 0);
+    vss::Pose target((vss::MAX_COORDINATE_X - 20)*0.75, vss::MAX_COORDINATE_Y*0.4, 0);
 
     return target;
 }

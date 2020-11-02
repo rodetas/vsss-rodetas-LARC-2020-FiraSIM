@@ -28,6 +28,14 @@ double Math::toRadian(double angle) {
     return angle * (M_PI / 180);
 }
 
+double Math::toDegree(double angle) {
+    return angle * (180 / M_PI);
+}
+
+vss::Point Math::conversion(vss::Point a){
+    return vss::Point((a.x*100)+75,(130-(a.y*100+65)));
+}
+
 double Math::norm(vss::Point vector) {
     return sqrt(pow(vector.x, 2) + pow(vector.y, 2));
 }

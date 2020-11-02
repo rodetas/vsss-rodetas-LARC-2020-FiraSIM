@@ -14,8 +14,7 @@ void Kernel::loop() {
     bool my_robots_are_yellow = false;
     if(Config::controlWindow)
         threadWindowControl = new thread(std::bind(&Kernel::windowThreadWrapper, this));
-    cout << "team color: "<<Config::teamColor<<endl;
-    if (Config::teamColor == 0){
+     if (Config::teamColor == 0){
         my_robots_are_yellow = true;
     }
     else{
@@ -27,7 +26,7 @@ void Kernel::loop() {
     fira_message::sim_to_ref::Environment packet;
     visionClient.open(false);
     
-    //GrSim_Client commandClient("127.0.0.1", 20011);
+    
     /*if (visionClient.receive(packet)) {
             //printf("-----Received Wrapper Packet---------------------------------------------\n");
             //see if the packet contains a robot detection frame:
@@ -97,7 +96,7 @@ void Kernel::loop() {
     vector<RodetasRobot> robots;
     
 
-    robots.emplace_back(RodetasRobot(0, MindSet::SingleAttackerStrategy, new RobotStrategySingleAttack()));
+    robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategySingleAttack()));
     robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategyDefender()));
     robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
 
@@ -141,7 +140,7 @@ void Kernel::loop() {
 
         coach.manage(robots, state, Config::playersSwap, isFreeBall, positionStatus);
 
-        //sendInterface.sendCommands(robots, isPlaying, isTestingTransmission);
+        sendInterface.sendCommands(robots, isPlaying, isTestingTransmission,my_robots_are_yellow);
         //debugInterface.sendDebug(debug);
     }
 

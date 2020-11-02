@@ -15,6 +15,7 @@
 #include <Movements/Movimentation.h>
 #include <Movements/UnivectorField.h>
 #include <Agent.h>
+#include <Config.h>
 
 class RobotStrategy : public Agent {
 

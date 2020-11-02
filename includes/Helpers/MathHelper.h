@@ -28,6 +28,10 @@ public:
     //! Transforms an angle to radian
     static double toRadian(double);
 
+    static double toDegree(double);
+
+    static vss::Point conversion(vss::Point);
+
     //! Calculates the norm of a vector
     static double norm(vss::Point);
 

@@ -23,6 +23,7 @@ public:
 
 	static vss::Point goalSize;
 	static vss::Point goalAreaSize;
+    static vss::Point fieldSize;
 
     static bool argumentParse(int ,char**);
 

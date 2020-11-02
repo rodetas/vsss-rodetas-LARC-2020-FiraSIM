@@ -23,12 +23,12 @@ vss::Pose RobotStrategyAttackDefense::defineTarget() {
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
 
     //Posiciona o atacante defensor no meio do campo para ele nao interferir no ataque
-    if (state.ball.projection.x < vss::MAX_COORDINATE_X * 0.6) {
+    if (state.ball.projection.x < (vss::MAX_COORDINATE_X - 20) * 0.6) {
         if (state.ball.projection.y > vss::MAX_COORDINATE_Y / 2) {
-            target = vss::Pose(vss::MAX_COORDINATE_X * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
+            target = vss::Pose((vss::MAX_COORDINATE_X - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
             stopAttackerDefense = true;
         } else {
-            target = vss::Pose(vss::MAX_COORDINATE_X * 0.55, vss::MAX_COORDINATE_Y * 0.2, 0);
+            target = vss::Pose((vss::MAX_COORDINATE_X - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.2, 0);
             stopAttackerDefense = true;
         }
     } else {
@@ -48,10 +48,10 @@ vss::Pose RobotStrategyAttackDefense::defineTarget() {
         if (target.y > vss::MAX_COORDINATE_Y * 0.88) {
             target.angle = 0;
         }
-        if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y < vss::MAX_COORDINATE_Y * 0.37)) {
+        if ((target.x > (vss::MAX_COORDINATE_X - 20) * 0.88) && (target.y < vss::MAX_COORDINATE_Y * 0.37)) {
             target.angle = (3 * M_PI) / 2;
         }
-        if ((target.x > vss::MAX_COORDINATE_X * 0.88) && (target.y > vss::MAX_COORDINATE_Y * 0.66)) {
+        if ((target.x > (vss::MAX_COORDINATE_X - 20) * 0.88) && (target.y > vss::MAX_COORDINATE_Y * 0.66)) {
             target.angle = M_PI_2;
         }
 
@@ -80,7 +80,7 @@ float RobotStrategyAttackDefense::applyUnivectorField(vss::Pose target) {
 
     if (!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
           robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 5) &&
-          robot.position.x > vss::MAX_COORDINATE_X - 25)) {
+          robot.position.x > (vss::MAX_COORDINATE_X - 20) - 25)) {
 
         obstacle.first.x = 152;
 

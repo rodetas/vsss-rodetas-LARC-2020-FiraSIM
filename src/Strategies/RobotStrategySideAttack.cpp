@@ -27,10 +27,10 @@ vss::Pose RobotStrategySideAttack::defineTarget() {
     stopSideAttacker = false;
 
     //std::cout<<"posição x: "<<target.x<<" posição y: "<<target.y<<"\n";
-    if (state.ball.position.x < vss::MAX_COORDINATE_X * 0.25) {
+    if (state.ball.position.x < (vss::MAX_COORDINATE_X - 20) * 0.25) {
         if (state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
             state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 && state.ball.projection.y > state.ball.position.y) {
-            target.x = vss::MAX_COORDINATE_X * 0.2;
+            target.x = (vss::MAX_COORDINATE_X - 20) * 0.2;
             target.y = vss::MAX_COORDINATE_Y * 0.2;
             target.angle = 0;
 
@@ -38,7 +38,7 @@ vss::Pose RobotStrategySideAttack::defineTarget() {
         } else if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 &&
                    state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
                    state.ball.projection.y < state.ball.position.y) {
-            target.x = vss::MAX_COORDINATE_X * 0.2;
+            target.x = (vss::MAX_COORDINATE_X - 20) * 0.2;
             target.y = vss::MAX_COORDINATE_Y * 0.8;
             target.angle = 0;
 
@@ -49,13 +49,13 @@ vss::Pose RobotStrategySideAttack::defineTarget() {
     if ((target.x == state.ball.position.x && target.y == state.ball.position.y) ||
         (target.x == state.ball.position.x && target.y == state.ball.projection.y)) {
 
-        if (target.x < vss::MAX_COORDINATE_X * 0.2) {
+        if (target.x < (vss::MAX_COORDINATE_X - 20) * 0.2) {
             if (target.y < vss::MAX_COORDINATE_Y * 0.5) {
                 target.angle = M_PI_2;
             } else {
                 target.angle = (3 * M_PI) / 2;
             }
-        } else if (target.x > vss::MAX_COORDINATE_X * 0.8) {
+        } else if (target.x > (vss::MAX_COORDINATE_X - 20) * 0.8) {
             if (target.y < vss::MAX_COORDINATE_Y * 0.5) {
                 target.angle = (3 * M_PI) / 2;
             } else {
@@ -67,7 +67,7 @@ vss::Pose RobotStrategySideAttack::defineTarget() {
             target.angle = M_PI / 2 - M_PI / 4;;
         }
 
-        if ((target.x < vss::MAX_COORDINATE_X * 0.88)) {
+        if ((target.x < (vss::MAX_COORDINATE_X - 20) * 0.88)) {
             if (target.y < vss::MAX_COORDINATE_Y * 0.1) {
                 target.angle = 0;
             } else if (target.y > vss::MAX_COORDINATE_Y * 0.88) {

@@ -15,20 +15,24 @@ void CommandSendAdapter::createSocketSendCommand() {
     interfaceSend.createSocket(teamColor);
 }
 
-void CommandSendAdapter::sendCommands(std::vector<RodetasRobot> robots, bool isPlaying, bool isTestingTransmission) {
-
-    std::vector<vss::WheelsCommand> commands;
+void CommandSendAdapter::sendCommands(std::vector<RodetasRobot> robots, bool isPlaying, bool isTestingTransmission, bool yellowTeam) {
+    GrSim_Client commandClient("127.0.0.1", 20011);
+    /*std::vector<vss::WheelsCommand> commands;
     for (auto robot : robots) {
         commands.push_back(robot.getCommand());
-    }
+    }*/
 
     if(not isRealEnvironment and isPlaying) {
         // sends commands to simulator
+        for(auto robot : robots){
+            std::cout<<"ROBO "<<robot.getId()<<": Speed Esq/Dir: "<<robot.getCommand().leftVel<<" / "<<robot.getCommand().rightVel<<std::endl;
+            commandClient.sendCommand(robot.getCommand().leftVel,robot.getCommand().rightVel , yellowTeam, robot.getId());
+            //commandClient.sendCommand(-10,30 , yellowTeam, robot.getId());
+        }
+       // vss::Command vssCommand;
+        //vssCommand.commands.insert(vssCommand.commands.begin(), commands.begin(), commands.end());
 
-        vss::Command vssCommand;
-        vssCommand.commands.insert(vssCommand.commands.begin(), commands.begin(), commands.end());
-
-        interfaceSend.sendCommand(vssCommand);
+        //interfaceSend.sendCommand(vssCommand);
 
     } else if(isPlaying) {
         for(auto robot : robots){
@@ -48,11 +52,13 @@ void CommandSendAdapter::sendCommands(std::vector<RodetasRobot> robots, bool isP
                 transmission.send(i, stopCommand);
             }
         } else {
-            vss::Command vssCommand;
-            vss::WheelsCommand nullCommand;
-            vssCommand.commands.resize(3, nullCommand);
-
-            interfaceSend.sendCommand(vssCommand);
+            //vss::Command vssCommand;
+            //vss::WheelsCommand nullCommand;
+            //vssCommand.commands.resize(3, nullCommand);
+            for(auto robot : robots){
+            commandClient.sendCommand(0, 0 , yellowTeam, robot.getId());
+        }
+            //interfaceSend.sendCommand(vssCommand);
         }
     }
 }

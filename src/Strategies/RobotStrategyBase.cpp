@@ -24,8 +24,8 @@ bool RobotStrategyBase::isBlocked() {
 }
 
 bool RobotStrategyBase::isParallelToGoal() {
-    return (robot.cosFrom(vss::Point(vss::MAX_COORDINATE_X, robot.position.y)) > -0.3 &&
-            robot.cosFrom(vss::Point(vss::MAX_COORDINATE_X, robot.position.y)) < 0.3);
+    return (robot.cosFrom(vss::Point((vss::MAX_COORDINATE_X - 20), robot.position.y)) > -0.3 &&
+            robot.cosFrom(vss::Point((vss::MAX_COORDINATE_X - 20), robot.position.y)) < 0.3);
 }
 
 bool RobotStrategyBase::isStopped() {
@@ -38,5 +38,5 @@ bool RobotStrategyBase::isStoppedFor(double time){
 
 bool RobotStrategyBase::isBoard() {
     return (robot.position.y > vss::MAX_COORDINATE_Y * (0.93) || robot.position.y < vss::MAX_COORDINATE_Y * (0.06) ||
-            robot.position.x > vss::MAX_COORDINATE_X * (0.88) || robot.position.x < vss::MAX_COORDINATE_X * (0.12) );
+            robot.position.x > (vss::MAX_COORDINATE_X - 20) * (0.88) || robot.position.x < (vss::MAX_COORDINATE_X - 20) * (0.12) );
 }

@@ -8,8 +8,9 @@ vss::FieldTransformationType Config::changeSide = vss::FieldTransformationType::
 vss::TeamType Config::teamColor = vss::TeamType::Blue;
 bool Config::playersSwap = true;
 std::string Config::xbeePort = "0";
-vss::Point Config::goalSize = {10, 40};
-vss::Point Config::goalAreaSize = vss::Point(vss::MAX_COORDINATE_X*0.1, vss::MAX_COORDINATE_Y*0.6);
+vss::Point Config::goalSize = {0.1, 0.4};
+vss::Point Config::fieldSize = {1.5, 1.3};
+vss::Point Config::goalAreaSize = vss::Point((vss::MAX_COORDINATE_X - 20)*0.1, vss::MAX_COORDINATE_Y*0.539);
 
 bool Config::argumentParse(int argc, char** argv) {
     namespace bpo = boost::program_options;
