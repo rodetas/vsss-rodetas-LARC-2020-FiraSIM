@@ -40,10 +40,12 @@ RodetasState StateReceiverAdapter::receiveState(fira_message::sim_to_ref::Enviro
         for(int i = 0; i < robots_yellow_n; i++){
             fira_message::Robot firaRobot = detection.robots_yellow(i);
             RobotState robot;
+            std::cout<<"Velocidade X/Y:"<<firaRobot.vx() <<" / "<<firaRobot.vy()<<std::endl;
+            std::cout<<"Angulo/V. Angular: "<<Math::toDegree(firaRobot.orientation())<<" / "<<firaRobot.vorientation()<<std::endl;
             robot.setPosition(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())));
             robot.setProjection(Math::calculateProjection(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())), firaRobot.vx(), firaRobot.vy()));
-            robot.setAngle(Math::toDegree(firaRobot.orientation()));
-            robot.setAngularSpeed(firaRobot.orientation());
+            robot.setAngle(Math::angulation2(vss::Point(firaRobot.x(), firaRobot.y()),vss::Point(ball.x(), ball.y())));
+            robot.setAngularSpeed(firaRobot.vorientation());
             robot.setLinearSpeed(Math::calculateLinearSpeed(firaRobot.vx(), firaRobot.vy()));
             robot.setVectorSpeed(vss::Point(firaRobot.vx(), firaRobot.vy()));
             newState.robots.emplace_back(robot);
@@ -54,8 +56,8 @@ RodetasState StateReceiverAdapter::receiveState(fira_message::sim_to_ref::Enviro
             RobotState robot;
             robot.setPosition(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())));
             robot.setProjection(Math::calculateProjection(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())), firaRobot.vx(), firaRobot.vy()));
-            robot.setAngle(Math::toDegree(firaRobot.orientation()));
-            robot.setAngularSpeed(firaRobot.orientation());
+            robot.setAngle(Math::angulation2(vss::Point(firaRobot.x(), firaRobot.y()),vss::Point(ball.x(), ball.y())));
+            robot.setAngularSpeed(firaRobot.vorientation());
             robot.setLinearSpeed(Math::calculateLinearSpeed(firaRobot.vx(), firaRobot.vy()));
             robot.setVectorSpeed(vss::Point(firaRobot.vx(), firaRobot.vy()));
             newState.robots.emplace_back(robot);
@@ -68,8 +70,8 @@ RodetasState StateReceiverAdapter::receiveState(fira_message::sim_to_ref::Enviro
             RobotState robot;
             robot.setPosition(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())));
             robot.setProjection(Math::calculateProjection(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())), firaRobot.vx(), firaRobot.vy()));
-            robot.setAngle(Math::toDegree(firaRobot.orientation()));
-            robot.setAngularSpeed(firaRobot.orientation());
+            robot.setAngle(Math::angulation2(vss::Point(firaRobot.x(), firaRobot.y()),vss::Point(ball.x(), ball.y())));
+            robot.setAngularSpeed(firaRobot.vorientation());
             robot.setLinearSpeed(Math::calculateLinearSpeed(firaRobot.vx(), firaRobot.vy()));
             robot.setVectorSpeed(vss::Point(firaRobot.vx(), firaRobot.vy()));
             newState.robots.emplace_back(robot);
@@ -80,8 +82,8 @@ RodetasState StateReceiverAdapter::receiveState(fira_message::sim_to_ref::Enviro
             RobotState robot;
             robot.setPosition(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())));
             robot.setProjection(Math::calculateProjection(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())), firaRobot.vx(), firaRobot.vy()));
-            robot.setAngle(Math::toDegree(firaRobot.orientation()));
-            robot.setAngularSpeed(firaRobot.orientation());
+            robot.setAngle(Math::angulation2(vss::Point(firaRobot.x(), firaRobot.y()),vss::Point(ball.x(), ball.y())));
+            robot.setAngularSpeed(firaRobot.vorientation());
             robot.setLinearSpeed(Math::calculateLinearSpeed(firaRobot.vx(), firaRobot.vy()));
             robot.setVectorSpeed(vss::Point(firaRobot.vx(), firaRobot.vy()));
             newState.robots.emplace_back(robot);

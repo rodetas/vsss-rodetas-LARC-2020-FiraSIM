@@ -17,10 +17,10 @@ void CommandSendAdapter::createSocketSendCommand() {
 
 void CommandSendAdapter::sendCommands(std::vector<RodetasRobot> robots, bool isPlaying, bool isTestingTransmission, bool yellowTeam) {
     GrSim_Client commandClient("127.0.0.1", 20011);
-    /*std::vector<vss::WheelsCommand> commands;
+    std::vector<vss::WheelsCommand> commands;
     for (auto robot : robots) {
         commands.push_back(robot.getCommand());
-    }*/
+    }
 
     if(not isRealEnvironment and isPlaying) {
         // sends commands to simulator

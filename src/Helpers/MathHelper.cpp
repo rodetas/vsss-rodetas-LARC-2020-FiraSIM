@@ -11,7 +11,9 @@ double Math::distancePoint(vss::Point a, vss::Point b) {
 double Math::angulation(vss::Point a, vss::Point b) {
     return (atan2(a.y - b.y, a.x - b.x) * (180 / M_PI));
 }
-
+double Math::angulation2(vss::Point a, vss::Point b) {
+    return (atan2(a.y - b.y, a.x - b.x));
+}
 double Math::radian(vss::Point a, vss::Point b) {
     return atan2(a.y - b.y, a.x - b.x);
 }

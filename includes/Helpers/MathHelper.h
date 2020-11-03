@@ -17,6 +17,8 @@ public:
     //! Estimate angle between two straight lines.
     static double angulation(vss::Point, vss::Point);
 
+    static double angulation2(vss::Point, vss::Point);
+
     //! Estimate angle between two straight lines in radian.
     static double radian(vss::Point, vss::Point);
 

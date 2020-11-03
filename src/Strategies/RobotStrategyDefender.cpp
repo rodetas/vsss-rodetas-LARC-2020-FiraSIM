@@ -81,10 +81,10 @@ vss::Pose RobotStrategyDefender::defineTarget() {
         }
     }
 
-    //target.x = 140;
-    //target.y = 15;
+    //target.x = 75;
+    //target.y = 65;
 
-    target.angle = 0;
+    //target.angle = 0;
 
     return target;
 }

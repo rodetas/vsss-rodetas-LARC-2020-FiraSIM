@@ -21,7 +21,7 @@ void Kernel::loop() {
         my_robots_are_yellow = false;
     }
     RobotStrategyFactory coach;
-    RoboCupSSLClient visionClient("224.5.23.2", 10020);
+    RoboCupSSLClient visionClient("224.0.0.2", 10002);
     
     fira_message::sim_to_ref::Environment packet;
     visionClient.open(false);
@@ -96,7 +96,7 @@ void Kernel::loop() {
     vector<RodetasRobot> robots;
     
 
-    robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategySingleAttack()));
+    robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategyAttack()));
     robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategyDefender()));
     robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
 
