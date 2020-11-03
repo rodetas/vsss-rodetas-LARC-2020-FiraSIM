@@ -7,6 +7,9 @@
 RobotStrategy::RobotStrategy() = default;
 
 vss::WheelsCommand RobotStrategy::applyStrategy(RobotState r, RodetasState s, RobotStrategyBase base) {
+
+    vss::Point lastPosition = robot.position;
+
     this->robot = r;
     this->state = s;
     this->strategyBase = base;
@@ -14,10 +17,11 @@ vss::WheelsCommand RobotStrategy::applyStrategy(RobotState r, RodetasState s, Ro
     // defines robot's target,
     target = this->defineTarget();
 
-    float fi = this->applyUnivectorField(target);
+    float lastFi = fi;
+    fi = this->applyUnivectorField(target);
 
     // defines robot's pwm
-    command = movimentation.movePlayers(robot, fi);
+    command = movimentation.movePlayers(robot, fi, lastFi, lastPosition, target, RobotSpeed ::NORMAL, this->mindSet);
 
     // defines specific strategy such as corner strategy or kick strategy - can be applied or not
     command = this->specificStrategy(command);
@@ -30,23 +34,24 @@ vss::WheelsCommand RobotStrategy::cornerStrategy(vss::WheelsCommand c) {
     if (strategyBase.isBoard() && strategyBase.isStopped()) {
 
         // girar caso robo esteja preso de frente pra parede
-        if (robot.cosFrom(state.ball.position) > -0.9 && robot.cosFrom(state.ball.position) < 0.9) {
-            if (robot.sinFrom(state.ball.position) > 0) {
-                c = movimentation.turnRight(50, 30);
+        if ((cos(fi - Math::toRadian(robot.angle)) > -0.9) && (cos(fi - Math::toRadian(robot.angle)) < 0.9)){
+
+            if (sin(fi - Math::toRadian(robot.angle)) > 0) {
+                c = movimentation.turnRight(30, 30);
             } else {
-                c = movimentation.turnLeft(50, 50);
+                c = movimentation.turnLeft(30, 30);
             }
-//            cout << "preso pra parede" << endl;
+
         }
 
         // girar caso robo prenda a bola na parede - 8 cm
         if (robot.distanceFrom(state.ball.position) < (8)) {
             if (robot.position.y < (vss::MAX_COORDINATE_Y / 2)) {
-                c = movimentation.turnLeft(60, 60);
+                c = movimentation.turnLeft(80, 80);
             } else {
-                c = movimentation.turnRight(60, 60);
+                c = movimentation.turnRight(80, 80);
             }
-//            cout << "preso com bola" << endl;
+
         }
     }
 
@@ -95,4 +100,3 @@ vss::WheelsCommand RobotStrategy::kickStrategy(vss::WheelsCommand c) {
 vss::WheelsCommand RobotStrategy::blockedStrategy(vss::WheelsCommand c) {
     return c;
 }
-

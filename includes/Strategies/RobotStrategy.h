@@ -10,12 +10,12 @@
 #include <Domain/Pose.h>
 #include <Domain/Path.h>
 #include <Domain/Constants.h>
+#include <Domain/Mindset.h>
 #include <Helpers/Math.h>
 #include <Strategies/RobotStrategyBase.h>
 #include <Movements/Movimentation.h>
 #include <Movements/UnivectorField.h>
 #include <Agent.h>
-#include <Config.h>
 
 class RobotStrategy : public Agent {
 
@@ -39,9 +39,14 @@ public:
 
     virtual vss::WheelsCommand kickStrategy(vss::WheelsCommand);
 
+    MindSet mindSet;
+
 protected:
 
     Movimentation movimentation;
+
+    float fi;
+    float last_fi;
 
 };
 
