@@ -24,7 +24,7 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     stopGoalKeeper = true;
 
     // posição para seguir linha da bola
-    goalTarget.x = (vss::MAX_COORDINATE_X - 20) - 15;
+    goalTarget.x = (vss::MAX_COORDINATE_X  - 20) - 15;
     goalTarget.y = ballProjection.y;
 
     // máximo que pode ir até a lateral da área
@@ -38,7 +38,7 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     // ir na bola quando ela está dentro da area
     if (ballPosition.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 ) &&
         ballPosition.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 ) &&
-        ballPosition.x > (vss::MAX_COORDINATE_X - 20) - 30) {
+        ballPosition.x > (vss::MAX_COORDINATE_X  - 20) - 30) {
 
         // Testar esse target como sendo ballProjection ou ballPosition
         goalTarget.x = ballPosition.x;
@@ -55,7 +55,7 @@ vss::Pose RobotStrategyGoal::defineTarget() {
 
     // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
 //    if (strategyBase.isStoppedFor(3000) && robot.distanceFrom(goalTarget) > 6) {
-//        goalTarget.x = (vss::MAX_COORDINATE_X - 20) - 10;
+//        goalTarget.x = (vss::MAX_COORDINATE_X  - 20) - 10;
 //        goalTarget.y = vss::MAX_COORDINATE_Y / 2;
 //
 //    }

@@ -31,7 +31,7 @@ double Math::toRadian(double angle) {
 }
 
 double Math::toDegree(double angle) {
-    return angle * (180 / M_PI);
+    return (angle) * (180 / M_PI);
 }
 
 vss::Point Math::conversion(vss::Point a){

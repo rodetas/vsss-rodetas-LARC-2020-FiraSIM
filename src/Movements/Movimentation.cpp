@@ -22,7 +22,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotS
 		d = 0.2;
 	}*/
 
-	double r = 0.02; // Raio da roda
+	double r = 0.016; // Raio da roda
 	double l = 0.075;// Distancia entre as rodas
 	double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
 

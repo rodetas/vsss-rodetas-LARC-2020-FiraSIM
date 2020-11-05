@@ -21,7 +21,7 @@ void Kernel::loop() {
         my_robots_are_yellow = false;
     }
     RobotStrategyFactory coach;
-    RoboCupSSLClient visionClient("224.0.0.2", 10002);
+    RoboCupSSLClient visionClient("224.0.0.3", 10020);
     
     fira_message::sim_to_ref::Environment packet;
     visionClient.open(false);
@@ -97,8 +97,8 @@ void Kernel::loop() {
     
 
     robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategyAttack()));
-    robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategyDefender()));
-    robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
+    //robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategyDefender()));
+    //robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
 
     vector<vss::WheelsCommand> commands(3);
 
@@ -117,15 +117,15 @@ void Kernel::loop() {
             //see if the packet contains a robot detection frame:
             if (packet.has_frame()) {
                 state = receiveInterface.receiveState(packet);
-                            }
-    }
+                            
+     }
         //state = receiveInterface.receiveState();
 
         for (unsigned int i = 0; i < robots.size(); i++) {
             RodetasRobot &robot = robots[i];
 
             robot.updateSelfState(state.robots[i]);
-            std::cout<<state.robots[i].position << "---";
+            //std::cout<<state.robots[i].position << "---";
             robot.updateState(state);
             robot.calcAction();
 
@@ -142,8 +142,9 @@ void Kernel::loop() {
 
         sendInterface.sendCommands(robots, isPlaying, isTestingTransmission,my_robots_are_yellow);
         //debugInterface.sendDebug(debug);
+   
     }
-
+}
     /*if(Config::controlWindow)
         threadWindowControl->detach();*/
 }

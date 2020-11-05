@@ -13,6 +13,6 @@ vss::WheelsCommand AttackFreeballLeftDefensePositioning::specificStrategy(vss::W
 
 vss::Pose AttackFreeballLeftDefensePositioning::defineTarget() {
 
-    target = vss::Pose((0.75*(vss::MAX_COORDINATE_X - 20))+6,103,0);
+    target = vss::Pose((0.75*(vss::MAX_COORDINATE_X  - 20))+6,103,0);
     return target;
 }

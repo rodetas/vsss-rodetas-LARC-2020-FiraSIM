@@ -26,29 +26,29 @@ vss::Pose RobotStrategyDefender::defineTarget() {
     vss::Pose target;
     vss::Point ballProjection = state.ball.projection;
    // se a bola passou da linha de defesa e do zagueiro
-    if (state.ball.position.x > (vss::MAX_COORDINATE_X - 20) * 0.70 and state.ball.position.x-5 > robot.position.x) {
+    if (state.ball.position.x > (vss::MAX_COORDINATE_X  - 20) * 0.70 and state.ball.position.x-5 > robot.position.x) {
 
         // coloca o robo pra tras da bola
         target.x = state.ball.projection.x + 10;
         target.y = state.ball.position.y;
 
-        if(target.x > (vss::MAX_COORDINATE_X - 20) - 20){
+        if(target.x > (vss::MAX_COORDINATE_X  - 20) - 20){
             // se esta fora do campo
             target.x = state.ball.position.x;
         }
 
 //        // se a bola passar da linha de defesa, posiciona o robô no canto da area para auxiliar o goleiro
 //        if(state.ball.position.y > vss::MAX_COORDINATE_Y / 2) {
-//            target.x = (vss::MAX_COORDINATE_X - 20) - 15;
+//            target.x = (vss::MAX_COORDINATE_X  - 20) - 15;
 //            target.y = vss::MAX_COORDINATE_Y - 22;
 //        } else {
-//            target.x = (vss::MAX_COORDINATE_X - 20) - 15;
+//            target.x = (vss::MAX_COORDINATE_X  - 20) - 15;
 //            target.y = vss::MIN_COORDINATE_Y + 22;
 //        }
 
     } else {
         // se a bola nao passou da linha de defesa e o zagueiro esta atras dela, acompanha a bola no eixo y
-        target.x = (vss::MAX_COORDINATE_X - 20) * 0.70;
+        target.x = (vss::MAX_COORDINATE_X  - 20) * 0.70;
         target.y = ballProjection.y;
 
         // se a bola estiver na parede, evita que o defensor fique preso na parede
@@ -61,7 +61,7 @@ vss::Pose RobotStrategyDefender::defineTarget() {
 
     // ataca a bola caso ela chegue perto
     if (robot.distanceFrom(state.ball.position) < 20 // bola esta proxima do robo
-        and robot.position.x > (vss::MAX_COORDINATE_X - 20) * 0.60) {// robo so pode atacar ate 60% do campo
+        and robot.position.x > (vss::MAX_COORDINATE_X  - 20) * 0.60) {// robo so pode atacar ate 60% do campo
 
         if(state.ball.vectorSpeed.x <= 0) {
             // bola esta indo para o ataque
@@ -81,8 +81,8 @@ vss::Pose RobotStrategyDefender::defineTarget() {
         }
     }
 
-    //target.x = 75;
-    //target.y = 65;
+    target.x = 75;
+    target.y = 65;
 
     //target.angle = 0;
 
@@ -110,7 +110,7 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
 
     if (!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
           robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 5) &&
-          robot.position.x > (vss::MAX_COORDINATE_X - 20) - 25)) {
+          robot.position.x > (vss::MAX_COORDINATE_X  - 20) - 25)) {
 
         obstacle.first.x = 152;
 

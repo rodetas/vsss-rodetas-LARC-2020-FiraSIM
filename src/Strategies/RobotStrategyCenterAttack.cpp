@@ -20,23 +20,23 @@ vss::Pose RobotStrategyCenterAttack::defineTarget() {
     vss::Pose target;
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
 
-    target.x = (vss::MAX_COORDINATE_X - 20) * 0.4;
+    target.x = (vss::MAX_COORDINATE_X  - 20) * 0.4;
     target.y = vss::MAX_COORDINATE_Y * 0.5;
 
     stopCenterAttacker = true;
 
-    if (state.ball.position.x < (vss::MAX_COORDINATE_X - 20) * 0.25) {
+    if (state.ball.position.x < (vss::MAX_COORDINATE_X  - 20) * 0.25) {
         if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.5) {
-            target.x = (vss::MAX_COORDINATE_X - 20) * 0.25;
+            target.x = (vss::MAX_COORDINATE_X  - 20) * 0.25;
             target.y = vss::MAX_COORDINATE_Y * 0.70;
             target.angle = 0;
         } else {
-            target.x = (vss::MAX_COORDINATE_X - 20) * 0.25;
+            target.x = (vss::MAX_COORDINATE_X  - 20) * 0.25;
             target.y = vss::MAX_COORDINATE_Y * 0.30;
             target.angle = 0;
         }
     }
-    if (state.ball.position.x < (vss::MAX_COORDINATE_X - 20) * 0.25) {
+    if (state.ball.position.x < (vss::MAX_COORDINATE_X  - 20) * 0.25) {
         if (state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
             state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 && state.ball.projection.y > state.ball.position.y) {
             target.x = state.ball.projection.x;

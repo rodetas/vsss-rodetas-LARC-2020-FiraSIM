@@ -92,7 +92,7 @@ UnivectorField::drawPath(RobotState robot, vss::Pose target, std::vector<std::pa
         if (Math::distancePoint(point, target) < 2)
             i = 250;
 
-        if(point.x < vss::MIN_COORDINATE_X || point.x > (vss::MAX_COORDINATE_X - 20) || point.y < vss::MIN_COORDINATE_Y || point.y > vss::MAX_COORDINATE_Y)
+        if(point.x < vss::MIN_COORDINATE_X || point.x > (vss::MAX_COORDINATE_X  - 20) || point.y < vss::MIN_COORDINATE_Y || point.y > vss::MAX_COORDINATE_Y)
             offTheField = true;
     }
 

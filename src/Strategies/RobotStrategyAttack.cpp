@@ -22,7 +22,7 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
         int halfGoal2 = vss::MAX_COORDINATE_Y / 2 - (Config::goalSize.y / 2);
 
         if (robot.distanceFrom(state.ball.position) < 7 &&
-            robot.position.x < (vss::MAX_COORDINATE_X - 20) * 0.25 && robot.position.y > halfGoal2 &&
+            robot.position.x < (vss::MAX_COORDINATE_X  - 20) * 0.25 && robot.position.y > halfGoal2 &&
             robot.position.y < halfGoal1) {
 
             if (robot.position.y < state.ball.position.y) {
@@ -41,12 +41,12 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
 
     //Posiciona o atacante no meio do campo para ele nao interferir na defesa
-    if (state.ball.projection.x > (vss::MAX_COORDINATE_X - 20) * 0.6) {
+    if (state.ball.projection.x > (vss::MAX_COORDINATE_X  - 20) * 0.6) {
         if (state.ball.projection.y < vss::MAX_COORDINATE_Y / 2) {
-            target = vss::Pose((vss::MAX_COORDINATE_X - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
+            target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
             stopAttacker = true;
         } else {
-            target = vss::Pose((vss::MAX_COORDINATE_X - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.2, 0);
+            target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.2, 0);
             stopAttacker = true;
         }
     } else {
@@ -67,11 +67,11 @@ vss::Pose RobotStrategyAttack::defineTarget() {
 
     }
 
-    //target.x = state.ball.position.x;
-    //target.y = state.ball.position.y;
+    target.x = state.ball.position.x;
+    target.y = state.ball.position.y;
 
-    //target.angle = 0;
-
+    target.angle = 0;
+    std::cout<<"objetivo: "<<target.x<<", "<<target.y<<std::endl;
 
     return target;
 }
@@ -99,3 +99,4 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
 }
+
