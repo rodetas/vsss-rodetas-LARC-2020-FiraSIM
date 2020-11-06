@@ -97,8 +97,8 @@ void Kernel::loop() {
     
 
     robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategyAttack()));
-    //robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategyDefender()));
-    //robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
+    robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategyDefender()));
+    robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
 
     vector<vss::WheelsCommand> commands(3);
 
@@ -125,7 +125,7 @@ void Kernel::loop() {
             RodetasRobot &robot = robots[i];
 
             robot.updateSelfState(state.robots[i]);
-            //std::cout<<state.robots[i].position << "---";
+            std::cout<<state.robots[i].position << "---";
             robot.updateState(state);
             robot.calcAction();
 

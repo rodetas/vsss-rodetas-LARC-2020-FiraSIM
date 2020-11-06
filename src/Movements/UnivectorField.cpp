@@ -12,7 +12,7 @@ UnivectorField::UnivectorField() {
 
     n = 3;
     orientationDistance = 10;
-    k0 = 0.4;
+    k0 = 0.2;
     dmin = 7;
     delta = 4.5;
 

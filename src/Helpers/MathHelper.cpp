@@ -31,11 +31,16 @@ double Math::toRadian(double angle) {
 }
 
 double Math::toDegree(double angle) {
-    return (angle) * (180 / M_PI);
+    float degree = static_cast<float>(angle * 180.0 / M_PI);
+
+        if(degree < 0)
+            degree = 360 + degree;
+
+        return degree;
 }
 
 vss::Point Math::conversion(vss::Point a){
-    return vss::Point((a.x*100)+75,(130-(a.y*100+65)));
+     return vss::Point((a.x*100)+75,(130-(a.y*100+65))); 
 }
 
 double Math::norm(vss::Point vector) {

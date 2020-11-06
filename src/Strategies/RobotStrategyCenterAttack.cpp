@@ -39,8 +39,13 @@ vss::Pose RobotStrategyCenterAttack::defineTarget() {
     if (state.ball.position.x < (vss::MAX_COORDINATE_X  - 20) * 0.25) {
         if (state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
             state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 && state.ball.projection.y > state.ball.position.y) {
-            target.x = state.ball.projection.x;
-            target.y = (state.ball.projection.y + 2);
+            if(Math::distancePoint(state.ball.position,robot.position)>= 5){
+                target.x = state.ball.projection.x;
+                target.y = (state.ball.projection.y + 2);
+            }else{
+                target.x = centerGoal.x;
+                target.y = centerGoal.y;
+            }
 
             vss::Point targetPoint(target.x, target.y);
             target.angle = Math::arrivalAngle(targetPoint, centerGoal);
@@ -50,8 +55,14 @@ vss::Pose RobotStrategyCenterAttack::defineTarget() {
         } else if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 &&
                    state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
                    state.ball.projection.y < state.ball.position.y) {
-            target.x = state.ball.projection.x;
-            target.y = (state.ball.projection.y - 2);
+            if(Math::distancePoint(state.ball.position,robot.position)>= 5){
+                target.x = state.ball.projection.x;
+                target.y = (state.ball.projection.y - 2);
+            }else{
+                target.x = centerGoal.x;
+                target.y = centerGoal.y;
+            }
+
 
             vss::Point targetPoint(target.x, target.y);
             target.angle = Math::arrivalAngle(targetPoint, centerGoal);
