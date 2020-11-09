@@ -17,12 +17,12 @@ RUN apt-get update && apt-get install -y \
     libboost-all-dev\
     libgtkmm-3.0-dev
 
-# Cloning VSS-Core Repository via docker
+# Run Rodetas build_test.sh 
 
-RUN git clone -b docker https://github.com/SIRLab/VSS-Core.git
-RUN cd VSS-Core
-RUN git submodule init;
-RUN git submodule update;;
+COPY ./build_test.sh /
+RUN chmod +x /build_test.sh
+ENTRYPOINT ["/build_test.sh"]
+RUN ./build_test.sh
 
 # Clean apt
 

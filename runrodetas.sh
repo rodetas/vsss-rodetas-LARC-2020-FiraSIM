@@ -1,7 +1,7 @@
 DEFAULT_DOCKER_IMAGE="rodetas"
 DEFAULT_CONTAINER_NAME="docker_container"
 
-WORK_DIR=`pwd`
+WORK_DIR=`run_bash_test`
 CONTAINER_WORK_DIR=$WORK_DIR
 
 CONTAINER_NAME=$rodetas$_container
