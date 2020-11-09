@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 FROM ubuntu:16.04
 
-LABEL maintainer="Rodetas"
+LABEL maintainer="Rodetas" 
 
 # Dependencias
 RUN apt-get update && apt-get install -y \
@@ -19,17 +19,32 @@ RUN apt-get update && apt-get install -y \
     libboost-all-dev\
     libgtkmm-3.0-dev
 
-# Rodetas repository git
+# VSS-Core Needed
 
-RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM
-RUN cd vsss-rodetas-LARC-2020-FiraSIM
+RUN git clone https://github.com/VSS-SDK/VSS-Core
+RUN cd VSS-Core
+WORKDIR /VSS-Core
+RUN ./configure.sh
+RUN cd ..
+WORKDIR /
 
-# Run Rodetas build_test.sh 
+# Rodetas repository git configuring
 
-COPY ./build_test.sh /
-RUN chmod +x /build_test.sh
-ENTRYPOINT ["/build_test.sh"]
+RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM.git
+RUN cd vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
+WORKDIR /vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
+RUN ./compile.sh
+RUN cd ../../../
+WORKDIR /
+WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
 RUN ./build_test.sh
+WORKDIR /
+
+# Running automated code
+
+RUN cd build
+WORKDIR /build
+RUN ./SDK-Rodetas -c yellow
 
 # Clean apt
 
