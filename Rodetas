@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y \
     git \
     qt5-default \
     sudo \
-    protobuf-compiler \ 
+    protobuf-compiler \
+    gcc \ 
     g++ \
     libzmqpp3 \
     libzmqpp-dev \
@@ -31,13 +32,19 @@ WORKDIR /
 # Rodetas repository git configuring
 
 RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM.git
-RUN cd vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
-WORKDIR /vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
-RUN ./compile.sh
-RUN cd ../../../
+RUN cd vsss-rodetas-LARC-2020-FiraSIM
+RUN cd VSS-Core
+#RUN cd vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
+#WORKDIR /vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
+#RUN ./compile.sh
+#RUN cd ../../../
+WORKDIR /
+WORKDIR /VSS-Core
+RUN ./configure.sh
+RUN cd ..
 WORKDIR /
 WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
-RUN ./build_test.sh
+RUN sudo ./build_test.sh
 WORKDIR /
 
 # Running automated code
