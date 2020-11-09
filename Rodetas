@@ -21,16 +21,11 @@ RUN apt-get update && apt-get install -y \
 
 # Rodetas repository git
 
-RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM.git
+RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM
 RUN cd vsss-rodetas-LARC-2020-FiraSIM
 
 # Run Rodetas build_test.sh 
 
-COPY ./build_test.sh /
-RUN chmod +x /build_test.sh
-ENTRYPOINT ["/build_test.sh"]
-RUN ./build_test.sh
-
 # Clean apt
 
-RUN apt-get clean
+
