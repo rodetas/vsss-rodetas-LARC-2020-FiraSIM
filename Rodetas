@@ -17,6 +17,11 @@ RUN apt-get update && apt-get install -y \
     libboost-all-dev\
     libgtkmm-3.0-dev
 
+# Rodetas repository git
+
+RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM.git
+RUN cd vsss-rodetas-LARC-2020-FiraSIM
+
 # Run Rodetas build_test.sh 
 
 COPY ./build_test.sh /
