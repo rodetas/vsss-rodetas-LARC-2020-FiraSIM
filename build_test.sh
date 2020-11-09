@@ -21,7 +21,14 @@ INSTALL_CORE() {
 
 INSTALL_SAMPLE() {
     sudo apt-get -y install g++ cmake protobuf-compiler libprotobuf-dev libboost-all-dev libgtkmm-3.0-dev
-
+    cd net/pb/proto
+    sudo sh compile.sh
+    cd ..
+    cd vssreferee
+    sudo sh protobuf.sh
+    cd ..
+    cd ..
+    cd ..
     mkdir build
     cd build
     cmake ..
