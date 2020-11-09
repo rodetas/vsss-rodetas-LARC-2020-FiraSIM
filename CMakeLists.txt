@@ -4,7 +4,7 @@ OPTION(TESTS "build tests" OFF)
 
 project(SDK_Rodetas)
 
-SET(CMAKE_CXX_FLAGS "-g -Wall -Werror -std=c++11 -o2 -pthread")
+SET(CMAKE_CXX_FLAGS "-g -Wall -Werror -std=c++11 -std=gnu++11 -o2 -pthread")
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
