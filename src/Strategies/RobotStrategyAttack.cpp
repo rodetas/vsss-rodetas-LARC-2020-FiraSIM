@@ -71,7 +71,7 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     target.y = state.ball.position.y;
 
     target.angle = 0;
-    int speed = 2;
+    int speed = 1;
     robot.setRobotSpeed(speed);
     return target;
 }
