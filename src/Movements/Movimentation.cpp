@@ -6,15 +6,14 @@ Movimentation::Movimentation() = default;
 /*
  * calculates the basic movimentation to goal to target
  */
-vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, RobotSpeed speed){
+vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int speed){
 
 	vss::WheelsCommand command;
-
+	std::cout<<"Velocidade que chega: "<<speed<<std::endl;
 	double vMax = 0.2;
-
-	//if(speed == RobotSpeed::SLOW) vMax = 0.2;
-	//else if(speed == RobotSpeed::FAST) vMax = 0.3;
-	//else if(speed == RobotSpeed::SUPERFAST) vMax = 0.8;
+	if(speed == 1) vMax = 0.4;
+	else if(speed == 2) vMax = 0.6;	
+	else if(speed == 3) vMax = 0.8;
 
 	double d = 0.1; // Coeficiente de ponto a frente do robô para ambiente SIMULADO
 	/*if(Config::realEnvironment){

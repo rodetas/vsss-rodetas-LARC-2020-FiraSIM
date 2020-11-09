@@ -75,7 +75,7 @@ float RobotStrategySingleAttack::applyUnivectorField(vss::Pose target) {
         }
     }
 
-    UnivectorField univectorField;
+    UnivectorField univectorField(robot);
     path = univectorField.drawPath(robot, target, obstacles);
 
     if (univectorField.offTheField) {

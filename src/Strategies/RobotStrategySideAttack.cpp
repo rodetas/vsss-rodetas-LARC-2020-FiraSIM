@@ -75,6 +75,8 @@ vss::Pose RobotStrategySideAttack::defineTarget() {
             }
         }
     }
+    int speed = 0;
+    robot.setRobotSpeed(speed);
 
     return target;
 }
@@ -91,7 +93,7 @@ float RobotStrategySideAttack::applyUnivectorField(vss::Pose target) {
         }
     }
 
-    UnivectorField univectorField;
+    UnivectorField univectorField(robot);
     path = univectorField.drawPath(robot, target, obstacles);
 
     if(univectorField.offTheField){

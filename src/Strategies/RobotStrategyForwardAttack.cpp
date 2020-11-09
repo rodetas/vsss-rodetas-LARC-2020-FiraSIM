@@ -32,7 +32,7 @@ float RobotStrategyForwardAttack::applyUnivectorField(vss::Pose target) {
             }
         }
     }
-    UnivectorField univectorField;
+    UnivectorField univectorField(robot);
     univectorField.setUnivectorWithoutCurves();
 
     path = univectorField.drawPath(robot, target, obstacles);

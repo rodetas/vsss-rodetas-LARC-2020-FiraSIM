@@ -22,7 +22,7 @@
 class UnivectorField {
 public:
 
-    UnivectorField();
+    UnivectorField( RobotState );
 
     void setUnivectorWithoutCurves();
 

@@ -32,7 +32,9 @@ public:
 
     static double toDegree(double);
 
-    static vss::Point conversion(vss::Point);
+    static vss::Point conversionYellow(vss::Point);
+    
+    static vss::Point conversionBlue(vss::Point);
 
     //! Calculates the norm of a vector
     static double norm(vss::Point);

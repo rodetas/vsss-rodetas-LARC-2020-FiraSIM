@@ -15,7 +15,6 @@ GrSim_Client::GrSim_Client(QString address, int port, QObject *parent) : QObject
 
 void GrSim_Client::sendCommand(double leftWheelVel, double rightWheelVel, bool my_robots_are_yellow, int id){
     fira_message::sim_to_ref::Packet packet;
-    std::cout<<"Robo "<<id<<": "<<"Esquerda/Direita: "<<leftWheelVel<<" / "<<rightWheelVel<<std::endl;
     fira_message::sim_to_ref::Command* command = packet.mutable_cmd()->add_robot_commands();
     command->set_id(id);
     command->set_yellowteam(my_robots_are_yellow);

@@ -33,19 +33,16 @@ RodetasState StateReceiverAdapter::receiveState(fira_message::sim_to_ref::Enviro
     // inserts team robots in the beginning of the vector and push opponents in the end
     if(teamColor == vss::TeamType::Yellow){
 
-        newState.ball.setPosition(Math::conversion(vss::Point(ball.x(), ball.y())));
-                std::cout<<"BOLA(X,Y): "<<Math::conversion(vss::Point(ball.x(), ball.y())).x  <<", "<<Math::conversion(vss::Point(ball.x(), ball.y())).y<<std::endl;
+                newState.ball.setPosition(Math::conversionYellow(vss::Point(ball.x(), ball.y())));
                 newState.ball.setLinearSpeed(Math::calculateLinearSpeed(ball.vx()*100, ball.vy()*(-1)*100));
                 newState.ball.setVectorSpeed(vss::Point(ball.vx()*100, ball.vy()*(-1)*100));
-                newState.ball.setProjection(Math::calculateProjection(Math::conversion(vss::Point(ball.x(), ball.y())), ball.vx()*100, ball.vy()*(-1)*100));
+                newState.ball.setProjection(Math::calculateProjection(Math::conversionYellow(vss::Point(ball.x(), ball.y())), ball.vx()*100, ball.vy()*(-1)*100));
 
         for(int i = 0; i < robots_yellow_n; i++){
             fira_message::Robot firaRobot = detection.robots_yellow(i);
             RobotState robot;  
-            std::cout<<"Velocidade X/Y:"<<firaRobot.vx()*100 <<" / "<<firaRobot.vy()*(-1)*100<<std::endl;
-            std::cout<<"Angulo/V. Angular: "<<Math::toDegree(Math::toDomain2Pi(firaRobot.orientation()*(-1)))<<" / "<<firaRobot.vorientation()<<std::endl;
-            robot.setPosition(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())));
-            robot.setProjection(Math::calculateProjection(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())), firaRobot.vx()*100, firaRobot.vy()*(-1)*100));
+            robot.setPosition(Math::conversionYellow(vss::Point(firaRobot.x(), firaRobot.y())));
+            robot.setProjection(Math::calculateProjection(Math::conversionYellow(vss::Point(firaRobot.x(), firaRobot.y())), firaRobot.vx()*100, firaRobot.vy()*(-1)*100));
             robot.setAngle(Math::toDegree(firaRobot.orientation()*(-1)));
             robot.setAngularSpeed(0);
             robot.setLinearSpeed(Math::calculateLinearSpeed(firaRobot.vx()*100, firaRobot.vy()*(-1)*100));
@@ -57,10 +54,8 @@ RodetasState StateReceiverAdapter::receiveState(fira_message::sim_to_ref::Enviro
         for(int i = 0; i < robots_blue_n; i++){
             fira_message::Robot firaRobot = detection.robots_blue(i);
             RobotState robot;
-            std::cout<<"Velocidade X/Y:"<<firaRobot.vx()*100 <<" / "<<firaRobot.vy()*(-1)*100<<std::endl;
-            std::cout<<"Angulo/V. Angular: "<<Math::toDegree(Math::toDomain2Pi(firaRobot.orientation()*(-1)))<<" / "<<firaRobot.vorientation()<<std::endl;
-            robot.setPosition(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())));
-            robot.setProjection(Math::calculateProjection(Math::conversion(vss::Point(firaRobot.x(), firaRobot.y())), firaRobot.vx()*100, firaRobot.vy()*(-1)*100));
+            robot.setPosition(Math::conversionYellow(vss::Point(firaRobot.x(), firaRobot.y())));
+            robot.setProjection(Math::calculateProjection(Math::conversionYellow(vss::Point(firaRobot.x(), firaRobot.y())), firaRobot.vx()*100, firaRobot.vy()*(-1)*100));
             robot.setAngle(Math::toDegree(firaRobot.orientation()*(-1)));
             robot.setAngularSpeed(0);
             robot.setLinearSpeed(Math::calculateLinearSpeed(firaRobot.vx()*100, firaRobot.vy()*(-1)*100));
@@ -69,20 +64,17 @@ RodetasState StateReceiverAdapter::receiveState(fira_message::sim_to_ref::Enviro
         }
 
     } else {
-newState.ball.setPosition(Math::conversion(vss::Point(ball.x()*(-1), ball.y()*(-1))));
-                std::cout<<"BOLA(X,Y): "<<Math::conversion(vss::Point(ball.x()*(-1), ball.y()*(-1))).x  <<", "<<Math::conversion(vss::Point(ball.x()*(-1), ball.y()*(-1))).y<<std::endl;
-                newState.ball.setLinearSpeed(Math::calculateLinearSpeed(ball.vx()*(-1)*100, ball.vy()*100));
-                newState.ball.setVectorSpeed(vss::Point(ball.vx()*(-1)*100, ball.vy()*100));
-                newState.ball.setProjection(Math::calculateProjection(Math::conversion(vss::Point(ball.x()*(-1), ball.y()*(-1))), ball.vx()*(-1)*100, ball.vy()*100));
+                newState.ball.setPosition(Math::conversionBlue(vss::Point(ball.x(), ball.y())));
+                newState.ball.setLinearSpeed(Math::calculateLinearSpeed(ball.vx()*100*(-1), ball.vy()*100));
+                newState.ball.setVectorSpeed(vss::Point(ball.vx()*100*(-1), ball.vy()*100));
+                newState.ball.setProjection(Math::calculateProjection(Math::conversionBlue(vss::Point(ball.x(), ball.y())), ball.vx()*100*(-1), ball.vy()*100));
 
        for(int i = 0; i < robots_blue_n; i++){
             fira_message::Robot firaRobot = detection.robots_blue(i);
-            RobotState robot;
-            std::cout<<"Velocidade X/Y:"<<firaRobot.vx()*(-1)*100 <<" / "<<firaRobot.vy()*100<<std::endl;
-            std::cout<<"Angulo/V. Angular: "<<Math::toDegree(Math::toDomain2Pi(firaRobot.orientation()*(-1)))<<" / "<<firaRobot.vorientation()<<std::endl;
-            robot.setPosition(Math::conversion(vss::Point(firaRobot.x()*(-1), firaRobot.y()*(-1))));
-            robot.setProjection(Math::calculateProjection(Math::conversion(vss::Point(firaRobot.x()*(-1), firaRobot.y()*(-1))), firaRobot.vx()*(-1)*100, firaRobot.vy()*100));
-            robot.setAngle(Math::toDegree(firaRobot.orientation()*(-1)));
+           RobotState robot;
+            robot.setPosition(Math::conversionBlue(vss::Point(firaRobot.x(), firaRobot.y())));
+            robot.setProjection(Math::calculateProjection(Math::conversionBlue(vss::Point(firaRobot.x(), firaRobot.y())), firaRobot.vx()*(-1)*100, firaRobot.vy()*100));
+            robot.setAngle(180-Math::toDegree(firaRobot.orientation()));
             robot.setAngularSpeed(0);
             robot.setLinearSpeed(Math::calculateLinearSpeed(firaRobot.vx()*(-1)*100, firaRobot.vy()*100));
             robot.setVectorSpeed(vss::Point(firaRobot.vx()*(-1)*100, firaRobot.vy()*100));
@@ -90,13 +82,11 @@ newState.ball.setPosition(Math::conversion(vss::Point(ball.x()*(-1), ball.y()*(-
         }
 
         for(int i = 0; i < robots_yellow_n; i++){
-             fira_message::Robot firaRobot = detection.robots_blue(i);
-             RobotState robot;
-            std::cout<<"Velocidade X/Y:"<<firaRobot.vx()*(-1)*100 <<" / "<<firaRobot.vy()*100<<std::endl;
-            std::cout<<"Angulo/V. Angular: "<<Math::toDegree(Math::toDomain2Pi(firaRobot.orientation()*(-1)))<<" / "<<firaRobot.vorientation()<<std::endl;
-            robot.setPosition(Math::conversion(vss::Point(firaRobot.x()*(-1), firaRobot.y()*(-1))));
-            robot.setProjection(Math::calculateProjection(Math::conversion(vss::Point(firaRobot.x()*(-1), firaRobot.y()*(-1))), firaRobot.vx()*(-1)*100, firaRobot.vy()*100));
-            robot.setAngle(Math::toDegree(firaRobot.orientation()*(-1)));
+            fira_message::Robot firaRobot = detection.robots_yellow(i);
+            RobotState robot;
+            robot.setPosition(Math::conversionBlue(vss::Point(firaRobot.x(), firaRobot.y())));
+            robot.setProjection(Math::calculateProjection(Math::conversionBlue(vss::Point(firaRobot.x(), firaRobot.y())), firaRobot.vx()*(-1)*100, firaRobot.vy()*100));
+            robot.setAngle(180-Math::toDegree(firaRobot.orientation()));
             robot.setAngularSpeed(0);
             robot.setLinearSpeed(Math::calculateLinearSpeed(firaRobot.vx()*(-1)*100, firaRobot.vy()*100));
             robot.setVectorSpeed(vss::Point(firaRobot.vx()*(-1)*100, firaRobot.vy()*100));

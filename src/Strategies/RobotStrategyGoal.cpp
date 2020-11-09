@@ -65,6 +65,8 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     } else {
         goalTarget.angle = (3 * M_PI)/2 + M_PI/6;
     }
+    int speed = 1;
+    robot.setRobotSpeed(speed);
 
     return goalTarget;
 }
@@ -73,7 +75,7 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
     /* Se o target for a bola e se a bola estiver atrás do goleiro indo pro gol, definir angulo de chegada
      * para que o robô chega até a bola por trás evitando gol contra e a levando para fora do gol*/
 
-    UnivectorField univectorField;
+    UnivectorField univectorField(robot);
 
     univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
     std::vector<std::pair<vss::Point, vss::Point>> obstacles;

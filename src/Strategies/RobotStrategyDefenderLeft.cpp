@@ -9,7 +9,7 @@ RobotStrategyDefenderLeft::RobotStrategyDefenderLeft() = default;
 vss::WheelsCommand RobotStrategyDefenderLeft::specificStrategy(vss::WheelsCommand c) {
     c = stopStrategy(c);
 
-    if(robot.distanceFrom(state.ball.position) < 9) {
+    if(robot.distanceFrom(state.ball.position) < 8) {
         if (robot.position.y > state.ball.position.y) {
             c = movimentation.turnLeft(60, 60);
         } else {
@@ -110,7 +110,7 @@ float RobotStrategyDefenderLeft::applyUnivectorField(vss::Pose target) {
         obstacles.push_back(obstacle);
     }
 
-    UnivectorField univectorField;
+    UnivectorField univectorField(robot);
     univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
 
     path = univectorField.drawPath(robot, target, obstacles);

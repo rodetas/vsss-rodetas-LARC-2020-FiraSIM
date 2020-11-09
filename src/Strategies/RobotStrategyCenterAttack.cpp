@@ -10,6 +10,7 @@ RobotStrategyCenterAttack::RobotStrategyCenterAttack(){
 
 vss::WheelsCommand RobotStrategyCenterAttack::specificStrategy(vss::WheelsCommand c) {
     c = cornerStrategy(c);
+    c = kickStrategy(c);
     if (stopCenterAttacker) {
         c = stopStrategy(c);
     }
@@ -35,43 +36,53 @@ vss::Pose RobotStrategyCenterAttack::defineTarget() {
             target.y = vss::MAX_COORDINATE_Y * 0.30;
             target.angle = 0;
         }
-    }
+        }
+    
     if (state.ball.position.x < (vss::MAX_COORDINATE_X  - 20) * 0.25) {
+        //de cima pra baixo
         if (state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
             state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 && state.ball.projection.y > state.ball.position.y) {
-            if(Math::distancePoint(state.ball.position,robot.position)>= 5){
+            if( robot.position.y - state.ball.position.y >= 5){
                 target.x = state.ball.projection.x;
                 target.y = (state.ball.projection.y + 2);
             }else{
-                target.x = centerGoal.x;
-                target.y = centerGoal.y;
+                target.x = state.ball.position.x;
+                target.y = state.ball.position.y;
             }
 
             vss::Point targetPoint(target.x, target.y);
-            target.angle = Math::arrivalAngle(targetPoint, centerGoal);
-
+            vss::Point targetCross(centerGoal.x,centerGoal.y);
+            target.angle = Math::arrivalAngle(targetPoint, targetCross);
+            target.x = state.ball.position.x - 10;
+            target.y = state.ball.position.y - 2;
+   
             stopCenterAttacker = false;
-
+            
+        //de baixo pra cima
         } else if (state.ball.position.y < vss::MAX_COORDINATE_Y * 0.70 &&
                    state.ball.position.y > vss::MAX_COORDINATE_Y * 0.3 &&
                    state.ball.projection.y < state.ball.position.y) {
-            if(Math::distancePoint(state.ball.position,robot.position)>= 5){
+            if(state.ball.position.y - robot.position.y >= 5){
                 target.x = state.ball.projection.x;
                 target.y = (state.ball.projection.y - 2);
             }else{
-                target.x = centerGoal.x;
-                target.y = centerGoal.y;
+                target.x = 0;
+                target.y = vss::MAX_COORDINATE_Y/2 + 5;
             }
 
 
             vss::Point targetPoint(target.x, target.y);
-            target.angle = Math::arrivalAngle(targetPoint, centerGoal);
+            vss::Point targetCross2(centerGoal.x,centerGoal.y);
+            target.angle = Math::arrivalAngle(targetPoint, targetCross2);
+            target.x = state.ball.position.x - 10;
+            target.y = state.ball.position.y + 2;
+   
 
             stopCenterAttacker = false;
         }
     }
-
-
+    int speed = 1;
+    robot.setRobotSpeed(speed);
     return target;
 
 }
@@ -87,7 +98,7 @@ float RobotStrategyCenterAttack::applyUnivectorField(vss::Pose target) {
             }
         }
     }
-    UnivectorField univectorField;
+    UnivectorField univectorField(robot);
 
     path = univectorField.drawPath(robot, target, obstacles);
     if(univectorField.offTheField){

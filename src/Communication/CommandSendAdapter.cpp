@@ -25,7 +25,6 @@ void CommandSendAdapter::sendCommands(std::vector<RodetasRobot> robots, bool isP
     if(not isRealEnvironment and isPlaying) {
         // sends commands to simulator
         for(auto robot : robots){
-            std::cout<<"ROBO "<<robot.getId()<<": Speed Esq/Dir: "<<robot.getCommand().leftVel<<" / "<<robot.getCommand().rightVel<<std::endl;
             commandClient.sendCommand(robot.getCommand().leftVel,robot.getCommand().rightVel , yellowTeam, robot.getId());
            //commandClient.sendCommand( 0,0 , yellowTeam, robot.getId());
         }

@@ -19,8 +19,8 @@ pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
 
 INCLUDE(FindProtobuf)
 include_directories(${PROTOBUF_INCLUDE_DIR} ${Qt5Widgets_INCLUDE_DIRS} ${Qt5Network_INCLUDE_DIRS} ${Qt5Core_INCLUDE_DIRS} ${GTKMM_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
-include_directories(includes includes/Strategies includes/Communication includes/Positioning net net/pb net/google)  
-include_directories(src src/Strategies src/Communication src/Positioning net net/pb net/google )
+include_directories(includes includes/Strategies includes/Communication includes/Positioning includes/vssclient includes/protobuf net net/pb net/google)  
+include_directories(src src/Strategies src/Communication src/Positioning net net/pb net/google)
 
 include_directories(usr/local/include)
 include_directories(usr/local/glade)

@@ -16,7 +16,7 @@ vss::WheelsCommand RobotPositioning::applyStrategy(RobotState r, RodetasState s,
     float fi = this->applyUnivectorField(target);
 
     // define a velocidade do robo com base no valor do fi
-    command = movimentation.movePlayers(robot, fi, RobotSpeed::SLOW);
+    command = movimentation.movePlayers(robot, fi,0);
 
     // define as estrategias que serao aplicadas para o robo - esta implementado em todas as classes filhas
     command = this->specificStrategy(command);
@@ -39,8 +39,8 @@ float RobotPositioning::applyUnivectorField(vss::Pose target) {
     }
 
     obstacles.emplace_back(std::make_pair(state.ball.position, state.ball.vectorSpeed));
+    UnivectorField univectorField(robot);
 
-    UnivectorField univectorField;
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
 }

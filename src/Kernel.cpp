@@ -1,5 +1,9 @@
 #include <Kernel.h>
 
+#define UDP_ADDRESS "224.0.0.1"
+#define REFEREE_PORT 10003
+#define REPLACER_PORT 10004
+
 Kernel::Kernel() {
     isPlaying = true;
     isTestingTransmission = false;
@@ -21,79 +25,39 @@ void Kernel::loop() {
         my_robots_are_yellow = false;
     }
     RobotStrategyFactory coach;
-    RoboCupSSLClient visionClient("224.0.0.3", 10020);
+    RoboCupSSLClient visionClient("224.0.0.1", 10002);
     
     fira_message::sim_to_ref::Environment packet;
     visionClient.open(false);
+
     
-    
-    /*if (visionClient.receive(packet)) {
-            //printf("-----Received Wrapper Packet---------------------------------------------\n");
-            //see if the packet contains a robot detection frame:
-            if (packet.has_frame()) {
-                fira_message::Frame detection = packet.frame();
-
-
-                int robots_blue_n =  detection.robots_blue_size();
-                int robots_yellow_n =  detection.robots_yellow_size();
-
-                //Ball info:
-
-                fira_message::Ball ball = detection.ball();
-                //printf("-Ball:  POS=<%9.2f,%9.2f> \n",ball.x(),ball.y());
-
-                //Blue robot info:
-                for (int i = 0; i < robots_blue_n; i++) {
-                    fira_message::Robot robot = detection.robots_blue(i);
-                    //printf("-Robot(B) (%2d/%2d): ",i+1, robots_blue_n);
-                    //visionClient.printRobotInfo(robot);
-
-                    if(!my_robots_are_yellow){
-                        if(robot.x() <= 0){
-                            commandClient.sendCommand(10, 10, my_robots_are_yellow, i);
-                        }else{
-                            commandClient.sendCommand(-10, -10, my_robots_are_yellow, i);
-                        }
-                    }
-                }
-
-                //Yellow robot info:
-                for (int i = 0; i < robots_yellow_n; i++) {
-                    fira_message::Robot robot = detection.robots_yellow(i);
-                    //printf("-Robot(Y) (%2d/%2d): ",i+1, robots_yellow_n);
-                    //visionClient.printRobotInfo(robot);
-
-                    if(my_robots_are_yellow){
-                        if(robot.x() <= 0){
-                            commandClient.sendCommand(10, 10, my_robots_are_yellow, i);
-                        }else{
-                            commandClient.sendCommand(-10, -10, my_robots_are_yellow, i);
-                        }
-                    }
-                }
-
-            }
-
-            //see if packet contains geometry data:
-            if (packet.has_field()){
-                printf("-[Geometry Data]-------\n");
-
-                const fira_message::Field & field = packet.field();
-                printf("Field Dimensions:\n");
-                printf("  -field_length=%f (mm)\n",field.length());
-                printf("  -field_width=%f (mm)\n",field.width());
-                printf("  -goal_width=%f (mm)\n",field.goal_width());
-                printf("  -goal_depth=%f (mm)\n",field.goal_depth());
-            }
-        }
-    
-    }*/
-
     StateReceiverAdapter receiveInterface(Config::teamColor, Config::changeSide);
     DebugSendAdapter debugInterface(Config::teamColor, Config::debug);
     CommandSendAdapter sendInterface(Config::teamColor, Config::realEnvironment);
-
     vector<RodetasRobot> robots;
+
+    QUdpSocket *replacerSocket = new QUdpSocket();
+    QUdpSocket *refereeClient = new QUdpSocket();
+
+    // Performing connection to send Replacer commands
+    if(replacerSocket->isOpen())
+        replacerSocket->close();
+
+    replacerSocket->connectToHost(UDP_ADDRESS, REPLACER_PORT, QIODevice::WriteOnly, QAbstractSocket::IPv4Protocol);
+    std::cout << "[Example] Connected to REPLACER socket in port " << REPLACER_PORT << " and address = " << UDP_ADDRESS << ".\n";
+
+    // Perfoming connection to receive Referee commands
+    // binding port
+    if(refereeClient->bind(QHostAddress::AnyIPv4, REFEREE_PORT, QUdpSocket::ShareAddress) == false){
+        std::cout << "[ERROR] Failed to bind referee client =(" << std::endl;
+        exit(-1);
+    }
+    // connecting to multicast group in UDP_ADDRESS
+    if(refereeClient->joinMulticastGroup(QHostAddress(UDP_ADDRESS)) == false){
+        std::cout << "[ERROR] Failed to join VSSReferee multicast group =(" << std::endl;
+        exit(-1);
+    }
+    std::cout << "[Example] Connected to REFEREE socket in port " << REFEREE_PORT << " and address = " << UDP_ADDRESS << ".\n";
     
 
     robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategyAttack()));
@@ -109,8 +73,79 @@ void Kernel::loop() {
     //debug.finalPoses.resize(3);
     //debug.stepPoints.resize(3);
 
-    while (isRunning) {
 
+    while (isRunning) {
+        VSSRef::ref_to_team::VSSRef_Command command;
+        bool received = false;
+        char *buffer = new char[65535];
+        long long int packetLength = 0;
+
+        while(refereeClient->hasPendingDatagrams()){
+            // Parse message to protobuf
+            packetLength = refereeClient->readDatagram(buffer, 65535);
+            if(command.ParseFromArray(buffer, int(packetLength)) == false){
+                std::cout << "[ERROR] Referee command parsing error =(" << std::endl;
+                exit(-1);
+            }
+
+            // If received command, let's debug it
+            //std::cout << "[Example] Succesfully received an command from ref: " << getFoulNameById(command.foul()).toStdString() << " for team " << getTeamColorNameById(command.teamcolor()).toStdString() << std::endl;
+            //std::cout << getQuadrantNameById(command.foulquadrant()).toStdString() << std::endl;
+
+            // Showing timestamp
+            std::cout << "Timestamp: " << command.timestamp() << std::endl;
+
+            // Showing half
+            //std::cout << "Half: " << getHalfNameById(command.gamehalf()).toStdString() << std::endl;
+
+            // Now let's send an placement packet to it
+
+            // First creating an placement command for the blue team
+            if(!my_robots_are_yellow){
+            VSSRef::team_to_ref::VSSRef_Placement placementCommandBlue;
+            VSSRef::Frame *placementFrameBlue = new VSSRef::Frame();
+            placementFrameBlue->set_teamcolor(VSSRef::Color::BLUE);
+            /*for(int x = 0; x < 3; x++){
+                VSSRef::Robot *robot = placementFrameBlue->add_robots();
+                robot->set_robot_id(static_cast<uint32_t>(x));
+                robot->set_x(0.5);
+                robot->set_y(-0.2 + (0.2 * x));
+                robot->set_orientation(0.0);
+            }*/
+            //placementCommandBlue.set_allocated_world(placementFrameBlue);
+
+            // Sending blue
+            std::string msgBlue;
+            placementCommandBlue.SerializeToString(&msgBlue);
+            if(replacerSocket->write(msgBlue.c_str(), static_cast<qint64>(msgBlue.length())) == -1){
+                std::cout << "[Example] Failed to write to replacer socket: " << replacerSocket->errorString().toStdString() << std::endl;
+            }
+            }
+            else{
+                // Now creating an placement command for the yellow team
+                VSSRef::team_to_ref::VSSRef_Placement placementCommandYellow;
+                VSSRef::Frame *placementFrameYellow = new VSSRef::Frame();
+                placementFrameYellow->set_teamcolor(VSSRef::Color::YELLOW);
+                /*for(int x = 0; x < 3; x++){
+                    VSSRef::Robot *robot = placementFrameYellow->add_robots();
+                    robot->set_robot_id(static_cast<uint32_t>(x));
+                    robot->set_x(-0.5);
+                    robot->set_y(-0.2 + (0.2 * x));
+                    robot->set_orientation(180.0);
+                 }*/
+            //placementCommandYellow.set_allocated_world(placementFrameYellow);
+
+            // Sending yellow
+            std::string msgYellow;
+            placementCommandYellow.SerializeToString(&msgYellow);
+            if(replacerSocket->write(msgYellow.c_str(), static_cast<qint64>(msgYellow.length())) == -1){
+                std::cout << "[Example] Failed to write to replacer socket: " << replacerSocket->errorString().toStdString() << std::endl;
+            }
+            }
+            received = true;
+        }
+
+        delete [] buffer; 
         // method which waits and receives a new state from simulator or vision
          if (visionClient.receive(packet)) {
             //printf("-----Received Wrapper Packet---------------------------------------------\n");
@@ -125,7 +160,6 @@ void Kernel::loop() {
             RodetasRobot &robot = robots[i];
 
             robot.updateSelfState(state.robots[i]);
-            std::cout<<state.robots[i].position << "---";
             robot.updateState(state);
             robot.calcAction();
 
@@ -145,6 +179,13 @@ void Kernel::loop() {
    
     }
 }
+
+if(replacerSocket->isOpen())
+        replacerSocket->close();
+
+    if(refereeClient->isOpen())
+        refereeClient->close();
+
     /*if(Config::controlWindow)
         threadWindowControl->detach();*/
 }
@@ -181,5 +222,6 @@ void Kernel::updateTestingState(bool testing) {
 
 void Kernel::exitProgram(){
     isRunning = false;
+    // Closing sockets  
     exit(0);
 }

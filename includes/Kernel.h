@@ -30,13 +30,15 @@
 #include <Kernel.h>
 #include <QtCore>
 #include <QtNetwork>
+#include <QUdpSocket>
 #include "../net/robocup_ssl_client.h"
 #include "../net/grSim_client.h"
 #include "../net/pb/command.pb.h"
 #include "../net/pb/common.pb.h"
 #include "../net/pb/packet.pb.h"
 #include "../net/pb/replacement.pb.h"
-
+#include "../net/vssref_placement.pb.h"
+#include "../net/vssref_command.pb.h"
 
 using namespace std;
 using namespace common;

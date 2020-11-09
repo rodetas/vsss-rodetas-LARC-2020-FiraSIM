@@ -115,7 +115,7 @@ float RobotStrategyAttackDefense::applyUnivectorField(vss::Pose target) {
         obstacles.push_back(obstacle);
     }
 
-    UnivectorField univectorField;
+    UnivectorField univectorField(robot);
 
     path = univectorField.drawPath(robot, target, obstacles);
     if(univectorField.offTheField){

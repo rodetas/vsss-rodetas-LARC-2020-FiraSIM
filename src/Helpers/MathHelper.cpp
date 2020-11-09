@@ -39,8 +39,12 @@ double Math::toDegree(double angle) {
         return degree;
 }
 
-vss::Point Math::conversion(vss::Point a){
+vss::Point Math::conversionYellow(vss::Point a){
      return vss::Point((a.x*100)+75,(130-(a.y*100+65))); 
+}
+
+vss::Point Math::conversionBlue(vss::Point a){
+     return vss::Point(150-(a.x*100+75),((a.y*100+65))); 
 }
 
 double Math::norm(vss::Point vector) {

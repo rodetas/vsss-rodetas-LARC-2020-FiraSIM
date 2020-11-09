@@ -8,6 +8,7 @@
 #include <Domain/Point.h>
 #include <Helpers/MathHelper.h>
 #include <cmath>
+#include <Domain/RobotSpeed.h>
 
 class RobotState {
 
@@ -20,6 +21,7 @@ public:
     double angularSpeed;
     double linearSpeed;
     vss::Point vectorSpeed;
+    int robotSpeed = 0;
 
     RobotState(){
         this->position = vss::Point(0,0);
@@ -64,6 +66,15 @@ public:
     double distanceFrom(vss::Point _p) {
         return Math::distancePoint(position, _p);
     }
+
+    int getRobotSpeed() {
+    return this->robotSpeed;
+}
+
+    void setRobotSpeed(int speed){
+    this->robotSpeed = speed;
+}
+
 
 };
 

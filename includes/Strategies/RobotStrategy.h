@@ -7,6 +7,7 @@
 
 #include <Domain/RobotState.h>
 #include <Domain/RodetasState.h>
+#include <Domain/RobotSpeed.h>
 #include <Domain/Pose.h>
 #include <Domain/Path.h>
 #include <Domain/Constants.h>
@@ -21,6 +22,8 @@ class RobotStrategy : public Agent {
 
 public:
     RobotStrategy();
+
+
 
     vss::WheelsCommand applyStrategy(RobotState, RodetasState, RobotStrategyBase) override;
 
@@ -40,7 +43,6 @@ public:
     virtual vss::WheelsCommand kickStrategy(vss::WheelsCommand);
 
 protected:
-
     Movimentation movimentation;
 
 };

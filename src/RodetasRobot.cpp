@@ -13,6 +13,7 @@ RodetasRobot::RodetasRobot(int id, MindSet mind, Agent* strategy) {
     this->id = id;
     this->mindSet = mind;
     this->agent = strategy;
+    this->robotSpeed = 0;
 }
 
 void RodetasRobot::calcAction(){

@@ -128,7 +128,7 @@ float RobotStrategyDefenderRight::applyUnivectorField(vss::Pose target) {
         obstacles.push_back(obstacle);
     }
 
-    UnivectorField univectorField;
+    UnivectorField univectorField(robot);
     univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
 
     path = univectorField.drawPath(robot, target, obstacles);

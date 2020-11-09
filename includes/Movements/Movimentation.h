@@ -15,7 +15,7 @@ public:
 
 	Movimentation();
 
-	vss::WheelsCommand movePlayers(RobotState, float, RobotSpeed = RobotSpeed::NORMAL);
+	vss::WheelsCommand movePlayers(RobotState, float, int);
 
     vss::WheelsCommand stop();
     vss::WheelsCommand turnLeft(int, int);

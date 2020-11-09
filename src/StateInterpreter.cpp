@@ -254,15 +254,21 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
         }
     }
 
-//    if(not leftDefenseRobot.isNull() and not rightDefenseRobot.isNull()){
-//
-//        if(leftDefenseRobot.getSelfState().position.x > (vss::MAX_COORDINATE_X  - 20) * 0.65 and
-//        state.ball.position.x > (vss::MAX_COORDINATE_X  - 20) * 0.65){
-//            strategiesById[leftDefenseRobot.getId()] = MindSet::AttackerStrategy;
-//            strategiesById[rightDefenseRobot.getId()] = MindSet::DefenderStrategy;
-//        }
-//
-//    }
+    if(not leftDefenseRobot.isNull() and not rightDefenseRobot.isNull()){
+
+        if(leftDefenseRobot.getSelfState().position.x > (vss::MAX_COORDINATE_X  - 20) * 0.40 and
+        state.ball.position.x > (vss::MAX_COORDINATE_X  - 20) * 0.65){
+            strategiesById[leftDefenseRobot.getId()] = MindSet::AttackerStrategy;
+            strategiesById[rightDefenseRobot.getId()] = MindSet::DefenderStrategy;
+        }
+
+         if(rightDefenseRobot.getSelfState().position.x > (vss::MAX_COORDINATE_X  - 20) * 0.40 and
+        state.ball.position.x > (vss::MAX_COORDINATE_X  - 20) * 0.65){
+            strategiesById[rightDefenseRobot.getId()] = MindSet::AttackerStrategy;
+            strategiesById[leftDefenseRobot.getId()] = MindSet::DefenderStrategy;
+        }
+
+    }
 
 
 }

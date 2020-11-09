@@ -71,8 +71,8 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     target.y = state.ball.position.y;
 
     target.angle = 0;
-    std::cout<<"objetivo: "<<target.x<<", "<<target.y<<std::endl;
-
+    int speed = 2;
+    robot.setRobotSpeed(speed);
     return target;
 }
 
@@ -88,7 +88,7 @@ float RobotStrategyAttack::applyUnivectorField(vss::Pose target) {
         }
     }
 
-    UnivectorField univectorField;
+    UnivectorField univectorField(robot);
     path = univectorField.drawPath(robot, target, obstacles);
 
     if(univectorField.offTheField){

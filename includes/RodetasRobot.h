@@ -9,6 +9,7 @@
 #include <Domain/RobotState.h>
 #include <Domain/Debug.h>
 #include "Domain/Mindset.h"
+#include <Domain/RobotSpeed.h>
 #include <Strategies/RobotStrategy.h>
 #include <Strategies/RobotStrategyAttack.h>
 #include <Strategies/RobotStrategySideAttack.h>
@@ -59,6 +60,7 @@ private:
     RobotStrategyBase strategyBase;
     MindSet mindSet;
     PositionStatus positionStatus;
+    int robotSpeed;
 
     vss::WheelsCommand command;
     vss::Path path;
