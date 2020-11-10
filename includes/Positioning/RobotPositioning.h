@@ -27,7 +27,7 @@ public:
 
 private:
     Movimentation movimentation;
-
+     float fi;
 };
 
 #endif //SDK_RODETAS_ROBOTPOSITIONING_H

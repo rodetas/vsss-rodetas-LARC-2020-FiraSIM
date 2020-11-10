@@ -6,62 +6,114 @@ Movimentation::Movimentation() = default;
 /*
  * calculates the basic movimentation to goal to target
  */
-vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int speed){
+vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, float lastFi, vss::Point lastPosition, vss::Point target, RobotSpeed speed, MindSet mindSet){
 
-	vss::WheelsCommand command;
-	std::cout<<"Velocidade que chega: "<<speed<<std::endl;
-	double vMax = 0.2;
-	if(speed == 1) vMax = 0.4;
-	else if(speed == 2) vMax = 0.6;	
-	else if(speed == 3) vMax = 0.8;
+	double sampleTime = 0.01666;
 
-	double d = 0.1; // Coeficiente de ponto a frente do robô para ambiente SIMULADO
-	/*if(Config::realEnvironment){
-		// Coeficiente para ambiente REAL
-		d = 0.2;
-	}*/
+    vss::WheelsCommand command;
 
-	double r = 0.016; // Raio da roda
-	double l = 0.075;// Distancia entre as rodas
-	double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
+	double realSpeedMax = 50;
+	double vMax = 0.5;
 
-	double xdDot = vMax * cos(fi);
-	double ydDot = vMax * sin(fi);
+    double r = 0.016; // Raio da roda
+    double l = 0.075; // Distancia entre as rodas
 
-	double v = cos(robotAngle) * xdDot + sin(robotAngle) * ydDot;
-	double w = -(sin(robotAngle)/d) * xdDot + (cos(robotAngle)/d) * ydDot;
+    double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
+    double errorAngle = Math::toDomain(fi - robotAngle);
 
-    if ( cos(fi - Math::toRadian(robot.angle)) > 0.4){
-        lastSide = -1;
-    } else if(cos(fi - Math::toRadian(robot.angle)) < -0.4){
-        lastSide = 1;
+    vss::Point nextPosition;
+    nextPosition.x = robot.position.x + cos(robotAngle)*robot.linearSpeed*sampleTime;
+    nextPosition.y = robot.position.y + sin(robotAngle)*robot.linearSpeed*sampleTime;
+
+    double d_fiy_x = (sin(fi) - sin(lastFi)) / (nextPosition.x - robot.position.x);
+    double d_fix_y = (cos(fi) - cos(lastFi)) / (nextPosition.y - robot.position.y);
+
+    double d_fiy_y = (sin(fi) - sin(lastFi)) / (nextPosition.y - robot.position.y);
+    double d_fix_x = (cos(fi) - cos(lastFi)) / (nextPosition.x - robot.position.x);
+
+    //std::cout<<" dfiy_x: "<< d_fiy_x<<" dfix_y: "<<d_fix_y<<" dfiy_y: "<< d_fiy_y<<" dfix_x: "<<d_fix_x<<std::endl;
+
+    if (std::isnan(d_fiy_x)) {
+        d_fiy_x = 0;
     }
 
-    double wr = v/r + w*(l/r) * lastSide;
-    double wl = v/r - w*(l/r) * lastSide;
+    if (std::isnan(d_fix_y)) {
+        d_fix_y = 0;
+    }
 
-	// conversão rad/s para cm/s
-	wr =  wr * r * 100;
-	wl =  wl * r * 100;
+    if (std::isnan(d_fiy_y)) {
+        d_fiy_y = 0;
+    }
 
-    //double linearSpeed = std::abs((wr + wl) / 2);
-	//double k = 1 - (0.7 * std::abs(linearSpeed - robot.linearSpeed) / 60);
-	//std::cout<<"k:"<<k<<std::endl;
+    if (std::isnan(d_fix_x)) {
+        d_fix_x = 0;
+    }
 
-	//wr *= k;
-	//wl *= k;
-	//std::cout<<"Fi: "<<Math::toDomain(fi)<<" Vcontrol: "<<v<<" Wcontrol: "<<w<<" Wr: "<<wr<< "Wl: "<<wl<<" --- X: "<<robot.position.x<<" Y: "<<robot.position.y<<" Theta: "<<robotAngle<<" Vrobot: "<<robot.linearSpeed<<" Wrobot: "<<Math::toDomain(robot.angularSpeed)<<" Eangle:"<<Math::toDomain(fi - robotAngle)<<std::endl;
+    double value = 300;
+    if ( d_fiy_x > value ) {
+        d_fiy_x = value;
+    }
+
+    if ( d_fiy_x < -value ) {
+        d_fiy_x = -value;
+    }
 
 
-	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr));
+    if ( d_fix_y > value ) {
+        d_fix_y = value;
+    }
+
+    if ( d_fix_y < -value ) {
+        d_fix_y = -value;
+    }
+
+    if ( d_fiy_y > value ) {
+        d_fiy_y = value;
+    }
+
+    if ( d_fiy_y < -value ) {
+        d_fiy_y = -value;
+    }
+
+
+    if ( d_fix_x > value ) {
+        d_fix_x = value;
+    }
+
+    if ( d_fix_x < -value ) {
+        d_fix_x = -value;
+    }
+
+    if ( cos(fi - Math::toRadian(robot.angle)) > 0.3){
+        lastSide = 1;
+    } else if(cos(fi - Math::toRadian(robot.angle)) < -0.3){
+        lastSide = -1;
+    }
+
+    double v = lastSide*vMax;
+
+    double kp = 2.5;
+    double d_thetaf = v*cos(errorAngle)*(d_fiy_x - d_fix_y) - v*sin(errorAngle)*(d_fix_x + d_fiy_y);
+
+    double w = kp*sin(errorAngle) + d_thetaf;
+
+	double wr = v / r - w * (l / r);
+	double wl = v / r + w * (l / r);
+
+    if (v < 0) {
+        double aux = wr;
+        wr = wl;
+        wl = aux;
+    }
+
+    std::cout<<"Fi: "<<Math::toDomain(fi)<<" Vcontrol: "<<v<<" Wcontrol: "<<w<<" Wr: "<<wr<< "Wl: "<<wl<<" --- X: "<<robot.position.x<<" Y: "<<robot.position.y<<" Theta: "<<robotAngle<<" Vrobot: "<<robot.linearSpeed<<" Wrobot: "<<Math::toDomain(robot.angularSpeed)<<" Eangle:"<<Math::toDomain(fi - robotAngle)<<std::endl;
+
+	command = checkMaximumSpeedWheel( vss::WheelsCommand(wl, wr), realSpeedMax);
 
 	return command;
 }
-
-vss::WheelsCommand Movimentation::checkMaximumSpeedWheel(const vss::WheelsCommand& speed){
+vss::WheelsCommand Movimentation::checkMaximumSpeedWheel(const vss::WheelsCommand& speed, int maximumSpeed){
 	vss::WheelsCommand command(speed);
-
-	int maximumSpeed = 60;
 
 	if(speed.leftVel  > maximumSpeed) command.leftVel  = maximumSpeed;
 	if(speed.rightVel > maximumSpeed) command.rightVel = maximumSpeed;

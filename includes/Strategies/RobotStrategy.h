@@ -2,22 +2,21 @@
 // Created by manoel on 17/04/18.
 //
 
+
 #ifndef SDK_RODETAS_ROBOTSTRATEGY_H
 #define SDK_RODETAS_ROBOTSTRATEGY_H
 
 #include <Domain/RobotState.h>
 #include <Domain/RodetasState.h>
-#include <Domain/RobotSpeed.h>
 #include <Domain/Pose.h>
 #include <Domain/Path.h>
 #include <Domain/Constants.h>
+#include <Domain/Mindset.h>
 #include <Helpers/Math.h>
 #include <Strategies/RobotStrategyBase.h>
 #include <Movements/Movimentation.h>
 #include <Movements/UnivectorField.h>
 #include <Agent.h>
-#include <Config.h>
-
 class RobotStrategy : public Agent {
 
 public:
@@ -41,10 +40,13 @@ public:
     virtual vss::WheelsCommand blockedStrategy(vss::WheelsCommand);
 
     virtual vss::WheelsCommand kickStrategy(vss::WheelsCommand);
+    MindSet mindSet;
 
 protected:
     Movimentation movimentation;
-
+    float fi;
+    float last_fi;
+    
 };
 
 #endif //SDK_RODETAS_ROBOTSTRATEGY_H

@@ -67,10 +67,10 @@ vss::Pose RobotStrategyAttack::defineTarget() {
 
     }
 
-    target.x = state.ball.position.x;
-    target.y = state.ball.position.y;
+    //target.x = state.ball.position.x;
+    //target.y = state.ball.position.y;
 
-    target.angle = 0;
+    //target.angle = 0;
     int speed = 1;
     robot.setRobotSpeed(speed);
     return target;
