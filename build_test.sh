@@ -16,7 +16,9 @@ INSTALL_CORE() {
     cmake -DRELEASE=ON ..
     make
     sudo make install
-    cd ../..
+    cd ..
+    sudo ./configure.sh
+    cd ..
 }
 
 INSTALL_SAMPLE() {
