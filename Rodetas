@@ -83,14 +83,10 @@ WORKDIR /
 
 # Rodetas repository git configuring
 
-RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM.git
+RUN ls
+RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM
 RUN cd vsss-rodetas-LARC-2020-FiraSIM
-WORKDIR /VSS-Core
-RUN sudo ./configure.sh
-RUN cd ..
-WORKDIR /
 WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
-RUN sudo ./build_test.sh
 WORKDIR /
 
 # Running automated code
