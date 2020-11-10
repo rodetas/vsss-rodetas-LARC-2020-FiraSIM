@@ -91,6 +91,7 @@ WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
 RUN cd build
 WORKDIR /build
 CMD ["SDK-Rodetas", "-c"]
+#ENTRYPOINT SDK-Rodetas
 
 # Clean apt
 
