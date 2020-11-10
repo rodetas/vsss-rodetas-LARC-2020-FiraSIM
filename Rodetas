@@ -77,20 +77,20 @@ WORKDIR /
 
 RUN dir
 RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM.git
-RUN cd vsss-rodetas-LARC-2020-FiraSIM
+#RUN cd vsss-rodetas-LARC-2020-FiraSIM
 WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
-WORKDIR /vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
-RUN sudo ./compile.sh
-WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
-RUN sudo ./build_test.sh
-WORKDIR /
+#WORKDIR /vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
+#RUN sudo ./compile.sh
+#WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
+#RUN sudo ./build_test.sh
+#WORKDIR /
 
 # Running automated code
 
-WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
-RUN cd build
-WORKDIR /build
-CMD ["SDK-Rodetas", "-c"]
+#WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
+#RUN cd build
+#WORKDIR /build
+#CMD ["SDK-Rodetas", "-c"]
 #ENTRYPOINT SDK-Rodetas
 
 # Clean apt
