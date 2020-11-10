@@ -91,6 +91,12 @@ void Kernel::loop() {
             // If received command, let's debug it
             //std::cout << "[Example] Succesfully received an command from ref: " << getFoulNameById(command.foul()).toStdString() << " for team " << getTeamColorNameById(command.teamcolor()).toStdString() << std::endl;
             //std::cout << getQuadrantNameById(command.foulquadrant()).toStdString() << std::endl;
+            if(command.foul() == VSSRef::Foul::STOP){
+                Kernel::updatePlayingState(false);
+            }
+            if(command.foul() == VSSRef::Foul::GAME_ON){
+                Kernel::updatePlayingState(true);
+            }
 
             // Showing timestamp
             std::cout << "Timestamp: " << command.timestamp() << std::endl;
