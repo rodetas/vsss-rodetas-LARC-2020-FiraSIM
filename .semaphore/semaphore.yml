@@ -1,0 +1,32 @@
+version: v1.0
+name: Rodetas CI
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: "Build"
+    task:
+      jobs:
+      - name: Compile
+        commands:
+          - ./build-test.sh
+
+  - name: "Unit tests"
+    task:
+      jobs:
+      - name: RSpec
+        commands:
+          - checkout
+          - echo "make rspec"
+
+      - name: Lint code
+        commands:
+          - checkout
+          - echo "make lint"
+
+      - name: Check security
+        commands:
+          - checkout
+          - echo "make security"
