@@ -5,7 +5,7 @@ INSTALLED=0
 INSTALL_CORE() {
 
     sudo apt-get update
-    sudo apt-get -y install git g++ cmake libzmqpp3 libzmqpp-dev protobuf-compiler libprotobuf-dev
+    sudo apt-get -y install git g++ cmake libzmqpp3 libzmqpp-dev
     git clone https://github.com/SIRLab/VSS-Core.git
     cd VSS-Core
     git submodule init;
@@ -22,7 +22,7 @@ INSTALL_CORE() {
 }
 
 INSTALL_SAMPLE() {
-    sudo apt-get -y install g++ cmake protobuf-compiler libprotobuf-dev libboost-all-dev libgtkmm-3.0-dev
+    sudo apt-get -y install g++ cmake libboost-all-dev libgtkmm-3.0-dev
     cd net/pb/proto
     sudo sh compile.sh
     cd ..
