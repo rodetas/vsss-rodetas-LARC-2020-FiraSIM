@@ -6,19 +6,10 @@ LABEL maintainer="Rodetas"
 # Dependencias
 RUN apt-get update && apt-get install -y \
     build-essential \
-    cmake \
     git \
     qt5-default \
     sudo \
-    protobuf-compiler \
-    gcc \ 
-    g++ \
-    python3-pip \
-    libzmqpp-dev \
-    protobuf-compiler\
-    libprotobuf-dev \
-    libboost-all-dev\
-    libgtkmm-3.0-dev
+    python3-pip 
 
 # python pip upgrade
 
@@ -55,7 +46,7 @@ RUN sudo cp -r protoc3/bin/* /usr/local/bin/
 
 RUN sudo cp -r protoc3/include/* /usr/local/include/
 
-#RUN sudo ldconfig
+RUN sudo ldconfig
 
 RUN curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protobuf-all-3.6.1.zip
 
@@ -65,6 +56,7 @@ RUN unzip protobuf-all-3.6.1.zip -d protobuf-all
 WORKDIR /protobuf-all/protobuf-3.6.1
 
 # Installation
+
 RUN sudo ./configure
 RUN make -j 4
 RUN make check
@@ -83,18 +75,22 @@ WORKDIR /
 
 # Rodetas repository git configuring
 
-RUN ls
-RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM
+RUN dir
+RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM.git
 RUN cd vsss-rodetas-LARC-2020-FiraSIM
+WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
+WORKDIR /vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
+RUN sudo ./compile.sh
 WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
 RUN sudo ./build_test.sh
 WORKDIR /
 
 # Running automated code
 
+WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
 RUN cd build
 WORKDIR /build
-RUN ./SDK-Rodetas -c yellow
+CMD ["SDK-Rodetas", "-c"]
 
 # Clean apt
 
