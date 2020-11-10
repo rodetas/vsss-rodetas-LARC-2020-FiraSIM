@@ -91,6 +91,49 @@ float RobotStrategySideAttack::applyUnivectorField(vss::Pose target) {
                 obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
             }
         }
+         //Obstáculos de área do gol
+    std::pair <vss::Point, vss::Point> obstacle;
+
+    obstacle.second.x = 0;
+    obstacle.second.y = 0;
+
+
+    if (!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
+          robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 5) &&
+          robot.position.x > (vss::MAX_COORDINATE_X  - 20) - 25)) {
+
+        obstacle.first.x = 152;
+
+        obstacle.first.y = 38;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 45;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 50;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 55;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 60;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 65;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 70;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 75;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 80;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 85;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 93;
+        obstacles.push_back(obstacle);
+
+        obstacle.first.x = 160;
+
+        obstacle.first.y = 96;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 33;
+        obstacles.push_back(obstacle);
+    }
     }
 
     UnivectorField univectorField(robot);

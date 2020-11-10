@@ -182,6 +182,8 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
     RodetasRobot leftDefenseRobot = getRobotByStrategy(MindSet::DefenderStrategyLeft, robots);
     RodetasRobot rightDefenseRobot = getRobotByStrategy(MindSet::DefenderStrategyRight, robots);
     RodetasRobot attackDefenseRobot = getRobotByStrategy(MindSet::AttackDefenseStrategy, robots);
+    RodetasRobot sideAttackRobot = getRobotByStrategy(MindSet::SideAttackerStrategy, robots);
+    RodetasRobot centerAttackRobot = getRobotByStrategy(MindSet::CenterAttackerStrategy, robots);
 
     if (not leftDefenseRobot.isNull() and not rightDefenseRobot.isNull()){
         if(state.ball.position.x > (vss::MAX_COORDINATE_X  - 20)*0.75){
@@ -209,7 +211,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
         }
     }
 
-    if (not attackerRobot.isNull() and not defenderRobot.isNull()) {
+    //if (not attackerRobot.isNull() and not defenderRobot.isNull()) {
 
 //        if(attackerRobot.getSelfState().projection.x*1.3 < state.ball.position.x and
 //        state.ball.position.x < (vss::MAX_COORDINATE_X  - 20)/2){
@@ -218,14 +220,23 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
 //        }
 
         // troca atacante e defensor quando houver situacao de cruzamento
-        if (state.ball.position.x < (vss::MAX_COORDINATE_X  - 20) / 2 and // bola esta no ataque
+        /*if (state.ball.position.x < (vss::MAX_COORDINATE_X  - 20) / 2 and // bola esta no ataque
         (state.ball.projection.y > 50 && state.ball.projection.y < 80 && state.ball.position.x < defenderRobot.getSelfState().position.x) and // bola esta passando de frente pro gol
         (attackerRobot.getSelfState().position.y > 90 || attackerRobot.getSelfState().position.y < 35) and // robo atacante nao esta de frente pro gol
         (defenderRobot.getSelfState().position.y > 55 and defenderRobot.getSelfState().position.y < 75)) { // defensor esta bem posicionado
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
+        }*/
+        
+        if (state.ball.position.x > (vss::MAX_COORDINATE_X  -20)*0.6 && (state.ball.position.y > 105 || state.ball.position.y < 25)){
+            strategiesById[attackerRobot.getId()] = MindSet::SideAttackerStrategy;
+            strategiesById[defenderRobot.getId()] = MindSet::CenterAttackerStrategy;
         }
+        else{
+            strategiesById[sideAttackRobot.getId()] = MindSet::AttackerStrategy;
+            strategiesById[centerAttackRobot.getId()] = MindSet::DefenderStrategy;
+        }        
 
         // define troca quando a bola esta distante para tras do atacante
         if (attackerRobot.getSelfState().position.x * 1.2 < state.ball.position.x and // a bola precisa estar distante do atacante
@@ -252,7 +263,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
         }
-    }
+    //}
 
     if(not leftDefenseRobot.isNull() and not rightDefenseRobot.isNull()){
 
