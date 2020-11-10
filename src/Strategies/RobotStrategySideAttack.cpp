@@ -83,7 +83,8 @@ vss::Pose RobotStrategySideAttack::defineTarget() {
 
 
 float RobotStrategySideAttack::applyUnivectorField(vss::Pose target) {
-    std::vector<std::pair<vss::Point, vss::Point>> obstacles;
+    std::vector <std::pair<vss::Point, vss::Point>> obstacles;
+
     if (robot.distanceFrom(target) > 15) {
         //Obstáculos roboôs
         for (auto &r: state.robots) {
@@ -91,7 +92,9 @@ float RobotStrategySideAttack::applyUnivectorField(vss::Pose target) {
                 obstacles.push_back(std::make_pair(r.position, r.vectorSpeed));
             }
         }
-         //Obstáculos de área do gol
+    }
+
+    //Obstáculos de área do gol
     std::pair <vss::Point, vss::Point> obstacle;
 
     obstacle.second.x = 0;
@@ -102,7 +105,7 @@ float RobotStrategySideAttack::applyUnivectorField(vss::Pose target) {
           robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 5) &&
           robot.position.x > (vss::MAX_COORDINATE_X  - 20) - 25)) {
 
-        obstacle.first.x = 152;
+        obstacle.first.x = 132;
 
         obstacle.first.y = 38;
         obstacles.push_back(obstacle);
@@ -127,22 +130,23 @@ float RobotStrategySideAttack::applyUnivectorField(vss::Pose target) {
         obstacle.first.y = 93;
         obstacles.push_back(obstacle);
 
-        obstacle.first.x = 160;
+        obstacle.first.x = 140;
 
         obstacle.first.y = 96;
         obstacles.push_back(obstacle);
         obstacle.first.y = 33;
         obstacles.push_back(obstacle);
     }
-    }
 
     UnivectorField univectorField(robot);
-    path = univectorField.drawPath(robot, target, obstacles);
+    univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
 
+    path = univectorField.drawPath(robot, target, obstacles);
     if(univectorField.offTheField){
-        univectorField.setUnivectorWithoutCurves();
         obstacles.clear();
     }
+
+    univectorField.setUnivectorWithoutCurves();
 
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);

@@ -60,8 +60,8 @@ void Kernel::loop() {
     std::cout << "[Example] Connected to REFEREE socket in port " << REFEREE_PORT << " and address = " << UDP_ADDRESS << ".\n";
     
 
-    robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategyCenterAttack()));
-    robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategySideAttack()));
+    robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategyAttack()));
+    robots.emplace_back(RodetasRobot(1, MindSet::DefenderStrategy, new RobotStrategyDefender()));
     robots.emplace_back(RodetasRobot(2, MindSet::GoalKeeperStrategy, new RobotStrategyGoal()));
 
     vector<vss::WheelsCommand> commands(3);

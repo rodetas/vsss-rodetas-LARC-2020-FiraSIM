@@ -95,7 +95,7 @@ float RobotStrategyDefenderRight::applyUnivectorField(vss::Pose target) {
           robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 5) &&
           robot.position.x > (vss::MAX_COORDINATE_X  - 20) - 25)) {
 
-        obstacle.first.x = 152;
+        obstacle.first.x = 132;
 
         obstacle.first.y = 38;
         obstacles.push_back(obstacle);
@@ -120,7 +120,7 @@ float RobotStrategyDefenderRight::applyUnivectorField(vss::Pose target) {
         obstacle.first.y = 93;
         obstacles.push_back(obstacle);
 
-        obstacle.first.x = 160;
+        obstacle.first.x = 140;
 
         obstacle.first.y = 96;
         obstacles.push_back(obstacle);

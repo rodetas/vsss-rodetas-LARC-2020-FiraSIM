@@ -98,7 +98,7 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
 
     //Obstáculos de canto de gol
     std::pair<vss::Point, vss::Point> obstacle;
-    obstacle.first.x = 167;
+    obstacle.first.x = 147;
     obstacle.first.y = 40;
     obstacle.second.x = 0;
     obstacle.second.y = 0;
