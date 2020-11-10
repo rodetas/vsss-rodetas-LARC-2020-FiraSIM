@@ -89,7 +89,8 @@ vss::Pose RobotStrategyCenterAttack::defineTarget() {
 
 
 float RobotStrategyCenterAttack::applyUnivectorField(vss::Pose target) {
-    std::vector<std::pair<vss::Point, vss::Point>> obstacles;
+    std::vector <std::pair<vss::Point, vss::Point>> obstacles;
+
     if (robot.distanceFrom(target) > 15) {
         //Obstáculos roboôs
         for (auto &r: state.robots) {
@@ -98,13 +99,60 @@ float RobotStrategyCenterAttack::applyUnivectorField(vss::Pose target) {
             }
         }
     }
+
+    //Obstáculos de área do gol
+    std::pair <vss::Point, vss::Point> obstacle;
+
+    obstacle.second.x = 0;
+    obstacle.second.y = 0;
+
+
+    if (!(robot.position.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 5) &&
+          robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 5) &&
+          robot.position.x > (vss::MAX_COORDINATE_X  - 20) - 25)) {
+
+        obstacle.first.x = 132;
+
+        obstacle.first.y = 38;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 45;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 50;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 55;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 60;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 65;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 70;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 75;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 80;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 85;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 93;
+        obstacles.push_back(obstacle);
+
+        obstacle.first.x = 140;
+
+        obstacle.first.y = 96;
+        obstacles.push_back(obstacle);
+        obstacle.first.y = 33;
+        obstacles.push_back(obstacle);
+    }
+
     UnivectorField univectorField(robot);
+    univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
 
     path = univectorField.drawPath(robot, target, obstacles);
     if(univectorField.offTheField){
-        univectorField.setUnivectorWithoutCurves();
         obstacles.clear();
     }
+
+    univectorField.setUnivectorWithoutCurves();
 
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);

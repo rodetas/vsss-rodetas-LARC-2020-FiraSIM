@@ -211,7 +211,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
         }
     }
 
-    //if (not attackerRobot.isNull() and not defenderRobot.isNull()) {
+    if (not attackerRobot.isNull() and not defenderRobot.isNull()) {
 
 //        if(attackerRobot.getSelfState().projection.x*1.3 < state.ball.position.x and
 //        state.ball.position.x < (vss::MAX_COORDINATE_X  - 20)/2){
@@ -229,14 +229,14 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             timeLastChange.restartCounting();
         }*/
         
-        if (state.ball.position.x > (vss::MAX_COORDINATE_X  -20)*0.6 && (state.ball.position.y > 105 || state.ball.position.y < 25)){
+       /* if (state.ball.position.x > (vss::MAX_COORDINATE_X  -20)*0.6 && (state.ball.position.y > 105 || state.ball.position.y < 25)){
             strategiesById[attackerRobot.getId()] = MindSet::SideAttackerStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::CenterAttackerStrategy;
         }
         else{
             strategiesById[sideAttackRobot.getId()] = MindSet::AttackerStrategy;
             strategiesById[centerAttackRobot.getId()] = MindSet::DefenderStrategy;
-        }        
+        }*/        
 
         // define troca quando a bola esta distante para tras do atacante
         if (attackerRobot.getSelfState().position.x * 1.2 < state.ball.position.x and // a bola precisa estar distante do atacante
@@ -263,7 +263,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
         }
-    //}
+    }
 
     if(not leftDefenseRobot.isNull() and not rightDefenseRobot.isNull()){
 

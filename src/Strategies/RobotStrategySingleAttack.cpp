@@ -55,10 +55,10 @@ vss::Pose RobotStrategySingleAttack::defineTarget() {
         target.angle = M_PI_2;
     }
 
-    target.x = 140;
-    target.y = 115;
+    //target.x = 140;
+    //target.y = 115;
 
-    target.angle = 0;
+    //target.angle = 0;
 
     return target;
 }

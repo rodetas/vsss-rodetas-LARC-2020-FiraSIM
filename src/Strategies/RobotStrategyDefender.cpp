@@ -85,7 +85,7 @@ vss::Pose RobotStrategyDefender::defineTarget() {
     //target.y = 65;
 
     //target.angle = 0;
-
+        
     return target;
 }
 
@@ -112,7 +112,7 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
           robot.position.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 5) &&
           robot.position.x > (vss::MAX_COORDINATE_X  - 20) - 25)) {
 
-        obstacle.first.x = 152;
+        obstacle.first.x = 132;
 
         obstacle.first.y = 38;
         obstacles.push_back(obstacle);
@@ -137,7 +137,7 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
         obstacle.first.y = 93;
         obstacles.push_back(obstacle);
 
-        obstacle.first.x = 160;
+        obstacle.first.x = 130;
 
         obstacle.first.y = 96;
         obstacles.push_back(obstacle);
@@ -146,14 +146,14 @@ float RobotStrategyDefender::applyUnivectorField(vss::Pose target) {
     }
 
     UnivectorField univectorField(robot);
-    univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
+    //univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
 
     path = univectorField.drawPath(robot, target, obstacles);
     if(univectorField.offTheField){
         obstacles.clear();
     }
 
-    univectorField.setUnivectorWithoutCurves();
+    //univectorField.setUnivectorWithoutCurves();
 
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
