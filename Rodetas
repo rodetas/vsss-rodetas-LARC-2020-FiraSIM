@@ -13,7 +13,6 @@ RUN apt-get update && apt-get install -y \
     protobuf-compiler \
     gcc \ 
     g++ \
-    libzmqpp3 \
     python3-pip \
     libzmqpp-dev \
     protobuf-compiler\
@@ -56,14 +55,13 @@ RUN sudo cp -r protoc3/bin/* /usr/local/bin/
 
 RUN sudo cp -r protoc3/include/* /usr/local/include/
 
-RUN sudo ldconfig
+#RUN sudo ldconfig
 
 RUN curl -OL https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protobuf-all-3.6.1.zip
 
 # Unzip
 
 RUN unzip protobuf-all-3.6.1.zip -d protobuf-all
-#RUN cd protobuf-all/protobuf-3.6.1
 WORKDIR /protobuf-all/protobuf-3.6.1
 
 # Installation
@@ -86,20 +84,20 @@ WORKDIR /
 # Rodetas repository git configuring
 
 RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM.git
-#RUN cd vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
-#WORKDIR /vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
-#RUN ./compile.sh
-#RUN cd ../../../
 RUN cd vsss-rodetas-LARC-2020-FiraSIM
+WORKDIR /VSS-Core
+RUN sudo ./configure.sh
+RUN cd ..
+WORKDIR /
 WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
 RUN sudo ./build_test.sh
 WORKDIR /
 
 # Running automated code
 
-RUN cd build
-WORKDIR /build
-RUN ./SDK-Rodetas -c yellow
+#RUN cd build
+#WORKDIR /build
+#RUN ./SDK-Rodetas -c yellow
 
 # Clean apt
 
