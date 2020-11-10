@@ -3,14 +3,11 @@ xhost +local:docker
 
 ### Buildando o docker
 #### Always use sudo to run docker
-##### sudo docker build . -f Dockerfile -t nomedodocker
+#### sudo docker build . -f Dockerfile -t nomedodocker
 sudo docker build . -f Rodetas -t runrodetas.sh
 
 ### Navegando no docker
 sudo docker run -it runrodetas.sh /bin/bash
-
-### Protobuf 3.6.1
-conferir versao do protobuf usando o comando protoc --version
 
 ### Buildando projeto
 sudo ./build_test.sh
