@@ -14,6 +14,7 @@ GrSim_Client::GrSim_Client(QString address, int port, QObject *parent) : QObject
 }
 
 void GrSim_Client::sendCommand(double leftWheelVel, double rightWheelVel, bool my_robots_are_yellow, int id){
+    std::cout<<"entrou aqui no envio!"<<std::endl;
     fira_message::sim_to_ref::Packet packet;
     fira_message::sim_to_ref::Command* command = packet.mutable_cmd()->add_robot_commands();
     command->set_id(id);
@@ -25,7 +26,7 @@ void GrSim_Client::sendCommand(double leftWheelVel, double rightWheelVel, bool m
     dgram.resize(packet.ByteSize());
     packet.SerializeToArray(dgram.data(), dgram.size());
     if(socket->writeDatagram(dgram, this->_addr, this->_port) > -1){
-        //printf("send data\n");
+        printf("send data\n");
     }
 }
 
