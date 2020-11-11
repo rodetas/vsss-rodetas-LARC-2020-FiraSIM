@@ -250,7 +250,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             timeLastChange.restartCounting();
         }
 
-        if (attackerRobot.getRobotStrategyBase().isBlocked()) {
+        if (attackerRobot.getRobotStrategyBase().isStoppedFor(1500)) {
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();

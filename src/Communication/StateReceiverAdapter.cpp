@@ -8,11 +8,11 @@ StateReceiverAdapter::StateReceiverAdapter(vss::TeamType teamColor, vss::FieldTr
     this->teamColor = teamColor;
     this->changeSide = changeSide;
 
-    createSocketReceiveState();
+    //createSocketReceiveState();
 }
 
 void StateReceiverAdapter::createSocketReceiveState() {
-    stateReceiver.createSocket();
+    //stateReceiver.createSocket();
 }
 
 RodetasState StateReceiverAdapter::receiveState(fira_message::sim_to_ref::Environment packet) {
