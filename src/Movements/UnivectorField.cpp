@@ -20,7 +20,7 @@ UnivectorField::UnivectorField(RobotState robot) {
     }
     else if(robot.getRobotSpeed()==2){
         orientationDistance = 6;
-        k0 = 0.15; 
+        k0 = 0.05; 
     }
     else if(robot.getRobotSpeed()==3){
         orientationDistance = 14;

@@ -40,6 +40,7 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     vss::Pose target;
     vss::Point centerGoal1 = vss::Point(0, vss::MAX_COORDINATE_Y / 2 - 10);
     vss::Point centerGoal2 = vss::Point(0, vss::MAX_COORDINATE_Y / 2 + 10);
+    vss::Point targetPoint;
 
     //Posiciona o atacante no meio do campo para ele nao interferir na defesa
     if (state.ball.projection.x > (vss::MAX_COORDINATE_X  - 20) * 0.6) {
@@ -77,9 +78,17 @@ vss::Pose RobotStrategyAttack::defineTarget() {
 
     //target.x = state.ball.position.x;
     //target.y = state.ball.position.y;
-
     //target.angle = 0;
+    targetPoint.x = target.x;
+    targetPoint.y = target.y;
+    
     int speed = 1;
+    /*if(Math::distancePoint(robot.position,targetPoint) <= 25){
+        speed = 1;
+    }
+    else{
+        speed = 2;
+    }*/
     robot.setRobotSpeed(speed);
     return target;
 }
