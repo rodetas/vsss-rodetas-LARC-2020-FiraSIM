@@ -79,7 +79,7 @@ void Kernel::loop() {
         bool received = false;
         char *buffer = new char[65535];
         long long int packetLength = 0;
-        print("is Running");
+        printf("is Running");
         while(refereeClient->hasPendingDatagrams()){
             // Parse message to protobuf
             packetLength = refereeClient->readDatagram(buffer, 65535);
