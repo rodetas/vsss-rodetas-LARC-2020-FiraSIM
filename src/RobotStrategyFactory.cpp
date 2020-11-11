@@ -160,7 +160,7 @@ void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots
 		        }
 				break;
 			default:
-				std::cout << "MindSet \"" << toString(robotMindSet) << "\" nao tratado. Tente adicionar no switch" << std::endl;
+				//std::cout << "MindSet \"" << toString(robotMindSet) << "\" nao tratado. Tente adicionar no switch" << std::endl;
 				break;
 		}
 	}

@@ -37,7 +37,7 @@ RodetasState StateReceiverAdapter::receiveState(fira_message::sim_to_ref::Enviro
                 newState.ball.setLinearSpeed(Math::calculateLinearSpeed(ball.vx()*100, ball.vy()*(-1)*100));
                 newState.ball.setVectorSpeed(vss::Point(ball.vx()*100, ball.vy()*(-1)*100));
                 newState.ball.setProjection(Math::calculateProjection(Math::conversionYellow(vss::Point(ball.x(), ball.y())), ball.vx()*100, ball.vy()*(-1)*100));
-                std::cout << "BOLA(X,Y): "<<(Math::conversionYellow(vss::Point(ball.x(), ball.y()))).x<<" / "<<(Math::conversionYellow(vss::Point(ball.x(), ball.y()))).y<<std::endl;
+                //std::cout << "BOLA(X,Y): "<<(Math::conversionYellow(vss::Point(ball.x(), ball.y()))).x<<" / "<<(Math::conversionYellow(vss::Point(ball.x(), ball.y()))).y<<std::endl;
         for(int i = 0; i < robots_yellow_n; i++){
             fira_message::Robot firaRobot = detection.robots_yellow(i);
             RobotState robot;  

@@ -9,7 +9,7 @@ Movimentation::Movimentation() = default;
 vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int speed){
 
 	vss::WheelsCommand command;
-	std::cout<<"Velocidade que chega: "<<speed<<std::endl;
+	//std::cout<<"Velocidade que chega: "<<speed<<std::endl;
 	double vMax = 0.2;
 	if(speed == 1) vMax = 0.4;
 	else if(speed == 2) vMax = 0.6;	

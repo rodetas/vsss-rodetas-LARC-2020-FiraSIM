@@ -44,7 +44,7 @@ void Kernel::loop() {
         replacerSocket->close();
 
     replacerSocket->connectToHost(UDP_ADDRESS, REPLACER_PORT, QIODevice::WriteOnly, QAbstractSocket::IPv4Protocol);
-    std::cout << "[Example] Connected to REPLACER socket in port " << REPLACER_PORT << " and address = " << UDP_ADDRESS << ".\n";
+    //std::cout << "[Example] Connected to REPLACER socket in port " << REPLACER_PORT << " and address = " << UDP_ADDRESS << ".\n";
 
     // Perfoming connection to receive Referee commands
     // binding port
@@ -57,7 +57,7 @@ void Kernel::loop() {
         std::cout << "[ERROR] Failed to join VSSReferee multicast group =(" << std::endl;
         exit(-1);
     }
-    std::cout << "[Example] Connected to REFEREE socket in port " << REFEREE_PORT << " and address = " << UDP_ADDRESS << ".\n";
+    std::cout << "Connected to REFEREE socket in port " << REFEREE_PORT << " and address = " << UDP_ADDRESS << ".\n";
     
 
     robots.emplace_back(RodetasRobot(0, MindSet::AttackerStrategy, new RobotStrategyAttack()));
@@ -89,7 +89,7 @@ void Kernel::loop() {
             }
 
             // If received command, let's debug it
-            //std::cout << "[Example] Succesfully received an command from ref: " << getFoulNameById(command.foul()).toStdString() << " for team " << getTeamColorNameById(command.teamcolor()).toStdString() << std::endl;
+            //std::cout << " Succesfully received an command from ref: " << getFoulNameById(command.foul()).toStdString() << " for team " << getTeamColorNameById(command.teamcolor()).toStdString() << std::endl;
             //std::cout << getQuadrantNameById(command.foulquadrant()).toStdString() << std::endl;
             
             if(command.foul() == VSSRef::Foul::GAME_ON){
@@ -97,6 +97,7 @@ void Kernel::loop() {
             }
             else{
                 Kernel::updatePlayingState(false);
+                
             }
 
             // Showing timestamp
@@ -177,7 +178,7 @@ void Kernel::loop() {
             //debug.paths[i] = robot.getPath();
         }
 
-        std::cout<<std::endl;
+        //std::cout<<std::endl;
 
         coach.manage(robots, state, Config::playersSwap, isFreeBall, positionStatus);
 

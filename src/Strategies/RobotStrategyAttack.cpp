@@ -43,7 +43,7 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     vss::Point targetPoint;
 
     //Posiciona o atacante no meio do campo para ele nao interferir na defesa
-    if (state.ball.projection.x > (vss::MAX_COORDINATE_X  - 20) * 0.6) {
+    if (state.ball.projection.x > (vss::MAX_COORDINATE_X  - 20) * 0.6 && (state.ball.position.x > robot.position.x)) {
         if (state.ball.projection.y < vss::MAX_COORDINATE_Y / 2) {
             target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
             stopAttacker = true;
