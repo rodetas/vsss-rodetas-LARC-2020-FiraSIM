@@ -27,9 +27,9 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     goalTarget.x = (vss::MAX_COORDINATE_X  - 20) - 15;
     goalTarget.y = ballProjection.y;
 
-    //if (ballPosition.x > goalTarget.x){
-    //    goalTarget.x = ballPosition.x;
-    //}
+    if (ballPosition.x > goalTarget.x){
+        goalTarget.x = ballPosition.x;
+    }
     // máximo que pode ir até a lateral da área
     if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) {
         goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y /2;
