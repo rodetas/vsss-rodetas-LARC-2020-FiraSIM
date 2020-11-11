@@ -11,4 +11,5 @@ team = ""
         ;;
     esac
 done
+    cd build
     sudo ./SDK-Rodetas -c team
