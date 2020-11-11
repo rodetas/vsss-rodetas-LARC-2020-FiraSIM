@@ -7,12 +7,12 @@
 CommandSendAdapter::CommandSendAdapter(vss::TeamType teamColor, bool isRealEnvironment) {
     this->isRealEnvironment = isRealEnvironment;
     this->teamColor = teamColor;
-
-    createSocketSendCommand();
+//
+    //createSocketSendCommand();
 }
 
 void CommandSendAdapter::createSocketSendCommand() {
-    interfaceSend.createSocket(teamColor);
+    //interfaceSend.createSocket(teamColor);
 }
 
 void CommandSendAdapter::sendCommands(std::vector<RodetasRobot> robots, bool isPlaying, bool isTestingTransmission, bool yellowTeam) {
