@@ -17,7 +17,9 @@ vss::Pose RobotStrategyForwardAttack::defineTarget() {
     vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
     target.x = centerGoal.x;
     target.y = centerGoal.y;
-
+    int speed = 2;
+    std::cout<<"ta aqui OOOO"<<std::endl;
+    robot.setRobotSpeed(speed);
     return target;
 }
 

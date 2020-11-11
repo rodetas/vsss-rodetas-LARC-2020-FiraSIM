@@ -27,12 +27,15 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     goalTarget.x = (vss::MAX_COORDINATE_X  - 20) - 15;
     goalTarget.y = ballProjection.y;
 
+    //if (ballPosition.x > goalTarget.x){
+    //    goalTarget.x = ballPosition.x;
+    //}
     // máximo que pode ir até a lateral da área
-    if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 3) {
-        goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 3;
+    if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) {
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y /2;
 
-    } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 3) {
-        goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 3;
+    } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2) {
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2;
     }
 
     // ir na bola quando ela está dentro da area
@@ -98,7 +101,7 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
 
     //Obstáculos de canto de gol
     std::pair<vss::Point, vss::Point> obstacle;
-    obstacle.first.x = 147;
+    obstacle.first.x = 167;
     obstacle.first.y = 40;
     obstacle.second.x = 0;
     obstacle.second.y = 0;
