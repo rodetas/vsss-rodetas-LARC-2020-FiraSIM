@@ -11,7 +11,7 @@
 
 int main(int argc, char** argv){
 
-    Gtk::Main kit(argc, argv);
+    //Gtk::Main kit(argc, argv);
 
     if (Config::argumentParse(argc, argv)){
         Kernel Kernel;
