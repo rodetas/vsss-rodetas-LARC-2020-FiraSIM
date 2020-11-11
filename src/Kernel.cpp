@@ -79,7 +79,7 @@ void Kernel::loop() {
         bool received = false;
         char *buffer = new char[65535];
         long long int packetLength = 0;
-
+        print("is Running");
         while(refereeClient->hasPendingDatagrams()){
             // Parse message to protobuf
             packetLength = refereeClient->readDatagram(buffer, 65535);
@@ -155,7 +155,7 @@ void Kernel::loop() {
         delete [] buffer; 
         // method which waits and receives a new state from simulator or vision
          if (visionClient.receive(packet)) {
-            //printf("-----Received Wrapper Packet---------------------------------------------\n");
+            printf("-----Received Wrapper Packet---------------------------------------------\n");
             //see if the packet contains a robot detection frame:
             if (packet.has_frame()) {
                 state = receiveInterface.receiveState(packet);
