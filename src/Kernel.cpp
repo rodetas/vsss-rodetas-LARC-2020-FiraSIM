@@ -16,8 +16,8 @@ Kernel::Kernel() {
 void Kernel::loop() {
     
     bool my_robots_are_yellow = false;
-    if(Config::controlWindow)
-        threadWindowControl = new thread(std::bind(&Kernel::windowThreadWrapper, this));
+    //if(Config::controlWindow)
+    //    threadWindowControl = new thread(std::bind(&Kernel::windowThreadWrapper, this));
      if (Config::teamColor == 0){
         my_robots_are_yellow = true;
     }
@@ -197,16 +197,16 @@ if(replacerSocket->isOpen())
         threadWindowControl->detach();*/
 }
 
-void Kernel::windowThreadWrapper() {
+//void Kernel::windowThreadWrapper() {
 
-    windowControl.signalUpdatePlaying.connect(sigc::mem_fun(this, &Kernel::updatePlayingState));
-    windowControl.signalUpdateTesting.connect(sigc::mem_fun(this, &Kernel::updateTestingState));
-    windowControl.signalChangeFunction.connect(sigc::mem_fun(this, &Kernel::freeBallPositions));
-    windowControl.signalCloseWindow.connect(sigc::mem_fun(this, &Kernel::exitProgram));
-    windowControl.signalPositioning.connect(sigc::mem_fun(this, &Kernel::automaticPositioning));
+    //windowControl.signalUpdatePlaying.connect(sigc::mem_fun(this, &Kernel::updatePlayingState));
+    //windowControl.signalUpdateTesting.connect(sigc::mem_fun(this, &Kernel::updateTestingState));
+    //windowControl.signalChangeFunction.connect(sigc::mem_fun(this, &Kernel::freeBallPositions));
+    //windowControl.signalCloseWindow.connect(sigc::mem_fun(this, &Kernel::exitProgram));
+    //windowControl.signalPositioning.connect(sigc::mem_fun(this, &Kernel::automaticPositioning));
 
-    windowControl.start();
-}
+    //windowControl.start();
+//}
 
 void Kernel::automaticPositioning(PositionStatus posStatus){
     if(this->positionStatus != PositionStatus::None) this->positionStatus = PositionStatus::None;

@@ -10,7 +10,7 @@
 #define _STRATEGY_H_
 
 #include <RodetasRobot.h>
-#include <Window/WindowControl.h>
+//#include <Window/WindowControl.h>
 #include <Communication/DebugSenderAdapter.h>
 #include <Communication/StateReceiverAdapter.h>
 #include <Communication/CommandSendAdapter.h>
@@ -58,7 +58,7 @@ public:
 
 private:
 
-	thread* threadWindowControl;
+	//thread* threadWindowControl;
 
 	PositionStatus positionStatus;
 
@@ -67,9 +67,9 @@ private:
     bool isFreeBall;
     bool isRunning;
 
-	WindowControl windowControl;
+	//WindowControl windowControl;
 
-	void windowThreadWrapper();
+	//void windowThreadWrapper();
 };
 
 #endif // _STRATEGY_H_
