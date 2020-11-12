@@ -228,7 +228,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
 
     if (not attackerRobot.isNull() and not defenderRobot.isNull()) {
 
-        if(state.ball.projection.x > (vss::MAX_COORDINATE_X  - 20) * 0.6 && (state.ball.position.x > attackerRobot.getSelfState().position.position.x){
+        if(state.ball.projection.x > (vss::MAX_COORDINATE_X  - 20) * 0.6 && (state.ball.position.x > attackerRobot.getSelfState().position.x){
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategyLeft;
             strategiesById[defenderRobot.getId()] = MindSet::DefenderStrategyRight;
         }
