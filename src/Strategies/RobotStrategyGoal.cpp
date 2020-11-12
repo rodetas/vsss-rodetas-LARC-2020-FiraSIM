@@ -68,7 +68,7 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     } else {
         goalTarget.angle = (3 * M_PI)/2 + M_PI/6;
     }
-    int speed = 1;
+    int speed = 3;
     robot.setRobotSpeed(speed);
 
     return goalTarget;
