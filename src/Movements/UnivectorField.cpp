@@ -9,7 +9,7 @@ UnivectorField::UnivectorField(RobotState robot) {
     //n = 3;
     //orientationDistance = 8;
     //Real:
-    n = 3;
+    n = 1.5;
     orientationDistance = 10;
     k0 = 0.4;
     dmin = 7;

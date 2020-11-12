@@ -10,8 +10,8 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
 
 	vss::WheelsCommand command;
 	//std::cout<<"Velocidade que chega: "<<speed<<std::endl;
-	double vMax = 0.8;
-	double d = 0.2;
+	double vMax = 1;
+	double d = 0.4;
 	/* if(speed == 1){ 
 	 	vMax = 0.6;
 		d = 0.2;
@@ -42,7 +42,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
 	double w = -(sin(robotAngle)/d) * xdDot + (cos(robotAngle)/d) * ydDot;
 
     if ( cos(fi - Math::toRadian(robot.angle)) > 0.4){
-        lastSide = 1;
+        lastSide = -1;
     } else if(cos(fi - Math::toRadian(robot.angle)) < -0.4){
         lastSide = 1;
     }

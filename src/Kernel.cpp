@@ -161,7 +161,6 @@ void Kernel::loop() {
             //see if the packet contains a robot detection frame:
             if (packet.has_frame()) {
                 state = receiveInterface.receiveState(packet);
-                            
      }
         //state = receiveInterface.receiveState();
 

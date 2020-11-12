@@ -9,7 +9,7 @@ RobotStrategyAttack::RobotStrategyAttack() {
 }
 
 vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
-    c = kickStrategy(c);
+   /*c = kickStrategy(c);
     c = cornerStrategy(c);
 
     if (stopAttacker) {
@@ -31,14 +31,14 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
                 c = movimentation.turnLeft(60, 60);
             }
         }
-    }
+    }*/
 
     return c;
 }
 
 vss::Pose RobotStrategyAttack::defineTarget() {
     vss::Pose target;
-   /* vss::Point centerGoal1 = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
+    vss::Point centerGoal1 = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
     vss::Point centerGoal2 = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
     vss::Point targetPoint;
 
@@ -89,12 +89,12 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     else{
         speed = 2;
     }
-    */
-    target.x = state.ball.position.x;
-    target.y = state.ball.position.y;
-    target.angle = 0;
-    //speed = 2;
-    //robot.setRobotSpeed(speed);
+    
+    //target.x = state.ball.projection.x;
+    //target.y = state.ball.projection.y;
+    //target.angle = 0;
+    speed = 2;
+    robot.setRobotSpeed(speed);
     return target;
 }
 
