@@ -203,7 +203,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
     if (not leftDefenseRobot.isNull() and not rightDefenseRobot.isNull()){
         if(state.ball.position.x > (vss::MAX_COORDINATE_X  - 20)*0.75){
             // se a bola passou da linha de defesa, torna um robo o defensor
-            if(state.ball.projection.y < vss::MAX_COORDINATE_Y/2){
+            if(state.ball.projection.y < vss::MAX_COORDINATE_Y*0.4 ){
                 strategiesById[leftDefenseRobot.getId()] = MindSet::AttackDefenseStrategy;
                 strategiesById[rightDefenseRobot.getId()] = MindSet::DefenderStrategyRight;
             } else {
@@ -228,8 +228,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
 
     if (not attackerRobot.isNull() and not defenderRobot.isNull()) {
 
-        if(attackerRobot.getSelfState().projection.x*1.3 < state.ball.position.x and
-        state.ball.position.x < (vss::MAX_COORDINATE_X  - 20)/2){
+        if(state.ball.projection.x > (vss::MAX_COORDINATE_X  - 20) * 0.6 && (state.ball.position.x > attackerRobot.position.x){
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategyLeft;
             strategiesById[defenderRobot.getId()] = MindSet::DefenderStrategyRight;
         }
@@ -271,7 +270,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             timeLastChange.restartCounting();
         }
 
-        if(defenderRobot.getSelfState().position.x < (vss::MAX_COORDINATE_X  - 20)*0.65 and
+        if(defenderRobot.getSelfState().position.x < (vss::MAX_COORDINATE_X  - 20)*0.7 and
         defenderRobot.getSelfState().distanceFrom(state.ball.position) < 20 and
         defenderRobot.getSelfState().linearSpeed > 10) {
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
