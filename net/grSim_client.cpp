@@ -20,6 +20,7 @@ void GrSim_Client::sendCommand(double leftWheelVel, double rightWheelVel, bool m
     command->set_yellowteam(my_robots_are_yellow);
     command->set_wheel_left(leftWheelVel);
     command->set_wheel_right(rightWheelVel);
+    std::cout<<"LeftWheelVel/RightWheelVel: "<<leftWheelVel<<" / "<<rightWheelVel <<std::endl;
 
     QByteArray dgram;
     dgram.resize(packet.ByteSize());

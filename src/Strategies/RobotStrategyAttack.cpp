@@ -38,7 +38,7 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
 
 vss::Pose RobotStrategyAttack::defineTarget() {
     vss::Pose target;
-    vss::Point centerGoal1 = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
+   /* vss::Point centerGoal1 = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
     vss::Point centerGoal2 = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
     vss::Point targetPoint;
 
@@ -89,8 +89,12 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     else{
         speed = 2;
     }
-    speed = 2;
-    robot.setRobotSpeed(speed);
+    */
+    target.x = state.ball.position.x;
+    target.y = state.ball.position.y;
+    target.angle = 0;
+    //speed = 2;
+    //robot.setRobotSpeed(speed);
     return target;
 }
 

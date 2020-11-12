@@ -10,8 +10,8 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
 
 	vss::WheelsCommand command;
 	//std::cout<<"Velocidade que chega: "<<speed<<std::endl;
-	double vMax = 0.6;
-	double d = 0.081;
+	double vMax = 0.8;
+	double d = 0.2;
 	/* if(speed == 1){ 
 	 	vMax = 0.6;
 		d = 0.2;
@@ -31,7 +31,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
 		d = 0.2;
 	}*/
 
-	double r = 0.016; // Raio da roda
+	double r = 0.02; // Raio da roda
 	double l = 0.075;// Distancia entre as rodas
 	double robotAngle = Math::toDomain(Math::toRadian(robot.angle));
 
@@ -42,7 +42,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
 	double w = -(sin(robotAngle)/d) * xdDot + (cos(robotAngle)/d) * ydDot;
 
     if ( cos(fi - Math::toRadian(robot.angle)) > 0.4){
-        lastSide = -1;
+        lastSide = 1;
     } else if(cos(fi - Math::toRadian(robot.angle)) < -0.4){
         lastSide = 1;
     }
@@ -71,7 +71,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
 vss::WheelsCommand Movimentation::checkMaximumSpeedWheel(const vss::WheelsCommand& speed){
 	vss::WheelsCommand command(speed);
 
-	int maximumSpeed = 60;
+	int maximumSpeed = 50;
 
 	if(speed.leftVel  > maximumSpeed) command.leftVel  = maximumSpeed;
 	if(speed.rightVel > maximumSpeed) command.rightVel = maximumSpeed;
