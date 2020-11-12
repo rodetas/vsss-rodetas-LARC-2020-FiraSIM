@@ -42,7 +42,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
 	double w = -(sin(robotAngle)/d) * xdDot + (cos(robotAngle)/d) * ydDot;
 
     if ( cos(fi - Math::toRadian(robot.angle)) > 0.4){
-        lastSide = -1;
+        lastSide = 1;
     } else if(cos(fi - Math::toRadian(robot.angle)) < -0.4){
         lastSide = 1;
     }
