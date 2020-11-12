@@ -76,8 +76,8 @@ vss::Pose RobotStrategyAttack::defineTarget() {
 
     }
 
-    //target.x = state.ball.position.x;
-    //target.y = state.ball.position.y;
+    target.x = state.ball.position.x;
+    target.y = state.ball.position.y;
     //target.angle = 0;
     targetPoint.x = target.x;
     targetPoint.y = target.y;
