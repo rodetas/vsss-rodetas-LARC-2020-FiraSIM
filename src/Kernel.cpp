@@ -92,12 +92,13 @@ void Kernel::loop() {
             //std::cout << " Succesfully received an command from ref: " << getFoulNameById(command.foul()).toStdString() << " for team " << getTeamColorNameById(command.teamcolor()).toStdString() << std::endl;
             //std::cout << getQuadrantNameById(command.foulquadrant()).toStdString() << std::endl;
             
+
             if(command.foul() == VSSRef::Foul::GAME_ON){
                 Kernel::updatePlayingState(true);
             }
             else{
                 Kernel::updatePlayingState(false);
-                
+                interpreter.attackerClosestToBall(robots, state);
             }
 
             // Showing timestamp
@@ -180,7 +181,7 @@ void Kernel::loop() {
 
         //std::cout<<std::endl;
 
-        coach.manage(robots, state, Config::playersSwap, isFreeBall, positionStatus);
+        coach.manage(robots, state, Config::playersSwap, isFreeBall, positionStatus, isPlaying);
 
         sendInterface.sendCommands(robots, isPlaying, isTestingTransmission,my_robots_are_yellow);
         //debugInterface.sendDebug(debug);

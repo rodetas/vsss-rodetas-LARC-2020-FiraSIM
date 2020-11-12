@@ -10,12 +10,22 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
 
 	vss::WheelsCommand command;
 	//std::cout<<"Velocidade que chega: "<<speed<<std::endl;
-	double vMax = 0.2;
-	if(speed == 1) vMax = 0.4;
-	else if(speed == 2) vMax = 0.6;	
-	else if(speed == 3) vMax = 0.8;
-
-	double d = 0.1; // Coeficiente de ponto a frente do robô para ambiente SIMULADO
+	double vMax = 0.6;
+	double d = 0.081;
+	/* if(speed == 1){ 
+	 	vMax = 0.6;
+		d = 0.2;
+	 }
+	else if(speed == 2) 
+	{
+		vMax = 1.2;
+		d = 0.54;	
+	}
+	else if(speed == 3) 
+	{	
+		vMax = 0.8;
+	}*/
+	 // Coeficiente de ponto a frente do robô para ambiente SIMULADO
 	/*if(Config::realEnvironment){
 		// Coeficiente para ambiente REAL
 		d = 0.2;
@@ -41,8 +51,8 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
     double wl = v/r - w*(l/r) * lastSide;
 
 	// conversão rad/s para cm/s
-	wr =  wr * r * 100;
-	wl =  wl * r * 100;
+	//wr =  wr * r * 100;
+	//wl =  wl * r * 100;
 
     //double linearSpeed = std::abs((wr + wl) / 2);
 	//double k = 1 - (0.7 * std::abs(linearSpeed - robot.linearSpeed) / 60);

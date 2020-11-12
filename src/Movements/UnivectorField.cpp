@@ -10,22 +10,10 @@ UnivectorField::UnivectorField(RobotState robot) {
     //orientationDistance = 8;
     //Real:
     n = 3;
-    orientationDistance = 8;
+    orientationDistance = 10;
     k0 = 0.4;
     dmin = 7;
     delta = 4.5;
-    if(robot.getRobotSpeed()==1){
-        orientationDistance = 10;
-        k0 = 0.2;     
-    }
-    else if(robot.getRobotSpeed()==2){
-        orientationDistance = 6;
-        k0 = 0.05; 
-    }
-    else if(robot.getRobotSpeed()==3){
-        orientationDistance = 14;
-        k0 = 0.1;
-    }
     offTheField = false;
 }
 

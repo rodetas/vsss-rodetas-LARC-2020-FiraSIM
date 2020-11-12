@@ -61,7 +61,7 @@ private:
 	//thread* threadWindowControl;
 
 	PositionStatus positionStatus;
-
+	StateInterpreter interpreter;
 	bool isPlaying;
 	bool isTestingTransmission;
     bool isFreeBall;

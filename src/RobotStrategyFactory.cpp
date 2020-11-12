@@ -6,10 +6,10 @@
 
 RobotStrategyFactory::RobotStrategyFactory() = default;
 
-void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool enabledSwap, bool isFreeBall, PositionStatus positionStatus) {
+void RobotStrategyFactory::manage(std::vector<RodetasRobot>& robots, RodetasState& state, bool enabledSwap, bool isFreeBall, PositionStatus positionStatus, bool isPlaying) {
 
 	// funcao retorna um vetor contendo no indice 0 o mindSet do Robo 0, no indice 1 mindSet do robo 1, etc
-	std::vector<MindSet> mindSetById = interpreter.manageStrategyOrPositioning(robots, state, enabledSwap, isFreeBall, positionStatus );
+	std::vector<MindSet> mindSetById = interpreter.manageStrategyOrPositioning(robots, state, enabledSwap, isFreeBall, positionStatus, isPlaying);
 	constructStrategies(robots, mindSetById);
 }
 
@@ -22,7 +22,7 @@ void RobotStrategyFactory::constructStrategies(std::vector<RodetasRobot>& robots
 		switch (robotMindSet) {
 			case MindSet::GoalKeeperStrategy:
 				if (robot.getMindSet() != MindSet::GoalKeeperStrategy) {
-					robot.setMindSet(MindSet::GoalKeeperStrategy);
+					robot.setMindSet(MindSet::GoalKeeperStrategy);	
 					robot.setStrategy(new RobotStrategyGoal());
 				}
 				break;

@@ -38,17 +38,17 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
 
 vss::Pose RobotStrategyAttack::defineTarget() {
     vss::Pose target;
-    vss::Point centerGoal1 = vss::Point(0, vss::MAX_COORDINATE_Y / 2 - 10);
-    vss::Point centerGoal2 = vss::Point(0, vss::MAX_COORDINATE_Y / 2 + 10);
+    vss::Point centerGoal1 = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
+    vss::Point centerGoal2 = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
     vss::Point targetPoint;
 
     //Posiciona o atacante no meio do campo para ele nao interferir na defesa
     if (state.ball.projection.x > (vss::MAX_COORDINATE_X  - 20) * 0.6 && (state.ball.position.x > robot.position.x)) {
         if (state.ball.projection.y < vss::MAX_COORDINATE_Y / 2) {
-            target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
+            target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.2, 0);
             stopAttacker = true;
         } else {
-            target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.2, 0);
+            target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
             stopAttacker = true;
         }
     } else {
@@ -83,12 +83,13 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     targetPoint.y = target.y;
     
     int speed = 1;
-    /*if(Math::distancePoint(robot.position,targetPoint) <= 25){
+    if(Math::distancePoint(robot.position,targetPoint) <= 35){
         speed = 1;
     }
     else{
         speed = 2;
-    }*/
+    }
+    speed = 2;
     robot.setRobotSpeed(speed);
     return target;
 }

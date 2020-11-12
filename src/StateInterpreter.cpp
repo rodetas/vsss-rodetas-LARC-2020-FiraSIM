@@ -9,8 +9,8 @@ StateInterpreter::StateInterpreter() {
     strategiesById.resize(3);
 };
 
-std::vector<MindSet> StateInterpreter::manageStrategyOrPositioning(std::vector<RodetasRobot> &robots, RodetasState &state, bool enabledSwap, bool freeBall, PositionStatus posStatus){
-
+std::vector<MindSet> StateInterpreter::manageStrategyOrPositioning(std::vector<RodetasRobot> &robots, RodetasState &state, bool enabledSwap, bool freeBall, PositionStatus posStatus, bool isPlaying){
+    this->isPlaying = isPlaying;
     for(unsigned int i=0 ; i<robots.size() ; i++){
         strategiesById[i] = robots[i].getMindSet();
     }
@@ -41,6 +41,8 @@ std::vector<MindSet> StateInterpreter::defineStrategy(std::vector<RodetasRobot> 
 
     return strategiesById;
 }
+
+
 
 std::vector<MindSet> StateInterpreter::definePositioning(std::vector<RodetasRobot>& robots, RodetasState& state, PositionStatus posStatus){
 
@@ -74,6 +76,7 @@ std::vector<MindSet> StateInterpreter::definePositioning(std::vector<RodetasRobo
 
     return strategiesById;
 }
+
 
 // define posicoes para situacao de cobranca de penalti a favor
 void StateInterpreter::definePenaltyHit(std::vector<RodetasRobot> & robots, RodetasState & state) {
@@ -174,6 +177,18 @@ void StateInterpreter::defineFreeballRightDefense(std::vector<RodetasRobot> & ro
     strategiesById[robots[2].getId()] = MindSet::GoalKeeperCenterPositioning;
 }
 
+void StateInterpreter::attackerClosestToBall(std::vector<RodetasRobot> & robots, RodetasState & state){
+    strategiesById[robots[0].getId()] = MindSet::AttackerStrategy;
+    strategiesById[robots[1].getId()] = MindSet::DefenderStrategy;
+    strategiesById[robots[2].getId()] = MindSet::GoalKeeperStrategy;
+    RodetasRobot closestToBallRobot = getClosestRobotTo(robots, state.ball.position);
+    if( closestToBallRobot.getId() != 0){
+        MindSet aux = strategiesById[closestToBallRobot.getId()];
+        strategiesById[closestToBallRobot.getId()] = MindSet::AttackerStrategy;
+        strategiesById[robots[0].getId()] = aux;
+    }
+}
+
 void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, RodetasState & state, bool freeBall) {
     // @TODO refatorar essa troca de estrategias
     RodetasRobot goalRobot = getRobotByStrategy(MindSet::GoalKeeperStrategy, robots);
@@ -213,21 +228,21 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
 
     if (not attackerRobot.isNull() and not defenderRobot.isNull()) {
 
-//        if(attackerRobot.getSelfState().projection.x*1.3 < state.ball.position.x and
-//        state.ball.position.x < (vss::MAX_COORDINATE_X  - 20)/2){
-//            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategyLeft;
-//            strategiesById[defenderRobot.getId()] = MindSet::DefenderStrategyRight;
-//        }
+        if(attackerRobot.getSelfState().projection.x*1.3 < state.ball.position.x and
+        state.ball.position.x < (vss::MAX_COORDINATE_X  - 20)/2){
+            strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategyLeft;
+            strategiesById[defenderRobot.getId()] = MindSet::DefenderStrategyRight;
+        }
 
         // troca atacante e defensor quando houver situacao de cruzamento
-        /*if (state.ball.position.x < (vss::MAX_COORDINATE_X  - 20) / 2 and // bola esta no ataque
+        if (state.ball.position.x < (vss::MAX_COORDINATE_X  - 20) / 2 and // bola esta no ataque
         (state.ball.projection.y > 50 && state.ball.projection.y < 80 && state.ball.position.x < defenderRobot.getSelfState().position.x) and // bola esta passando de frente pro gol
         (attackerRobot.getSelfState().position.y > 90 || attackerRobot.getSelfState().position.y < 35) and // robo atacante nao esta de frente pro gol
         (defenderRobot.getSelfState().position.y > 55 and defenderRobot.getSelfState().position.y < 75)) { // defensor esta bem posicionado
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();
-        }*/
+        }
         
        /* if (state.ball.position.x > (vss::MAX_COORDINATE_X  -20)*0.6 && (state.ball.position.y > 105 || state.ball.position.y < 25)){
             strategiesById[attackerRobot.getId()] = MindSet::SideAttackerStrategy;
@@ -250,7 +265,7 @@ void StateInterpreter::chooseStrategies(std::vector<RodetasRobot> & robots, Rode
             timeLastChange.restartCounting();
         }
 
-        if (attackerRobot.getRobotStrategyBase().isStoppedFor(1500)) {
+        if (attackerRobot.getRobotStrategyBase().isStoppedFor(1500) && isPlaying) {
             strategiesById[attackerRobot.getId()] = MindSet::DefenderStrategy;
             strategiesById[defenderRobot.getId()] = MindSet::AttackerStrategy;
             timeLastChange.restartCounting();

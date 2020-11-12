@@ -39,7 +39,7 @@ class RobotStrategyFactory {
 public:
 
     RobotStrategyFactory();
-    void manage(std::vector<RodetasRobot>&, RodetasState&, bool, bool, PositionStatus);
+    void manage(std::vector<RodetasRobot>&, RodetasState&, bool, bool, PositionStatus, bool);
     void constructStrategies(std::vector<RodetasRobot>&, std::vector<MindSet>&);
 
 private:

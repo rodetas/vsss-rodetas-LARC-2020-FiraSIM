@@ -26,7 +26,7 @@ void CommandSendAdapter::sendCommands(std::vector<RodetasRobot> robots, bool isP
         // sends commands to simulator
         for(auto robot : robots){
             commandClient.sendCommand(robot.getCommand().leftVel,robot.getCommand().rightVel , yellowTeam, robot.getId());
-           //commandClient.sendCommand( 0,0 , yellowTeam, robot.getId());
+            //commandClient.sendCommand( 120, 120 , yellowTeam, robot.getId());
         }
        // vss::Command vssCommand;
         //vssCommand.commands.insert(vssCommand.commands.begin(), commands.begin(), commands.end());
