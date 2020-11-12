@@ -46,7 +46,7 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
     } else if(cos(fi - Math::toRadian(robot.angle)) < -0.4){
         lastSide = 1;
     }
-
+	
     double wr = v/r + w*(l/r) * lastSide;
     double wl = v/r - w*(l/r) * lastSide;
 
