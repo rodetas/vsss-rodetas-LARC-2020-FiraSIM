@@ -9,7 +9,7 @@ RobotStrategyAttack::RobotStrategyAttack() {
 }
 
 vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
-   /*c = kickStrategy(c);
+   c = kickStrategy(c);
     c = cornerStrategy(c);
 
     if (stopAttacker) {
@@ -31,7 +31,7 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
                 c = movimentation.turnLeft(60, 60);
             }
         }
-    }*/
+    }
 
     return c;
 }
@@ -54,17 +54,23 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     } else {
         stopAttacker = false;
 
-        target.x = state.ball.position.x;
-        target.y = state.ball.position.y;
+        if(state.ball.linearSpeed ==0)
+        {   target.x = state.ball.position.x;
+           target.y = state.ball.position.y;
+        }
+        else{
+            target.x = state.ball.projection.x;
+            target.y = state.ball.projection.y;
+        }
         if(target.y < (target.y < vss::MAX_COORDINATE_Y * 0.5) )
             target.angle = Math::arrivalAngle(target, centerGoal1);
         else target.angle = Math::arrivalAngle(target, centerGoal2);
         
         //Angulos para quando robô estiver na parede
-        if (target.y < vss::MAX_COORDINATE_Y * 0.1) {
+        if (target.y < vss::MAX_COORDINATE_Y * 0.25) {
             target.angle = 0;
         }
-        if (target.y > vss::MAX_COORDINATE_Y * 0.88) {
+        if (target.y > vss::MAX_COORDINATE_Y * 0.75) {
             target.angle = 0;
         }
         if ((target.x > (vss::MAX_COORDINATE_X  - 20) * 0.88) && (target.y < vss::MAX_COORDINATE_Y * 0.5)) {
@@ -79,22 +85,14 @@ vss::Pose RobotStrategyAttack::defineTarget() {
     //target.x = state.ball.position.x;
     //target.y = state.ball.position.y;
     //target.angle = 0;
-    targetPoint.x = target.x;
-    targetPoint.y = target.y;
-    
-    int speed = 1;
-    if(Math::distancePoint(robot.position,targetPoint) <= 35){
-        speed = 1;
-    }
-    else{
-        speed = 2;
-    }
+    //targetPoint.x = target.x;
+    //targetPoint.y = target.y;
     
     //target.x = state.ball.projection.x;
     //target.y = state.ball.projection.y;
     //target.angle = 0;
-    speed = 2;
-    robot.setRobotSpeed(speed);
+    //speed = 2;
+    //robot.setRobotSpeed(speed);
     return target;
 }
 
@@ -156,8 +154,8 @@ std::vector <std::pair<vss::Point, vss::Point>> obstacles;
     }
 
     UnivectorField univectorField(robot);
+    
     //univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
-
     path = univectorField.drawPath(robot, target, obstacles);
     if(univectorField.offTheField){
         obstacles.clear();

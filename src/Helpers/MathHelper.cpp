@@ -23,7 +23,7 @@ double Math::calculateLinearSpeed(double velX, double velY) {
 }
 
 vss::Point Math::calculateProjection(vss::Point initialPoint, double velX, double velY) {
-    return vss::Point(initialPoint.x + velX /5, initialPoint.y + velY /5);
+    return vss::Point(initialPoint.x + velX/10 , initialPoint.y + velY/10);
 }
 
 double Math::toRadian(double angle) {
