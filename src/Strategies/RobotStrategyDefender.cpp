@@ -37,14 +37,14 @@ vss::Pose RobotStrategyDefender::defineTarget() {
             target.x = state.ball.position.x;
         }
 
-//        // se a bola passar da linha de defesa, posiciona o robô no canto da area para auxiliar o goleiro
-//        if(state.ball.position.y > vss::MAX_COORDINATE_Y / 2) {
-//            target.x = (vss::MAX_COORDINATE_X  - 20) - 15;
-//            target.y = vss::MAX_COORDINATE_Y - 22;
-//        } else {
-//            target.x = (vss::MAX_COORDINATE_X  - 20) - 15;
-//            target.y = vss::MIN_COORDINATE_Y + 22;
-//        }
+        // se a bola passar da linha de defesa, posiciona o robô no canto da area para auxiliar o goleiro
+        if(state.ball.position.y > robot.position.y) {
+            target.x = (vss::MAX_COORDINATE_X  - 20) - 15;
+            target.y = vss::MAX_COORDINATE_Y - 22;
+        } else {
+            target.x = (vss::MAX_COORDINATE_X  - 20) - 15;
+            target.y = vss::MIN_COORDINATE_Y + 22;
+        }
 
     } else {
         // se a bola nao passou da linha de defesa e o zagueiro esta atras dela, acompanha a bola no eixo y

@@ -32,16 +32,16 @@ vss::Pose RobotStrategyGoal::defineTarget() {
     }
     // máximo que pode ir até a lateral da área
     if (goalTarget.y > vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2) {
-        goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y /2;
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2;
 
-    } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2) {
+    } else if (goalTarget.y < vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y /2) {
         goalTarget.y = vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2;
     }
 
     // ir na bola quando ela está dentro da area
-    if (ballPosition.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 ) &&
-        ballPosition.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 ) &&
-        ballPosition.x > (vss::MAX_COORDINATE_X  - 20) - 30) {
+    if (ballPosition.y > (vss::MAX_COORDINATE_Y / 2 - Config::goalAreaSize.y / 2 + 8) &&
+        ballPosition.y < (vss::MAX_COORDINATE_Y / 2 + Config::goalAreaSize.y / 2 - 8) &&
+        ballPosition.x > vss::MAX_COORDINATE_X - 30) {
 
         // Testar esse target como sendo ballProjection ou ballPosition
         goalTarget.x = ballPosition.x;
@@ -56,20 +56,20 @@ vss::Pose RobotStrategyGoal::defineTarget() {
         stopGoalKeeper = false;
     }
 
-    // quando esta agarrado manda ir para o centro do gol na tentativa de soltar
-//    if (strategyBase.isStoppedFor(3000) && robot.distanceFrom(goalTarget) > 6) {
-//        goalTarget.x = (vss::MAX_COORDINATE_X  - 20) - 10;
-//        goalTarget.y = vss::MAX_COORDINATE_Y / 2;
+    //quando esta agarrado manda ir para o centro do gol na tentativa de soltar
+    if (strategyBase.isStoppedFor(6000) && robot.distanceFrom(goalTarget) > 6) {
+      goalTarget.x = (vss::MAX_COORDINATE_X  - 20) - 10;
+        goalTarget.y = vss::MAX_COORDINATE_Y / 2;
 //
-//    }
+    }
 
     if (robot.position.y < goalTarget.y) {
         goalTarget.angle = M_PI/2 - M_PI/6;
     } else {
         goalTarget.angle = (3 * M_PI)/2 + M_PI/6;
     }
-    int speed = 1;
-    robot.setRobotSpeed(speed);
+    //int speed = 1;
+    //robot.setRobotSpeed(speed);
 
     return goalTarget;
 }

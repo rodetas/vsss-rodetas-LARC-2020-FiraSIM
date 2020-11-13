@@ -12,11 +12,11 @@ vss::WheelsCommand Movimentation::movePlayers(RobotState robot, float fi, int sp
 	//std::cout<<"Velocidade que chega: "<<speed<<std::endl;
 	double vMax = 1;
 	double d = 0.4;
-	/* if(speed == 1){ 
-	 	vMax = 0.6;
-		d = 0.2;
+	if(speed == 3){ 
+	 	vMax = 0.4;
+		d = 0.1;
 	 }
-	else if(speed == 2) 
+	/*else if(speed == 2) 
 	{
 		vMax = 1.2;
 		d = 0.54;	
