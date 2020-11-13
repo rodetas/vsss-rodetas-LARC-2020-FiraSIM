@@ -67,14 +67,15 @@ public:
             a2 = atan2(orientation.y - target.y, target.x - orientation.x);
             a3 = atan2((orientation.y + Config::goalSize.y /2) - target.y,(target.x - orientation.x));
             return (a1+a3 -2*a2);
-            //return a3 - a1;
+            //return a3 - a2;
         }
         else{
             a1 = atan2(target.y -(orientation.y + Config::goalSize.y/2),(orientation.x - target.x));
             a2 = atan2(target.y - orientation.y, orientation.x - target.x);
             a3 = atan2(target.y -(orientation.y - Config::goalSize.y/2),(orientation.x - target.x));
             return (a1 + a3 - 2*a2)*-1;
-           //return M_PI -(a3-a1);
+            //return M_PI -(a3-a1);
+            //return a3 - a2;
         }
     }
 

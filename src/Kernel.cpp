@@ -98,9 +98,11 @@ void Kernel::loop() {
             }
             else{
                 Kernel::updatePlayingState(false);
+            
+            if(command.foul() == VSSRef::Foul::STOP){    
                 interpreter.attackerClosestToBall(robots, state);
             }
-
+            }
             // Showing timestamp
             std::cout << "Timestamp: " << command.timestamp() << std::endl;
 

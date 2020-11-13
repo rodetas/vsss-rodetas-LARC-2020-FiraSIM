@@ -72,7 +72,7 @@ vss::Pose RobotStrategyDefender::defineTarget() {
             // bola esta indo para defesa
             target.x = state.ball.position.x;
             target.y = state.ball.position.y;
-            target.angle = Math::arrivalAngle2(target, vss::Point(0, vss::MAX_COORDINATE_Y / 2));
+            target.angle = Math::arrivalAngle2  (target, vss::Point(0, vss::MAX_COORDINATE_Y / 2));
 
            if(abs(state.ball.vectorSpeed.x) > abs(state.ball.vectorSpeed.y * 1.2)){
                 target.x = state.ball.projection.x;
