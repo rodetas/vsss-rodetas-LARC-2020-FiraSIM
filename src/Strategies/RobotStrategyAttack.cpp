@@ -38,33 +38,25 @@ vss::WheelsCommand RobotStrategyAttack::specificStrategy(vss::WheelsCommand c) {
 
 vss::Pose RobotStrategyAttack::defineTarget() {
     vss::Pose target;
-    vss::Point centerGoal1 = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
-    vss::Point centerGoal2 = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
+    vss::Point centerGoal = vss::Point(0, vss::MAX_COORDINATE_Y / 2);
     vss::Point targetPoint;
 
     //Posiciona o atacante no meio do campo para ele nao interferir na defesa
     if (state.ball.projection.x > (vss::MAX_COORDINATE_X  - 20) * 0.6 && (state.ball.position.x > robot.position.x)) {
         if (state.ball.projection.y < vss::MAX_COORDINATE_Y / 2) {
-            target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.2, 0);
+            target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
             stopAttacker = true;
         } else {
-            target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.8, 0);
+            target = vss::Pose((vss::MAX_COORDINATE_X  - 20) * 0.55, vss::MAX_COORDINATE_Y * 0.2, 0);
             stopAttacker = true;
         }
     } else {
         stopAttacker = false;
-
-        if(state.ball.linearSpeed ==0)
-        {   target.x = state.ball.position.x;
-           target.y = state.ball.position.y;
-        }
-        else{
+    
             target.x = state.ball.projection.x;
             target.y = state.ball.projection.y;
-        }
-        if(target.y < (target.y < vss::MAX_COORDINATE_Y * 0.5) )
-            target.angle = Math::arrivalAngle(target, centerGoal1);
-        else target.angle = Math::arrivalAngle(target, centerGoal2);
+    
+            target.angle = Math::arrivalAngle2(target, centerGoal);
         
         //Angulos para quando robô estiver na parede
         if (target.y < vss::MAX_COORDINATE_Y * 0.25) {
@@ -154,9 +146,10 @@ std::vector <std::pair<vss::Point, vss::Point>> obstacles;
     }
 
     UnivectorField univectorField(robot);
-    
+    //if( (Math::toDomain(Math::toRadian(robot.angle)) - target.angle < M_PI/10) and (state.ball.position.x < robot.position.x) and (robot.distanceFrom(state.ball.position) < 20))
     //univectorField.setUnivectorWithoutCurves(); // faz com que o robô ande sempre reto  fazendo com que o arrivalOrientation não faça diferença
-    path = univectorField.drawPath(robot, target, obstacles);
+    
+   path = univectorField.drawPath(robot, target, obstacles);
     if(univectorField.offTheField){
         obstacles.clear();
     }

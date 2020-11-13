@@ -114,7 +114,7 @@ float RobotStrategyGoal::applyUnivectorField(vss::Pose target) {
         univectorField.setUnivectorWithoutCurves();
         obstacles.clear();
     }
-
+    
     path = univectorField.drawPath(robot, target, obstacles);
     return univectorField.defineFi(robot, target, obstacles);
 }
