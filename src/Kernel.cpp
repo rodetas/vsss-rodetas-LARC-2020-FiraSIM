@@ -1,6 +1,6 @@
 #include <Kernel.h>
 
-#define UDP_ADDRESS "224.0.0.1"
+#define UDP_ADDRESS "224.5.23.2"
 #define REFEREE_PORT 10003
 #define REPLACER_PORT 10004
 
@@ -25,7 +25,7 @@ void Kernel::loop() {
         my_robots_are_yellow = false;
     }
     RobotStrategyFactory coach;
-    RoboCupSSLClient visionClient("224.0.0.1", 10002);
+    RoboCupSSLClient visionClient("224.5.23.2", 10002);
     
     fira_message::sim_to_ref::Environment packet;
     visionClient.open(false);
