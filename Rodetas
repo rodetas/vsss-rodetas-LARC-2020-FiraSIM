@@ -1,5 +1,5 @@
 FROM ubuntu:18.04
-FROM ubuntu:16.04
+#FROM ubuntu:16.04
 
 LABEL maintainer="Rodetas" 
 
@@ -75,19 +75,22 @@ WORKDIR /
 
 # Rodetas repository git configuring
 
-RUN dir
-RUN git clone https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM.git
+RUN ls
+RUN git clone -b dia3 https://github.com/rodetas/vsss-rodetas-LARC-2020-FiraSIM
 #RUN cd vsss-rodetas-LARC-2020-FiraSIM
 WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
 #WORKDIR /vsss-rodetas-LARC-2020-FiraSIM/net/pb/proto
 #RUN sudo ./compile.sh
 #WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
-#RUN sudo ./build_test.sh
+#WORKDIR /vsss-rodetas-LARC-2020-FiraSIM/net/pb/vssreferee
+#RUN sudo ./protobuf.sh
+#WORKDIR /vss-rodetas-LARC-2020-FiraSIM
+RUN sudo ./build_test.sh
 #WORKDIR /
 
 # Running automated code
 
-#WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
+WORKDIR /vsss-rodetas-LARC-2020-FiraSIM
 #RUN cd build
 #WORKDIR /build
 #CMD ["SDK-Rodetas", "-c"]
